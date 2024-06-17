@@ -1,22 +1,8 @@
+# Gemfile
+
 source 'https://rubygems.org'
 
-# Cucumber for behavior-driven development
-gem 'cucumber', '~> 5.3'
-
-# Capybara for simulating how a user interacts with your application
-gem 'capybara', '~> 3.0'
-
-
-# Selenium WebDriver for driving a browser (needed by Capybara)
-gem 'selenium-webdriver', '~> 4.1'
-
-# Optional: If you want to use RSpec for assertions
-gem 'rspec', '~> 3.11'
-
-# Optional: If you want to use page-object pattern with Cucumber
-gem 'page-object', '~> 2.3'
-
-# Optional: If you want to use site_prism with Cucumber
-gem 'site_prism', '~> 3.7'
-
-
+gem 'cucumber'
+gem 'capybara'
+gem 'selenium-webdriver'
+gem 'rspec'
