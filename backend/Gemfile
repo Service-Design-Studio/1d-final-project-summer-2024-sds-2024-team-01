@@ -15,9 +15,6 @@ gem 'uglifier'
 #It doesn't work without this
 gem "bootsnap", require: false
 
-# For .env to store credentials
-gem 'dotenv-rails'
-
 # Support for Windows
 gem 'tzinfo'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
