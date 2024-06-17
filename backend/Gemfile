@@ -1,8 +1,37 @@
 # Gemfile
 
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'cucumber'
-gem 'capybara'
-gem 'selenium-webdriver'
-gem 'rspec'
+ruby "3.2.4"
+
+gem "rails", "~> 7.1.3", ">= 7.1.3.4"
+
+# SCSS Supremacy
+gem 'sass-rails'
+
+#Imma be real idk what uglifier is but wtv 
+gem 'uglifier'
+
+#It doesn't work without this
+gem "bootsnap", require: false
+
+# For .env to store credentials
+gem 'dotenv-rails'
+
+# Support for Windows
+gem 'tzinfo'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+
+gem 'pg'
+group :development, :test do
+  gem 'cucumber'
+  gem 'capybara'
+  gem 'rspec-rails'
+  gem 'guard-rspec'
+  gem 'web-console'
+end
+
+group :production do
+end
+
+
