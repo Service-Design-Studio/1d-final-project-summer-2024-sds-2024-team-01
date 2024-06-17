@@ -35,4 +35,4 @@
 /config/master.key
 
 # Ignore database.yml to put db creds in
-# /config/database.yml
+/config/database.yml
