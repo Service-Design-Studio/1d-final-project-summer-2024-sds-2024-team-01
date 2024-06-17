@@ -20,12 +20,15 @@ gem 'tzinfo'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
 gem 'pg'
+
+group :development do
+  gem 'web-console'
+end
 group :development, :test do
   gem 'cucumber'
   gem 'capybara'
   gem 'rspec-rails'
   gem 'guard-rspec'
-  gem 'web-console'
 end
 
 group :production do
