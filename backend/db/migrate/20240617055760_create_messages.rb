@@ -5,8 +5,8 @@ class CreateMessages < ActiveRecord::Migration[7.1]
       t.boolean :read, null: false
 
       t.references :chat, foreign_key: true, null: true
-      t.references :sender_id, null: false, foreign_key: { to_table: :users }
-      t.references :receiver_id, null: false, foreign_key: { to_table: :users }
+      t.references :sender, null: false, foreign_key: { to_table: :users }
+      t.references :receiver, null: false, foreign_key: { to_table: :users }
 
       t.timestamps
     end

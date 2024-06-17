@@ -13,9 +13,10 @@ class CreateRequests < ActiveRecord::Migration[7.1]
       t.string :reward_type, null: false
       t.string :status, null: false
 
-      t.reference :created_by, null: false, foreign_key: { to_table: :users }
+      t.bigint :created_by, null: false
 
       t.timestamps
     end
+    add_foreign_key :requests, :users, column: :created_by
   end
 end
