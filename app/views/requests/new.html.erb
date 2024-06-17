@@ -1,6 +1,68 @@
 <h1>New request</h1>
 
-<%= render "form", request: @request %>
+<%= form_with do |form| %>
+  <%= form.label :title, "Title:" %>
+  <%= form.text_field :title %>
+
+  <br/>
+  <br/>
+
+  <%= form.label :description, "Description:" %>
+  <%= form.text_field :description %>
+  
+  <br/>
+  <br/>
+
+  <%= form.label :thumbnail, "Thumbnail:" %>
+  <%= form.text_field :thumbnail %>
+
+  <br/>
+  <br/>
+
+  <%= form.label :category, "Category:" %>
+  <%= form.text_field :category %>
+  
+  <br/>
+  <br/>
+
+  <%= form.label :location, "Location:" %>
+  <%= form.text_field :location %>
+  
+  <br/>
+  <br/>
+
+  <%= form.label :date, "Date:" %>
+  <%= form.text_field :date %>
+  
+  <br/>
+  <br/>
+
+  <%= form.label :number_of_pax, "Number of People Needed:" %>
+  <%= form.text_field :number_of_pax %>
+  
+  <br/>
+  <br/>
+
+  <%= form.label :duration, "Duration (Hours):" %>
+  <%= form.text_field :duration %>
+  
+  <br/>
+  <br/>
+
+  <%= form.label :reward, "Reward:" %>
+  <%= form.text_field :reward %>
+  
+  <br/>
+  <br/>
+
+  <%= form.label :reward_type, "Reward Type:" %>
+  <%= form.text_field :reward_type %>
+  
+  <br/>
+  <br/>
+
+  <%= form.submit "Create" %>
+<% end %>
 
 <br>
 
