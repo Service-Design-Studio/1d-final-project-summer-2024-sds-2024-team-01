@@ -1,5 +1,5 @@
 class Request < ActiveRecord::Base
-  belongs_to :created_by, class_name: 'User'
+  belongs_to :user, foreign_key: :created_by
   validates_presence_of :title, message: "Please enter a title"
   validates_presence_of :category, message: "Please select a category"
   validates_presence_of :location, message: "Please enter a location"
@@ -10,7 +10,7 @@ class Request < ActiveRecord::Base
   validates_presence_of :reward_type, message: "Please select a reward type"
   validates_presence_of :status 
   validates_presence_of :created_by
-  validates_presence_of :created_at
-  validates_presence_of :updated_at
+  # validates_presence_of :created_at
+  # validates_presence_of :updated_at
 
 end

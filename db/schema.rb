@@ -13,6 +13,7 @@
 ActiveRecord::Schema[7.1].define(version: 2024_06_17_055766) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "charities", force: :cascade do |t|
     t.string "charity_name", null: false
@@ -69,7 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_17_055766) do
     t.text "description"
     t.text "thumbnail_pic", null: false
     t.string "category", null: false
-    t.point "location", null: false
+    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
     t.date "date", null: false
     t.integer "number_of_pax", null: false
     t.integer "duration", null: false

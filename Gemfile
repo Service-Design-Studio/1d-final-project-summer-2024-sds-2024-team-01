@@ -21,6 +21,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
 gem 'pg'
 
+# for geospatial queries from the database to query for locations
+gem 'rgeo'
+gem 'activerecord-postgis-adapter'
+
 group :development do
   gem 'web-console'
 end
