@@ -1,14 +1,40 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Requests</h1>
+<h1>Requests (<%= @requests.count %>)</h1>
 
 <div id="requests">
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Category</th>
+      <th scope="col">Location</th>
+      <th scope="col">Date</th>
+      <th scope="col">Number of Pax</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Reward</th>
+      <th scope="col">Created by</th>
+      <th scope="col">Details</th>
+    </tr>
+  </thead>
+  <tbody>
   <% @requests.each do |request| %>
-    <%= render request %>
-    <p>
-      <%= link_to "Show more details", request %>
-    </p>
+    <tr>
+      <td><%= request.title %> </td>
+      <td><%= request.category %> </td>
+      <td><%= request.location %> </td>
+      <td><%= request.date %> </td>
+      <td><%= request.number_of_pax %> </td>
+      <td><%= request.duration %> </td>
+      <td><%= request.reward %> </td>
+      <td><%= request.created_by%> </td>
+      <td>
+        <%= link_to "Show more details", request %>
+      </td>
+    </tr>
   <% end %>
-</div>
+  </tbody>
+</table>
 
 <%= link_to "New request", new_request_path %>
+</div>
