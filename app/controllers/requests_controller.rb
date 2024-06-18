@@ -1,3 +1,5 @@
+require 'date'
+
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy ]
 
@@ -21,7 +23,20 @@ class RequestsController < ApplicationController
 
   # POST /requests
   def create
-    @request = Request.new(request_params)
+    @request = Request.new
+    @request.title = params[:title]
+    @request.thumbnail_pic = params[:thumbnail]
+    @request.category = params[:category]
+    @request.location = params[:location]
+    @request.date = params[:date]
+    @request.number_of_pax = params[:number_of_pax]
+    @request.duration = params[:duration]
+    @request.reward = params[:reward]
+    @request.reward_type = params[:reward_type]
+    @request.status = "Available"
+    @request.created_by = 1
+    @request.created_at = DateTime.now()
+    @request.updated_at = DateTime.now()
 
     if @request.save
       redirect_to @request, notice: "Request was successfully created."
