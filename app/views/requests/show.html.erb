@@ -1,10 +1,44 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @request %>
+<h1><%= @request.title %></h1>
+
+<p>
+  <strong>Category:</strong>
+  <%= @request.category %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @request.location %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @request.date %>
+</p>
+
+<p>
+  <strong>Number of Pax:</strong>
+  <%= @request.number_of_pax %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @request.duration %>
+</p>
+
+<p>
+  <strong>Reward:</strong>
+  <%= @request.reward %>
+</p>
+
+<p>
+  <strong>Created by:</strong>
+  <%= @request.created_by %>
+</p>
 
 <div>
   <%= link_to "Edit this request", edit_request_path(@request) %> |
   <%= link_to "Back to requests", requests_path %>
-
-  <%= button_to "Destroy this request", @request, method: :delete %>
+  <%= button_to "Destroy this request", @request, method: :delete, data: { confirm: 'Are you sure?' } %>
 </div>
