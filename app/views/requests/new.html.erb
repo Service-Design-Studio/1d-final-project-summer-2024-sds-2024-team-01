@@ -1,6 +1,6 @@
 <h1>New request</h1>
 
-<%= form_with do |form| %>
+<%= form_with url: "/requests", method: :post do |form| %>
   <%= form.label :title, "Title:" %>
   <%= form.text_field :title %>
 
