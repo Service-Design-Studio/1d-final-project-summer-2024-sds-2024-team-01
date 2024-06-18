@@ -25,9 +25,10 @@ Download the installer here: https://www.enterprisedb.com/downloads/postgres-pos
 
 ![image](https://github.com/Service-Design-Studio/1d-final-project-summer-2024-sds-2024-team-01/assets/41722713/4b2f7feb-f6d3-4637-90f2-340e9dd6b21e)
 
-4. Updated your database.yml with the password you entered at the previous step 
-5. After installation, run stack builder
-6. Under spatial extensions, install PostGIS
+4. Copy the database.yml.example file and remove .example for the new file created (database.yml)
+5. Change the ```PASSWORD_ENTERED_DURING_INSTALL``` field in database.yml to the password previously entered 
+6. After installation, run stack builder
+7. Under spatial extensions, install PostGIS
 
 
 ## Migrating and data setup
