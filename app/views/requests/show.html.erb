@@ -8,6 +8,11 @@
 </p>
 
 <p>
+  <strong>Description:</strong>
+  <%= @request.description %>
+</p>
+
+<p>
   <strong>Location:</strong>
   <%= @request.location %>
 </p>
@@ -36,6 +41,8 @@
   <strong>Created by:</strong>
   <%= @request.created_by %>
 </p>
+
+
 
 <div>
   <%= link_to "Edit this request", edit_request_path(@request) %> |
