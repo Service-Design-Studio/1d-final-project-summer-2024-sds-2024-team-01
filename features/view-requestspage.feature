@@ -23,7 +23,7 @@ Feature: View User Requests
   # Happy Path Scenarios
   Scenario: View user requests on the requests page
     Given I can see the total number of requests
-    And I should see the following requests on the page:
+    Then I should see the following requests on the page:
       | Title               | Category    | Location                     | Date       | Number of Pax | Duration | Reward | Created by | Details           |
       | Help with Gardening | Gardening   | POINT (40.712776 -74.005974) | 2024-07-01 | 2             | 3        | $50    | 1          | Show more details |
       | Dog Walking         | Pet Care    | POINT (34.052235 -90.0)      | 2024-07-02 | 1             | 1        | $20    | 2          | Show more details |
@@ -32,5 +32,5 @@ Feature: View User Requests
 
   # Sad Path Scenarios
   Scenario: View user requests on the requests page with no requests available
-    Given I am on the Ring of Reciprocity requests page
+    Given I can see no requests available
     Then I should see a message indicating no requests are currently available
