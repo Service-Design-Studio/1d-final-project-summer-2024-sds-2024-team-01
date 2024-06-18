@@ -11,12 +11,13 @@
 #
 # db/seeds.rb
 # ChatGPT is the goat
-#
-#
-#
-role_list = [
-  [1, "User"], [2, "Admin"], [3, "Corporate Manager"], [4, "Corporate User"], [5, "Charity Manager"
-]]
+
+# For adding in dummy location data
+# The SRID 4326 refers to the WGS 84 coordinate system, 
+# which is the standard for latitude and longitude used 
+# by GPS and many mapping services.
+
+role_list = [  [1, "User"], [2, "Admin"], [3, "Corporate Manager"], [4, "Corporate User"], [5, "Charity Manager"]]
 
 if Role.count == 0
   p "No roles found, seeding role data..."
@@ -156,7 +157,7 @@ p "No requests found, seeding fake request data..."
       description: "Looking for someone to help with my backyard garden",
       thumbnail_pic: "https://example.com/thumbnails/gardening.jpg",
       category: "Gardening",
-      location: (40.712776, -74.005974),
+      location: "POINT(40.712776 -74.005974)",
       date: Date.new(2024, 7, 1),
       number_of_pax: 2,
       duration: 3,
