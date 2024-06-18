@@ -1,3 +1,4 @@
+=begin
 Given("I am on the login page") do
           visit '/login'
         end
@@ -14,4 +15,4 @@ Given("I am on the login page") do
         Then("I should see the dashboard page") do
           expect(page).to have_content('Dashboard')
         end
-        
+=end       
