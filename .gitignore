@@ -38,13 +38,4 @@
 /config/database.yml
 
 # Ignore bootsnap cache files
-/backend/tmp/cache/bootsnap/compile-cache-iseq/
-
-*.log
-*.tmp
-*.cache
-/tmp/
-log/
-node_modules/
-dist/
-backend/tmp/cache/
+/tmp/cache/bootsnap/compile-cache-iseq/
