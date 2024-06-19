@@ -5,7 +5,7 @@ class RequestsController < ApplicationController
 
   # GET /requests
   def index
-    @requests = Request.all
+    @requests = Request.includes(:user).all
   end
 
   # GET /requests/1
