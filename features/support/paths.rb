@@ -1,13 +1,12 @@
+require 'cucumber/rails'
+require 'capybara/cucumber'
+
 module NavigationHelpers
-          def path_to(page_name)
-            case page_name
-            when /the Ring of Reciprocity requests page/
-              requests_path
-            else
-              raise "Can't find mapping from \"#{page_name}\" to a path."
-            end
-          end
-        end
-        
-        World(NavigationHelpers)
-        
+  def requests_page
+    visit '/requests'  
+  end
+  
+end
+
+World(NavigationHelpers)
+World(Capybara::DSL)
