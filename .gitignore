@@ -34,8 +34,5 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Ignore database.yml to put db creds in
-/config/database.yml
-
 # Ignore bootsnap cache files
 /backend/tmp/cache/bootsnap/compile-cache-iseq/
