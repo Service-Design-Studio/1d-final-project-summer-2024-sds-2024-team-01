@@ -26,6 +26,10 @@ RUN bundle
 
 ADD . /docker/rails
 
+RUN rails db:create && \
+rails db:migrate && \
+rails db:seed
+
 EXPOSE ${DEFAULT_PORT}
 
 CMD ["rails", "s", "-b", "0.0.0.0", "-p", "8080"]
