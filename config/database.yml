@@ -17,8 +17,5 @@ test:
 production:
   <<: *default
 
-  # username: <%= ENV.fetch("dbuser") %>
-  # password: <%= ENV.fetch("dbpassword") %>
-  # host: <%= ENV.fetch("dbhost") %>
 
   database: production
