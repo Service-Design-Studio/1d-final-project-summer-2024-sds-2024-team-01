@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
-ARG DEFAULT_PORT=3000
+ARG DEFAULT_PORT=8080
 
 FROM ruby:3.2.4
 
@@ -25,4 +25,4 @@ ADD . /docker/rails
 
 EXPOSE ${DEFAULT_PORT}
 
-CMD ["rails", "s", "-b", "0.0.0.0"]
+CMD ["rails", "server", "-p", "8080", "-b", "0.0.0.0"]
