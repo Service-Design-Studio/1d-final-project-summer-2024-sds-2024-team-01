@@ -12,10 +12,14 @@ development:
 test:
   <<: *default
   database: test
+
+staging:
+  <<: *default
   username: <%= Rails.application.credentials.db.username %>
   password: <%= Rails.application.credentials.db.password %>
   host: <%= Rails.application.credentials.db.host %>
-
+  database: production
+  
 production:
   <<: *default
   database: production
