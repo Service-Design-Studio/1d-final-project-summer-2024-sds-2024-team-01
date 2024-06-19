@@ -28,20 +28,15 @@ gem 'pg', '~> 1.5.6'
 gem 'rgeo', '~> 3.0.1'
 gem 'activerecord-postgis-adapter', '~> 9.0.2'
 
-gem 'cucumber', '~> 9.2.0'
-gem 'capybara', '~> 3.40.0'
-gem 'rspec-rails', '~> 6.1.2'
-gem 'guard-rspec', '~> 4.7.3'
-
 group :development do
   gem 'web-console', '~> 4.2.1'
 end
 
 group :development, :test do
   gem 'cucumber-rails'
-  gem 'capybara'
-  gem 'rspec-rails'
-  gem 'guard-rspec'
+  gem 'capybara', '~> 3.40.0'
+  gem 'rspec-rails', '~> 6.1.2'
+  gem 'guard-rspec', '~> 4.7.3'
 end
 
 group :production do
