@@ -43,7 +43,7 @@ Feature: View Requests
     Then I should see "Request was successfully created."
     Then I should see "Cooking Dinner" in the table of requests
 
-    Scenario: Edit request
+Scenario: Edit request
     Given I have a request titled "Help with Gardening"
     When I follow "Edit" for "Help with Gardening"
     And I fill in "Title" with "Gardening Help"
@@ -63,8 +63,12 @@ Feature: View Requests
     Then I should see "Help with Gardening" on the request details page
     And I should see "Description" with "Looking for someone to help with my backyard garden"
 
-  # Sad Path Scenarios
-  Scenario: View user requests on the requests page with no requests available
+Scenario: Go to create request
+    Given I have no requests
+    When I press "Create Request" 
+
+# Sad Path Scenarios
+Scenario: View user requests on the requests page with no requests available
     Given I can see no seed requests available
     Then I should see a message indicating no requests are currently available
 

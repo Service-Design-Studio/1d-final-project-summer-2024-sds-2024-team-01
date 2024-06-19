@@ -29,7 +29,7 @@ group :development do
   gem 'web-console'
 end
 group :development, :test do
-  gem 'cucumber'
+  gem 'cucumber-rails'
   gem 'capybara'
   gem 'rspec-rails'
   gem 'guard-rspec'

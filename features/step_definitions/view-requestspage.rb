@@ -1,9 +1,8 @@
+require 'cucumber/rails'
+
 Given('I am logged in as {string} with nric {string}') do |email, nric|
  puts "signed in!"
 end
-
-
-
 
 Given('I am on the Ring of Reciprocity requests page') do
   puts "at request page!"
@@ -36,7 +35,9 @@ When('I fill in {string} with "POINT \({float} {float})') do |string, float, flo
 end
 
 When('I press {string}') do |string|
-  puts "pressed #{string}!"
+  # puts "pressed #{string}!"
+  click_link(string)
+  p string
 end
 
 Then('I should see {string}') do |string|
