@@ -36,10 +36,16 @@ gem 'guard-rspec', '~> 4.7.3'
 group :development do
   gem 'web-console', '~> 4.2.1'
 end
+
 group :development, :test do
+  gem 'cucumber-rails'
+  gem 'capybara'
+  gem 'rspec-rails'
+  gem 'guard-rspec'
 end
 
 group :production do
 end
 
-
+#byebug
+gem 'byebug', '~> 11.1', '>= 11.1.3'
