@@ -19,6 +19,9 @@ RUN gem install bundler
 
 COPY Gemfile* ./
 
+RUN mkdir /cloudsql && \
+    touch /cloudsql/sds-ror:asia-southeast1:ror-db
+
 RUN bundle
 
 ADD . /docker/rails
