@@ -15,7 +15,7 @@ test:
   host: <%= Rails.application.credentials.db.host %>
   username: <%= Rails.application.credentials.db.username %>
   password: <%= Rails.application.credentials.db.password %>
-  socket: <%= ENV.fetch("UNIX_SOCKET") %>
+  socket: <%= ENV.fetch("INSTANCE_UNIX_SOCKET") %>
 
 
 production:
