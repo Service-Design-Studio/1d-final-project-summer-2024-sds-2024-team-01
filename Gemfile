@@ -34,6 +34,8 @@ end
 
 group :development, :test do
   gem 'cucumber-rails', require: false
+  gem 'database_cleaner-active_record'
+  gem 'selenium-webdriver'
   gem 'capybara', '~> 3.40.0'
   gem 'rspec-rails', '~> 6.1.2'
   gem 'guard-rspec', '~> 4.7.3'
@@ -44,3 +46,5 @@ end
 
 #byebug
 gem 'byebug', '~> 11.1', '>= 11.1.3'
+
+gem 'puma'
