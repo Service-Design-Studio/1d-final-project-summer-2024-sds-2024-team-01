@@ -12,10 +12,10 @@ development:
 test:
   <<: *default
   database: test
-  host: localhost
+  host: Rails.application.credentials.db.host
+  username: Rails.application.credentials.db.username
+  password: Rails.application.credentials.db.password
 
 production:
   <<: *default
-
-
   database: production
