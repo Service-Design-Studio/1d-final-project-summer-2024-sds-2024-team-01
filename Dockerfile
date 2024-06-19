@@ -26,9 +26,11 @@ RUN bundle
 
 ADD . /docker/rails
 
-RUN rails db:create && \
-rails db:migrate && \
-rails db:seed
+RUN rake db:test_connection 
+
+RUN bin/rails db:create && \
+bin/rails db:migrate && \
+bin/rails db:seed
 
 EXPOSE ${DEFAULT_PORT}
 
