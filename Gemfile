@@ -33,7 +33,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', require: false
   gem 'capybara', '~> 3.40.0'
   gem 'rspec-rails', '~> 6.1.2'
   gem 'guard-rspec', '~> 4.7.3'
