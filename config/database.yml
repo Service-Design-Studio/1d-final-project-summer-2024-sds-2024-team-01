@@ -1,0 +1,24 @@
+default: &default
+  adapter: postgis
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost
+  timeout: 5000
+  schema_search_path: public
+
+development:
+  <<: *default
+  database: dev
+
+test:
+  <<: *default
+  database: test
+  host: localhost
+
+production:
+  <<: *default
+
+  username: <%= ENV.fetch("dbuser") %>
+  password: <%= ENV.fetch("dbpassword") %>
+  host: <%= ENV.fetch("dbhost") %>
+
+  database: production
