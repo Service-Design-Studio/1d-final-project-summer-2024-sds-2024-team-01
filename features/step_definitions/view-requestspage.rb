@@ -1,77 +1,103 @@
-require 'cucumber/rails'
+# File: features/step_definitions/request_steps.rb
 
 Given('I am logged in as {string} with nric {string}') do |email, nric|
- puts "signed in!"
+  # Implement authentication logic here if necessary
+  puts "Logged in as #{email} with NRIC #{nric}"
 end
 
 Given('I am on the Ring of Reciprocity requests page') do
-  puts "at request page!"
+  visit '/requests' # Assuming this is the correct URL to view requests
 end
 
 Then('I should see the following:') do |table|
-  # table is a Cucumber::MultilineArgument::DataTable
-  pending # Write code here that turns the phrase above into concrete actions
+ # Convert the table into an array of hashes
+ requests = table.hashes
+ # Loop through each request and create it in the database
+ requests.each do |request|
+  p requests
+  # Request.create!(
+  #   title: request['Title'],
+  #   category: request['Category'],
+  #   location: request['Location'],
+  #   date: request['Date'],
+  #   number_of_pax: request['Number of Pax'],
+  #   duration: request['Duration'],
+  #   reward: request['Reward'],
+  #   reward_type: request['Reward_Type'],  
+  #   status: 'Active',               
+  #   created_by: request['Created by']                  
+  # )
+ end
 end
 
-Then('see that there are {int} requests') do |int|
-# Then('see that there are {float} requests') do |float|
-  puts int
+Then('see that there are {int} requests') do |expected_count|
+  expect(page).to have_selector('.request', count: expected_count)
 end
 
 Given('I have no requests') do
-  puts "no requests!"
+  Request.delete_all
 end
 
-When('I follow {string}') do |string|
-  puts "followed #{string}!"
+When('I follow "New Request"') do 
+  visit 'requests/new'
 end
 
-When('I fill in {string} with {string}') do |string, string2|
-  puts "filled in #{string} with #{string2}!"
+
+When('I fill in {string} with {string}') do |field, input|
+  fill_in(id: field, with: input)
 end
 
 When('I fill in {string} with "POINT \({float} {float})') do |string, float, float2|
-  puts "filled in #{string} with POINT (#{float} #{float2})!"
+  fill_in(string, with: "POINT (#{float} #{float2})")
 end
 
-When('I press {string}') do |string|
-  # puts "pressed #{string}!"
-  click_link(string)
-  p string
+Then('I should see {string}') do |content|
+  expect(page).to have_content(content)
 end
 
-Then('I should see {string}') do |string|
-  puts "saw #{string}!"
+Then('I should see {string} in the table of requests') do |content|
+  expect(page).to have_selector('table#requests-table', text: content)
 end
 
-Then('I should see {string} in the table of requests') do |string|
-  puts "saw #{string} in the table of requests!"
+Given('I have a request titled {string}') do |title|
+  Request.create!(title: title) # Create a request with the specified title
 end
 
-Given('I have a request titled {string}') do |string|
-  puts "have a request titled #{string}!"
+When('I follow {string} for {string}') do |action, title|
+  click_link("#{action} #{title}")
 end
 
-When('I follow {string} for {string}') do |string, string2|
-  puts "followed #{string} for #{string2}!"
+Then('I should not see {string} in the table of requests') do |title|
+  expect(page).not_to have_selector('table#requests-table', text: title)
 end
 
-Then('I should not see {string} in the table of requests') do |string|
-  puts "did not see #{string} in the table of requests!"
+Then('I should see {string} on the request details page') do |title|
+  expect(page).to have_content(title)
 end
 
-Then('I should see {string} on the request details page') do |string|
-  puts "saw #{string} on the request details page!"
+Then('I should see {string} with {string}') do |field, value|
+  expect(page).to have_content("#{field}: #{value}")
 end
 
-Then('I should see {string} with {string}') do |string, string2|
-  puts "@string : @string2"
-end
-
-Given('I can see no seed requests available') do
-  puts "0 requests available"
+Given('I can see no requests available') do
+  # Implement logic to ensure no seed requests are present
+  puts "No seed requests available"
 end
 
 Then('I should see a message indicating no requests are currently available') do
-  puts "No requests are currently available!"
+  expect(page).to have_content("No requests are currently available")
 end
+
+Then('I press {string}') do |string|
+  click_button(string, exact: true)
+end
+
+Then('I should see {string} details in the table of requests') do |string|
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+# When('I press "Create"') do |string|
+#   click_button("Create")
+#    # Write code here that turns the phrase above into concrete actions
+# end
+
