@@ -12,21 +12,21 @@ end
 Then('I should see the following:') do |table|
  # Convert the table into an array of hashes
  requests = table.hashes
-
  # Loop through each request and create it in the database
  requests.each do |request|
-   Request.create!(
-     title: request['Title'],
-     category: request['Category'],
-     location: request['Location'],
-     date: request['Date'],
-     number_of_pax: request['Number of Pax'],
-     duration: request['Duration'],
-     reward: request['Reward'],
-     reward_type: request['Reward_Type'],  
-     status: 'Active',               
-     created_by: request['Created by']                  
-   )
+  p requests
+  # Request.create!(
+  #   title: request['Title'],
+  #   category: request['Category'],
+  #   location: request['Location'],
+  #   date: request['Date'],
+  #   number_of_pax: request['Number of Pax'],
+  #   duration: request['Duration'],
+  #   reward: request['Reward'],
+  #   reward_type: request['Reward_Type'],  
+  #   status: 'Active',               
+  #   created_by: request['Created by']                  
+  # )
  end
 end
 
@@ -38,16 +38,13 @@ Given('I have no requests') do
   Request.delete_all
 end
 
-When('I follow {string}') do |link|
-  click_link(link)
+When('I follow "New Request"') do 
+  visit 'requests/new'
 end
 
-Then('I am on create request page') do
-  puts "I am on create request page"
-end
 
-When('I fill in {string} with {string}') do |field, value|
-  fill_in(field, with: value)
+When('I fill in {string} with {string}') do |field, input|
+  fill_in(id: field, with: input)
 end
 
 When('I fill in {string} with "POINT \({float} {float})') do |string, float, float2|
@@ -90,3 +87,17 @@ end
 Then('I should see a message indicating no requests are currently available') do
   expect(page).to have_content("No requests are currently available")
 end
+
+Then('I press {string}') do |string|
+  click_button(string, exact: true)
+end
+
+Then('I should see {string} details in the table of requests') do |string|
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+# When('I press "Create"') do |string|
+#   click_button("Create")
+#    # Write code here that turns the phrase above into concrete actions
+# end
+
