@@ -140,7 +140,6 @@ if User.count == 0
 end
 
 
-
 requests = [
   {
     title: "Help with Gardening",

@@ -50,4 +50,4 @@ end
 #byebug
 gem 'byebug', '~> 11.1', '>= 11.1.3'
 
-gem 'puma'
+gem 'puma' # Puma is the default server for Rails
