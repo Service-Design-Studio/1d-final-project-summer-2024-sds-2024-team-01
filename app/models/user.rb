@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_one_attached :avatar 
+
   belongs_to :charity, optional: true
   belongs_to :company, optional: true
   belongs_to :role
