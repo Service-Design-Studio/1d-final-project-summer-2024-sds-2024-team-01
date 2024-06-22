@@ -2,6 +2,10 @@
 
 <h1><%= @request.title %></h1>
 
+<% if @request.thumbnail.attached? %>
+  <%= image_tag url_for(@request.thumbnail) %>
+<% end %>
+
 <p>
   <strong>Category:</strong>
   <%= @request.category %>
