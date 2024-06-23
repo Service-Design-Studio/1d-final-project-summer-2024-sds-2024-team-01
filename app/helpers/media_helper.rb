@@ -5,7 +5,7 @@ module MediaHelper
     when :local
       return url_for photo
     when :google
-      return "https://storage.googleapis.com/#{ENV['STORAGE_BUCKET_NAME']}/#{photo.image.key}"
+      return "https://storage.googleapis.com/#{ENV['STORAGE_BUCKET_NAME']}/#{photo.thumbnail.key}"
     end
   end
 end
