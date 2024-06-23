@@ -3,7 +3,7 @@
 <h1><%= @request.title %></h1>
 
 <% if @request.thumbnail.attached? %>
-  <%= image_tag url_for(@request.thumbnail) %>
+  <img src="<%= image_url(@request.thumbnail) %>" />
 <% end %>
 
 <p>
