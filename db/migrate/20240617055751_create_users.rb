@@ -27,9 +27,9 @@ class CreateUsers < ActiveRecord::Migration[7.1]
       
     end
 
-    add_index :testusers, :number,               unique: true
-    add_index :testusers, :email,                unique: true
-    add_index :testusers, :reset_password_token, unique: true
-    add_index :testusers, :confirmation_token,   unique: true
+    add_index :users, :number,               unique: true
+    add_index :users, :email,                unique: true
+    add_index :users, :reset_password_token, unique: true
+    add_index :users, :confirmation_token,   unique: true
     end
 end
