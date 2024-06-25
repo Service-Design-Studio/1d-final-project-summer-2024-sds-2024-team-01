@@ -1,40 +1,207 @@
-<p style="color: green"><%= notice %></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requests</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .content {
+      padding-top: 80px; /* Adjust this value based on the height of your navbar */
+    }
+    .custom-card {
+      margin-top: 30px;
+      margin-bottom: 30px; 
+      background-color: #ad88c6; /* Background color for the header container */
+      color: #fff; /* Text color for the header container */
+      height: 120px;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 20px;
+    }
+    .header-text {
+      margin-bottom: 0;
+    }
+    .clickable-card {
+      text-decoration: none;
+      color: inherit;
+    }
+    .clickable-card:hover .card {
+      border-color: #ad88c6; /* Change border color on hover */
+    }
+    .card-divider {
+      border-top: 1px solid #dee2e6;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .profile-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .profile-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .card-details {
+      margin-top: 20px;
+    }
+    .card-text {
+      margin-bottom: 20px; /* Add more space between fields */
+    }
+    .card-text i {
+      color: #656dad; /* Set icon color */
+    }
+    .icon-text {
+      margin-left: 10px; /* Add more space between icons and text */
+    }
+    .card-title {
+      margin-top: 20px;
+      margin-bottom: 3px; /* Reduce space between title and category */
+    }
+    .card-subtitle {
+      margin-top: 2px;
+      margin-bottom: 20px; /* Adjust space below category */
+    }
+    .reward-text {
+      text-align: right; /* Align reward text to the right */
+    }
+    .custom-btn-dark-purple {
+      background-color: #656dad;
+      border-color: #656dad;
+      color: white;
+    }
+    .custom-btn-dark-purple:hover {
+      background-color: #9852a6; /* Slightly darker shade for hover effect */
+      border-color: #9852a6;
+    }
+    .search-container {
+      margin-bottom: 20px; /* Adjust spacing below the search container */
+    }
+    .search-form {
+      background-color: #f8f9fa; /* Light background color for search bar */
+      border: 1px solid #ced4da; /* Gray border */
+      border-radius: 4px;
+      padding: 8px 16px;
+      display: flex; /* Use flexbox to align items */
+      align-items: center; /* Center items vertically */
+    }
+    .search-input {
+      flex: 1; /* Grow to take remaining space */
+      border: none;
+      outline: none;
+      padding: 8px;
+      font-size: 14px;
+    }
+    .search-btn {
+      background-color: #656dad;
+      border-color: #656dad;
+      color: white;
+      margin-left: 8px;
+    }
+    .search-btn:hover {
+      background-color: #9852a6; /* Slightly darker shade for hover effect */
+      border-color: #9852a6;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container content">
+    <div class="card custom-card">
+      <div class="card-body header-container">
+        <h2 class="header-text">Requests</h2>
+      </div>
+    </div>
 
-<h1>Requests (<%= @requests.count %>)</h1>
+    <!-- Search Bar Container -->
+    <div class="search-container">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <form class="search-form">
+              <input type="text" class="search-input form-control" id="searchInput" placeholder="Search requests...">
+              <button type="submit" class="btn search-btn"><i class="fas fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div id="requests">
-  <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Category</th>
-      <th scope="col">Location</th>
-      <th scope="col">Date</th>
-      <th scope="col">Number of Pax</th>
-      <th scope="col">Duration</th>
-      <th scope="col">Reward</th>
-      <th scope="col">Created by</th>
-      <th scope="col">Details</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @requests.each do |request| %>
-    <tr>
-      <td><%= request.title %> </td>
-      <td><%= request.category %> </td>
-      <td><%= request.location %> </td>
-      <td><%= request.date %> </td>
-      <td><%= request.number_of_pax %> </td>
-      <td><%= request.duration %> </td>
-      <td><%= request.reward %> </td>
-      <td><%= request.user.name %> </td>
-      <td>
-        <%= link_to "Show more details", request %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+    <!-- Container for Request Cards -->
+    <div class="card mt-0" id="requestContainer">
+      <div class="card-body">
+        <div class="row">
+          <% @requests.each do |request| %>
+            <div class="col-md-6 mb-4 request-card">
+              <a href="<%= request_path(request) %>" class="clickable-card">
+                <div class="card h-100">
+                  <%# <img src="<%= request.image_url %>" class="card-img-top" alt="<%= request.title %>"> %>
+                  <div class="card-body">
+                    <div class="profile-info">
+                      <img src="<%= request.user.profile_picture %>" alt="<%= request.user.name %>" width="30" height="30">
+                      <span><%= request.user.name %></span>
+                    </div>
+                    <h5 class="card-title"><%= request.title %></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= request.category %></h6>
+                    <div class="reward-text">
+                      <p class="card-text">Reward: <%= request.reward %></p>
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-details">
+                      <div class="row">
+                        <div class="col-6">
+                          <p class="card-text"><i class="fas fa-map-marker-alt"></i><span class="icon-text"><%= request.location %></span></p>
+                        </div>
+                        <div class="col-6">
+                          <p class="card-text"><i class="fas fa-users"></i><span class="icon-text"><%= request.number_of_pax %></span></p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                          <p class="card-text"><i class="fas fa-clock"></i><span class="icon-text"><%= request.duration %> hours</span></p>
+                        </div>
+                        <div class="col-6">
+                          <p class="card-text"><i class="fas fa-calendar-alt"></i><span class="icon-text"><%= request.date %></span></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const requestCards = document.querySelectorAll('.request-card');
 
-<%= link_to "New request", new_request_path %>
-</div>
+      searchInput.addEventListener('input', function() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+
+        requestCards.forEach(card => {
+          const title = card.querySelector('.card-title').innerText.toLowerCase();
+          const category = card.querySelector('.card-subtitle').innerText.toLowerCase();
+
+          if (title.includes(searchTerm) || category.includes(searchTerm)) {
+            card.style.display = 'block'; // Show the card
+          } else {
+            card.style.display = 'none'; // Hide the card
+          }
+        });
+      });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
