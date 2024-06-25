@@ -27,7 +27,6 @@ class RequestsController < ApplicationController
   def create
     @request = Request.new
     @request.title = params[:title]
-    @request.thumbnail_pic = params[:thumbnail]
     @request.category = params[:category]
     @request.location = params[:location]
     @request.date = params[:date]
@@ -41,11 +40,13 @@ class RequestsController < ApplicationController
     @request.updated_at = DateTime.now()
 
     if @request.save
+      @request.thumbnail.attach(params[:thumbnail_pic])
       redirect_to @request, notice: "Request was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
   end
+
 
   # PATCH/PUT /requests/1
   def update
@@ -68,8 +69,9 @@ class RequestsController < ApplicationController
       @request = Request.find(params[:id])
     end
 
+
     # Only allow a list of trusted parameters through.
     def request_params
-      params.fetch(:request, {})
+      params.fetch(:request, {}).permit(:thumbnail)
     end
 end

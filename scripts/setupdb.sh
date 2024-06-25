@@ -6,13 +6,14 @@ set -e
 echo "Bundling gems"
 bundle install
 
-echo "Creating database"
+echo "Recreating database..."
+bundle exec rails db:drop
 bundle exec rails db:create
 
-echo "Running Migrations"
+echo "Running migrations..."
 bundle exec rails db:migrate
 
-echo "Seeding database"
+echo "Seeding database..."
 bundle exec rails db:seed
 
 # Thanks random homie from stackoverflow
