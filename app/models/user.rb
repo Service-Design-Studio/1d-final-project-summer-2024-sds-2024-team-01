@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
-         :authentication_keys =>[:number]
 
   has_one_attached :avatar 
 
