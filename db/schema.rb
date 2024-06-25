@@ -143,8 +143,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
     t.string "nric", limit: 9, null: false
     t.string "email", null: false
     t.string "number", default: "", null: false
-    t.string "status", null: false
-    t.bigint "role_id"
+    t.string "status", default: "active", null: false
+    t.bigint "role_id", default: 1
     t.bigint "company_id"
     t.bigint "charity_id"
     t.string "encrypted_password", default: "", null: false
