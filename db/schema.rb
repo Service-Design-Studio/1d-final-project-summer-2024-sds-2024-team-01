@@ -96,11 +96,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   create_table "requests", force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
+    t.text "thumbnail_pic", null: false
     t.string "category", null: false
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
     t.date "date", null: false
-    t.time "start_time", null: false
-    t.time "end_time", null: false
     t.integer "number_of_pax", null: false
     t.integer "duration", null: false
     t.string "reward", null: false
@@ -141,6 +140,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.text "profile_picture"
     t.string "name", null: false
     t.string "nric", limit: 9, null: false
     t.string "number", null: false
