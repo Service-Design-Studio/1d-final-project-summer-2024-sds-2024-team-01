@@ -25,6 +25,7 @@ class RequestsController < ApplicationController
 
   # POST /requests
   def create
+    puts params
     @request = Request.new
     @request.title = params[:title]
     @request.category = params[:category]
