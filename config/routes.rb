@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => { :registrations => 'my_devise/registrations' }
+  devise_for :users, :controllers => { :registrations => 'my_devise/registrations' , :sessions => 'my_devise/sessions'}
     # ,path: "", controllers: {sessions: "sessions", registrations:"registrations"}, path_names: {sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register', sign_out: 'logout'}
   resources :requests
   root "requests#index"
