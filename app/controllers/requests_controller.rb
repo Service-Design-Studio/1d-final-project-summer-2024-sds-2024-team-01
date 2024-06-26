@@ -21,6 +21,7 @@ class RequestsController < ApplicationController
 
   # GET /requests/1/edit
   def edit
+    # @request is set by the set_request method
   end
 
   # POST /requests
