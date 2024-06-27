@@ -3,6 +3,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: localhost
   timeout: 5000
+  username: postgres
+  password: <%= ENV.fetch("ROR_LOCAL_DB_PW") {} %>
   schema_search_path: public
 
 development:
@@ -12,10 +14,17 @@ development:
 test:
   <<: *default
   database: test
-  host: localhost
 
+staging:
+  <<: *default
+  username: <%= Rails.application.credentials.db.username %>
+  password: <%= Rails.application.credentials.db.password %>
+  host: <%= Rails.application.credentials.db.host %>
+  database: staging
+  
 production:
   <<: *default
-
-
+  username: <%= Rails.application.credentials.db.username %>
+  password: <%= Rails.application.credentials.db.password %>
+  host: <%= Rails.application.credentials.db.host %>
   database: production

@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
+  has_one_attached :avatar 
+
   belongs_to :charity, optional: true
   belongs_to :company, optional: true
   belongs_to :role
