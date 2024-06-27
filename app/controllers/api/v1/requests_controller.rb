@@ -1,30 +1,30 @@
-class Json::RequestsController < ApplicationController
+class Api::V1::RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy ]
 
-  # GET /json/requests
+  # GET /api/v1/requests
   def index
     @requests = Request.includes(:user).all
     render json: @requests
   end
 
-  # GET /json/requests/1
+  # GET /api/v1/requests/1
   def show
     @request = Request.find(params[:id])
     render json: @request
   end
 
-  # GET /json/requests/new
+  # GET /api/v1/requests/new
   def new
     @request = Request.new
     render json: @request
   end
 
 
-  # GET /json/requests/1/edit
+  # GET /api/v1/requests/1/edit
   def edit
   end
 
-  # POST /json/requests
+  # POST /api/v1/requests
   def create
     puts params
     @request = Request.new
@@ -51,7 +51,7 @@ class Json::RequestsController < ApplicationController
   end
 
 
-  # PATCH/PUT /requests/1
+  # PATCH/PUT /api/v1/requests/1
   def update
     if @request.update(request_params)
       render json: @request
@@ -60,7 +60,7 @@ class Json::RequestsController < ApplicationController
     end
   end
 
-  # DELETE /requests/1
+  # DELETE /api/v1/requests/1
   def destroy
     @request.destroy!
     redirect_to requests_url, notice: "Request was successfully destroyed.", status: :see_other
