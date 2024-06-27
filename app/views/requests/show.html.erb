@@ -1,55 +1,179 @@
-<p style="color: green"><%= notice %></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .content {
+      padding-top: 80px; /* Adjust this value based on the height of your navbar */
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #ad88c6;
+      color: #fff;
+    }
+    .header-text {
+      margin-bottom: 0;
+    }
+    .request-details {
+      margin-top: 20px;
+    }
+    .request-image-container {
+      position: relative;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .request-image {
+      width: 100%;
+      height: auto;
+    }
+    .btn-report {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+    }
+    .details-section {
+      margin-top: 20px;
+    }
+    .details-section h5 {
+      font-weight: bold;
+    }
+    .description {
+      margin-top: 20px;
+    }
+    .profile-card {
+      padding: 10px;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      text-align: left;
+    }
+    .profile-card .profile-info {
+      display: flex;
+      align-items: center;
+    }
+    .profile-card img {
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .request-availability {
+      display: flex;
+      margin-top: 10px;
+    }
+    .availability-indicator,
+    .accept-button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .availability-indicator {
+      background-color: #f8f9fa;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      text-align: center;
+    }
+    .accept-button {
+      background-color: #28a745;
+      color: white;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      cursor: pointer;
+    }
+    .accept-button:hover {
+      background-color: #218838;
+    }
+    .divider {
+      border-top: 1px solid #dee2e6;
+      margin: 20px 0;
+    }
+    .custom-btn-dark-purple {
+      background-color: #656dad;
+      border-color: #656dad;
+      color: white;
+    }
+    .custom-btn-dark-purple:hover {
+      background-color: #9852a6; /* Slightly darker shade for hover effect */
+      border-color: #9852a6;
+    }
+    .stars {
+      color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container content">
+    <a href="/requests" class="btn btn-secondary me-2">
+      <i class="bi bi-arrow-left"></i> Back to requests
+    </a>
+    <div class="request-image-container">
+    <% if @request.thumbnail.attached? %>
+      <img src="<%= image_url(@request.thumbnail) %>" alt="Request Image" class="request-image"/>
+    <% end %>
+      <div class="btn-report">
+        <button class="btn btn-outline-danger">
+          <i class="fas fa-flag"></i> Report
+        </button>
+      </div>
+    </div>
+    <div class="card custom-card">
+      <div class="card-body p-0">
+        <div class="p-3 row">
+          <div class="col-md-8">
+            <h1 class="mt-3"><%= @request.title %> <i class="bi bi-bookmark"></i> (65)</h1>
+            <div class="divider"></div>
+            <div class="details-section">
+              <h5>Details</h5>
+              <p><i class="fas fa-calendar-alt"></i> <%= @request.date %></p>
+              <p><i class="fas fa-clock"></i> <%= @request.duration %></p>
+              <p><i class="fas fa-users"></i> <%= @request.number_of_pax %></p>
+              <p><i class="fas fa-map-marker-alt"></i> <%= @request.location %></p>
+              <p><i class="fas fa-money-bill-wave"></i> <%= @request.reward %></p>
+            </div>
+            <div class="divider"></div>
+            <div class="description">
+              <h5>Description</h5>
+              <p><%= @request.description %></p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card profile-card mt-3">
+              <div class="profile-info mb-3">
+                <img src="<%= image_url(@request.user.avatar) %>" alt="<%= @request.user.name %>" width="50" height="50">
+                <div>
+                  <h5 class="mb-1"><%= @request.created_by %></h5>
+                  <p class="mb-1 stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i> (120 reviews)
+                  </p>
+                </div>
+              </div>
+              <button class="btn custom-btn-dark-purple my-4 w-60">Chat</button>
+              <div class="request-availability mt-2">
+                <div class="availability-indicator">50 slots</div>
+                <button class="accept-button">Accept</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <%= link_to "Edit this request", edit_request_path(@request), class: "btn btn-warning w-100" %>
+      <%= button_to "Destroy this request", @request, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger w-100 mt-2" %>
+    </div>
+  </div>
 
-<h1><%= @request.title %></h1>
-
-<% if @request.thumbnail.attached? %>
-  <img src="<%= image_url(@request.thumbnail) %>" />
-<% end %>
-
-<p>
-  <strong>Category:</strong>
-  <%= @request.category %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @request.description %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= @request.location %>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @request.date %>
-</p>
-
-<p>
-  <strong>Number of Pax:</strong>
-  <%= @request.number_of_pax %>
-</p>
-
-<p>
-  <strong>Duration:</strong>
-  <%= @request.duration %>
-</p>
-
-<p>
-  <strong>Reward:</strong>
-  <%= @request.reward %>
-</p>
-
-<p>
-  <strong>Created by:</strong>
-  <%= @request.created_by %>
-</p>
-
-
-
-<div>
-  <%= link_to "Edit this request", edit_request_path(@request) %> |
-  <%= link_to "Back to requests", requests_path %>
-  <%= button_to "Destroy this request", @request, method: :delete, data: { confirm: 'Are you sure?' } %>
-</div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
