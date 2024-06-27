@@ -49,8 +49,10 @@
               <i class="fas fa-plus"></i>
             </a>
             <!-- Profile on the right of Navbar -->
-            <img src="/path/to/profile.jpg" alt="Profile Picture" width="30" height="30" class="rounded-circle"> <!-- Profile pic -->
-            <span class="ms-2">Vicky Jang</span> <!-- Profile name -->
+            <% if current_user.avatar.attached? %>
+              <img src="<%= image_url(current_user.avatar) %>" alt="Profile Picture" width="30" height="30" class="rounded-circle"> <!-- Profile pic -->
+              <% end%>
+            <span class="ms-2"><%= current_user.name %></span> <!-- Profile name -->
             <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn  ms-5 " %>
           </div>
         </div>
