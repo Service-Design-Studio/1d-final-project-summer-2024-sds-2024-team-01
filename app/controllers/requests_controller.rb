@@ -2,6 +2,7 @@ require 'date'
 
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy ]
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   # GET /requests
   def index

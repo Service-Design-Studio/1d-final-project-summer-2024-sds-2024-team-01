@@ -28,16 +28,16 @@
   </style>
 </head>
   <body>
-    <div class="container">
-      <% if !user_signed_in? %>
-        <%= link_to "Login", new_user_session_path, class: "btn btn-primary" %>
-      <% else %>
       <nav class="navbar fixed-top">
         <div class="container-fluid d-flex justify-content-start align-items-center">
           <a class="navbar-brand d-flex align-items-center" href="#">
             <img src="/app/assets/images/OIG.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             <span>Ring of Reciprocity</span>
           </a>
+
+      <% if !user_signed_in? %>
+        <%= link_to "Login", new_user_session_path, class: "btn ms-auto" %>
+      <% else %>
           <div class="d-flex ms-4">
             <a class="nav-link" href="#">My Applications</a>
             <a class="nav-link" href="#">My Requests</a>
@@ -55,9 +55,10 @@
             <span class="ms-2"><%= current_user.name %></span> <!-- Profile name -->
             <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn  ms-5 " %>
           </div>
+      <% end %>
         </div>
       </nav>
-      <% end %>
+    <div class="container mt-5 pt-5">
     <%= yield %>
     </div>
   </body>
