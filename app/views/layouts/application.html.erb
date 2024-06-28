@@ -30,7 +30,7 @@
   <body>
       <nav class="navbar fixed-top">
         <div class="container-fluid d-flex justify-content-start align-items-center">
-          <a class="navbar-brand d-flex align-items-center" href="#">
+          <a class="navbar-brand d-flex align-items-center" href="<%= root_path%>">
             <img src="/app/assets/images/OIG.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             <span>Ring of Reciprocity</span>
           </a>
@@ -49,10 +49,12 @@
               <i class="fas fa-plus"></i>
             </a>
             <!-- Profile on the right of Navbar -->
+            <a href="<%= profile_path%>">
             <% if current_user.avatar.attached? %>
               <img src="<%= image_url(current_user.avatar) %>" alt="Profile Picture" width="30" height="30" class="rounded-circle"> <!-- Profile pic -->
               <% end%>
             <span class="ms-2"><%= current_user.name %></span> <!-- Profile name -->
+              </a>
             <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn  ms-5 " %>
           </div>
       <% end %>
