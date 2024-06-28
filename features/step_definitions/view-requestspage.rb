@@ -2,13 +2,14 @@
 #Feature 1: View Requests
 Given('I am logged in as {string} with nric {string}') do |email, nric|
   # Implement authentication logic here if necessary
-  puts "Logged in as #{email} with NRIC #{nric}"
+puts "Logged in as #{email} with NRIC #{nric}"  #need to check information with database
 end
 
 Given('I am on the Ring of Reciprocity requests page') do
-  visit '/requests' # Assuming this is the correct URL to view requests
+  visit '/requests' 
 end
 
+#this is to add requsts to the database
 # Then('I should see the following:') do |table|
 #  # Convert the table into an array of hashes
 #  requests = table.hashes
@@ -29,11 +30,13 @@ end
 #  end
 # end
 
+#just check that there is a list of requests in the database
 Then('I should see a list of requests') do
   # Check if the page has a list of requests
   expect(page).to have_css('table tr') 
   end
 
+#the number of requests there are in total
 Then('see that there are {int} requests') do |expected_count|
   expect(page).to have_selector('.request', count: expected_count)
 end
@@ -42,6 +45,7 @@ Given('I can see no requests available') do
   Request.delete_all
 end
 
+#not sure if there is a message yet
 Then ('I should see a message indicating no requests are currently available') do
   ##should have a message that says that there is no requests available
   #expect(page).to have_content('No requests are currently available')
@@ -78,7 +82,7 @@ Then('I should not see any new requests') do
   puts " "
 end
 
-########################
+###########################################
 #Feature 3: Show more details of Request
 
 # Given('the following requests exist:') do |table|
@@ -164,6 +168,49 @@ Then('I should see an error message {string}') do |string|
   puts "#{string}"
 end
 ##################
+
+#Feature 4: delete_requests
+
+
+
+
+
+
+
+
+
+
+
+
+################################
+#Feature 5: edit_requests
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+############################
+#Feature 6: sort_requests
+
+
+
+
+
 
 
 Then('I should see {string} in the table of requests') do |content|
