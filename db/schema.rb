@@ -84,7 +84,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   end
 
   create_table "request_applications", force: :cascade do |t|
-    t.string "status", null: false
+    t.string "status", default: "Unreviewed", null: false
     t.bigint "applicant_id", null: false
     t.bigint "request_id", null: false
     t.datetime "created_at", null: false

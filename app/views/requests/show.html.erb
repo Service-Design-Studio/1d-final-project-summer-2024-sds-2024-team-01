@@ -108,14 +108,14 @@
   </style>
 </head>
 <body>
-  
+
   <div class="container content">
     <a href="/requests" class="btn btn-secondary me-2">
       <i class="bi bi-arrow-left"></i> Back to requests
     </a>
     <div class="request-image-container">
     <% if @request.thumbnail.attached? %>
-      <img src="<%= image_url(@request.thumbnail) %>" alt="Request Image" class="request-image"/>
+      <img src="<%= image_url(@request.thumbnail) %>" alt="Request Image" class="request-image">
     <% end %>
       <div class="btn-report">
         <button class="btn btn-outline-danger">
@@ -161,7 +161,7 @@
               <button class="btn custom-btn-dark-purple my-4 w-60">Chat</button>
               <div class="request-availability mt-2">
                 <div class="availability-indicator">50 slots</div>
-                <button class="accept-button">Accept</button>
+                <%= button_to 'Apply', {:controller => "requests", :action => "apply", :id => @request.id, :method => :post }, { class: 'accept-button'} %>
               </div>
             </div>
           </div>
