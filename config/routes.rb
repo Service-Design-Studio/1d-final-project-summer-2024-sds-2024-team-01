@@ -20,4 +20,6 @@ Rails.application.routes.draw do
   get 'profile/edit' => 'profile#edit'
 
   post 'requests/apply' => 'requests#apply'
+
+  get 'myrequests' => 'my_requests#index'
 end
