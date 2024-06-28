@@ -16,4 +16,7 @@ Rails.application.routes.draw do
   get "login" => "auth#login"
   get "register" => "auth#register"
 
+  get 'profile' => "profile#index"
+  get 'profile/edit' => "profile#edit"
+
 end
