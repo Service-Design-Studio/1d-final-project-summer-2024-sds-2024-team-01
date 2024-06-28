@@ -37,7 +37,7 @@ class RequestsController < ApplicationController
     @request.reward = params[:reward]
     @request.reward_type = params[:reward_type]
     @request.status = "Available"
-    @request.created_by = 1
+    @request.created_by = current_user.id
     @request.created_at = DateTime.now()
     @request.updated_at = DateTime.now()
 
