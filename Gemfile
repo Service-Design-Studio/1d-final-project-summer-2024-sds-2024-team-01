@@ -33,6 +33,9 @@ gem 'activerecord-postgis-adapter', '~> 9.0.2'
 # for authentication
 gem 'devise'
 
+# for role management and belongs_to
+gem 'rolify'
+
 group :development do
   gem 'web-console', '~> 4.2.1'
 end

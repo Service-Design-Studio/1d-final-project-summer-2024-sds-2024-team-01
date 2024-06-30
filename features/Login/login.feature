@@ -1,8 +1,13 @@
 
 #Feature: Login functionality
 
-# Scenario: Successful login with valid credentials
-#   Given I am on the login page
-#   When I enter "username" and "password"
-#   And I click the login button
-#    Then I should see the dashboard page
+Scenario: Successful login with Singpass
+    Given I am on the login page
+    When I scan the Singpass QR code
+    Then I should see the requests page
+
+Scenario: Failed login with Singpass
+        Given I am on the login page
+        When I scan the Singpass QR code
+        And fail the login
+        Then I should see "Login failed, please try again"
