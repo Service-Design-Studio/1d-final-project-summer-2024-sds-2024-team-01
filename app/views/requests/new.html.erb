@@ -92,7 +92,7 @@
     <!-- Form Card Container -->
     <div class="card mb-4 custom-card">
       <div class="card-body">
-        <%= form_with model: @request, url: requests_path, local: true do |f| %>
+        <%= form_with model: @request, url: requests_path, local: true, id: "request-form" do |f| %>
           <div class="row mb-3">
             <div class="col-md-6">
               <%= f.label :title, class: "form-label" %>
@@ -118,14 +118,21 @@
             </div>
             <div class="col-md-3">
               <%= f.label :duration, class: "form-label" %>
-              <%= f.number_field :duration, class: "form-control", placeholder: "How many hours?", required: true %>
+              <%= f.number_field :duration, class: "form-control", placeholder: "How many hours?", required: true, min: 0 %>
             </div>
           </div>
           <!-- Location Input Field -->
           <div class="col-md-12 mb-3">
             <%= f.label :location, class: "form-label" %>
-            <%= f.text_field :location, class: "form-control", placeholder: "Where will it take place?", required: true %>
+            <%= f.text_field :location, class: "form-control", placeholder: "Enter the address", required: true, id: "location" %>
           </div>
+
+          <!-- Hidden Fields for Latitude and Longitude -->
+          <div class="col-md-12 mb-3">
+            <%= f.hidden_field :latitude, id: "latitude" %>
+            <%= f.hidden_field :longitude, id: "longitude" %>
+          </div>
+
           <div class="col-md-12 mb-3">
             <%= f.label :description, class: "form-label" %>
             <%= f.text_area :description, class: "form-control", rows: 6, placeholder: "Describe your request!", required: true %>
@@ -149,6 +156,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
   <script>
     document.getElementById('request_reward_type').addEventListener('change', function() {
       const rewardType = document.getElementById('request_reward_type').value;
@@ -183,17 +191,44 @@
           alert('Please upload a JPG or PNG image.');
           return;
         }
-
+        // Show preview
         const reader = new FileReader();
         reader.onload = function(e) {
-          const previewImg = document.getElementById('preview-img');
-          previewImg.src = e.target.result;
-          previewImg.style.display = 'block';
+          document.getElementById('preview-img').src = e.target.result;
+          document.getElementById('preview-img').style.display = 'block';
           document.getElementById('plus-icon').style.display = 'none';
         };
         reader.readAsDataURL(file);
       }
     });
+
+    function initAutocomplete() {
+      const input = document.getElementById('location');
+      const autocomplete = new google.maps.places.Autocomplete(input);
+
+      autocomplete.addListener('place_changed', function() {
+        const place = autocomplete.getPlace();
+        if (!place.geometry) {
+          // User entered the name of a Place that was not suggested and pressed the Enter key,
+          // or the Place Details request failed.
+          return;
+        }
+
+        const latitude = place.geometry.location.lat();
+        const longitude = place.geometry.location.lng();
+        const pointFormat = `POINT(${longitude} ${latitude})`;
+
+        // Set the hidden fields for latitude and longitude
+        document.getElementById('latitude').value = latitude;
+        document.getElementById('longitude').value = longitude;
+
+        // Set the formatted point in the location field for submission
+        document.getElementById('location').value = pointFormat;
+      });
+    }
+
+    // Initialize Google Maps Autocomplete
+    google.maps.event.addDomListener(window, 'load', initAutocomplete);
   </script>
 </body>
 </html>
