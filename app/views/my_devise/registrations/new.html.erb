@@ -1,45 +1,95 @@
-<h2>Sign up</h2>
+<!DOCTYPE html>
+<html>
+<style>
+  .signup-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  .signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-  <div class="field">
-    <%= f.label :full_name%><br />
-    <%= f.search_field :name, autofocus: true, autocomplete: "full-name" %>
+  .signup-header {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+  }
+
+  .signup-container .field {
+    margin-bottom: 15px;
+  }
+
+  .signup-container .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+
+  .signup-container .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #9b59b6;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+  }
+
+  .signup-container .btn:hover {
+    background-color: #8e44ad;
+  }
+
+  .signup-container .devise-links {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+</style>
+
+<div class="signup-container">
+  
+  <h2 class="signup-header">Start your own account!</h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="field">
+      <%= f.search_field :name, placeholder: "Full name", autofocus: true, autocomplete: "full-name", class: "form-control" %>
+    </div>
+
+    <div class="field">
+      <%= f.search_field :nric, placeholder: "NRIC", autocomplete: "nric", class: "form-control" %>
+    </div>
+
+    <div class="field">
+      <%= f.telephone_field :number, placeholder: "Phone number", autocomplete: "number", class: "form-control" %>
+    </div>
+
+    <div class="field">
+      <%= f.email_field :email, placeholder: "Email address", autocomplete: "email", class: "form-control" %>
+    </div>
+
+    <div class="field">
+      <%= f.password_field :password, placeholder: "Password", autocomplete: "new-password", class: "form-control" %>
+    </div>
+
+    <div class="field">
+      <%= f.password_field :password_confirmation, placeholder: "Confirm password", autocomplete: "new-password", class: "form-control" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Sign up!", class: "btn btn-primary btn-block" %>
+    </div>
+  <% end %>
+  <div class="devise-links">
+    <%= render "devise/shared/links" %>
   </div>
-
-
-  <div class="field">
-    <%= f.label :nric%><br />
-    <%= f.search_field :nric, autocomplete: "nric" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.telephone_field :number, autocomplete: "number" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
+</html>
