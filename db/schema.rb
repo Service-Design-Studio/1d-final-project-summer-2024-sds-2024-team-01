@@ -103,6 +103,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
     t.integer "number_of_pax", null: false
     t.integer "duration", null: false
     t.string "reward_type", null: false
+    t.string "reward"
     t.string "status", null: false
     t.bigint "created_by", null: false
     t.datetime "created_at", null: false
