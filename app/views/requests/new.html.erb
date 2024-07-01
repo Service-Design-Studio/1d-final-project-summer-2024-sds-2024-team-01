@@ -132,15 +132,20 @@
           </div>
           <div class="input-group mb-3 mt-3 d-flex align-items-center">
             <div class="input-group-prepend">
-              <span class="input-group-text rounded-start rounded-sm" id="incentive-label">Incentive?</span>
+              <label for="reward">Incentive provided</label>
+              <select id="reward_type" name="reward_type" class="input-group-text rounded-start" required>
+                <option value="None">None</option>
+                <option value="Money">Money</option>
+                <option value="Service">Service</option>
+              </select>
             </div>
-            <select id="reward_type" name="reward_type" class="form-control" required>
-              <option value="">Choose...</option>
-              <option value="None">None</option>
-              <option value="Money">Money</option>
-              <option value="Service">Service</option>
-            </select>
           </div>
+
+          <div class="form-group mt-3">
+            <%# <label for="reward_description">Reward Description</label> %>
+            <textarea id="reward" name="reward" class="form-control" rows="3" placeholder="If you are providing an incentive, please describe it here!"></textarea>
+          </div>
+          
           <div class="d-flex justify-content-end mt-3">
             <button type="submit" class="btn custom-btn-lilac">Create</button>
           </div>

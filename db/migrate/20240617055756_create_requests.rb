@@ -10,6 +10,7 @@ class CreateRequests < ActiveRecord::Migration[7.1]
       t.integer :number_of_pax, null: false
       t.integer :duration, null: false
       t.string :reward_type, null: false
+      t.string :reward, null: true
       t.string :status, null: false
 
       t.bigint :created_by, null: false

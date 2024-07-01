@@ -34,8 +34,8 @@ class RequestsController < ApplicationController
     @request.date = params[:date]
     @request.number_of_pax = params[:number_of_pax]
     @request.duration = params[:duration]
-    @request.reward = params[:reward]
     @request.reward_type = params[:reward_type]
+    @request.reward = params[:reward]
     @request.status = "Available"
     @request.created_by = current_user.id
     @request.created_at = DateTime.now()
