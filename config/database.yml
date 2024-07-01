@@ -4,8 +4,10 @@ default: &default
   host: localhost
   timeout: 5000
   username: postgres
-  password: <%= ENV.fetch("ROR_LOCAL_DB_PW") {} %>
+  password: password
+  #<%= ENV.fetch("ROR_LOCAL_DB_PW") {} %>
   schema_search_path: public
+  port: 5432
 
 development:
   <<: *default
@@ -28,3 +30,4 @@ production:
   password: <%= Rails.application.credentials.db.password %>
   host: <%= Rails.application.credentials.db.host %>
   database: production
+
