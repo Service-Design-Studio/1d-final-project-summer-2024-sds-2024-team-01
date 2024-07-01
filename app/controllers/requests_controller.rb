@@ -2,6 +2,7 @@ require 'date'
 
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy ]
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   # GET /requests
   def index
@@ -37,7 +38,7 @@ class RequestsController < ApplicationController
     @request.reward = params[:reward]
     @request.reward_type = params[:reward_type]
     @request.status = "Available"
-    @request.created_by = 1
+    @request.created_by = current_user.id
     @request.created_at = DateTime.now()
     @request.updated_at = DateTime.now()
 
