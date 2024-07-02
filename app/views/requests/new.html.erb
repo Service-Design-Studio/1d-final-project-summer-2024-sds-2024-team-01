@@ -6,7 +6,6 @@
   <title>New Request</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" rel="stylesheet">
-  <!-- Flatpickr CSS -->
   <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
   <style>
     .content {
@@ -112,7 +111,7 @@
             </div>
             <div class="col-md-3">
               <%= f.label :number_of_pax, "Number of volunteers needed:", class: "form-label" %>
-              <%= f.number_field :number_of_pax, class: "form-control", required: true %>
+              <%= f.number_field :number_of_pax, class: "form-control", required: true, min: 1 %>
             </div>
             <div class="col-md-3">
               <%= f.label :start_time, class: "form-label" %>
@@ -120,7 +119,7 @@
             </div>
             <div class="col-md-3">
               <%= f.label :duration, class: "form-label" %>
-              <%= f.number_field :duration, class: "form-control", placeholder: "How many hours?", required: true, min: 0 %>
+              <%= f.number_field :duration, class: "form-control", placeholder: "How many hours?", required: true, min: 1 %>
             </div>
           </div>
           <!-- Location Input Field -->
@@ -159,7 +158,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
-  <!-- Flatpickr JS -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     document.getElementById('request_reward_type').addEventListener('change', function() {
@@ -178,34 +176,35 @@
     document.getElementById('request_reward_type').dispatchEvent(new Event('change'));
 
     // Image upload and preview feature
-    const uploadBox = document.getElementById('upload-box');
-    const fileInput = document.getElementById('file-input');
-    const previewImg = document.getElementById('preview-img');
-    const plusIcon = document.getElementById('plus-icon');
-
-    uploadBox.addEventListener('click', () => {
-      fileInput.click();
+    document.getElementById('upload-box').addEventListener('click', function() {
+      document.getElementById('file-input').click();
     });
 
-    fileInput.addEventListener('change', (event) => {
+    document.getElementById('file-input').addEventListener('change', function(event) {
       const file = event.target.files[0];
       if (file) {
+        // Check file size (3MB max)
+        if (file.size > 3 * 1024 * 1024) {
+          alert('File size exceeds 3MB.');
+          return;
+        }
+        // Check file type (JPG or PNG)
+        if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+          alert('Please upload a JPG or PNG image.');
+          return;
+        }
+        // Show preview
         const reader = new FileReader();
-        reader.onload = (e) => {
-          previewImg.src = e.target.result;
-          previewImg.style.display = 'block';
-          plusIcon.style.display = 'none';
+        reader.onload = function(e) {
+          document.getElementById('preview-img').src = e.target.result;
+          document.getElementById('preview-img').style.display = 'block';
+          document.getElementById('plus-icon').style.display = 'none';
         };
         reader.readAsDataURL(file);
       }
     });
 
     function initAutocomplete() {
-      const input = document.getElementById('location');
-      const autocomplete = new google.maps.places.Autocomplete(input);
-    }
-
-    function convertAddress() {
       const input = document.getElementById('location');
       const autocomplete = new google.maps.places.Autocomplete(input);
 
@@ -219,17 +218,16 @@
 
         const latitude = place.geometry.location.lat();
         const longitude = place.geometry.location.lng();
+        const pointFormat = `POINT(${longitude} ${latitude})`;
 
         // Set the hidden fields for latitude and longitude
         document.getElementById('latitude').value = latitude;
         document.getElementById('longitude').value = longitude;
+
+        // Set the formatted point in the location field for submission
+        document.getElementById('location').value = pointFormat;
       });
     }
-
-    // Bind the form submission event to convert the address
-    document.getElementById('request-form').addEventListener('submit', function(event) {
-      convertAddress();
-    });
 
     // Initialize Google Maps Autocomplete
     google.maps.event.addDomListener(window, 'load', initAutocomplete);

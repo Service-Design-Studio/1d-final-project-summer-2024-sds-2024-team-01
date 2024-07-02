@@ -32,6 +32,7 @@ class RequestsController < ApplicationController
     @request.category = params[:category]
     @request.location = params[:location]
     @request.date = params[:date]
+    @request.start_time = params[:start_time]
     @request.number_of_pax = params[:number_of_pax]
     @request.duration = params[:duration]
     @request.reward_type = params[:reward_type]
