@@ -19,4 +19,9 @@ Rails.application.routes.draw do
   get 'profile' => "profile#index"
   get 'profile/edit' => "profile#edit"
 
+  namespace :api do
+    namespace :v1 do
+      resources :requests
+    end
+  end
 end
