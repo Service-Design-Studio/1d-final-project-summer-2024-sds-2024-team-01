@@ -1,0 +1,100 @@
+.content {
+      padding-top: 80px; /* Adjust this value based on the height of your navbar */
+    }
+    .custom-card {
+      margin-top: 30px;
+      margin-bottom: 30px; 
+      background-color: #ad88c6; /* Background color for the header container */
+      color: #fff; /* Text color for the header container */
+      height: 120px;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 20px;
+    }
+    .header-text {
+      margin-bottom: 0;
+    }
+    .clickable-card {
+      text-decoration: none;
+      color: inherit;
+    }
+    .clickable-card:hover .card {
+      border-color: #ad88c6; /* Change border color on hover */
+    }
+    .card-divider {
+      border-top: 1px solid #dee2e6;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .profile-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .profile-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .card-details {
+      margin-top: 20px;
+    }
+    .card-text {
+      margin-bottom: 20px; /* Add more space between fields */
+    }
+    .card-text i {
+      color: #656dad; /* Set icon color */
+    }
+    .icon-text {
+      margin-left: 10px; /* Add more space between icons and text */
+    }
+    .card-title {
+      margin-top: 20px;
+      margin-bottom: 3px; /* Reduce space between title and category */
+    }
+    .card-subtitle {
+      margin-top: 2px;
+      margin-bottom: 20px; /* Adjust space below category */
+    }
+    .reward-text {
+      text-align: right; /* Align reward text to the right */
+    }
+    .custom-btn-dark-purple {
+      background-color: #656dad;
+      border-color: #656dad;
+      color: white;
+    }
+    .custom-btn-dark-purple:hover {
+      background-color: #9852a6; /* Slightly darker shade for hover effect */
+      border-color: #9852a6;
+    }
+    .search-container {
+      margin-bottom: 20px; /* Adjust spacing below the search container */
+    }
+    .search-form {
+      background-color: #f8f9fa; /* Light background color for search bar */
+      border: 1px solid #ced4da; /* Gray border */
+      border-radius: 4px;
+      padding: 8px 16px;
+      display: flex; /* Use flexbox to align items */
+      align-items: center; /* Center items vertically */
+    }
+    .search-input {
+      flex: 1; /* Grow to take remaining space */
+      border: none;
+      outline: none;
+      padding: 8px;
+      font-size: 14px;
+    }
+    .search-btn {
+      background-color: #656dad;
+      border-color: #656dad;
+      color: white;
+      margin-left: 8px;
+    }
+    .search-btn:hover {
+      background-color: #9852a6; /* Slightly darker shade for hover effect */
+      border-color: #9852a6;
+    }
