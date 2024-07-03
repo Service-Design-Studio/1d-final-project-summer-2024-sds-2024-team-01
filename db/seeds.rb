@@ -149,7 +149,6 @@ requests = [
     date: Date.new(2024, 7, 1),
     number_of_pax: 2,
     start_time: '12:00',
-    end_time: '14:00',
     duration: 3,
     reward: "$50",
     reward_type: "Cash",
@@ -165,7 +164,6 @@ requests = [
     number_of_pax: 1,
     duration: 1,
     start_time: '12:00',
-    end_time: '14:00',
     reward: "$20",
     reward_type: "Cash",
     status: "Open",
@@ -180,7 +178,6 @@ requests = [
     number_of_pax: 1,
     duration: 2,
     start_time: '12:00',
-    end_time: '14:00',
     reward: "£30",
     reward_type: "Cash",
     status: "Open",
@@ -195,7 +192,6 @@ requests = [
     number_of_pax: 3,
     duration: 5,
     start_time: '12:00',
-    end_time: '14:00',
     reward: "€100",
     reward_type: "Cash",
     status: "Open",
@@ -210,7 +206,6 @@ requests = [
     number_of_pax: 2,
     duration: 4,
     start_time: '12:00',
-    end_time: '14:00',
     reward: "¥5000",
     reward_type: "Cash",
     status: "Open",
@@ -225,7 +220,6 @@ requests = [
     number_of_pax: 1,
     duration: 1,
     start_time: '12:00',
-    end_time: '14:00',
     reward: "$30",
     reward_type: "Cash",
     status: "Open",
@@ -240,7 +234,6 @@ requests = [
     number_of_pax: 1,
     duration: 5,
     start_time: '12:00',
-    end_time: '14:00',
     reward: "2000₽",
     reward_type: "Cash",
     status: "Open",
@@ -257,7 +250,6 @@ requests = [
     number_of_pax: 1,
     duration: 2,
     start_time: '12:00',
-    end_time: '14:00',
     reward: "€50",
     reward_type: "Cash",
     status: "Open",
@@ -274,7 +266,6 @@ requests = [
     number_of_pax: 1,
     duration: 1,
     start_time: '12:00',
-    end_time: '14:00',
     reward: "¥200",
     reward_type: "Cash",
     status: "Open",
@@ -291,7 +282,6 @@ requests = [
     number_of_pax: 1,
     duration: 3,
     start_time: '12:00',
-    end_time: '14:00',
     reward: "€150",
     reward_type: "Cash",
     status: "Open",
@@ -305,7 +295,7 @@ if Request.count == 0
   p "No requests found, seeding fake request data..."
   requests.each do |rq_attr|
     req = Request.new(rq_attr)
-    req.save()
+    req.save
     downloaded_imagee = URI.parse("https://www.houselogic.com/wp-content/uploads/2011/03/exterior-house-painting-epspainting-standard_c231db00f6cd6e9389489e72c0f32fe0.jpg").open
       req.thumbnail.attach(io: downloaded_imagee, filename: "painting.jpg")
   end
