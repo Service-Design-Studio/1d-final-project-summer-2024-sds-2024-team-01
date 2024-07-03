@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   get 'profile/edit' => 'profile#edit'
 
   post 'requests/apply' => 'requests#apply'
-
   get 'myrequests' => 'my_requests#index'
+
+  namespace :api do
+    namespace :v1 do
+      resources :requests
+    end
+  end
 end
