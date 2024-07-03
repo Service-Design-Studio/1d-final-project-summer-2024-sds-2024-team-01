@@ -1,6 +1,6 @@
 class MyRequestsController < ApplicationController
   def index
-    @requests = Request.includes(:user).all
+    @requests = Request.where(created_by: current_user.id)
   end
 
   # GET /requests/1
