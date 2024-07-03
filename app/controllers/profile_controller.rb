@@ -13,6 +13,14 @@ class ProfileController < ApplicationController
     @reviews_given = Review.where(review_for: @profile.id).all
   end
 
+
+  # GET /requests/1
+  def show
+    @user = User.find(params[:id])
+    @requests = @user.requests
+  end  
+
+
   def edit
   end
   def destroy
