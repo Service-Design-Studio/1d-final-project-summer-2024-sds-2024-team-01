@@ -19,13 +19,31 @@ class RequestsController < ApplicationController
     @request = Request.new
   end
 
+  # POST /requests/apply
+  def apply
+    @request = Request.find(params[:id])
+    if RequestApplication.find_by(applicant_id: current_user.id, request_id: @request.id).nil?
+      @application = RequestApplication.new
+      @application.applicant_id = current_user.id
+      @application.request_id = @request.id
+      @application.created_at = DateTime.now
+      @application.updated_at = DateTime.now
+
+      if @application.save
+        redirect_to @request, notice: 'Successfully applied for the request.'
+      else
+        redirect_to @request, notice: 'Failed to apply for this request'
+      end
+    else
+      redirect_to @request, alert: 'You have already applied for this request.'
+    end
+  end
+
   # GET /requests/1/edit
   def edit; end
 
   # POST /requests
   def create
-    puts params
-    puts request_params
     @request = Request.new(request_params)
     @request.status = 'Available'
     @request.created_by = current_user.id
@@ -57,7 +75,7 @@ class RequestsController < ApplicationController
   end
 
   private
-  #
+
   # # Use callbacks to share common setup or constraints between actions.
   def set_request
     @request = Request.find(params[:id])
