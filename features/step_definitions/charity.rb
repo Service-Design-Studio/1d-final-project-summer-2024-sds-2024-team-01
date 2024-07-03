@@ -1,4 +1,3 @@
-=begin
 Given("I want to generate a report") do
           visit '/generate_report'
         end
@@ -15,5 +14,4 @@ Given("I want to generate a report") do
 
         Then("I should see a PDF of the report") do
           expect(page).to have_content('Report')
-        end
-=end       
+        end       
