@@ -44,25 +44,17 @@ class RequestsController < ApplicationController
 
   # POST /requests
   def create
-    puts params
-    @request = Request.new
-    @request.title = params[:title]
-    @request.category = params[:category]
-    @request.location = params[:location]
-    @request.date = params[:date]
-    @request.number_of_pax = params[:number_of_pax]
-    @request.duration = params[:duration]
-    @request.reward = params[:reward]
-    @request.reward_type = params[:reward_type]
+    @request = Request.new(request_params)
     @request.status = 'Available'
     @request.created_by = current_user.id
     @request.created_at = DateTime.now
     @request.updated_at = DateTime.now
 
     if @request.save
-      @request.thumbnail.attach(params[:thumbnail_pic])
+      @request.thumbnail.attach(request_params[:thumbnail])
       redirect_to @request, notice: 'Request was successfully created.'
     else
+      puts @request.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end
@@ -84,13 +76,15 @@ class RequestsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+  # # Use callbacks to share common setup or constraints between actions.
   def set_request
     @request = Request.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.fetch(:request, {}).permit(:thumbnail)
+    params.require(:request).permit(:title, :description, :category, :location, :date, :start_time, :number_of_pax, :duration,
+                                    :reward_type, :reward, :thumbnail)
+    # params.fetch(:request, {}).permit(:thumbnail)
   end
 end

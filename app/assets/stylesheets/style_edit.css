@@ -1,0 +1,50 @@
+.content {
+    padding-top: 80px; /* Adjust this value based on the height of your navbar */
+  }
+  .custom-card {
+    margin-top: 30px;
+    width: 100%;
+    border: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  .header-card {
+    background-color: #ad88c6;
+    color: white;
+    position: relative;
+    height: 120px;
+  }
+  .header-text {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    margin: 0;
+  }
+  .upload-box {
+    cursor: pointer;
+  }
+
+  .custom-btn-lilac {
+    background-color: #ad88c6;
+    border-color: #ad88c6;
+    color: white;
+  }
+
+  .custom-btn-lilac:hover {
+    background-color: #9852a6; /* Slightly darker shade for hover effect */
+    border-color: #9852a6;
+  }
+
+  image-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Set the height as needed */
+    width: 100%; /* Set the width as needed */
+  }
+
+  preview-img {
+    display: none;
+    max-width: 100%;
+    height: auto;
+  }
