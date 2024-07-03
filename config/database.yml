@@ -6,7 +6,6 @@ default: &default
   username: postgres
   password: <%= ENV.fetch("ROR_LOCAL_DB_PW") {} %>
   schema_search_path: public
-  port: 5432
 
 development:
   <<: *default
@@ -29,4 +28,3 @@ production:
   password: <%= Rails.application.credentials.db.password %>
   host: <%= Rails.application.credentials.db.host %>
   database: production
-
