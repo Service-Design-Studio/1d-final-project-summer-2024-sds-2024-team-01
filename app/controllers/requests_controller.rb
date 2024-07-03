@@ -33,7 +33,7 @@ class RequestsController < ApplicationController
     @request.updated_at = DateTime.now
 
     if @request.save
-      @request.thumbnail.attach(request_params[:thumbnail_pic])
+      @request.thumbnail.attach(request_params[:thumbnail])
       redirect_to @request, notice: 'Request was successfully created.'
     else
       puts @request.errors.full_messages
@@ -66,7 +66,7 @@ class RequestsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def request_params
     params.require(:request).permit(:title, :description, :category, :location, :date, :start_time, :number_of_pax, :duration,
-                                    :reward_type, :reward, :thumbnail, :thumbnail_pic)
+                                    :reward_type, :reward, :thumbnail)
     # params.fetch(:request, {}).permit(:thumbnail)
   end
 end
