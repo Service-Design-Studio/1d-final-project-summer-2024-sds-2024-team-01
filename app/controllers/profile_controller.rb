@@ -11,6 +11,7 @@ class ProfileController < ApplicationController
 
     @reviews = Review.where(review_by: @profile.id).all
     @reviews_given = Review.where(review_for: @profile.id).all
+    @requests = @profile.requests
   end
 
 
@@ -22,7 +23,11 @@ class ProfileController < ApplicationController
 
 
   def edit
+    @profile = current_user
   end
   def destroy
+    @profile = current_user # or fetch specific profile based on params[:id]
+    @profile.destroy
+    redirect_to root_path, notice: 'Profile was successfully destroyed.'
   end
 end
