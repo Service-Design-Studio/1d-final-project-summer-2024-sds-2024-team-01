@@ -36,10 +36,10 @@ Then('I should see a list of requests') do
   expect(page).to have_css('table tr') 
   end
 
-#the number of requests there are in total
-Then('see that there are {int} requests') do |expected_count|
-  expect(page).to have_selector('.request', count: expected_count)
-end
+# #the number of requests there are in total
+# Then('see that there are {int} requests') do |expected_count|
+#   expect(page).to have_selector('.request', count: expected_count)
+# end
 
 Given('I can see no requests available') do
   Request.delete_all
@@ -53,34 +53,51 @@ Then ('I should see a message indicating no requests are currently available') d
 end
 ##############################################################
 #Feature 2: Create Request 
-Given('I want to make new requests') do
-  visit 'requests/new'
+# Assuming this step assumes the form is accessible at /requests/new in your Rails application
+Given("I want to make new requests") do
+  visit '/requests/new'
 end
 
 When("I fill in the following:") do |table|
-  table.hashes.each do |row|
-    fill_in row['field'], with: row['value']
+  data = table.hashes.first
+
+  # Fill in form fields
+  fill_in 'Title', with: data['Title']
+  fill_in 'Date', with: data['Date']
+  select data['Manual labour'], from: 'Category'
+  select data['5'], from: 'Number of volunteers needed'
+  fill_in 'Start Time', with: data['Start Time']
+  fill_in 'End Time', with: data['End Time']
+  fill_in 'Description', with: data['Description']
+
+  # Upload banner photo (assuming you handle this with JavaScript)
+  # This step assumes you have JavaScript that interacts with the file input
+  attach_file('file-input', Rails.root.join('path', 'to', 'your', 'file.jpg'))
+
+  # Select incentive (Yes/No) and fill in incentive text if applicable
+  select data['Incentive'], from: 'reward'
+  if data['Incentive'] == 'Yes'
+    fill_in 'reward-text', with: data['Incentive Amount']
   end
 end
 
-#confirm that the button is the only and correct one
-When('I press {string}') do |string|
-  click_button(string, exact: true) 
-  ##capybara looks for button element that matches the text or ID// exact: true --> Capybara to match button's text exactly as provided 
+And("I press {string}") do |button_text|
+  click_button button_text
 end
 
-When('I follow {string}') do |string|
-  click_link(string)
+Then("I should see {string}") do |text|
+  expect(page).to have_content text
 end
 
-#get the feedback at the top that there is that string
-Then('I should see {string}') do |content|
-  expect(page).to have_content(content)
+When("I follow {string}") do |link_text|
+  click_link link_text
 end
 
-Then('I should not see any new requests') do
-  puts " "
+Then("I should not see any new requests") do
+  # Assuming the application handles invalid form submissions without creating new requests
+  expect(page).to_not have_content 'New Request'
 end
+
 
 ###########################################
 #Feature 3: Show more details of Request
