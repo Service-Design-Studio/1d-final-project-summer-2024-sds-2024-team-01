@@ -397,6 +397,21 @@ font-weight: bold;
   height: auto;
 }
 
+.btn-back_to_requests {
+  background-color: #656dad;
+  border-color: #656dad;
+  color: white;
+  margin-right: 990px;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.btn-back_to_requests:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+}
+
 .btn-report_requests_details {
   position: absolute;
   top: 10px;
@@ -433,23 +448,32 @@ font-weight: bold;
   margin-right: 10px;
 }
 
+
+/* Flexbox container for the indicator and button */
 .request-availability_requests_details {
   display: flex;
   margin-top: 10px;
+  width: 100%; /* Ensure it takes full width */
 }
 
+/* Ensuring the availability indicator and Apply button have the same width and height */
 .availability-indicator_requests_details,
 .accept-button_requests_details {
   flex: 1;
-  padding: 10px;
+  padding: 20px;
   border-radius: 5px;
+  text-align: center; /* Center text horizontally */
+  display: flex;
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
 }
 
 .availability-indicator_requests_details {
   background-color: #f8f9fa;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  text-align: center;
+  height: 20px;
+  margin-top: 21px;
 }
 
 .accept-button_requests_details {
@@ -457,6 +481,7 @@ font-weight: bold;
   color: white;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  height: 20px;
   cursor: pointer;
 }
 

@@ -4,17 +4,20 @@
 <body>
 
   <div class="container content">
-    <a href="/requests" class="btn btn-secondary me-2">
-      <i class="bi bi-arrow-left"></i> Back to requests
-    </a>
     <div class="request-image-container_requests_details">
       <% if @request.thumbnail.attached? %>
         <img src="<%= image_url(@request.thumbnail) %>" alt="Request Image" class="request-image_requests_details">
       <% end %>
       <div class="btn-report_requests_details">
-        <button class="btn btn-outline-danger">
+        <a href="/requests" class="btn btn-back_to_requests">
+          <i class="bi bi-arrow-left"></i> Back to requests
+        </a>
+        <button class="btn btn-danger">
           <i class="fas fa-flag"></i> Report
         </button>
+        <%# <a href="/requests" class="btn btn-back_to_requests">
+          <i class="bi bi-arrow-left"></i> Back to requests
+        </a> %>
       </div>
     </div>
     <div class="card custom-card_requests_details">
@@ -26,7 +29,7 @@
             <div class="details-section_requests_details">
               <h5>Details</h5>
               <p><i class="fas fa-calendar-alt"></i> <%= @request.date %></p>
-              <p><i class="fas fa-clock"></i> <%= @request.duration %></p>
+              <p><i class="fas fa-clock"></i> <%= @request.duration %> hours</p>
               <p><i class="fas fa-users"></i> <%= @request.number_of_pax %></p>
               <p><i class="fas fa-map-marker-alt"></i> <%= @request.location %></p>
               <p><i class="fas fa-money-bill-wave"></i> <%= @request.reward %></p>
