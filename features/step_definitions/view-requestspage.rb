@@ -1,38 +1,16 @@
-<<<<<<< HEAD
-Given('I am logged in as {string} with nric {string}') do |email, nric|
-  # Implementation to log in with the given credentials
-=======
 
 #Feature 1: View Requests
 Given('I am logged in as {string} with nric {string}') do |email, nric|
   # Implement authentication logic here if necessary
 puts "Logged in as #{email} with NRIC #{nric}"  #need to check information with database
+
+
+
 end
 
 Given('I am on the Ring of Reciprocity requests page') do
-  visit '/requests' # Assuming this is the correct URL to view requests
+  visit '/requests' 
 end
-
-#this is to add requsts to the database
-# Then('I should see the following:') do |table|
-#  # Convert the table into an array of hashes
-#  requests = table.hashes
-#  # Loop through each request and create it in the database
-#  requests.each do |request|
-#   Request.create!(
-#     title: request['Title'],
-#     category: request['Category'],
-#     location: request['Location'],
-#     date: request['Date'],
-#     number_of_pax: request['Number of Pax'],
-#     duration: request['Duration'],
-#     reward: request['Reward'],
-#     reward_type: request['Reward_Type'],  
-#     status: 'Active',               
-#     created_by: request['Created by']                  
-#   )
-#  end
-# end
 
 #just check that there is a list of requests in the database
 Then('I should see a list of requests') do
@@ -40,10 +18,6 @@ Then('I should see a list of requests') do
   expect(page).to have_css('table tr') 
   end
 
-# #the number of requests there are in total
-# Then('see that there are {int} requests') do |expected_count|
-#   expect(page).to have_selector('.request', count: expected_count)
-# end
 
 Given('I can see no requests available') do
   Request.delete_all
@@ -57,31 +31,29 @@ Then ('I should see a message indicating no requests are currently available') d
 end
 ##############################################################
 #Feature 2: Create Request 
-# Assuming this step assumes the form is accessible at /requests/new in your Rails application
+
 Given("I want to make new requests") do
   visit '/requests/new'
 end
 
-When("I fill in the following:") do |table|
-  data = table.hashes.first
 
-  # Fill in form fields
-  fill_in 'Title', with: data['Title']
-  fill_in 'Date', with: data['Date']
-  select data['Manual labour'], from: 'Category'
-  select data['5'], from: 'Number of volunteers needed'
-  fill_in 'Start Time', with: data['Start Time']
-  fill_in 'End Time', with: data['End Time']
-  fill_in 'Description', with: data['Description']
+When("I fill in the following:") do
+  fill_in 'title', with: 'Help with Gardening'
+  fill_in 'date', with: '01/07/2024'
+  select 'Manual Labor', from: 'category'
+  select '5', from: 'volunteers'
+  fill_in 'start_time', with: '01:10 pm'
+  fill_in 'end_time', with: '12:30 am'
+  fill_in 'description', with: 'Looking for someone to help with my backyard garden'
 
   # Upload banner photo (assuming you handle this with JavaScript)
   # This step assumes you have JavaScript that interacts with the file input
-  attach_file('file-input', Rails.root.join('path', 'to', 'your', 'file.jpg'))
+  #attach_file('file-input', Rails.root.join('path', 'to', 'your', 'file.jpg'))
 
   # Select incentive (Yes/No) and fill in incentive text if applicable
   select data['Incentive'], from: 'reward'
   if data['Incentive'] == 'Yes'
-    fill_in 'reward-text', with: data['Incentive Amount']
+    fill_in 'reward-text', with: data['Incentive']
   end
 end
 
@@ -248,4 +220,3 @@ end
 
 
 
->>>>>>> ddbb5a2d1745231b62753735ab04e4859613e12d
