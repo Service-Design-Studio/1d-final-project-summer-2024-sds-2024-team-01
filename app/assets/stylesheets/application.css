@@ -49,7 +49,7 @@ form {
 
 
 
-/* Common asset: custom purple button*/
+/* Common asset: custom purple and lilac button*/
 .custom-btn-dark-purple {
   background-color: #656dad;
   border-color: #656dad;
@@ -57,6 +57,17 @@ form {
 }
 
 .custom-btn-dark-purple:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+}
+
+.custom-btn-lilac {
+  background-color: #ad88c6;
+  border-color: #ad88c6;
+  color: white;
+}
+
+.custom-btn-lilac:hover {
   background-color: #9852a6; /* Slightly darker shade for hover effect */
   border-color: #9852a6;
 }
@@ -283,4 +294,45 @@ font-weight: bold;
 .search-btn_requests_index:hover {
   background-color: #9852a6; /* Slightly darker shade for hover effect */
   border-color: #9852a6;
+}
+
+/* New requests CSS functions */
+.custom-card_requests_new {
+  margin-top: 30px;
+  width: 100%;
+  border: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.header-card_requests_new {
+  background-color: #ad88c6;
+  color: white;
+  position: relative;
+  height: 120px;
+}
+
+.header-text_requests_new {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  margin: 0;
+}
+
+.upload-box_requests_new {
+  cursor: pointer;
+}
+
+#image-preview_requests_new {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Set the height as needed */
+  width: 100%; /* Set the width as needed */
+}
+
+#preview-img_requests_new {
+  display: none;
+  max-width: 100%;
+  height: auto;
 }
