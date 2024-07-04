@@ -319,10 +319,35 @@ font-weight: bold;
   margin: 0;
 }
 
-.upload-box_requests_new {
-  cursor: pointer;
+#upload-box {
   position: relative;
 }
+
+#plus-icon_requests_details {
+  font-size: 2rem;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#upload-instructions {
+  text-align: center;
+  margin-top: 80px;
+}
+
+#upload-instructions p {
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+} /*hides instructions when image is uploaded*/
+/* .upload-box_requests_new {
+  cursor: pointer;
+  position: relative;
+} */
 
 .upload-box_requests_new input[type="file"] {
   display: none;

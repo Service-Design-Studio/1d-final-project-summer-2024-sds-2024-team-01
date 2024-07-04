@@ -2,7 +2,6 @@
 <html lang="en">
 
 <body>
-  
   <div class="container content">
     <div class="card mb-0 custom-card_requests_new header-card_requests_new">
       <div class="card-body header-container_requests_new">
@@ -21,83 +20,91 @@
           <div class="card-body">
             <h5 class="card-title">Banner Photo</h5>
             <div class="text-center">
-              <div class="border p-5 upload-box_requests_details" id="upload-box" style="cursor: pointer;">
+              <div class="border p-5 upload-box_requests_details" id="upload-box">
                 <!-- Image Preview Container -->
                 <div id="image-preview_requests_details" class="mb-3">
                   <img id="preview-img_requests_details" src="#" alt="Your image" style="display: none; max-width: 100%; height: auto;" />
                 </div>
+                <!-- Cropper Container -->
+                <div id="cropper-container" style="display: none;">
+                  <img id="image-to-crop" src="#" alt="Image for cropping" style="max-width: 100%; height: auto;" />
+                  <button id="crop-and-upload" class="btn btn-primary mt-3">Crop and Upload</button>
+                </div>
                 <!-- Plus Symbol -->
-                <i class="bi bi-plus-circle" id="plus-icon_requests_details" style="font-size: 2rem;"></i>
+                <i class="bi bi-plus-circle" id="plus-icon_requests_details"></i>
                 <!-- File Input for preview and upload -->
                 <input type="file" id="file-input-visible" style="display: none;" accept="image/*" />
-                <p>Jpg or Png, not exceeding 3mb in size</p>
+                <!-- Upload Instructions -->
+                <div id="upload-instructions">
+                  <p>Jpg or Png, not exceeding 3mb in size</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <!-- Hidden File Input for actual form submission -->
-              <%= f.file_field :thumbnail, id: "file-input-hidden", style: "display: none;" %>
-            </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <!-- Hidden File Input for actual form submission -->
+            <%= f.file_field :thumbnail, id: "file-input-hidden", style: "display: none;" %>
           </div>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <%= f.label :title, class: "form-label" %>
-              <%= f.text_field :title, class: "form-control", placeholder: "A few words will do!", required: true %>
-            </div>
-            <div class="col-md-6">
-              <%= f.label :date, class: "form-label" %>
-              <%= f.date_field :date, class: "form-control", placeholder: "When will it be?", required: true %>
-            </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <%= f.label :title, class: "form-label" %>
+            <%= f.text_field :title, class: "form-control", placeholder: "A few words will do!", required: true %>
           </div>
-          <div class="row mb-3">
-            <div class="col-md-3">
-              <%= f.label :category, class: "form-label" %>
-              <%= f.select :category, options_for_select(["Manual labour", "Teaching", "Delivery"], selected: ""), { prompt: "Choose..." }, { class: "form-control", required: true } %>
-            </div>
-            <div class="col-md-3">
-              <%= f.label :number_of_pax, "Number of volunteers needed:", class: "form-label" %>
-              <%= f.number_field :number_of_pax, class: "form-control", required: true, min: 1 %>
-            </div>
-            <div class="col-md-3">
-              <%= f.label :start_time, class: "form-label" %>
-              <%= f.time_field :start_time, class: "form-control", placeholder: "Time of the event", required: true, id: "start_time" %>
-            </div>
-            <div class="col-md-3">
-              <%= f.label :duration, class: "form-label" %>
-              <%= f.number_field :duration, class: "form-control", placeholder: "How many hours?", required: true, min: 1 %>
-            </div>
+          <div class="col-md-6">
+            <%= f.label :date, class: "form-label" %>
+            <%= f.date_field :date, class: "form-control", placeholder: "When will it be?", required: true %>
           </div>
-          <!-- Location Input Field -->
-          <div class="col-md-12 mb-3">
-            <%= f.label :location, class: "form-label" %>
-            <%= f.text_field :location, class: "form-control", placeholder: "Enter the address", required: true, id: "location" %>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <%= f.label :category, class: "form-label" %>
+            <%= f.select :category, options_for_select(["Manual labour", "Teaching", "Delivery"], selected: ""), { prompt: "Choose..." }, { class: "form-control", required: true } %>
           </div>
+          <div class="col-md-3">
+            <%= f.label :number_of_pax, "Number of volunteers needed:", class: "form-label" %>
+            <%= f.number_field :number_of_pax, class: "form-control", required: true, min: 1 %>
+          </div>
+          <div class="col-md-3">
+            <%= f.label :start_time, class: "form-label" %>
+            <%= f.time_field :start_time, class: "form-control", placeholder: "Time of the event", required: true, id: "start_time" %>
+          </div>
+          <div class="col-md-3">
+            <%= f.label :duration, class: "form-label" %>
+            <%= f.number_field :duration, class: "form-control", placeholder: "How many hours?", required: true, min: 1 %>
+          </div>
+        </div>
+        <!-- Location Input Field -->
+        <div class="col-md-12 mb-3">
+          <%= f.label :location, class: "form-label" %>
+          <%= f.text_field :location, class: "form-control", placeholder: "Enter the address", required: true, id: "location" %>
+        </div>
 
-          <!-- Hidden Fields for Latitude and Longitude -->
-          <div class="col-md-12 mb-3">
-            <%= f.hidden_field :latitude, id: "latitude" %>
-            <%= f.hidden_field :longitude, id: "longitude" %>
-          </div>
+        <!-- Hidden Fields for Latitude and Longitude -->
+        <div class="col-md-12 mb-3">
+          <%= f.hidden_field :latitude, id: "latitude" %>
+          <%= f.hidden_field :longitude, id: "longitude" %>
+        </div>
 
-          <div class="col-md-12 mb-3">
-            <%= f.label :description, class: "form-label" %>
-            <%= f.text_area :description, class: "form-control", rows: 6, placeholder: "Describe your request!", required: true %>
+        <div class="col-md-12 mb-3">
+          <%= f.label :description, class: "form-label" %>
+          <%= f.text_area :description, class: "form-control", rows: 6, placeholder: "Describe your request!", required: true %>
+        </div>
+        <!-- Incentive provided -->
+        <div class="input-group mb-3 mt-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text rounded-start" for="request_reward_type">Incentive provided</label>
           </div>
-          <!-- Incentive provided -->
-          <div class="input-group mb-3 mt-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text rounded-start" for="request_reward_type">Incentive provided</label>
-            </div>
-            <%= f.select :reward_type, options_for_select(["None", "Money", "Service"], selected: "None"), { class: "form-control", required: true, id: "request_reward_type" } %>
-          </div>
-          <div class="form-group mt-3">
-            <%= f.text_area :reward, class: "form-control", rows: 3, placeholder: "If you are providing an incentive, please describe it here!", id: "request_reward", disabled: true %>
-          </div>
-          <div class="d-flex justify-content-end mt-3">
-            <%= f.submit "Create", class: "btn custom-btn-lilac" %>
-          </div>
+          <%= f.select :reward_type, options_for_select(["None", "Money", "Service"], selected: "None"), { class: "form-control", required: true, id: "request_reward_type" } %>
+        </div>
+        <div class="form-group mt-3">
+          <%= f.text_area :reward, class: "form-control", rows: 3, placeholder: "If you are providing an incentive, please describe it here!", id: "request_reward", disabled: true %>
+        </div>
+        <div class="d-flex justify-content-end mt-3">
+          <%= f.submit "Create", class: "btn custom-btn-lilac" %>
+        </div>
         <% end %>
       </div>
     </div>
@@ -106,6 +113,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://unpkg.com/cropperjs"></script>
+
   <script>
     document.getElementById('request_reward_type').addEventListener('change', function() {
       const rewardType = document.getElementById('request_reward_type').value;
@@ -122,38 +131,59 @@
     // Trigger change event on page load to set the initial state of the reward field
     document.getElementById('request_reward_type').dispatchEvent(new Event('change'));
 
-    // Image upload and preview feature
-    document.getElementById('upload-box').addEventListener('click', function() {
-      document.getElementById('file-input-visible').click();
+    let cropper;
+    const fileInputVisible = document.getElementById('file-input-visible');
+    const previewImg = document.getElementById('preview-img_requests_details');
+    const plusIcon = document.getElementById('plus-icon_requests_details');
+    const hiddenFileInput = document.getElementById('file-input-hidden');
+    const cropperContainer = document.getElementById('cropper-container');
+    const cropAndUploadButton = document.getElementById('crop-and-upload');
+    const uploadInstructions = document.getElementById('upload-instructions');
+
+    plusIcon.addEventListener('click', function() {
+      fileInputVisible.click();
     });
 
-    document.getElementById('file-input-visible').addEventListener('change', function(event) {
+    fileInputVisible.addEventListener('change', function(event) {
       const file = event.target.files[0];
       if (file) {
-        // Check file size (3MB max)
-        if (file.size > 3 * 1024 * 1024) {
-          alert('File size exceeds 3MB.');
-          return;
-        }
-        // Check file type (JPG or PNG)
-        if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-          alert('Please upload a JPG or PNG image.');
-          return;
-        }
-        // Show preview
         const reader = new FileReader();
         reader.onload = function(e) {
-          document.getElementById('preview-img_requests_details').src = e.target.result;
-          document.getElementById('preview-img_requests_details').style.display = 'block';
-          document.getElementById('plus-icon_requests_details').style.display = 'none';
+          document.getElementById('image-to-crop').src = e.target.result;
+          cropperContainer.style.display = 'block';
+          previewImg.style.display = 'none';
+          plusIcon.style.display = 'none'; // Hide the plus icon
+          uploadInstructions.style.display = 'none'; // Hide the upload instructions
 
-          // Sync the hidden file input with the selected file
-          const hiddenFileInput = document.getElementById('file-input-hidden');
-          const dataTransfer = new DataTransfer();
-          dataTransfer.items.add(file);
-          hiddenFileInput.files = dataTransfer.files;
+          if (cropper) {
+            cropper.destroy();
+          }
+          cropper = new Cropper(document.getElementById('image-to-crop'), {
+            aspectRatio: 16 / 9,
+            viewMode: 1,
+          });
         };
         reader.readAsDataURL(file);
+      }
+    });
+
+    cropAndUploadButton.addEventListener('click', function() {
+      if (cropper) {
+        const canvas = cropper.getCroppedCanvas({
+          width: 1600,
+          height: 900,
+        });
+        canvas.toBlob(function(blob) {
+          const url = URL.createObjectURL(blob);
+          previewImg.src = url;
+          previewImg.style.display = 'block';
+          cropperContainer.style.display = 'none';
+
+          const dataTransfer = new DataTransfer();
+          const file = new File([blob], 'cropped-image.jpg', { type: 'image/jpeg' });
+          dataTransfer.items.add(file);
+          hiddenFileInput.files = dataTransfer.files;
+        }, 'image/jpeg');
       }
     });
 
@@ -185,7 +215,8 @@
     // Initialize Google Maps Autocomplete
     google.maps.event.addDomListener(window, 'load', initAutocomplete);
 
-    // Initialize flatpickr on the start_time input field
+
+    // Initialize Flatpickr for time picker
     flatpickr("#start_time", {
       enableTime: true,
       noCalendar: true,
@@ -194,4 +225,5 @@
     });
   </script>
 </body>
+
 </html>
