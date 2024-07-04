@@ -326,7 +326,7 @@ font-weight: bold;
 
 .upload-box_requests_new input[type="file"] {
   display: none;
-}
+} /* For hidden image button */
 
 #image-preview_requests_new {
   display: flex;
