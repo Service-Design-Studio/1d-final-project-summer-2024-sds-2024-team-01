@@ -1,5 +1,6 @@
 class Request < ActiveRecord::Base
   has_one_attached :thumbnail
+  has_many :request_applications, dependent: :destroy
 
   belongs_to :user, foreign_key: :created_by
   validates_presence_of :title, message: "Please enter a title"
