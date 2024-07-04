@@ -10,6 +10,7 @@
   <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
   <%= stylesheet_link_tag "application.css"%>
 </head>
+
   <body class="<%= "#{controller_name}-#{action_name}" %>">
     <%# <% unless controller_name == 'sessions' && action_name == 'new' || controller_name == 'registrations' && action_name == 'new' %> 
     <% unless current_page?(new_user_session_path) || current_page?(new_user_registration_path) || current_page?(new_user_password_path) %>
