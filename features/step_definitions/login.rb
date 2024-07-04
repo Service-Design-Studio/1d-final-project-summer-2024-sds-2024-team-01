@@ -28,7 +28,7 @@ Then('I should see a message {string}') do |message|
   expect(page).to have_content(message)
 end
 
-# features/step_definitions/forgot_password_steps.rb
+#################################### features/step_definitions/forgot_password_steps.rb################################################
 
 ## Forgot Password
 Given('I am on the forget password page') do 
@@ -39,14 +39,14 @@ When('I fill in {string} with {string}') do |field, value|
   fill_in field, with: value
 end
 
-# features/step_definitions/signup_steps.rb
+###################################### features/step_definitions/signup_steps.rb#############################################################
 
 ## Signup
 Given('I am on the signup page') do
   visit '/register'
 end
 
-When('I fill in the following:') do |table|
+When('I fill in the follwing:') do |table|
   table.hashes.each do |row|
     case row['field']
     when 'Full name'
