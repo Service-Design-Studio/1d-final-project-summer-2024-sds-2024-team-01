@@ -1,13 +1,20 @@
+Feature: Login
+  As a user
+  So that I can request for help
+  I want to make an account
 
-#Feature: Login functionality
-
-Scenario: Successful login with Singpass
+  # Happy Case
+  Scenario: Login with valid credentials
     Given I am on the login page
-    When I scan the Singpass QR code
-    Then I should see the requests page
+    When I enter "000" for "Phone number"
+    And I enter "123456" for "Password"
+    And I click on "Log in" button
+    Then I should be brought to the request page
 
-Scenario: Failed login with Singpass
-        Given I am on the login page
-        When I scan the Singpass QR code
-        And fail the login
-        Then I should see "Login failed, please try again"
+  # Sad Case
+  Scenario: Login with invalid credentials
+    Given I am on the login page
+    When I enter " " for "Phone number "
+    And I enter " " for "Password"
+    And I click on "Log in" button
+    Then I should see "Invalid Phone number or password."
