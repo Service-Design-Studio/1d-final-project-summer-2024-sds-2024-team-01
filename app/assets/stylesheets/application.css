@@ -321,6 +321,11 @@ font-weight: bold;
 
 .upload-box_requests_new {
   cursor: pointer;
+  position: relative;
+}
+
+.upload-box_requests_new input[type="file"] {
+  display: none;
 }
 
 #image-preview_requests_new {

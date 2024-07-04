@@ -12,33 +12,33 @@
         <h2 class="header-text_requests_new">New Request</h2>
       </div>
     </div>
-    <!-- Banner Photo Card Container -->
-    <div class="card mb-4 custom-card_requests_new">
-      <div class="card-body">
-        <h5 class="card-title">Banner Photo</h5>
-        <div class="text-center">
-          <div class="border p-5 upload-box_requests_new" id="upload-box" style="cursor: pointer;">
-            <!-- Image Preview Container -->
-            <div id="image-preview_requests_new" class="mb-3">
-              <img id="preview-img_requests_new" src="#" alt="Your image" style="display: none; max-width: 100%; height: auto;" />
-            </div>
-            <!-- Plus Symbol -->
-            <i class="bi bi-plus-circle" id="plus-icon_requests_new" style="font-size: 2rem;"></i>
-            <!-- File Input -->
-            <input type="file" id="file-input" style="display: none;" accept="image/*" />
-            <p>Jpg or Png, not exceeding 3mb in size</p>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- Form Card Container -->
     <div class="card mb-4 custom-card_requests_new">
       <div class="card-body">
         <%= form_with model: @request, url: requests_path, local: true, id: "request-form" do |f| %>
+        <!-- Banner Photo Card Container -->
+        <div class="card mb-4 custom-card_requests_details">
+          <div class="card-body">
+            <h5 class="card-title">Banner Photo</h5>
+            <div class="text-center">
+              <div class="border p-5 upload-box_requests_details" id="upload-box" style="cursor: pointer;">
+                <!-- Image Preview Container -->
+                <div id="image-preview_requests_details" class="mb-3">
+                  <img id="preview-img_requests_details" src="#" alt="Your image" style="display: none; max-width: 100%; height: auto;" />
+                </div>
+                <!-- Plus Symbol -->
+                <i class="bi bi-plus-circle" id="plus-icon_requests_details" style="font-size: 2rem;"></i>
+                <!-- File Input for preview and upload -->
+                <input type="file" id="file-input-visible" style="display: none;" accept="image/*" />
+                <p>Jpg or Png, not exceeding 3mb in size</p>
+              </div>
+            </div>
+          </div>
+        </div>
           <div class="row mb-3">
             <div class="col-md-6">
-              <%= f.label :thumbnail, class: "form-label" %>
-              <%= f.file_field :thumbnail , class: "form-control", required: true %>
+              <!-- Hidden File Input for actual form submission -->
+              <%= f.file_field :thumbnail, id: "file-input-hidden", style: "display: none;" %>
             </div>
           </div>
           <div class="row mb-3">
@@ -124,10 +124,10 @@
 
     // Image upload and preview feature
     document.getElementById('upload-box').addEventListener('click', function() {
-      document.getElementById('file-input').click();
+      document.getElementById('file-input-visible').click();
     });
 
-    document.getElementById('file-input').addEventListener('change', function(event) {
+    document.getElementById('file-input-visible').addEventListener('change', function(event) {
       const file = event.target.files[0];
       if (file) {
         // Check file size (3MB max)
@@ -143,9 +143,15 @@
         // Show preview
         const reader = new FileReader();
         reader.onload = function(e) {
-          document.getElementById('preview-img_requests_new').src = e.target.result;
-          document.getElementById('preview-img_requests_new').style.display = 'block';
-          document.getElementById('plus-icon_requests_new').style.display = 'none';
+          document.getElementById('preview-img_requests_details').src = e.target.result;
+          document.getElementById('preview-img_requests_details').style.display = 'block';
+          document.getElementById('plus-icon_requests_details').style.display = 'none';
+
+          // Sync the hidden file input with the selected file
+          const hiddenFileInput = document.getElementById('file-input-hidden');
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+          hiddenFileInput.files = dataTransfer.files;
         };
         reader.readAsDataURL(file);
       }
