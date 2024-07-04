@@ -100,7 +100,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
     t.string "category", null: false
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
     t.date "date", null: false
-    t.time "start_time", null: false
     t.integer "number_of_pax", null: false
     t.integer "duration", null: false
     t.string "reward_type", null: false

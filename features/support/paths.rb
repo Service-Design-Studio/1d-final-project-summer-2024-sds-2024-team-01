@@ -1,17 +1,4 @@
-require 'cucumber/rails'
-require 'capybara/cucumber'
-
 module NavigationHelpers
-<<<<<<< HEAD
-  def requests_page
-    visit '/requests'  
-  end
-  
-end
-
-World(NavigationHelpers)
-World(Capybara::DSL)
-=======
   def path_to(page_name)
     case page_name
     when /the Ring of Reciprocity requests page/
@@ -38,5 +25,3 @@ World(Capybara::DSL)
 end
 
 World(NavigationHelpers)
-
->>>>>>> ddbb5a2d1745231b62753735ab04e4859613e12d

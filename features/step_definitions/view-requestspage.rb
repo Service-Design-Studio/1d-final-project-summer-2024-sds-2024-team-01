@@ -5,6 +5,7 @@ Given('I am logged in as {string} with nric {string}') do |email, nric|
 puts "Logged in as #{email} with NRIC #{nric}"  #need to check information with database
 
 
+
 end
 
 Given('I am on the Ring of Reciprocity requests page') do
@@ -34,6 +35,7 @@ end
 Given("I want to make new requests") do
   visit '/requests/new'
 end
+
 
 When("I fill in the following:") do
   fill_in 'title', with: 'Help with Gardening'
@@ -218,4 +220,3 @@ end
 
 
 
->>>>>>> ddbb5a2d1745231b62753735ab04e4859613e12d
