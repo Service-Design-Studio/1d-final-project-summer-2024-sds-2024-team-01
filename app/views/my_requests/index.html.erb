@@ -1,5 +1,43 @@
-<% @requests.each do | myrequest | %>
-<p>
-<%= myrequest.title %>
-</p>
-<% end %>
+<table>
+  <thead>
+    <tr>
+      <td>
+        Title
+      </td>
+      <td>
+        Number of Applicants
+      </td>
+      <td>
+        View Applications
+      </td>
+      <td>
+        Actions
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+  <% @requests.each do | myrequest | %>
+  <tr>
+    <td>
+      <%= myrequest.title %>
+    </td>
+    <td>
+      <%= myrequest.application_count %>
+    </td>
+    <td>
+    <a href="<%=request_path(myrequest)%>"> 
+      View applications
+   </a>
+    </td>
+    <td>
+    <a href="<%=request_path(myrequest)%>"> 
+      Edit
+   </a>
+
+    <a href="<%=request_path(myrequest)%>"> 
+      Delete
+   </a>
+    </td>
+  </tr>
+  <% end %>
+</tbody>
