@@ -3,6 +3,8 @@
 Given('I am logged in as {string} with nric {string}') do |email, nric|
   # Implement authentication logic here if necessary
 puts "Logged in as #{email} with NRIC #{nric}"  #need to check information with database
+
+
 end
 
 Given('I am on the Ring of Reciprocity requests page') do
@@ -216,3 +218,4 @@ end
 
 
 
+>>>>>>> ddbb5a2d1745231b62753735ab04e4859613e12d

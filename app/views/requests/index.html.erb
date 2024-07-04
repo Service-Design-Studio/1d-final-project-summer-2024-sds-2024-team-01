@@ -140,10 +140,14 @@
             <div class="col-md-6 mb-4 request-card">
               <a href="<%= request_path(request) %>" class="clickable-card">
                 <div class="card h-100">
+                  <% if request.thumbnail.attached? %> 
                   <img src="<%= image_url(request.thumbnail) %>" class="card-img-top" alt="<%= request.title %>"/> 
+                  <% end %> 
                   <div class="card-body">
                     <div class="profile-info">
+                      <% if request.user.avatar.attached? %>
                       <img src="<%= image_url(request.user.avatar) %>" alt="<%= request.user.name %>" width="30" height="30"/>
+                      <%end%>
                       <span><%= request.user.name %></span>
                     </div>
                     <h5 class="card-title"><%= request.title %></h5>
