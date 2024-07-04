@@ -1,20 +1,4 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
-
-
+/* Navbar CSS functions*/
 header {
   font-family: Arial, sans-serif;
   margin: 20px;
@@ -22,7 +6,6 @@ header {
 
 form {
   margin: 20px 0;
-  
 }
 
 .button-container .button {
@@ -36,7 +19,11 @@ form {
 
 .navbar {
   width: 100%;
-  padding: 1rem; /* Adjust padding as needed */
+  padding: 0rem; /* Adjust padding as needed */
+  background-color: #ad88c6 !important;
+  height: 80px; /* Set a fixed height */
+  display: flex;
+  align-items: center; /* Center items vertically */
 }
 
 .navbar-brand {
@@ -52,4 +39,248 @@ form {
   margin-left: 10px; /* Adjust spacing between buttons */
 }
 
+.content {
+  padding-top: 40px; /* Adjust this value based on the height of your navbar */
+}
 
+.nav-link {
+  margin-right: 40px; /* Adjust this value to increase spacing */
+}
+
+
+
+/* Common asset: custom purple button*/
+.custom-btn-dark-purple {
+  background-color: #656dad;
+  border-color: #656dad;
+  color: white;
+}
+
+.custom-btn-dark-purple:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+}
+
+/* Login, Register, Password reset gradient background */
+body.sessions-new {
+  background: linear-gradient(180deg, #AC88C6 0%, #666DAD 100%);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+/* Register page CSS functions*/
+
+/* body.registrations-new {
+  background: linear-gradient(180deg, #AC88C6 0%, #666DAD 100%);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+} */
+
+.signup-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.signup-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signup-header {
+margin-bottom: 20px;
+font-size: 1.5em;
+font-weight: bold;
+}
+
+.signup-container .field {
+  margin-bottom: 15px;
+}
+
+.signup-container .form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.signup-container .btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #9b59b6;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+}
+
+.signup-container .btn:hover {
+  background-color: #8e44ad;
+}
+
+.signup-container .devise-links {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Login and Password reset CSS functions */
+
+.login-container {
+  background-color: white;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-container .field {
+  margin-bottom: 1rem;
+}
+
+.login-container .actions {
+  margin-top: 1rem;
+}
+
+.login-container .btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #9b59b6;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+}
+
+.login-container .btn:hover {
+  background-color: #8e44ad;
+}
+
+.login-container .logo {
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.login-container h2,
+.login-container p {
+  text-align: center;
+}
+
+/* Requests home page CSS functions */
+.custom-card_requests_index {
+  margin-top: 30px;
+  margin-bottom: 30px; 
+  background-color: #ad88c6; /* Background color for the header container */
+  color: #fff; /* Text color for the header container */
+  height: 120px;
+}
+
+.header-container_requests_index {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px;
+}
+
+.header-text_requests_index {
+  margin-bottom: 0;
+}
+
+.clickable-card_requests_index {
+  text-decoration: none;
+  color: inherit;
+}
+
+.clickable-card_requests_index:hover .card {
+  border-color: #ad88c6; /* Change border color on hover */
+}
+
+.card-divider_requests_index {
+  border-top: 1px solid #dee2e6;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-info_requests_index {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-info_requests_index img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.card-details_requests_index {
+  margin-top: 20px;
+}
+
+.card-text_requests_index {
+  margin-bottom: 20px; /* Add more space between fields */
+}
+
+.card-text_requests_index i {
+  color: #656dad; /* Set icon color */
+}
+
+.icon-text_requests_index {
+  margin-left: 10px; /* Add more space between icons and text */
+}
+
+.card-title_requests_index {
+  margin-top: 20px;
+  margin-bottom: 3px; /* Reduce space between title and category */
+}
+
+.card-subtitle_requests_index {
+  margin-top: 2px;
+  margin-bottom: 20px; /* Adjust space below category */
+}
+
+.reward-text_requests_index {
+  text-align: right; /* Align reward text to the right */
+}
+
+.search-container_requests_index {
+  margin-bottom: 20px; /* Adjust spacing below the search container */
+}
+
+.search-form_requests_index {
+  background-color: #f8f9fa; /* Light background color for search bar */
+  border: 1px solid #ced4da; /* Gray border */
+  border-radius: 4px;
+  padding: 8px 16px;
+  display: flex; /* Use flexbox to align items */
+  align-items: center; /* Center items vertically */
+}
+
+.search-input_requests_index {
+  flex: 1; /* Grow to take remaining space */
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.search-btn_requests_index {
+  background-color: #656dad;
+  border-color: #656dad;
+  color: white;
+  margin-left: 8px;
+}
+
+.search-btn_requests_index:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+}
