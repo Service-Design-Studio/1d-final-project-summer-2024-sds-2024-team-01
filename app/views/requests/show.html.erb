@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<body>
+<body onload="initialize()">
 
   <div class="container content">
     <div class="request-image-container_requests_details">
@@ -15,9 +15,6 @@
         <button class="btn btn-danger">
           <i class="fas fa-flag"></i> Report
         </button>
-        <%# <a href="/requests" class="btn btn-back_to_requests">
-          <i class="bi bi-arrow-left"></i> Back to requests
-        </a> %>
       </div>
     </div>
     <div class="card custom-card_requests_details">
@@ -28,11 +25,26 @@
             <div class="divider_requests_details"></div>
             <div class="details-section_requests_details">
               <h5>Details</h5>
-              <p><i class="fas fa-calendar-alt"></i> <%= @request.date %></p>
-              <p><i class="fas fa-clock"></i> <%= @request.duration %> hours</p>
-              <p><i class="fas fa-users"></i> <%= @request.number_of_pax %></p>
-              <p><i class="fas fa-map-marker-alt"></i> <%= @request.location %></p>
-              <p><i class="fas fa-money-bill-wave"></i> <%= @request.reward %></p>
+              <div class="details-item_requests_details">
+                <i class="fas fa-calendar-alt"></i>
+                <span><%= @request.date %></span>
+              </div>
+              <div class="details-item_requests_details">
+                <i class="fas fa-clock"></i>
+                <span><%= @request.duration %> hours</span>
+              </div>
+              <div class="details-item_requests_details">
+                <i class="fas fa-users"></i>
+                <span><%= @request.number_of_pax %></span>
+              </div>
+              <div class="details-item_requests_details">
+                <i class="fas fa-map-marker-alt"></i>
+                <span id="address">Loading address...</span>
+              </div>
+              <div class="details-item_requests_details">
+                <i class="fas fa-money-bill-wave"></i>
+                <span><%= @request.reward %></span>
+              </div>
             </div>
             <div class="divider_requests_details"></div>
             <div class="description_requests_details">
@@ -72,5 +84,50 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
+  <script>
+    function initialize() {
+      var geocoder = new google.maps.Geocoder();
+
+      // Extract latitude and longitude from @request.location in POINT(lat lng) format
+      var geocode = "<%= @request.location %>";
+      var latLngString = geocode.replace('POINT', '').replace('(', '').replace(')', '').trim();
+      var latLngArray = latLngString.split(/\s+/); // Split by one or more spaces
+
+      if (latLngArray.length !== 2) {
+        console.error('Invalid geocode format:', geocode);
+        document.getElementById('address').textContent = 'Invalid geocode format';
+        return;
+      }
+
+      var latLng = { lat: parseFloat(latLngArray[1]), lng: parseFloat(latLngArray[0]) };
+
+      // Log the latitude and longitude values
+      console.log('Latitude:', latLng.lat);
+      console.log('Longitude:', latLng.lng);
+
+      if (isNaN(latLng.lat) || isNaN(latLng.lng)) {
+        console.error('Invalid latitude or longitude:', latLng);
+        document.getElementById('address').textContent = 'Invalid latitude or longitude';
+        return;
+      }
+
+      geocoder.geocode({ 'location': latLng }, function(results, status) {
+        if (status === 'OK') {
+          if (results[0]) {
+            document.getElementById('address').textContent = results[0].formatted_address;
+          } else {
+            document.getElementById('address').textContent = 'No results found';
+          }
+        } else {
+          console.error('Geocoder failed due to:', status);
+          document.getElementById('address').textContent = 'Geocoder failed due to: ' + status;
+        }
+      });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+
 </body>
 </html>

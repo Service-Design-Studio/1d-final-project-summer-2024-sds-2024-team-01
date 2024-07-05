@@ -420,11 +420,30 @@ font-weight: bold;
 }
 
 .details-section_requests_details {
-  margin-top: 20px;
+  margin-top: 20px 0;
+}
+
+.details-section_requests_details i {
+  color: #656dad; /* Set icon color */
 }
 
 .details-section_requests_details h5 {
   font-weight: bold;
+}
+
+.details-item_requests_details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.details-item_requests_details i {
+  margin-right: 10px;
+  min-width: 20px; /* Ensures icons are uniformly spaced */
+}
+
+.details-item_requests_details span {
+  flex: 1; /* Takes up remaining space, ensuring even spacing */
 }
 
 .description_requests_details {
