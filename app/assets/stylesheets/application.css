@@ -84,14 +84,14 @@ body.sessions-new {
 
 /* Register page CSS functions*/
 
-/* body.registrations-new {
+body.registrations-new {
   background: linear-gradient(180deg, #AC88C6 0%, #666DAD 100%);
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
-} */
+}
 
 .signup-container {
   max-width: 400px;
@@ -515,4 +515,83 @@ font-weight: bold;
 
 .stars_requests_details {
   color: #ffc107;
+}
+
+/* Profile page CSS functions */
+
+.custom-card_profile {
+  margin-top: 30px;
+  width: 100%;
+  border: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.header-card_profile {
+  background-color: #ad88c6;
+  color: white;
+  position: relative;
+  height: 200px;
+}
+
+.body-card_profile {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: white;
+  height: 1000px;
+  margin-top: 0px; /* Ensure borders are joined correctly */
+}
+
+.profile-picture-container {
+  position: absolute;
+  top: 120px; /* Shift downwards to overlap top and bottom containers */
+  left: 20px; /* Adjust this value to control the horizontal position */
+  width: 240px; /* Enlarge the circle */
+  height: 240px; /* Enlarge the circle */
+  border-radius: 50%;
+  background-color: #ccc; /* Grey background to represent profile picture */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 2; /* Ensure the profile picture is on top */
+}
+
+.profile-picture {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #ccc; /* Grey background to represent profile picture */
+}
+
+.body-container_profile h5 {
+  margin-top: 160px; /* Adjust this value to position the name below the profile picture */
+  padding-left: 75px; /* Align text with profile picture */
+}
+
+.stars_user_profile {
+  color: #ad88c6;
+  padding-left: 50px;
+}
+
+.follow-btn-profile {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.follow-btn-profile button {
+  background-color: transparent; /* Transparent background */
+  border: 2px solid #ad88c6; /* Lilac outline */
+  color: #000000; /* Black text color */
+  padding: 6px 20px; /* Adjust padding as needed */
+  font-size: 16px; /* Adjust font size as needed */
+  cursor: pointer; /* Ensure cursor changes on hover */
+}
+
+.follow-btn-profile button:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  color: white; /* White text color on hover */
 }

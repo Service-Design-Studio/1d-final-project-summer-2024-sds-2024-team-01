@@ -1,3 +1,28 @@
-<p>
-<%= @profile.name %>
-</p>
+<body>
+  <div class="container content">
+    <div class="card mb-0 custom-card_profile header-card_profile">
+      <div class="card-body header-container_profile">
+        <!-- Profile picture container -->
+        <div class="profile-picture-container">
+          <div class="profile-picture"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-0 custom-card_profile body-card_profile">
+      <div class="card-body body-container_profile">
+        <!-- Profile name -->
+        <h5><%= @profile.name %></h5>
+        <p class="mb-1 stars_user_profile">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i> (120)
+        </p>
+        <div class="follow-btn-profile">
+          <button type="submit" class="btn follow-btn-profile">Follow</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
