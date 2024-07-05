@@ -16,4 +16,3 @@ Scenario: Applying for a request that has already been applied for
         When I click on the first request
         And I click on Apply
         Then I should see "Request has already been applied for"
-
