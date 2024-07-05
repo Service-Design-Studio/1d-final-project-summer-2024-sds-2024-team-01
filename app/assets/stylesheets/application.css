@@ -1,20 +1,4 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
-
-
+/* Navbar CSS functions*/
 header {
   font-family: Arial, sans-serif;
   margin: 20px;
@@ -22,7 +6,6 @@ header {
 
 form {
   margin: 20px 0;
-  
 }
 
 .button-container .button {
@@ -36,7 +19,11 @@ form {
 
 .navbar {
   width: 100%;
-  padding: 1rem; /* Adjust padding as needed */
+  padding: 0rem; /* Adjust padding as needed */
+  background-color: #ad88c6 !important;
+  height: 80px; /* Set a fixed height */
+  display: flex;
+  align-items: center; /* Center items vertically */
 }
 
 .navbar-brand {
@@ -52,4 +39,480 @@ form {
   margin-left: 10px; /* Adjust spacing between buttons */
 }
 
+.content {
+  padding-top: 40px; /* Adjust this value based on the height of your navbar */
+}
 
+.nav-link {
+  margin-right: 40px; /* Adjust this value to increase spacing */
+}
+
+
+
+/* Common asset: custom purple and lilac button*/
+.custom-btn-dark-purple {
+  background-color: #656dad;
+  border-color: #656dad;
+  color: white;
+}
+
+.custom-btn-dark-purple:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+}
+
+.custom-btn-lilac {
+  background-color: #ad88c6;
+  border-color: #ad88c6;
+  color: white;
+}
+
+.custom-btn-lilac:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+}
+
+/* Login, Register, Password reset gradient background */
+body.sessions-new {
+  background: linear-gradient(180deg, #AC88C6 0%, #666DAD 100%);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+/* Register page CSS functions*/
+
+/* body.registrations-new {
+  background: linear-gradient(180deg, #AC88C6 0%, #666DAD 100%);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+} */
+
+.signup-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.signup-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signup-header {
+margin-bottom: 20px;
+font-size: 1.5em;
+font-weight: bold;
+}
+
+.signup-container .field {
+  margin-bottom: 15px;
+}
+
+.signup-container .form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.signup-container .btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #9b59b6;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+}
+
+.signup-container .btn:hover {
+  background-color: #8e44ad;
+}
+
+.signup-container .devise-links {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Login and Password reset CSS functions */
+
+.login-container {
+  background-color: white;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-container .field {
+  margin-bottom: 1rem;
+}
+
+.login-container .actions {
+  margin-top: 1rem;
+}
+
+.login-container .btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #9b59b6;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+}
+
+.login-container .btn:hover {
+  background-color: #8e44ad;
+}
+
+.login-container .logo {
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.login-container h2,
+.login-container p {
+  text-align: center;
+}
+
+/* Requests home page CSS functions */
+.custom-card_requests_index {
+  margin-top: 30px;
+  margin-bottom: 30px; 
+  background-color: #ad88c6; /* Background color for the header container */
+  color: #fff; /* Text color for the header container */
+  height: 120px;
+}
+
+.header-container_requests_index {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px;
+}
+
+.header-text_requests_index {
+  margin-bottom: 0;
+}
+
+.clickable-card_requests_index {
+  text-decoration: none;
+  color: inherit;
+}
+
+.clickable-card_requests_index:hover .card {
+  border-color: #ad88c6; /* Change border color on hover */
+}
+
+.card-divider_requests_index {
+  border-top: 1px solid #dee2e6;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-info_requests_index {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-info_requests_index img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.card-details_requests_index {
+  margin-top: 20px;
+}
+
+.card-text_requests_index {
+  margin-bottom: 20px; /* Add more space between fields */
+}
+
+.card-text_requests_index i {
+  color: #656dad; /* Set icon color */
+}
+
+.icon-text_requests_index {
+  margin-left: 10px; /* Add more space between icons and text */
+}
+
+.card-title_requests_index {
+  margin-top: 20px;
+  margin-bottom: 3px; /* Reduce space between title and category */
+}
+
+.card-subtitle_requests_index {
+  margin-top: 2px;
+  margin-bottom: 20px; /* Adjust space below category */
+}
+
+.reward-text_requests_index {
+  text-align: right; /* Align reward text to the right */
+}
+
+.search-container_requests_index {
+  margin-bottom: 20px; /* Adjust spacing below the search container */
+}
+
+.search-form_requests_index {
+  background-color: #f8f9fa; /* Light background color for search bar */
+  border: 1px solid #ced4da; /* Gray border */
+  border-radius: 4px;
+  padding: 8px 16px;
+  display: flex; /* Use flexbox to align items */
+  align-items: center; /* Center items vertically */
+}
+
+.search-input_requests_index {
+  flex: 1; /* Grow to take remaining space */
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.search-btn_requests_index {
+  background-color: #656dad;
+  border-color: #656dad;
+  color: white;
+  margin-left: 8px;
+}
+
+.search-btn_requests_index:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+}
+
+/* New requests CSS functions */
+.custom-card_requests_new {
+  margin-top: 30px;
+  width: 100%;
+  border: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.header-card_requests_new {
+  background-color: #ad88c6;
+  color: white;
+  position: relative;
+  height: 120px;
+}
+
+.header-text_requests_new {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  margin: 0;
+}
+
+#upload-box {
+  position: relative;
+}
+
+#plus-icon_requests_details {
+  font-size: 2rem;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#upload-instructions {
+  text-align: center;
+  margin-top: 80px;
+}
+
+#upload-instructions p {
+  margin: 0;
+}
+
+.hidden {
+  display: none;
+} /*hides instructions when image is uploaded*/
+/* .upload-box_requests_new {
+  cursor: pointer;
+  position: relative;
+} */
+
+.upload-box_requests_new input[type="file"] {
+  display: none;
+} /* For hidden image button */
+
+#image-preview_requests_new {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Set the height as needed */
+  width: 100%; /* Set the width as needed */
+}
+
+#preview-img_requests_new {
+  display: none;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Request details CSS functions */
+.header-container_requests_details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ad88c6;
+  color: #fff;
+}
+
+.header-text_requests_details {
+  margin-bottom: 0;
+}
+
+.request-details_requests_details {
+  margin-top: 20px;
+}
+
+.request-image-container_requests_details {
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.request-image_requests_details {
+  width: 100%;
+  height: auto;
+}
+
+.btn-back_to_requests {
+  background-color: #656dad;
+  border-color: #656dad;
+  color: white;
+  margin-right: 990px;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.btn-back_to_requests:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+}
+
+.btn-report_requests_details {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.details-section_requests_details {
+  margin-top: 20px 0;
+}
+
+.details-section_requests_details i {
+  color: #656dad; /* Set icon color */
+}
+
+.details-section_requests_details h5 {
+  font-weight: bold;
+}
+
+.details-item_requests_details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.details-item_requests_details i {
+  margin-right: 10px;
+  min-width: 20px; /* Ensures icons are uniformly spaced */
+}
+
+.details-item_requests_details span {
+  flex: 1; /* Takes up remaining space, ensuring even spacing */
+}
+
+.description_requests_details {
+  margin-top: 20px;
+}
+
+.profile-card_requests_details {
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.profile-card_requests_details .profile-info_requests_details {
+  display: flex;
+  align-items: center;
+}
+
+.profile-card_requests_details img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+
+/* Flexbox container for the indicator and button */
+.request-availability_requests_details {
+  display: flex;
+  margin-top: 10px;
+  width: 100%; /* Ensure it takes full width */
+}
+
+/* Ensuring the availability indicator and Apply button have the same width and height */
+.availability-indicator_requests_details,
+.accept-button_requests_details {
+  flex: 1;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center; /* Center text horizontally */
+  display: flex;
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+}
+
+.availability-indicator_requests_details {
+  background-color: #f8f9fa;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  height: 20px;
+  margin-top: 21px;
+}
+
+.accept-button_requests_details {
+  background-color: #28a745;
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.accept-button_requests_details:hover {
+  background-color: #218838;
+}
+
+.divider_requests_details {
+  border-top: 1px solid #dee2e6;
+  margin: 20px 0;
+}
+
+.stars_requests_details {
+  color: #ffc107;
+}
