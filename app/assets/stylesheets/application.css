@@ -620,8 +620,8 @@ font-weight: bold;
 
 .profile-user_description_container{
   position: absolute;
-  top: 20%;
-  right: 54%;
+  top: 250px;
+  right: 687px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-right: 290px; /* Adjust this value for spacing from the profile-info-container */
   padding-bottom: 40%; /* Adjust this value for spacing below the header-card_profile */
