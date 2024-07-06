@@ -642,12 +642,12 @@ font-weight: bold;
 .requests-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* Adjust spacing between the request items */
+  gap: 10px; /* Adjust gap between squares */
 }
 
 .request-item {
-  width: calc(33.333% - 20px); /* Three items per row with spacing */
-  text-align: center;
+  width: calc(33.333% - 10px); /* Three items per row with a 10px gap */
+  box-sizing: border-box;
 }
 
 .request-content {
@@ -657,16 +657,12 @@ font-weight: bold;
 }
 
 .request-square {
-  width: 200px; /* Adjust size as needed */
-  height: 200px; /* Adjust size as needed */
-  background-color: #f0f0f0; /* Light grey background for squares */
-  border: 1px solid #ccc; /* Light grey border */
+  width: 100%;
+  padding-top: 40%; /* Maintain aspect ratio */
+  background-size: cover;
+  background-position: center;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .request-square:hover {
@@ -688,12 +684,17 @@ font-weight: bold;
 .request-name {
   margin-top: 10px; /* Space between square and name */
   color: #333;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .options-icon {
   margin-top: 5px; /* Space between name and options icon */
+  margin-left: 280px;
   color: #999;
   cursor: pointer;
+  text-align: center;
+  transform: rotate(90deg);
 }
 
 .options-icon:hover {
