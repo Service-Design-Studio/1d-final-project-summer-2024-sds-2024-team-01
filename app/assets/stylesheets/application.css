@@ -543,8 +543,8 @@ font-weight: bold;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   background-color: white;
-  height: 1000px;
   margin-top: 0px; /* Ensure borders are joined correctly */
+  padding-bottom: 20%;
 }
 
 .profile-info-container {
@@ -601,6 +601,7 @@ font-weight: bold;
   font-size: 16px; /* Adjust font size as needed */
   cursor: pointer; /* Ensure cursor changes on hover */
   margin-right: 30px;
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .follow-btn-profile button:hover {
@@ -617,8 +618,19 @@ font-weight: bold;
   transform: rotate(90deg);
 }
 
+.profile-user_description_container{
+  position: absolute;
+  top: 20%;
+  right: 54%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-right: 290px; /* Adjust this value for spacing from the profile-info-container */
+  padding-bottom: 40%; /* Adjust this value for spacing below the header-card_profile */
+  width: calc(100% - 990px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
+}
+
 /* Tabs container */
 .tabs-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-left: 290px; /* Adjust this value for spacing from the profile-info-container */
   margin-top: 100px; /* Adjust this value for spacing below the header-card_profile */
   width: calc(100% - 300px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
@@ -672,6 +684,7 @@ font-weight: bold;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .request-square {
@@ -681,12 +694,31 @@ font-weight: bold;
   background-position: center;
   border-radius: 5px;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
-.request-square:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #e0e0e0; /* Darker grey on hover */
+.request-popup {
+  position: absolute;
+  top: -100%; /* Start hidden above the square */
+  left: 0;
+  width: 100%;
+  height: 41.5%; /* Full height of the square */
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: top 0.3s ease; /* Smooth transition */
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
 }
+
+.request-square:hover .request-popup {
+  top: 0; /* Slide pop-up down */
+}
+
 
 .request-thumbnail {
   width: 100%;
@@ -704,20 +736,28 @@ font-weight: bold;
   margin-top: 10px; /* Space between square and name */
   color: #333;
   text-align: center;
-  margin-top: 10px;
 }
 
 .options-icon-requests {
   margin-top: 5px; /* Space between name and options icon */
-  margin-left: 280px;
-  color: #999;
+  margin-left: 275px;
+  color: #ad88c6;
   cursor: pointer;
   text-align: center;
   transform: rotate(90deg);
 }
 
 .options-icon:hover {
-  color: #666;
+  color: #ad88c6;
 }
 
-
+.availability-indicator_profile_requests {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  height: 40px;
+  width: 80px;
+  margin-top: 21px;
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  padding-left: 10px; /* Optional: Add padding for better spacing */
+}

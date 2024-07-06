@@ -24,7 +24,7 @@
     <div class="card mb-0 custom-card_profile body-card_profile">
       <div class="card-body body-container_profile">
         <div class="follow-btn-profile">
-          <button type="submit" class="btn follow-btn-profile">Follow</button>
+          <button type="submit" class="btn follow-btn-profile">Edit profile</button>
         </div>
         <div class="options-icon-follow">
           <i class="fas fa-ellipsis-h"></i>
@@ -51,10 +51,13 @@
                           <% if request.thumbnail.attached? %> 
                           <img src="<%= image_url(request.thumbnail) %>" class="card-img-top" alt="<%= request.title %>"/> 
                           <% end %> 
-                          <!-- Using inline style to set background image -->
+                          <div class="request-popup">
+                            <p> Number of slots available (TBI) </p>
+                          </div>
                         </div>
                       </a>
                       <p class="request-name"><%= request.title %></p>
+                      <div class="availability-indicator_profile_requests"><%= request.status %></div>
                       <div class="options-icon-requests">
                         <i class="fas fa-ellipsis-h"></i>
                       </div>
@@ -69,6 +72,10 @@
               <div class="review-item">Review 2</div>
             </div>
           </div>
+        </div>
+        <!--Profile user description container-->
+        <div class="card mb-0 profile-user_description_container">
+          <p> This holds the user written description. </p>
         </div>
       </div>
     </div>
