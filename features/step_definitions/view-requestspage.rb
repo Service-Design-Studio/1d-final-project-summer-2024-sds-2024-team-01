@@ -57,18 +57,6 @@ When("I fill in the following:") do
   end
 end
 
-And("I press {string}") do |button_text|
-  click_button button_text
-end
-
-Then("I should see {string}") do |text|
-  expect(page).to have_content text
-end
-
-When("I follow {string}") do |link_text|
-  click_link link_text
-end
-
 Then("I should not see any new requests") do
   # Assuming the application handles invalid form submissions without creating new requests
   expect(page).to_not have_content 'New Request'
