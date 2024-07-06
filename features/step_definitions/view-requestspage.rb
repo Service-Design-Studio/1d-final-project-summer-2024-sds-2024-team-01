@@ -14,7 +14,10 @@ end
 #just check that there is a list of requests in the database
 Then('I should see a list of requests') do
   # Check if the page has a list of requests
-  expect(page).to have_css('table tr') 
+  expect(page).to have_css('.request-card')
+  expect(page).to have_content('Help with Gardening')
+  expect(page).to have_content('Dog Walking')
+  expect(page).to have_content('Grocery Shopping')
   end
 
 
@@ -35,23 +38,29 @@ Given("I want to make new requests") do
   visit '/requests/new'
 end
 
-When("I fill in the following:") do
-  fill_in 'title', with: 'Help with Gardening'
-  fill_in 'date', with: '01/07/2024'
-  select 'Manual Labor', from: 'category'
-  select '5', from: 'volunteers'
-  fill_in 'start_time', with: '01:10 pm'
-  fill_in 'end_time', with: '12:30 am'
-  fill_in 'description', with: 'Looking for someone to help with my backyard garden'
-
-  # Upload banner photo (assuming you handle this with JavaScript)
-  # This step assumes you have JavaScript that interacts with the file input
-  #attach_file('file-input', Rails.root.join('path', 'to', 'your', 'file.jpg'))
-
-  # Select incentive (Yes/No) and fill in incentive text if applicable
-  select data['Incentive'], from: 'reward'
-  if data['Incentive'] == 'Yes'
-    fill_in 'reward-text', with: data['Incentive']
+When("I fill in the following:") do |table|
+  table.rows_hash.each do |field, value|
+    case field
+    when "BannerPhoto"
+      attach_file("request_thumbnail", value) unless value.strip.empty?
+    when "Title"
+      fill_in "request_title", with: value
+    when "Date"
+      fill_in "request_date", with: value
+    when "Category"
+      select value, from: "request_category" unless value.strip.empty?
+    when "Number of volunteers needed"
+      fill_in "request_number_of_pax", with: value
+    when "Start Time"
+      fill_in "request_start_time", with: value
+    when "End Time"
+      fill_in "request_duration", with: value
+    when "Description"
+      fill_in "request_description", with: value
+    when "Incentive"
+      select value, from: "request_reward_type" unless value.strip.empty?
+      fill_in "request_reward", with: value unless value.strip.empty?
+    end
   end
 end
 
@@ -69,7 +78,7 @@ end
 
 Then("I should not see any new requests") do
   # Assuming the application handles invalid form submissions without creating new requests
-  expect(page).to_not have_content 'New Request'
+  expect(page).not_to have_css('.request-card')
 end
 
 
