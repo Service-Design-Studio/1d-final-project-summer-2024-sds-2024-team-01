@@ -5,6 +5,7 @@ Given('I am logged in as {string} with nric {string}') do |email, nric|
 puts "Logged in as #{email} with NRIC #{nric}"  #need to check information with database
 
 
+
 end
 
 Given('I am on the Ring of Reciprocity requests page') do
@@ -62,18 +63,6 @@ When("I fill in the following:") do |table|
       fill_in "request_reward", with: value unless value.strip.empty?
     end
   end
-end
-
-And("I press {string}") do |button_text|
-  click_button button_text
-end
-
-Then("I should see {string}") do |text|
-  expect(page).to have_content text
-end
-
-When("I follow {string}") do |link_text|
-  click_link link_text
 end
 
 Then("I should not see any new requests") do
@@ -223,6 +212,7 @@ end
 Then('I should see {string} on the request details page') do |title|
   expect(page).to have_content(title)
 end
+
 
 
 
