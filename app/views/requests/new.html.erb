@@ -121,10 +121,13 @@
       const rewardField = document.getElementById('request_reward');
 
       if (rewardType === 'None') {
-        rewardField.disabled = true;
-        rewardField.value = '';
+        rewardField.readOnly = true;
+        rewardField.value = 'None';
+        rewardField.disabled = false;
       } else {
         rewardField.disabled = false;
+        rewardField.readOnly = false;
+        rewardField.value = '';
       }
     });
 
