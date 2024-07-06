@@ -6,23 +6,81 @@
         <div class="profile-picture-container">
           <div class="profile-picture"></div>
         </div>
+        <!-- Profile info container -->
+        <div class="profile-info-container">
+          <!-- Profile name -->
+          <h5><%= @profile.name %></h5>
+          <!-- Star ratings -->
+          <p class="mb-1 stars_user_profile">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i> (120)
+          </p>
+        </div>
       </div>
     </div>
     <div class="card mb-0 custom-card_profile body-card_profile">
       <div class="card-body body-container_profile">
-        <!-- Profile name -->
-        <h5><%= @profile.name %></h5>
-        <p class="mb-1 stars_user_profile">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i> (120)
-        </p>
         <div class="follow-btn-profile">
           <button type="submit" class="btn follow-btn-profile">Follow</button>
+        </div>
+        <!-- Tabs container -->
+        <div class="tabs-container">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="requests-tab" data-toggle="tab" href="#requests" role="tab" aria-controls="requests" aria-selected="true">Requests</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="requests" role="tabpanel" aria-labelledby="requests-tab">
+              <!-- Content for Requests -->
+              <div class="requests-grid">
+                <div class="request-item">
+                  <div class="request-content">
+                    <div class="request-square"></div>
+                    <p class="request-name">Request 1</p>
+                    <div class="options-icon">
+                      <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="request-item">
+                  <div class="request-content">
+                    <div class="request-square"></div>
+                    <p class="request-name">Request 2</p>
+                    <div class="options-icon">
+                      <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="request-item">
+                  <div class="request-content">
+                    <div class="request-square"></div>
+                    <p class="request-name">Request 3</p>
+                    <div class="options-icon">
+                      <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- Add more request items as needed -->
+              </div>
+            </div>
+            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+              <!-- Content for Reviews -->
+              <div class="review-item">Review 1</div>
+              <div class="review-item">Review 2</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -519,6 +519,7 @@ font-weight: bold;
 
 /* Profile page CSS functions */
 
+/* Custom card profile */
 .custom-card_profile {
   margin-top: 30px;
   width: 100%;
@@ -531,7 +532,7 @@ font-weight: bold;
 
 .header-card_profile {
   background-color: #ad88c6;
-  color: white;
+  color: black;
   position: relative;
   height: 200px;
 }
@@ -546,6 +547,16 @@ font-weight: bold;
   margin-top: 0px; /* Ensure borders are joined correctly */
 }
 
+.profile-info-container {
+  position: absolute;
+  top: 375px; /* Position below the profile picture container */
+  left: 20px; /* Align with the profile picture container */
+  width: 240px; /* Same width as the profile picture container */
+  text-align: center; /* Center the text within the container */
+  z-index: 3; /* Ensure the text is on top */
+}
+
+/* Profile picture container */
 .profile-picture-container {
   position: absolute;
   top: 120px; /* Shift downwards to overlap top and bottom containers */
@@ -566,13 +577,13 @@ font-weight: bold;
 }
 
 .body-container_profile h5 {
-  margin-top: 160px; /* Adjust this value to position the name below the profile picture */
-  padding-left: 75px; /* Align text with profile picture */
+  margin-top: 0; /* Remove margin to prevent overlap */
+  padding-left: 0; /* Remove padding for central alignment */
 }
 
 .stars_user_profile {
   color: #ad88c6;
-  padding-left: 50px;
+  padding-left: 0; /* Remove padding for central alignment */
 }
 
 .follow-btn-profile {
@@ -595,3 +606,97 @@ font-weight: bold;
   background-color: #9852a6; /* Slightly darker shade for hover effect */
   color: white; /* White text color on hover */
 }
+
+/* Tabs container */
+.tabs-container {
+  margin-left: 290px; /* Adjust this value for spacing from the profile-info-container */
+  margin-top: 100px; /* Adjust this value for spacing below the header-card_profile */
+  width: calc(100% - 300px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
+}
+
+.nav-tabs {
+  border-bottom: 2px solid #ad88c6; /* Lilac border for tabs */
+}
+
+.nav-tabs .nav-link {
+  color: #ad88c6; /* Lilac text color for tabs */
+  border-radius: 5px;
+  border-color: #ad88c6;
+}
+
+.nav-tabs .nav-link.active {
+  color: #fff; /* White text color for active tab */
+  background-color: #ad88c6; /* Lilac background for active tab */
+  border-color: #ad88c6; /* Lilac border for active tab */
+}
+
+.tab-content {
+  margin-top: 40px;
+}
+
+.request-item, .review-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.requests-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust spacing between the request items */
+}
+
+.request-item {
+  width: calc(33.333% - 20px); /* Three items per row with spacing */
+  text-align: center;
+}
+
+.request-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.request-square {
+  width: 200px; /* Adjust size as needed */
+  height: 200px; /* Adjust size as needed */
+  background-color: #f0f0f0; /* Light grey background for squares */
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.request-square:hover {
+  background-color: #e0e0e0; /* Darker grey on hover */
+}
+
+.request-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the entire square */
+}
+
+.no-thumbnail {
+  width: 100%;
+  height: 100%;
+  background-color: #ddd; /* Default background for no thumbnail */
+}
+
+.request-name {
+  margin-top: 10px; /* Space between square and name */
+  color: #333;
+}
+
+.options-icon {
+  margin-top: 5px; /* Space between name and options icon */
+  color: #999;
+  cursor: pointer;
+}
+
+.options-icon:hover {
+  color: #666;
+}
+
