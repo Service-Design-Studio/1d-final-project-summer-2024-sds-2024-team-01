@@ -8,7 +8,7 @@ class ProfileController < ApplicationController
     else
       @profile = User.find(params[:id])
     end
-
+    @requests = Request.includes(:user)
     @reviews = Review.where(review_by: @profile.id).all
     @reviews_given = Review.where(review_for: @profile.id).all
   end
