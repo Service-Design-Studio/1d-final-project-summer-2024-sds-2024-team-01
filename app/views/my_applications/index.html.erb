@@ -1,5 +1,148 @@
-<% @applications.each do | myapplication | %>
-<p>
-<%= myapplication.request.title %>
-</p>
-<% end %>
+<!DOCTYPE html>
+<html lang="en">
+
+<body onload="initialize()">
+  
+  <div class="container content_requests_index">
+    <div class="card custom-card_requests_index">
+      <div class="card-body header-container_requests_index">
+        <h2 class="header-text_requests_index">My applications</h2>
+      </div>
+    </div>
+
+    <!-- Search Bar Container -->
+    <div class="search-container_requests_index">
+      <div class="">
+        <div class="row">
+          <div class="col-md-12">
+            <form class="search-form_requests_index">
+              <input type="text" class="search-input_requests_index form-control" id="searchInput" placeholder="Search my applications...">
+              <button type="submit" class="btn search-btn_requests_index"><i class="fas fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Container for Request Cards -->
+    <div class="card mt-0" id="requestContainer">
+      <div class="card-body">
+        <div class="row">
+          <% @applications.each do | myapplication | %>
+            <div class="col-md-6 mb-4 request-card_requests_index">
+              <a href="<%= request_path(myapplication.request.id) %>" class="clickable-card_requests_index">
+                <div class="card h-100">
+                  <% if myapplication.request.thumbnail.attached? %> 
+                  <img src="<%= image_url(myapplication.request.thumbnail) %>" class="card-img-top" alt="<%= myapplication.request.title %>"/> 
+                  <% end %> 
+                  <div class="card-body">
+                    <div class="profile-info_requests_index">
+                      <% if myapplication.request.user.avatar.attached? %>
+                      <img src="<%= image_url(request.user.avatar) %>" alt="<%= request.user.name %>" width="30" height="30"/>
+                      <%end%>
+                      <span><%= myapplication.request.user.name %></span>
+                    </div>
+                    <h5 class="card-title_requests_index"><%= myapplication.request.title %></h5>
+                    <h6 class="card-subtitle_requests_index mb-2 text-muted"><%= myapplication.request.category %></h6>
+                    <div class="reward-text_requests_index">
+                      <p class="card-text_requests_index">Reward: <%= myapplication.request.reward %></p>
+                    </div>
+                    <div class="card-divider_requests_index"></div>
+                    <div class="card-details_requests_index">
+                      <div class="row">
+                        <div class="col-6">
+                          <p class="card-text_requests_index"><i class="fas fa-map-marker-alt"></i> <span id="address-<%= myapplication.request.id %>">Loading address...</span></p>
+                        </div>
+                        <div class="col-6">
+                          <p class="card-text_requests_index"><i class="fas fa-users"></i><span class="icon-text_requests_index"><%= myapplication.request.number_of_pax %></span></p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                          <p class="card-text_requests_index"><i class="fas fa-clock"></i><span class="icon-text_requests_index"><%= myapplication.request.duration %> hours</span></p>
+                        </div>
+                        <div class="col-6">
+                          <p class="card-text_requests_index"><i class="fas fa-calendar-alt"></i><span class="icon-text_requests_index"><%= myapplication.request.date %></span></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const requestCards = document.querySelectorAll('.request-card_requests_index');
+
+      searchInput.addEventListener('input', function() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+
+        requestCards.forEach(card => {
+          const title = card.querySelector('.card-title_requests_index').innerText.toLowerCase();
+          const category = card.querySelector('.card-subtitle_requests_index').innerText.toLowerCase();
+
+          if (title.includes(searchTerm) || category.includes(searchTerm)) {
+            card.style.display = 'block'; // Show the card
+          } else {
+            card.style.display = 'none'; // Hide the card
+          }
+        });
+      });
+    });
+    function initialize() {
+      var geocoder = new google.maps.Geocoder();
+
+      <% @applications.each do | myapplication | %>
+        (function() {
+          var geocode = "<%= myapplication.request.location %>";
+          var elementId = "address-<%= myapplication.request.id %>";
+
+          var latLngString = geocode.replace('POINT', '').replace('(', '').replace(')', '').trim();
+          var latLngArray = latLngString.split(/\s+/); // Split by one or more spaces
+
+          if (latLngArray.length !== 2) {
+            console.error('Invalid geocode format:', geocode);
+            document.getElementById(elementId).textContent = 'Invalid geocode format';
+            return;
+          }
+
+          var latLng = { lat: parseFloat(latLngArray[1]), lng: parseFloat(latLngArray[0]) };
+
+          // Log the latitude and longitude values
+          console.log('Latitude:', latLng.lat);
+          console.log('Longitude:', latLng.lng);
+
+          if (isNaN(latLng.lat) || isNaN(latLng.lng)) {
+            console.error('Invalid latitude or longitude:', latLng);
+            document.getElementById(elementId).textContent = 'Invalid latitude or longitude';
+            return;
+          }
+
+          geocoder.geocode({ 'location': latLng }, function(results, status) {
+            if (status === 'OK') {
+              if (results[0]) {
+                document.getElementById(elementId).textContent = results[0].formatted_address;
+              } else {
+                document.getElementById(elementId).textContent = 'No results found';
+              }
+            } else {
+              console.error('Geocoder failed due to:', status);
+              document.getElementById(elementId).textContent = 'Geocoder failed due to: ' + status;
+            }
+          });
+        })();
+      <% end %>
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+</body>
+</html>
