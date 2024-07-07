@@ -45,7 +45,7 @@
                     <h5 class="card-title_requests_index"><%= myapplication.request.title %></h5>
                     <h6 class="card-subtitle_requests_index mb-2 text-muted"><%= myapplication.request.category %></h6>
                     <div class="reward-text_requests_index">
-                      <p class="card-text_requests_index">Reward: <%= myapplication.request.reward %></p>
+                      <p class="card-text_requests_index">Your application is still pending</p>
                     </div>
                     <div class="card-divider_requests_index"></div>
                     <div class="card-details_requests_index">
@@ -78,6 +78,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
   <script>
+
     document.addEventListener('DOMContentLoaded', function() {
       const searchInput = document.getElementById('searchInput');
       const requestCards = document.querySelectorAll('.request-card_requests_index');
