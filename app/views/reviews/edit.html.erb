@@ -1,0 +1,15 @@
+<!-- app/views/reviews/edit.html.erb -->
+<h1>Edit Your Review</h1>
+<%= form_with(model: @review, local: true) do |form| %>
+  <div>
+    <%= form.label :rating %>
+    <%= form.number_field :rating, in: 1..5 %>
+  </div>
+  <div>
+    <%= form.label :review_content %>
+    <%= form.text_area :review_content %>
+  </div>
+  <div>
+    <%= form.submit 'Update Review' %>
+  </div>
+<% end %>

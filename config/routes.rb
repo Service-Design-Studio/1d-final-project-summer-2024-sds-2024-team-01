@@ -28,4 +28,10 @@ Rails.application.routes.draw do
       resources :requests
     end
   end
+    
+  # resources :reviews, only: [:new, :create]
+  resources :requests do
+    resources :reviews, only: [:new, :create]
+  end
+  resources :reviews, only: [:edit, :update, :index]
 end
