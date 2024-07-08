@@ -84,7 +84,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   end
 
   create_table "request_applications", force: :cascade do |t|
-    t.string "status", null: false
+    t.string "status", default: "Pending", null: false
     t.bigint "applicant_id", null: false
     t.bigint "request_id", null: false
     t.datetime "created_at", null: false
@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   create_table "reviews", force: :cascade do |t|
     t.integer "rating", null: false
     t.text "review_content"
+    t.bigint "request_id", null: false
     t.bigint "review_for", null: false
     t.bigint "review_by", null: false
     t.datetime "created_at", null: false
@@ -179,6 +180,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   add_foreign_key "request_applications", "requests"
   add_foreign_key "request_applications", "users", column: "applicant_id"
   add_foreign_key "requests", "users", column: "created_by"
+  add_foreign_key "reviews", "requests"
   add_foreign_key "reviews", "users", column: "review_by"
   add_foreign_key "reviews", "users", column: "review_for"
   add_foreign_key "summary_reports", "users", column: "requested_by"

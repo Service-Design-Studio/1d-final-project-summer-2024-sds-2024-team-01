@@ -28,6 +28,7 @@ class RequestsController < ApplicationController
       @application.request_id = @request.id
       @application.created_at = DateTime.now
       @application.updated_at = DateTime.now
+      @application.status = 'Pending'
 
       if @application.save
         redirect_to @request, notice: 'Successfully applied for the request.'

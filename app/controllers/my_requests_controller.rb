@@ -1,6 +1,11 @@
 class MyRequestsController < ApplicationController
   def index
-    @requests = Request.where(created_by: current_user.id)
+    @requests =
+      Request.includes(:request_applications)
+             .where(created_by: current_user.id)
+             .left_outer_joins(:request_applications)
+             .group('requests.id')
+             .select('requests.*, COUNT(request_applications.id) as application_count')
   end
 
   # GET /requests/1
