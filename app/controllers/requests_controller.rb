@@ -1,25 +1,31 @@
 require 'date'
 
 class RequestsController < ApplicationController
+  #ensure @request is set before these actions
   before_action :set_request, only: %i[show edit update destroy]
+  #skip user authentication for 'index' and 'show' actions, allowing them to be publically accessed
   skip_before_action :authenticate_user!, only: %i[index show]
 
   # GET /requests
+  #list all requests
   def index
     @requests = Request.includes(:user).all
   end
 
   # GET /requests/1
+  #show a single request
   def show
     @request = Request.find(params[:id])
   end
 
   # GET /requests/new
+  #show a form to create a new request
   def new
     @request = Request.new
   end
 
   # POST /requests/apply
+  #create a new request
   def apply
     @request = Request.find(params[:id])
     if RequestApplication.find_by(applicant_id: current_user.id, request_id: @request.id).nil?
@@ -41,9 +47,11 @@ class RequestsController < ApplicationController
   end
 
   # GET /requests/1/edit
+  #show a form to edit a request
   def edit; end
 
   # POST /requests
+  #create a new request
   def create
     @request = Request.new(request_params)
     @request.status = 'Available'
@@ -61,6 +69,7 @@ class RequestsController < ApplicationController
   end
 
   # PATCH/PUT /requests/1
+  #update a request
   def update
     if @request.update(request_params)
       redirect_to @request, notice: 'Request was successfully updated.', status: :see_other
@@ -70,6 +79,7 @@ class RequestsController < ApplicationController
   end
 
   # DELETE /requests/1
+  #delete a request
   def destroy
     @request.destroy!
     redirect_to requests_url, notice: 'Request was successfully destroyed.', status: :see_other
