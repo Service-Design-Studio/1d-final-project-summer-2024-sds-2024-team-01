@@ -60,3 +60,8 @@ gem 'byebug', '~> 11.1', '>= 11.1.3'
 
 gem 'puma' # Puma is the default server for Rails
 
+gem 'faker'
+
+gem 'shoulda-matchers', '~> 5.0'
+
+#gem 'ruby-vips' #enable image analysis
