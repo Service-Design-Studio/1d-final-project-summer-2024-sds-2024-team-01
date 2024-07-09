@@ -6,6 +6,9 @@ class MyRequestsController < ApplicationController
              .left_outer_joins(:request_applications)
              .group('requests.id')
              .select('requests.*, COUNT(request_applications.id) as application_count')
+    
+    @comprequests = 
+      Request.where(status: 'Completed')
   end
 
   # GET /requests/1

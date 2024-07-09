@@ -1,20 +1,8 @@
-When('I follow {string}') do |link_text|
-  click_link link_text
-end
-
-# And('I fill in {string} with {string}') do |field, value|
-#   fill_in field, with: value
-# end
-
-And('I press {string}') do |button|
-  click_button button
-end
-
-Then('I should see {string}') do |content|
-  expect(page).to have_content(content)
-end
-
 # Scenario: Leave a review for a user
+When('I have a completed request') do
+  @review = Review.find_by!(status: "Completed").first
+end
+
 Given('there is a user named {string}') do |name|
   @reviewee = User.create!(name: name, email: 'john@example.com', password: 'password')
 end

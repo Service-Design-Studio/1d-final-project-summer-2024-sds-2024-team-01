@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :set_reviewee, only: [:new, :create]
   before_action :set_review, only: [:edit, :update]
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
 
   def new
     @review = Review.new
@@ -39,7 +39,7 @@ class ReviewsController < ApplicationController
   end
 
   def set_review
-    @review = Review.find(params[:id])
+    @review = Review.find_by(id: params[:id])
   end
   
   def review_params

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'myrequests' => 'my_requests#index'
   get 'myapplications' => 'my_applications#index'
 
+  post 'reviews/edit'=> 'reviews#edit'
   namespace :api do
     namespace :v1 do
       resources :requests
@@ -33,5 +34,5 @@ Rails.application.routes.draw do
   resources :requests do
     resources :reviews, only: [:new, :create]
   end
-  resources :reviews, only: [:edit, :update, :index]
+  resources :reviews, only: [:edit, :update, :index, :new, :create]
 end

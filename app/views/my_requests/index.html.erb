@@ -54,3 +54,45 @@
   <% end %>
 </tbody>
 
+<table>
+  <thead>
+    <tr>
+      <Strong>Completed</strong>
+      <td>
+        Title
+      </td>
+      <td>
+        Number of Applicants
+      </td>
+      <td>
+        View Applications
+      </td>
+      <td>
+        Actions
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+  <% @comprequests.each do | comprequest | %>
+  <tr>
+    <td>
+      <%= comprequest.title %>
+    </td>
+    <td>
+      <a href="<%=request_path(comprequest)%>"> 
+        View applications
+      </a>
+    </td>
+    <td>
+      <a href="<%=new_review_path(comprequest)%>"> 
+        Leave a Review
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td colspen="4">
+    <%= comprequest.status %>
+    </td>
+  </tr>
+  <% end %>
+</tbody>
