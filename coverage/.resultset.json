@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/user.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/user.rb": {
         "lines": [
           1,
           1,
@@ -19,16 +19,20 @@
           1,
           1,
           1,
+          null,
+          1,
+          1,
+          1,
           null
         ]
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/helpers/application_helper.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/helpers/media_helper.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/helpers/media_helper.rb": {
         "lines": [
           null,
           1,
@@ -43,223 +47,13 @@
           null
         ]
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/helpers/requests_helper.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/helpers/requests_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/requests_controller.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          null,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          null,
-          null,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          0,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          0,
-          0,
-          null,
-          null,
-          1,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/application_controller.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
-          null,
-          1,
-          0,
-          0,
-          null,
-          1,
-          null
-        ]
-      },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/charity.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/role.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null,
-          null,
-          null
-        ]
-      },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/company.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/request.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/chat.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/message.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/review.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/channels/application_cable/channel.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
           0,
@@ -269,7 +63,7 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/channels/application_cable/connection.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/channels/application_cable/connection.rb": {
         "lines": [
           0,
           0,
@@ -279,7 +73,7 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/api/v1/requests_controller.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/api/v1/requests_controller.rb": {
         "lines": [
           null,
           0,
@@ -366,7 +160,26 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/auth_controller.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/application_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/auth_controller.rb": {
         "lines": [
           null,
           null,
@@ -395,7 +208,7 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/my_applications_controller.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/my_applications_controller.rb": {
         "lines": [
           0,
           0,
@@ -412,7 +225,7 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/my_devise/registrations_controller.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/my_devise/registrations_controller.rb": {
         "lines": [
           null,
           0,
@@ -445,7 +258,7 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/my_devise/sessions_controller.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/my_devise/sessions_controller.rb": {
         "lines": [
           null,
           0,
@@ -538,8 +351,9 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/my_requests_controller.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/my_requests_controller.rb": {
         "lines": [
+          0,
           0,
           0,
           0,
@@ -564,7 +378,7 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/profile_controller.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/profile_controller.rb": {
         "lines": [
           null,
           null,
@@ -580,6 +394,12 @@
           0,
           0,
           0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
           null,
           0,
           null,
@@ -589,7 +409,95 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/jobs/application_job.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/controllers/requests_controller.rb": {
+        "lines": [
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/jobs/application_job.rb": {
         "lines": [
           0,
           null,
@@ -602,7 +510,7 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/mailers/application_mailer.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/mailers/application_mailer.rb": {
         "lines": [
           0,
           0,
@@ -612,7 +520,7 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/application_record.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/application_record.rb": {
         "lines": [
           0,
           0,
@@ -626,7 +534,18 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/request_application.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/charity.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/chat.rb": {
         "lines": [
           0,
           0,
@@ -639,7 +558,101 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/summary_report.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/company.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/message.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/request.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/request_application.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/review.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/role.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null
+        ],
+        "branches": {
+        }
+      },
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/summary_report.rb": {
         "lines": [
           0,
           0,
@@ -650,7 +663,7 @@
         "branches": {
         }
       },
-      "C:/Users/allis/Downloads/sds/1d-final-project-summer-2024-sds-2024-team-01/app/models/user_report.rb": {
+      "/home/darren/School/Term_5/SDS/1d-final-project-summer-2024-sds-2024-team-01/app/models/user_report.rb": {
         "lines": [
           0,
           0,
@@ -663,6 +676,6 @@
         }
       }
     },
-    "timestamp": 1720345663
+    "timestamp": 1720499824
   }
 }

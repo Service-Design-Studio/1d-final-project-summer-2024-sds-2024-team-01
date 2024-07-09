@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_one_attached :avatar 
+  has_one_attached :avatar
 
   belongs_to :charity, optional: true
   belongs_to :company, optional: true
@@ -14,4 +14,8 @@ class User < ActiveRecord::Base
   has_many :userreports, foreign_key: :created_by_id
   has_many :requests, foreign_key: :created_by
   has_many :requestapplications, foreign_key: :applicant_id
+
+  validates :name, presence: true
+  validates :email, presence: true
+  validates :number, presence: true
 end
