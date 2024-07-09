@@ -37,6 +37,8 @@ users = [
     email: "alice.smith@example.com",
     status: "Active",
     role_id: 1,
+    password: 'password',
+    password_confirmation: 'password'
   },
   {
     name: "Bob Johnson",
@@ -45,6 +47,8 @@ users = [
     email: "bob.johnson@example.com",
     status: "Active",
     role_id: 2,
+    password: 'password',
+    password_confirmation: 'password'
   },
   {
     name: "Charlie Lee",
@@ -54,7 +58,9 @@ users = [
     status: "Active",
     role_id: 3,
     created_at: DateTime.now,
-    updated_at: DateTime.now
+    updated_at: DateTime.now,
+    password: 'password',
+    password_confirmation: 'password'
   },
   {
     name: "Diana Patel",
@@ -64,7 +70,9 @@ users = [
     status: "Active",
     role_id: 1,
     created_at: DateTime.now,
-    updated_at: DateTime.now
+    updated_at: DateTime.now,
+    password: 'password',
+    password_confirmation: 'password'
   },
   {
     name: "Evan Green",
@@ -74,7 +82,9 @@ users = [
     status: "Active",
     role_id: 2,
     created_at: DateTime.now,
-    updated_at: DateTime.now
+    updated_at: DateTime.now,
+    password: 'password',
+    password_confirmation: 'password'
   },
   {
     name: "Fiona Brown",
@@ -84,6 +94,8 @@ users = [
     status: "Active",
     role_id: 3,
     created_at: DateTime.now,
+    password: 'password',
+    password_confirmation: 'password',
     updated_at: DateTime.now
   },
   {
@@ -94,6 +106,8 @@ users = [
     status: "Active",
     role_id: 1,
     created_at: DateTime.now,
+    password: 'password',
+    password_confirmation: 'password',
     updated_at: DateTime.now
   },
   {
@@ -104,6 +118,8 @@ users = [
     status: "Active",
     role_id: 2,
     created_at: DateTime.now,
+    password: 'password',
+    password_confirmation: 'password',
     updated_at: DateTime.now
   },
   {
@@ -114,6 +130,8 @@ users = [
     status: "Active",
     role_id: 3,
     created_at: DateTime.now,
+    password: 'password',
+    password_confirmation: 'password',
     updated_at: DateTime.now
   },
   {
@@ -124,6 +142,8 @@ users = [
     status: "Active",
     role_id: 1,
     created_at: DateTime.now,
+    password: 'password',
+    password_confirmation: 'password',
     updated_at: DateTime.now
   }
 ]
@@ -132,7 +152,7 @@ if User.count == 0
   p "No users found, seeding user data..."
   users.each do |user_attributes|
     user = User.new(user_attributes)
-    user.save(validate: false) # Skipping validations
+    user.save # Skipping validations
     downloaded_image = URI.parse("https://innostudio.de/fileuploader/images/default-avatar.png").open
     user.avatar.attach(io: downloaded_image, filename: "foo.png")
   end
@@ -296,8 +316,8 @@ if Request.count == 0
   requests.each do |rq_attr|
     req = Request.new(rq_attr)
     req.save
-    downloaded_imagee = URI.parse("https://www.houselogic.com/wp-content/uploads/2011/03/exterior-house-painting-epspainting-standard_c231db00f6cd6e9389489e72c0f32fe0.jpg").open
-      req.thumbnail.attach(io: downloaded_imagee, filename: "painting.jpg")
+    # downloaded_imagee = URI.parse("https://www.houselogic.com/wp-content/uploads/2011/03/exterior-house-painting-epspainting-standard_c231db00f6cd6e9389489e72c0f32fe0.jpg").open
+    #   req.thumbnail.attach(io: downloaded_imagee, filename: "painting.jpg")
   end
   p "Fake request data seeded"
 end
