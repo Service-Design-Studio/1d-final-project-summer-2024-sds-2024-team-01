@@ -1,20 +1,23 @@
-# Feature: Sort the requests according by different criteria
+# Feature: Sort the requests according to different criteria
 # As a user
-# So that I can easily find the requests that I need
+# So that I can easily find the requests that I want
 # I want to sort the requests by different criteria
 
+# Scenario: Sort category
+# Given I have a list of requests
+# When I sort the requests by the "category" field
+# Then the requests should be sorted by the "category" field
+# And the requests should be sorted in descending order according to created by
 
-# Scenario: Sort by request ID
-# Given I am on the "requests" page
-# When I click on the "Request ID" column header
-# Then the requests should be sorted in ascending order by request ID
+# Scenerio: Sort date
+# Given I have a list of requests
+# When I sort the requests by the "date" field
+# Then the requests should be sorted by the "date" field
+# And the requests should be sorted in descending order according to created by
 
-# Scenario: Sort by date
-# Given I am on the "requests" page
-# When I click on the "Date" column header
-# Then the requests should be sorted in descending order by date
+# Scenerio: Sort skillset
+# Given I have a list of requests
+# When I sort the requests by the "skillset" field
+# Then the requests should be sorted by the "skillset" field
+# And the requests should be sorted in descending order according to created by
 
-# Scenario: Sort by Category
-# Given I am on the "requests" page
-# When I click on the "Category" column header
-# Then the requests should be sorted in ascending order by category

@@ -17,6 +17,8 @@ module NavigationHelpers
       '/requests/new'
     when 'Edit Request'
       '/requests/edit'
+    when 'Edit'
+      '/reviews/edit'
     # Add more mappings as needed
     else
       raise "Can't find mapping from \"#{link_text}\" to a link."
@@ -25,4 +27,3 @@ module NavigationHelpers
 end
 
 World(NavigationHelpers)
-

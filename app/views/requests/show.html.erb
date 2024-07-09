@@ -1,153 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Request Details</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    .content {
-      padding-top: 80px; /* Adjust this value based on the height of your navbar */
-    }
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      background-color: #ad88c6;
-      color: #fff;
-    }
-    .header-text {
-      margin-bottom: 0;
-    }
-    .request-details {
-      margin-top: 20px;
-    }
-    .request-image-container {
-      position: relative;
-      margin-bottom: 20px;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-    .request-image {
-      width: 100%;
-      height: auto;
-    }
-    .btn-report {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 10;
-    }
-    .details-section {
-      margin-top: 20px;
-    }
-    .details-section h5 {
-      font-weight: bold;
-    }
-    .description {
-      margin-top: 20px;
-    }
-    .profile-card {
-      padding: 10px;
-      border: 1px solid #dee2e6;
-      border-radius: 5px;
-      text-align: left;
-    }
-    .profile-card .profile-info {
-      display: flex;
-      align-items: center;
-    }
-    .profile-card img {
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-    .request-availability {
-      display: flex;
-      margin-top: 10px;
-    }
-    .availability-indicator,
-    .accept-button {
-      flex: 1;
-      padding: 10px;
-      border-radius: 5px;
-    }
-    .availability-indicator {
-      background-color: #f8f9fa;
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-      text-align: center;
-    }
-    .accept-button {
-      background-color: #28a745;
-      color: white;
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-      cursor: pointer;
-    }
-    .accept-button:hover {
-      background-color: #218838;
-    }
-    .divider {
-      border-top: 1px solid #dee2e6;
-      margin: 20px 0;
-    }
-    .custom-btn-dark-purple {
-      background-color: #656dad;
-      border-color: #656dad;
-      color: white;
-    }
-    .custom-btn-dark-purple:hover {
-      background-color: #9852a6; /* Slightly darker shade for hover effect */
-      border-color: #9852a6;
-    }
-    .stars {
-      color: #ffc107;
-    }
-  </style>
-</head>
-<body>
-  
+
+<body onload="initialize()">
+
   <div class="container content">
-    <a href="/requests" class="btn btn-secondary me-2">
-      <i class="bi bi-arrow-left"></i> Back to requests
-    </a>
-    <div class="request-image-container">
-      <img src="/mnt/data/image.png" alt="Request Image" class="request-image">
-      <div class="btn-report">
-        <button class="btn btn-outline-danger">
+    <div class="request-image-container_requests_details">
+      <% if @request.thumbnail.attached? %>
+        <img src="<%= image_url(@request.thumbnail) %>" alt="Request Image" class="request-image_requests_details">
+      <% end %>
+      <div class="btn-report_requests_details">
+        <a href="/requests" class="btn btn-back_to_requests">
+          <i class="bi bi-arrow-left"></i> Back to requests
+        </a>
+        <button class="btn btn-danger">
           <i class="fas fa-flag"></i> Report
         </button>
       </div>
     </div>
-    <div class="card custom-card">
+    <div class="card custom-card_requests_details">
       <div class="card-body p-0">
         <div class="p-3 row">
           <div class="col-md-8">
             <h1 class="mt-3"><%= @request.title %> <i class="bi bi-bookmark"></i> (65)</h1>
-            <div class="divider"></div>
-            <div class="details-section">
+            <div class="divider_requests_details"></div>
+            <div class="details-section_requests_details">
               <h5>Details</h5>
-              <p><i class="fas fa-calendar-alt"></i> <%= @request.date %></p>
-              <p><i class="fas fa-clock"></i> <%= @request.duration %></p>
-              <p><i class="fas fa-users"></i> <%= @request.number_of_pax %></p>
-              <p><i class="fas fa-map-marker-alt"></i> <%= @request.location %></p>
-              <p><i class="fas fa-money-bill-wave"></i> <%= @request.reward %></p>
+              <div class="details-item_requests_details">
+                <i class="fas fa-calendar-alt"></i>
+                <span><%= @request.date %></span>
+              </div>
+              <div class="details-item_requests_details">
+                <i class="fas fa-clock"></i>
+                <span><%= @request.duration %> hours</span>
+              </div>
+              <div class="details-item_requests_details">
+                <i class="fas fa-users"></i>
+                <span><%= @request.number_of_pax %></span>
+              </div>
+              <div class="details-item_requests_details">
+                <i class="fas fa-map-marker-alt"></i>
+                <span id="address">Loading address...</span>
+              </div>
+              <div class="details-item_requests_details">
+                <i class="fas fa-money-bill-wave"></i>
+                <span><%= @request.reward %></span>
+              </div>
             </div>
-            <div class="divider"></div>
-            <div class="description">
+            <div class="divider_requests_details"></div>
+            <div class="description_requests_details">
               <h5>Description</h5>
               <p><%= @request.description %></p>
             </div>
           </div>
           <div class="col-md-4">
-            <div class="card profile-card mt-3">
-              <div class="profile-info mb-3">
+            <div class="card profile-card_requests_details mt-3">
+              <div class="profile-info_requests_details mb-3">
                 <img src="<%= @request.user.avatar %>" alt="<%= @request.user.name %>" width="50" height="50">
                 <div>
                   <h5 class="mb-1"><%= @request.created_by %></h5>
-                  <p class="mb-1 stars">
+                  <p class="mb-1 stars_requests_details">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -157,9 +68,9 @@
                 </div>
               </div>
               <button class="btn custom-btn-dark-purple my-4 w-60">Chat</button>
-              <div class="request-availability mt-2">
-                <div class="availability-indicator">50 slots</div>
-                <button class="accept-button">Accept</button>
+              <div class="request-availability_requests_details mt-2">
+                <div class="availability-indicator_requests_details">50 slots</div>
+                <%= button_to 'Apply', {:controller => "requests", :action => "apply", :id => @request.id, :method => :post }, { class: 'accept-button_requests_details'} %>
               </div>
             </div>
           </div>
@@ -173,5 +84,50 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
+  <script>
+    function initialize() {
+      var geocoder = new google.maps.Geocoder();
+
+      // Extract latitude and longitude from @request.location in POINT(lat lng) format
+      var geocode = "<%= @request.location %>";
+      var latLngString = geocode.replace('POINT', '').replace('(', '').replace(')', '').trim();
+      var latLngArray = latLngString.split(/\s+/); // Split by one or more spaces
+
+      if (latLngArray.length !== 2) {
+        console.error('Invalid geocode format:', geocode);
+        document.getElementById('address').textContent = 'Invalid geocode format';
+        return;
+      }
+
+      var latLng = { lat: parseFloat(latLngArray[1]), lng: parseFloat(latLngArray[0]) };
+
+      // Log the latitude and longitude values
+      console.log('Latitude:', latLng.lat);
+      console.log('Longitude:', latLng.lng);
+
+      if (isNaN(latLng.lat) || isNaN(latLng.lng)) {
+        console.error('Invalid latitude or longitude:', latLng);
+        document.getElementById('address').textContent = 'Invalid latitude or longitude';
+        return;
+      }
+
+      geocoder.geocode({ 'location': latLng }, function(results, status) {
+        if (status === 'OK') {
+          if (results[0]) {
+            document.getElementById('address').textContent = results[0].formatted_address;
+          } else {
+            document.getElementById('address').textContent = 'No results found';
+          }
+        } else {
+          console.error('Geocoder failed due to:', status);
+          document.getElementById('address').textContent = 'Geocoder failed due to: ' + status;
+        }
+      });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+
 </body>
 </html>

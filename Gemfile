@@ -30,6 +30,12 @@ gem 'google-cloud-storage', '~> 1.47', require: false
 gem 'rgeo', '~> 3.0.1'
 gem 'activerecord-postgis-adapter', '~> 9.0.2'
 
+# for authentication
+gem 'devise'
+
+# for role management and belongs_to
+gem 'rolify'
+
 group :development do
   gem 'web-console', '~> 4.2.1'
 end
@@ -42,6 +48,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.1.2'
   gem 'guard-rspec', '~> 4.7.3'
   gem 'simplecov', require: false
+  gem 'guard-cucumber'
+  gem 'guard'
 end
 
 group :production do
