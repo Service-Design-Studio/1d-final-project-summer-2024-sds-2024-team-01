@@ -8,12 +8,12 @@ class CreateReviews < ActiveRecord::Migration[7.1]
       t.bigint :request_id, null: false
 
       t.bigint :review_for, null: false
-      t.bigint :review_by, null: false
+      t.bigint :created_by, null: false
 
       t.timestamps
     end
     add_foreign_key :reviews, :users, column: :review_for
-    add_foreign_key :reviews, :users, column: :review_by
+    add_foreign_key :reviews, :users, column: :created_by
     add_foreign_key :reviews, :requests, column: :request_id
   end
 end

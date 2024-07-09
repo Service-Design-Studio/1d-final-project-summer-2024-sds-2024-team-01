@@ -3,7 +3,7 @@ Rails.application.routes.draw do
              controllers: { registrations: 'my_devise/registrations', sessions: 'my_devise/sessions' }, path: '', path_names: { sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register', sign_out: 'logout' }
 
   # ,path: "", controllers: {sessions: "sessions", registrations:"registrations"}, path_names: {sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register', sign_out: 'logout'}
-  resources :requests
+  # resources :requests
   resources :devise
   root 'requests#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

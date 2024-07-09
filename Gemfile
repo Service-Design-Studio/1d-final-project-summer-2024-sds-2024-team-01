@@ -48,6 +48,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.1.2'
   gem 'guard-rspec', '~> 4.7.3'
   gem 'simplecov', require: false
+  gem 'guard-cucumber'
+  gem 'guard'
 end
 
 group :production do

@@ -4,6 +4,7 @@
   <% @reviews.each do |review| %>
     <li>
       <strong>Review for <%= review.review_for.name %>:</strong><br>
+      Review by: <%= review.created_by.name %><br>
       Rating: <%= review.rating %><br>
       Comment: <%= review.review_content %><br>
       <%= link_to 'Edit', edit_review_path(review) %>

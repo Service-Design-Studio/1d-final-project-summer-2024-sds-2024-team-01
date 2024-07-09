@@ -291,6 +291,79 @@ requests = [
   }
 ]
 
+comp_requests = [
+  {
+    title: "Help with Gardening",
+    description: "Looking for someone to help with my backyard garden",
+    category: "Gardening",
+    location: "POINT(40.712776 -74.005974)",
+    date: Date.new(2024, 7, 1),
+    number_of_pax: 2,
+    start_time: '12:00',
+    duration: 3,
+    reward: "$50",
+    reward_type: "Cash",
+    status: "Completed",
+    created_by: 1,
+  },
+  {
+    title: "Dog Walking",
+    description: "Need someone to walk my dog for an hour every afternoon",
+    category: "Pet Care",
+    location: "POINT(34.052235 -118.243683)",
+    date: Date.new(2024, 7, 2),
+    number_of_pax: 1,
+    duration: 1,
+    start_time: '12:00',
+    reward: "$20",
+    reward_type: "Cash",
+    status: "Completed",
+    created_by: 2,
+  },
+  {
+    title: "Grocery Shopping",
+    description: "Need help with weekly grocery shopping",
+    category: "Errands",
+    location: "POINT(51.507351 -0.127758)",
+    date: Date.new(2024, 7, 3),
+    number_of_pax: 1,
+    duration: 2,
+    start_time: '12:00',
+    reward: "£30",
+    reward_type: "Cash",
+    status: "Completed",
+    created_by: 3,
+  },
+  {
+    title: "Moving Assistance",
+    description: "Help needed with moving furniture to a new apartment",
+    category: "Moving",
+    location: "POINT(48.856613 2.352222)",
+    date: Date.new(2024, 7, 4),
+    number_of_pax: 3,
+    duration: 5,
+    start_time: '12:00',
+    reward: "€100",
+    reward_type: "Cash",
+    status: "Completed",
+    created_by: 4,
+  },
+  {
+    title: "Painting Job",
+    description: "Need help painting a room",
+    category: "Household",
+    location: "POINT(35.689487 139.691711)",
+    date: Date.new(2024, 7, 5),
+    number_of_pax: 2,
+    duration: 4,
+    start_time: '12:00',
+    reward: "¥5000",
+    reward_type: "Cash",
+    status: "Completed",
+    created_by: 5,
+  }
+]
+
 if Request.count == 0
   p "No requests found, seeding fake request data..."
   requests.each do |rq_attr|
@@ -299,5 +372,45 @@ if Request.count == 0
     downloaded_imagee = URI.parse("https://www.houselogic.com/wp-content/uploads/2011/03/exterior-house-painting-epspainting-standard_c231db00f6cd6e9389489e72c0f32fe0.jpg").open
       req.thumbnail.attach(io: downloaded_imagee, filename: "painting.jpg")
   end
+  comp_requests.each do |comp|
+    compl = Request.new(comp)
+    compl.save
+  end
   p "Fake request data seeded"
+  p "Completed request data seeded"
+end
+
+user1 = User.find_by(email:"alice.smith@example.com")
+user2 = User.find_by(email:"bob.johnson@example.com")
+user3 = User.find_by(email:"charlie.lee@example.com")
+user4 = User.find_by(email:"diana.patel@example.com")
+request = Request.first
+
+if user1 && user2 && user3 && user4
+
+  Review.create!([
+    {
+      review_for: user2,
+      created_by: user1,
+      request_id: request.id,
+      rating: 3,
+      review_content: "It's alright"
+    },
+    {
+      review_for: user3,
+      created_by: user1,
+      request_id: request.id,
+      rating: 5,
+      review_content: "Great experience!"
+    },
+    {
+      review_for: user4,
+      created_by: user1,
+      request_id: request.id,
+      rating: 2,
+      review_content: "Bad"
+    }
+  ])
+else
+  p "One or more users not found"
 end

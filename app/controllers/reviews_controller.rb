@@ -10,9 +10,8 @@ class ReviewsController < ApplicationController
   def create
     @review = @review_for.received_reviews.new(review_params)
     @review.created_by = current_user
-
     if @review.save
-      redirect_to user_reviews_path(current_user), notice: 'Review was successfully created.'
+      redirect_to reviews_path, notice: 'Review was successfully created.'
     else
       render :new
     end
@@ -23,14 +22,14 @@ class ReviewsController < ApplicationController
 
   def update
     if @review.update(review_params)
-      redirect_to user_reviews_path(current_user), notice: 'Review was successfully updated.'
+      redirect_to reviews_path, notice: 'Review was successfully updated.'
     else
       render :edit
     end
   end
 
   def index
-    @reviews = current_user.written_reviews
+    @reviews = Review.all
   end
 
   private
