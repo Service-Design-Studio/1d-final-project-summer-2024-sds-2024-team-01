@@ -316,8 +316,8 @@ if Request.count == 0
   requests.each do |rq_attr|
     req = Request.new(rq_attr)
     req.save
-    # downloaded_imagee = URI.parse("https://www.houselogic.com/wp-content/uploads/2011/03/exterior-house-painting-epspainting-standard_c231db00f6cd6e9389489e72c0f32fe0.jpg").open
-    #   req.thumbnail.attach(io: downloaded_imagee, filename: "painting.jpg")
+    downloaded_imagee = URI.parse("https://www.houselogic.com/wp-content/uploads/2011/03/exterior-house-painting-epspainting-standard_c231db00f6cd6e9389489e72c0f32fe0.jpg").open
+      req.thumbnail.attach(io: downloaded_imagee, filename: "painting.jpg")
   end
   p "Fake request data seeded"
 end
