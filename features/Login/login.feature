@@ -22,3 +22,11 @@ Feature: Login
     | Password      |        |
     And I click on "Login" button
     Then I should see a message "Invalid Number or password."
+    When I enter " " for "Phone number "
+    And I enter " " for "Password"
+    And I click on "Log in" button
+    Then I should see "Invalid Phone number or password."
+
+Scenario: Test login
+    Given I am logged in
+    Then I should see "Signed in successfully."
