@@ -62,7 +62,7 @@
                           <p class="card-text_requests_index"><i class="fas fa-clock"></i><span class="icon-text_requests_index"><%= request.duration %> hours</span></p>
                         </div>
                         <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-calendar-alt"></i><span class="icon-text_requests_index"><%= request.date %></span></p>
+                          <p class="card-text_requests_index"><i class="fas fa-calendar-alt"></i><span class="icon-text_requests_index"><%= request.date.strftime('%d %B %Y') %></span></p>
                         </div>
                       </div>
                     </div>

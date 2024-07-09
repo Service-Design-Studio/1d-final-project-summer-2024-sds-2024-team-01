@@ -212,6 +212,7 @@ font-weight: bold;
 .clickable-card_requests_index {
   text-decoration: none;
   color: inherit;
+  display: block; /* Make the link cover the entire card */
 }
 
 .clickable-card_requests_index:hover .card {
@@ -809,3 +810,126 @@ font-weight: bold;
   align-items: center; /* Center items vertically */
   padding-left: 10px; /* Optional: Add padding for better spacing */
 }
+
+/*my requests page CSSs styling*/
+.thumbnail_requests_index {
+  height: 100px;
+  width: auto;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.card-content_requests_index {
+  flex-grow: 1;
+}
+
+.clickable-card_requests_index-wrapper {
+  position: relative; /* For positioning the pop-up */
+}
+
+.clickable-card_requests_index {
+  text-decoration: none;
+  color: inherit;
+  display: flex; /* Ensure the link covers the entire card */
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.clickable-card_requests_index:hover .card {
+  border-color: #ad88c6; /* Change border color on hover */
+}
+
+.application-indicator_requests_index {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-right: 25px;
+}
+
+.application-indicator_requests_index p {
+  margin: 0;
+  width: fit-content; /* Set the width to fit the content */
+}
+
+.application-count_requests_index {
+  color: #28a745; /* Green text for the number of applicants */
+}
+
+.applicants-status_requests_index {
+  color: #6c757d; /* Dark grey text for the status */
+}
+
+.applicants-status_requests_index i {
+  color: #656dad; /* Purple icon for the people indicator */
+  margin-right: 5px;
+}
+
+.popup_requests_index {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none; /* Hidden by default */
+  z-index: 1000;
+  pointer-events: none; /* Make the pop-up not clickable by default */
+  animation: slideDown 0.3s ease-out; /* Slide-down animation */
+}
+
+.split-button_requests_index {
+  display: flex;
+  justify-content: flex-end; /* Align the buttons to the right */
+  margin-top: 10px;
+}
+
+.split-button_requests_index .btn {
+  width: auto; /* Adjust the width as needed */
+  margin-left: -2px; /* Slight overlap to remove gap between buttons */
+}
+
+.accept-btn_requests_index {
+  background-color: #28a745;
+  color: white;
+  text-align: center;
+  border-top-left-radius: 5px; /* Only round the top-left corner */
+  border-bottom-left-radius: 5px; /* Only round the bottom-left corner */
+  padding: 10px 20px; /* Add padding for better appearance */
+  border-top-right-radius: 0; /* No rounding for the top-right corner */
+  border-bottom-right-radius: 0; /* No rounding for the bottom-right corner */
+}
+
+.accept-btn_requests_index:hover {
+  background-color: #218838;
+}
+
+.reject-btn_requests_index {
+  background-color: #dc3545;
+  color: white;
+  text-align: center;
+  border-top-right-radius: 5px; /* Only round the top-right corner */
+  border-bottom-right-radius: 5px; /* Only round the bottom-right corner */
+  padding: 10px 20px; /* Add padding for better appearance */
+  border-top-left-radius: 0; /* No rounding for the top-left corner */
+  border-bottom-left-radius: 0; /* No rounding for the bottom-left corner */
+}
+
+.reject-btn_requests_index:hover {
+  background-color: #c82333;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
