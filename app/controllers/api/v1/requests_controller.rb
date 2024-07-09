@@ -1,3 +1,4 @@
+
 class Api::V1::RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy ]
 
