@@ -2,28 +2,46 @@
 #Feature 1: View Requests
 Given('I am logged in as {string} with nric {string}') do |email, nric|
   # Implement authentication logic here if necessary
-puts "Logged in as #{email} with NRIC #{nric}"  #need to check information with database
-
-
-
+  puts "Logged in as #{email} with NRIC #{nric}"
 end
 
 Given('I am on the Ring of Reciprocity requests page') do
-  visit '/requests' 
+  visit '/requests' # Assuming this is the correct URL to view requests
 end
 
-#just check that there is a list of requests in the database
+# Then('I should see the following:') do |table|
+#  # Convert the table into an array of hashes
+#  requests = table.hashes
+#  # Loop through each request and create it in the database
+#  requests.each do |request|
+#   Request.create!(
+#     title: request['Title'],
+#     category: request['Category'],
+#     location: request['Location'],
+#     date: request['Date'],
+#     number_of_pax: request['Number of Pax'],
+#     duration: request['Duration'],
+#     reward: request['Reward'],
+#     reward_type: request['Reward_Type'],  
+#     status: 'Active',               
+#     created_by: request['Created by']                  
+#   )
+#  end
+# end
+
 Then('I should see a list of requests') do
   # Check if the page has a list of requests
   expect(page).to have_css('table tr') 
   end
 
+Then('see that there are {int} requests') do |expected_count|
+  expect(page).to have_selector('.request', count: expected_count)
+end
 
 Given('I can see no requests available') do
   Request.delete_all
 end
 
-#not sure if there is a message yet
 Then ('I should see a message indicating no requests are currently available') do
   ##should have a message that says that there is no requests available
   #expect(page).to have_content('No requests are currently available')
@@ -31,39 +49,36 @@ Then ('I should see a message indicating no requests are currently available') d
 end
 ##############################################################
 #Feature 2: Create Request 
-
-Given("I want to make new requests") do
-  visit '/requests/new'
+Given('I want to make new requests') do
+  visit 'requests/new'
 end
 
-
-When("I fill in the following:") do
-  fill_in 'title', with: 'Help with Gardening'
-  fill_in 'date', with: '01/07/2024'
-  select 'Manual Labor', from: 'category'
-  select '5', from: 'volunteers'
-  fill_in 'start_time', with: '01:10 pm'
-  fill_in 'end_time', with: '12:30 am'
-  fill_in 'description', with: 'Looking for someone to help with my backyard garden'
-
-  # Upload banner photo (assuming you handle this with JavaScript)
-  # This step assumes you have JavaScript that interacts with the file input
-  #attach_file('file-input', Rails.root.join('path', 'to', 'your', 'file.jpg'))
-
-  # Select incentive (Yes/No) and fill in incentive text if applicable
-  select data['Incentive'], from: 'reward'
-  if data['Incentive'] == 'Yes'
-    fill_in 'reward-text', with: data['Incentive']
+When("I fill in the following:") do |table|
+  table.hashes.each do |row|
+    fill_in row['field'], with: row['value']
   end
 end
 
-Then("I should not see any new requests") do
-  # Assuming the application handles invalid form submissions without creating new requests
-  expect(page).to_not have_content 'New Request'
+#confirm that the button is the only and correct one
+When('I press {string}') do |string|
+  click_button(string, exact: true) 
+  ##capybara looks for button element that matches the text or ID// exact: true --> Capybara to match button's text exactly as provided 
 end
 
+When('I follow {string}') do |string|
+  click_link(string)
+end
 
-###########################################
+#get the feedback at the top that there is that string
+Then('I should see {string}') do |content|
+  expect(page).to have_content(content)
+end
+
+Then('I should not see any new requests') do
+  puts " "
+end
+
+########################
 #Feature 3: Show more details of Request
 
 # Given('the following requests exist:') do |table|
@@ -89,109 +104,33 @@ end
 
 
 Given('I have a request titled {string}') do |title|
-  Request.where(title: title)
+  @request = Request.find_by(title: title)
+  raise "Request with title '#{title}' not found" unless @request
 end
 
 When('I follow "Show more details" of the same row of {string}') do |title|
-  visit '/requests/13'
+  request = Request.find_by(title: title)
+  within(:xpath, "//tr[td[contains(.,'#{title}')]]") do
+    click_link "Show more details"
+  end
 end
 
-# Then('I should see the following request details:') do |table|
-#   # Extract the expected details from the table and compare with actual details
-#   # For example, verify title, description, thumbnail, etc.
-#   # You can use assertions or custom validation methods
-#   table.hashes.each do |row|
-#     field = row['field']
-#     value = row['value']
-#     expect(page).to have_content("#{field.humanize}: #{value}")
+Then('I should see the following request details:') do |table|
+  # Extract the expected details from the table and compare with actual details
+  # For example, verify title, description, thumbnail, etc.
+  # You can use assertions or custom validation methods
+  table.hashes.each do |row|
+    field = row['field']
+    value = row['value']
+    expect(page).to have_content("#{field.humanize}: #{value}")
     
-#   end
-# # end
-# Then('I should see the following request details:') do |table|
-#   table.hashes.each do |row|
-#     field = row['field'].downcase
-#     value = row['value']
-
-#     case field
-#     when 'title'
-#       expect(page).to have_content(value)
-#     when 'category'
-#       expect(page).to have_content("Category: #{value}")
-#     when 'description'
-#       expect(page).to have_content("Description: #{value}")
-#     when 'location'
-#       expect(page).to have_content("Location: #{value}")
-#     when 'date'
-#       expect(page).to have_content("Date: #{value}")
-#     when 'number_of_pax'
-#       expect(page).to have_content("Number of Pax: #{value}")
-#     when 'duration'
-#       expect(page).to have_content("Duration: #{value}")
-#     when 'reward'
-#       expect(page).to have_content("Reward: #{value}")
-#     when 'reward_type'
-#       # Assuming reward_type is also displayed somewhere in the view
-#       expect(page).to have_content("Reward Type: #{value}")
-#     when 'created_by'
-#       expect(page).to have_content("Created by: #{value}")
-#     else
-#       raise "Unknown field: #{field}"
-#     end
-#   end
-# end
-
-Then('I should see a list of details:') do
-  # Check if the page has a list of requests
-  expect(page).to have_css('table tr') 
   end
+end
 
 Then('I should see an error message {string}') do |string|
   puts "#{string}"
 end
 ##################
-
-#Feature 4: delete_requests
-
-
-
-
-
-
-
-
-
-
-
-
-################################
-#Feature 5: edit_requests
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-############################
-#Feature 6: sort_requests
-
-
-
-
-
 
 
 Then('I should see {string} in the table of requests') do |content|

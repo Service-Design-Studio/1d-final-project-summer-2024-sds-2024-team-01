@@ -1,234 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New application</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    .content {
+      padding-top: 80px; /* Adjust this value based on the height of your navbar */
+    }
+    .custom-card {
+      margin-top: 30px;
+      width: 100%;
+      border: none;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    .header-card {
+      background-color: #ad88c6;
+      color: white;
+      position: relative;
+      height: 120px;
+    }
+    .header-text {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      margin: 0;
+    }
+    .upload-box {
+      cursor: pointer;
+    }
 
+    .custom-btn-lilac {
+      background-color: #ad88c6;
+      border-color: #ad88c6;
+      color: white;
+    }
+
+    .custom-btn-lilac:hover {
+      background-color: #9852a6; /* Slightly darker shade for hover effect */
+      border-color: #9852a6;
+    }
+
+    #image-preview {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%; /* Set the height as needed */
+      width: 100%; /* Set the width as needed */
+    }
+
+    #preview-img {
+      display: none;
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
 <body>
+  
   <div class="container content">
-    <div class="card mb-0 custom-card_requests_new header-card_requests_new">
-      <div class="card-body header-container_requests_new">
+    <div class="card mb-0 custom-card header-card">
+      <div class="card-body header-container">
         <a href="/requests" class="btn btn-secondary me-2">
           <i class="bi bi-arrow-left"></i> Back to requests
         </a>
-        <h2 class="header-text_requests_new">New Request</h2>
+        <h2 class="header-text">New Request</h2>
+      </div>
+    </div>
+    <!-- Banner Photo Card Container -->
+    <div class="card mb-4 custom-card">
+      <div class="card-body">
+        <h5 class="card-title">Banner Photo</h5>
+        <div class="text-center">
+          <div class="border p-5 upload-box" id="upload-box" style="cursor: pointer;">
+            <!-- Image Preview Container -->
+            <div id="image-preview" class="mb-3">
+              <img id="preview-img" src="#" alt="Your image" style="display: none; max-width: 100%; height: auto;" />
+            </div>
+            <!-- Plus Symbol -->
+            <i class="bi bi-plus-circle" id="plus-icon" style="font-size: 2rem;"></i>
+            <!-- File Input -->
+            <input type="file" id="file-input" style="display: none;" accept="image/*" />
+            <p>Jpg or Png, not exceeding 3mb in size</p>
+          </div>
+        </div>
       </div>
     </div>
     <!-- Form Card Container -->
-    <div class="card mb-4 custom-card_requests_new">
+    <div class="card mb-4 custom-card">
       <div class="card-body">
-        <%= form_with model: @request, url: requests_path, local: true, id: "request-form" do |f| %>
-        <!-- Banner Photo Card Container -->
-        <div class="card mb-4 custom-card_requests_details">
-          <div class="card-body">
-            <h5 class="card-title">Banner Photo</h5>
-            <div class="text-center">
-              <div class="border p-5 upload-box_requests_details" id="upload-box">
-                <!-- Image Preview Container -->
-                <div id="image-preview_requests_details" class="mb-3">
-                  <img id="preview-img_requests_details" src="#" alt="Your image" style="display: none; max-width: 100%; height: auto;" />
-                </div>
-                <!-- Cropper Container -->
-                <div id="cropper-container" style="display: none;">
-                  <img id="image-to-crop" src="#" alt="Image for cropping" style="max-width: 100%; height: auto;" />
-                  <button id="crop-and-upload" class="btn btn-primary mt-3">Crop and Upload</button>
-                </div>
-                <!-- Plus Symbol -->
-                <i class="bi bi-plus-circle" id="plus-icon_requests_details"></i>
-                <!-- File Input for preview and upload -->
-                <input type="file" id="file-input-visible" style="display: none;" accept="image/*" />
-                <!-- Upload Instructions -->
-                <div id="upload-instructions">
-                  <p>Jpg or Png, not exceeding 3mb in size</p>
-                </div>
-              </div>
+        <form action="/requests" method="post">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="title" class="form-label">Title:</label>
+              <input type="text" id="title" name="title" class="form-control" placeholder="A few words will do!">
+            </div>
+            <div class="col-md-6">
+              <label for="date" class="form-label">Date:</label>
+              <input type="date" id="date" name="date" class="form-control" placeholder="When will it be?">
             </div>
           </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <!-- Hidden File Input for actual form submission -->
-            <%= f.file_field :thumbnail, id: "file-input-hidden", style: "display: none;" %>
+          <div class="row mb-3">
+            <div class="col-md-3">
+              <label for="category" class="form-label">Category:</label>
+              <select id="category" name="category" class="form-control">
+                <option>Manual labour</option>
+                <option>Teaching</option>
+                <option>Delivery</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="volunteers" class="form-label">Number of volunteers needed:</label>
+              <select id="volunteers" name="volunteers" class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="start_time" class="form-label">Start Time:</label>
+              <input type="time" id="start_time" name="start_time" class="form-control" placeholder="Time of the event">
+            </div>
+            <div class="col-md-3">
+              <label for="end_time" class="form-label">End Time:</label>
+              <input type="time" id="end_time" name="end_time" class="form-control" placeholder="Time of the event">
+            </div>
           </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <%= f.label :title, class: "form-label" %>
-            <%= f.text_field :title, class: "form-control", placeholder: "A few words will do!", required: true %>
+          <div class="col-md-12">
+            <label for="description" class="form-label">Description:</label>
+            <textarea id="description" name="description" class="form-control" rows="6" placeholder="Describe your request!"></textarea>
           </div>
-          <div class="col-md-6">
-            <%= f.label :date, class: "form-label" %>
-            <%= f.date_field :date, class: "form-control", placeholder: "When will it be?", required: true %>
+          <div class="input-group mb-3 mt-3 d-flex align-items-center">
+            <div class="input-group-prepend">
+              <span class="input-group-text rounded-start rounded-sm" id="incentive-label">Incentive?</span>
+            </div>
+            <input type="hidden" id="reward-hidden" name="reward" class="form-control">
+            <button class="btn btn-outline-secondary dropdown-toggle rounded-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="reward-dropdown">Yes/No</button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" data-value="Yes">Yes</a></li>
+              <li><a class="dropdown-item" href="#" data-value="No">No</a></li>
+            </ul>
+            <input type="text" id="reward-text" class="form-control rounded-sm" aria-label="Text input with dropdown button" placeholder="If so, describe your incentive." disabled>
           </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-3">
-            <%= f.label :category, class: "form-label" %>
-            <%= f.select :category, options_for_select(["Manual labour", "Teaching", "Delivery"], selected: ""), { prompt: "Choose..." }, { class: "form-control", required: true } %>
+          <div class="d-flex justify-content-end mt-3">
+            <button type="submit" class="btn custom-btn-lilac">Create</button>
           </div>
-          <div class="col-md-3">
-            <%= f.label :number_of_pax, "Number of volunteers needed:", class: "form-label" %>
-            <%= f.number_field :number_of_pax, class: "form-control", required: true, min: 1 %>
-          </div>
-          <div class="col-md-3">
-            <%= f.label :start_time, class: "form-label" %>
-            <%= f.time_field :start_time, class: "form-control", placeholder: "Time of the event", required: true, id: "start_time" %>
-          </div>
-          <div class="col-md-3">
-            <%= f.label :duration, class: "form-label" %>
-            <%= f.number_field :duration, class: "form-control", placeholder: "How many hours?", required: true, min: 1 %>
-          </div>
-        </div>
-        <!-- Location Input Field -->
-        <div class="col-md-12 mb-3">
-          <%= f.label :location, class: "form-label" %>
-          <%= f.text_field :location, class: "form-control", placeholder: "Enter the address", required: true, id: "location" %>
-        </div>
-
-        <!-- Hidden Fields for Latitude and Longitude -->
-        <div class="col-md-12 mb-3">
-          <%= f.hidden_field :latitude, id: "latitude" %>
-          <%= f.hidden_field :longitude, id: "longitude" %>
-        </div>
-
-        <div class="col-md-12 mb-3">
-          <%= f.label :description, class: "form-label" %>
-          <%= f.text_area :description, class: "form-control", rows: 6, placeholder: "Describe your request!", required: true %>
-        </div>
-        <!-- Incentive provided -->
-        <div class="input-group mb-3 mt-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text rounded-start" for="request_reward_type">Incentive provided</label>
-          </div>
-          <%= f.select :reward_type, options_for_select(["None", "Money", "Service"], selected: "None"), { class: "form-control", required: true, id: "request_reward_type" } %>
-        </div>
-        <div class="form-group mt-3">
-          <%= f.text_area :reward, class: "form-control", rows: 3, placeholder: "If you are providing an incentive, please describe it here!", id: "request_reward", disabled: true %>
-        </div>
-        <div class="d-flex justify-content-end mt-3">
-          <%= f.submit "Create", class: "btn custom-btn-lilac" %>
-        </div>
-        <% end %>
+        </form>
       </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://unpkg.com/cropperjs"></script>
-
   <script>
-    document.getElementById('request_reward_type').addEventListener('change', function() {
-      const rewardType = document.getElementById('request_reward_type').value;
-      const rewardField = document.getElementById('request_reward');
+    // Incentives dropdown feature
+    document.addEventListener('DOMContentLoaded', function() {
+      const rewardDropdown = document.getElementById('reward-dropdown');
+      const rewardHidden = document.getElementById('reward-hidden');
+      const rewardText = document.getElementById('reward-text');
 
-      if (rewardType === 'None') {
-        rewardField.readOnly = true;
-        rewardField.value = 'None';
-        rewardField.disabled = false;
-      } else {
-        rewardField.disabled = false;
-        rewardField.readOnly = false;
-        rewardField.value = '';
-      }
+      document.querySelectorAll('.dropdown-item').forEach(function(item) {
+        item.addEventListener('click', function(event) {
+          event.preventDefault();
+          const value = this.getAttribute('data-value');
+          rewardHidden.value = value;
+          rewardDropdown.textContent = value;
+
+          // Enable or disable the text input based on the dropdown selection
+          if (value === 'Yes') {
+            rewardText.disabled = false;
+          } else {
+            rewardText.disabled = true;
+            rewardText.value = ''; // Clear the text input when disabled
+          }
+        });
+      });
     });
 
-    // Trigger change event on page load to set the initial state of the reward field
-    document.getElementById('request_reward_type').dispatchEvent(new Event('change'));
-
-    let cropper;
-    const fileInputVisible = document.getElementById('file-input-visible');
-    const previewImg = document.getElementById('preview-img_requests_details');
-    const plusIcon = document.getElementById('plus-icon_requests_details');
-    const hiddenFileInput = document.getElementById('file-input-hidden');
-    const cropperContainer = document.getElementById('cropper-container');
-    const cropAndUploadButton = document.getElementById('crop-and-upload');
-    const uploadInstructions = document.getElementById('upload-instructions');
-
-    plusIcon.addEventListener('click', function() {
-      fileInputVisible.click();
+    // Image upload and preview feature
+    document.getElementById('upload-box').addEventListener('click', function() {
+      document.getElementById('file-input').click();
     });
 
-    fileInputVisible.addEventListener('change', function(event) {
+    document.getElementById('file-input').addEventListener('change', function(event) {
       const file = event.target.files[0];
       if (file) {
+        // Check file size (3MB max)
+        if (file.size > 3 * 1024 * 1024) {
+          alert('File size exceeds 3MB.');
+          return;
+        }
+        // Check file type (JPG or PNG)
+        if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+          alert('Please upload a JPG or PNG image.');
+          return;
+        }
+
         const reader = new FileReader();
         reader.onload = function(e) {
-          document.getElementById('image-to-crop').src = e.target.result;
-          cropperContainer.style.display = 'block';
-          previewImg.style.display = 'none';
-          plusIcon.style.display = 'none'; // Hide the plus icon
-          uploadInstructions.style.display = 'none'; // Hide the upload instructions
-
-          if (cropper) {
-            cropper.destroy();
-          }
-          cropper = new Cropper(document.getElementById('image-to-crop'), {
-            aspectRatio: 16 / 9,
-            viewMode: 1,
-          });
+          const previewImg = document.getElementById('preview-img');
+          previewImg.src = e.target.result;
+          previewImg.style.display = 'block';
+          document.getElementById('plus-icon').style.display = 'none';
         };
         reader.readAsDataURL(file);
       }
     });
-
-    cropAndUploadButton.addEventListener('click', function() {
-      if (cropper) {
-        const canvas = cropper.getCroppedCanvas({
-          width: 1600,
-          height: 900,
-        });
-        canvas.toBlob(function(blob) {
-          const url = URL.createObjectURL(blob);
-          previewImg.src = url;
-          previewImg.style.display = 'block';
-          cropperContainer.style.display = 'none';
-
-          const dataTransfer = new DataTransfer();
-          const file = new File([blob], 'cropped-image.jpg', { type: 'image/jpeg' });
-          dataTransfer.items.add(file);
-          hiddenFileInput.files = dataTransfer.files;
-        }, 'image/jpeg');
-      }
-    });
-
-    function initAutocomplete() {
-      const input = document.getElementById('location');
-      const autocomplete = new google.maps.places.Autocomplete(input);
-
-      autocomplete.addListener('place_changed', function() {
-        const place = autocomplete.getPlace();
-        if (!place.geometry) {
-          // User entered the name of a Place that was not suggested and pressed the Enter key,
-          // or the Place Details request failed.
-          return;
-        }
-
-        const latitude = place.geometry.location.lat();
-        const longitude = place.geometry.location.lng();
-        const pointFormat = `POINT(${longitude} ${latitude})`;
-
-        // Set the hidden fields for latitude and longitude
-        document.getElementById('latitude').value = latitude;
-        document.getElementById('longitude').value = longitude;
-
-        // Set the formatted point in the location field for submission
-        document.getElementById('location').value = pointFormat;
-      });
-    }
-
-    // Initialize Google Maps Autocomplete
-    google.maps.event.addDomListener(window, 'load', initAutocomplete);
-
-
-    // Initialize Flatpickr for time picker
-    flatpickr("#start_time", {
-      enableTime: true,
-      noCalendar: true,
-      dateFormat: "H:i",
-      time_24hr: true
-    });
   </script>
 </body>
-
 </html>
-
-<%# Changes to implement: Enable display of actual address for user, only change to Geocode when user hits create %>

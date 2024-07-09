@@ -1,7 +1,7 @@
 class RequestApplication < ActiveRecord::Base
-  belongs_to :applicant, class_name: 'User'
-  belongs_to :request, class_name: 'Request'
+  belongs_to :userId, class_name: 'User'
+  belongs_to :requestId, class_name: 'Request'
   validates_presence_of :status
-  validates_presence_of :created_at
-  validates_presence_of :updated_at
+  validates_presence_of :date_created
+  validates_presence_of :date_modified
 end
