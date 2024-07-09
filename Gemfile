@@ -48,6 +48,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.1.2'
   gem 'guard-rspec', '~> 4.7.3'
   gem 'simplecov', require: false
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
 end
 
 group :production do
@@ -57,3 +59,4 @@ end
 gem 'byebug', '~> 11.1', '>= 11.1.3'
 
 gem 'puma' # Puma is the default server for Rails
+

@@ -44,11 +44,11 @@
     Everything below here should be hidden until i click it then it pops out
     </td>
   </tr>
-    <td>
-  <% RequestApplication.includes(:request => request).where(request_id: myrequest.id).each do |application| %>
-    </td>
+  <% RequestApplication.includes(:request).where(request_id: myrequest.id).each do |application| %>
   <tr>
+    <td colspen="4">
     <%= application.status %>
+    </td>
   </tr>
   <% end %>
   <% end %>
