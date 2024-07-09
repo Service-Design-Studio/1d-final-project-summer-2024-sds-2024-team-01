@@ -207,6 +207,8 @@ font-weight: bold;
   margin-bottom: 0;
 }
 
+/* Clickable card CSS for all requests display pages, e.g my applications, my requests, requests page*/
+
 .clickable-card_requests_index {
   text-decoration: none;
   color: inherit;
@@ -261,6 +263,52 @@ font-weight: bold;
 
 .reward-text_requests_index {
   text-align: right; /* Align reward text to the right */
+}
+
+.custom-btn-review-applications {
+  background-color: #ad88c6;
+  border-color: #ad88c6;
+  color: white;
+  margin-top: 5px;
+  width: fit-content; /* Set the width to fit the content */
+}
+
+.custom-btn-review-applications:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+}
+
+.application-indicator_requests_index {
+  text-align: right;
+  color: #28a745;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align items to the right */
+}
+
+.application-indicator_requests_index p {
+  margin: 0 auto;
+  width: fit-content; /* Set the width to fit the content */
+}
+
+.application-indicator_requests_index a {
+  margin-top: 5px; /* Add margin to separate the button from the text */
+  width: fit-content; /* Set the width to fit the content */
+}
+
+.options-icon-my-requests {
+  position: absolute;
+  bottom: 300px;
+  right: 15px;
+  color: #ad88c6;
+  cursor: pointer;
+  transform: rotate(90deg);
+}
+
+.options-icon-my-requests:hover {
+  color: #ad88c6;
 }
 
 .search-container_requests_index {
@@ -620,8 +668,8 @@ font-weight: bold;
 
 .profile-user_description_container{
   position: absolute;
-  top: 20%;
-  right: 54%;
+  top: 250px;
+  right: 687px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-right: 290px; /* Adjust this value for spacing from the profile-info-container */
   padding-bottom: 40%; /* Adjust this value for spacing below the header-card_profile */
