@@ -16,17 +16,13 @@ When('I enter the following credentials:') do |table|
   end
 end
 
-When('I click on {string} button') do |button|
-  click_button button
-end
+
 
 Then('I should be brought to the request page') do
   visit '/requests'
 end
 
-Then('I should see a message {string}') do |message|
-  expect(page).to have_content(message)
-end
+
 
 #################################### features/step_definitions/forgot_password_steps.rb################################################
 
