@@ -23,6 +23,10 @@ Rails.application.routes.draw do
   get 'myrequests' => 'my_requests#index'
   get 'myapplications' => 'my_applications#index'
 
+  resources :reviews, only: [:edit, :update, :index, :new, :create]
+  
+  get 'reviews/new_temp' => 'reviews#new_temp'
+
   namespace :api do
     namespace :v1 do
       resources :requests

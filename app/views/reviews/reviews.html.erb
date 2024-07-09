@@ -1,4 +1,3 @@
-<!-- app/views/reviews/new_temp.html.erb -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,30 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Leave a Review</title>
   <%= stylesheet_link_tag 'application', media: 'all' %>
-  <style>
-    .star-rating .fa-star {
-      font-size: 2rem;
-      color: #ddd;
-      cursor: pointer;
-    }
-    .star-rating .fa-star.checked {
-      color: #ffcc00;
-    }
-    .breadcrumb {
-      background: none;
-      padding: 0;
-    }
-    .breadcrumb-item + .breadcrumb-item::before {
-      content: ">";
-    }
-  </style>
 </head>
 <body>
   <div class="container mt-4">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">My Requests</a></li>
-        <li class="breadcrumb-item"><a href="#">Request Details</a></li>
+        <li class="breadcrumb-item"><%= link_to 'My Requests', myrequests_path %></li>
+        <li class="breadcrumb-item"><%= link_to 'Request Details', request_path(params[:request_id]) %></li>
         <li class="breadcrumb-item active" aria-current="page">Leave a Review</li>
       </ol>
     </nav>
@@ -39,28 +21,24 @@
     <div class="mb-3">
       <label for="rating" class="form-label">Rate the overall experience:</label>
       <div id="rating" class="star-rating">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <span class="rating-text">(0)</span>
+        <% 5.times do %>
+          <i class="fas fa-star"></i>
+        <% end %>
       </div>
     </div>
     
-    <form>
+    <%= form_with model: @review, url: reviews_path, method: :post, local: true do |form| %>
       <div class="mb-3">
-        <textarea class="form-control" id="reviewContent" rows="5" placeholder="Share details of your own experience with them and any feedback you might have."></textarea>
+        <%= form.text_area :review_content, class: "form-control", id: "reviewContent", rows: 5, placeholder: "Share details of your own experience with them and any feedback you might have." %>
       </div>
-      <input type="hidden" id="reviewRating" name="rating" value="">
-      <input type="hidden" id="reviewForId" name="review_for_id" value="1"> <!-- Placeholder -->
-      <input type="hidden" id="createdById" name="created_by_id" value="1"> <!-- Placeholder -->
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+      <%= form.hidden_field :rating, id: "reviewRating" %>
+      <%= form.hidden_field :review_for_id, value: params[:review_for_id] %>
+      <%= form.hidden_field :created_by_id, value: current_user.id %>
+      <%= form.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
   </div>
 
   <%= javascript_include_tag 'application' %>
-
   <script>
     // Placeholder for star rating interaction
     document.querySelectorAll('.star-rating i').forEach(function(star, index) {
@@ -77,5 +55,17 @@
       });
     });
   </script>
+
+  <style>
+    .star-rating .fa-star {
+      font-size: 2rem;
+      color: #ddd;
+      cursor: pointer;
+    }
+
+    .star-rating .fa-star.checked {
+      color: #ffcc00;
+    }
+  </style>
 </body>
 </html>
