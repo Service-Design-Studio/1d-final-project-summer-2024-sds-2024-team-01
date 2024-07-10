@@ -26,61 +26,39 @@
     </div>
 
     <!-- Container for Request Cards -->
-    <div class="card mt-0" id="requestContainer">
-      <div class="card-body">
-        <div class="row">
           <% @requests.each do | myrequest | %>
-            <div class="col-md-6 mb-4 request-card_requests_index">
-              <a href="<%= request_path(myrequest) %>" class="clickable-card_requests_index">
-                <div class="card h-100">
-                  <% if myrequest.thumbnail.attached? %> 
-                  <img src="<%= image_url(myrequest.thumbnail) %>" class="card-img-top" alt="<%= myrequest.title %>"/> 
-                  <% end %> 
-                  <div class="card-body">
-                    <div class="profile-info_requests_index">
-                      <% if myrequest.user.avatar.attached? %>
-                      <img src="<%= image_url(myrequest.user.avatar) %>" alt="<%= myrequest.user.name %>" width="30" height="30"/>
-                      <%end%>
-                      <span><%= myrequest.user.name %></span>
-                    </div>
-                    <h5 class="card-title_requests_index"><%= myrequest.title %></h5>
-                    <h6 class="card-subtitle_requests_index mb-2 text-muted"><%= myrequest.category %></h6>
-                    <div class="options-icon-my-requests">
-                      <i class="fas fa-ellipsis-h"></i>
-                    </div>
-                    <div class="application-indicator_requests_index">
-                      <% if myrequest.application_count > 0 %>
-                        <p class="text-right"><%= myrequest.application_count %> <%= 'user'.pluralize(myrequest.application_count) %> ha<%= 's'.pluralize(myrequest.application_count) %> applied!</p>
-                      <% end %>
-                      <a href="<%= request_path(myrequest) %>" class="btn custom-btn-review-applications">Review Applications</a>
-                    </div>
-                    <div class="card-divider_requests_index"></div>
-                    <div class="card-details_requests_index">
-                      <div class="row">
-                        <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-map-marker-alt"></i> <span id="address-<%= myrequest.id %>">Loading address...</span></p>
-                        </div>
-                        <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-users"></i><span class="icon-text_requests_index"><%= myrequest.number_of_pax %></span></p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-clock"></i><span class="icon-text_requests_index"><%= myrequest.duration %> hours</span></p>
-                        </div>
-                        <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-calendar-alt"></i><span class="icon-text_requests_index"><%= myrequest.date %></span></p>
-                        </div>
-                      </div>
-                    </div>
+    <div class="card mt-0" id="requestContainer">
+        <div class="row">
+            <div class="row text-center">
+              <div class="col-2">
+                <% if myrequest.thumbnail.attached? %>
+                <img src="<%= url_for myrequest.thumbnail %>" width="100%"/>
+              <% end %>
+              </div>
+              <div class="col align-middle">
+                <div class="row ">
+                  <%= myrequest.title %>
+                </div>
+              </div>
+              <div class="col-2 ">
+                <div class="row">
+                  <div class="col">
+                    5 Applicants
                   </div>
                 </div>
-              </a>
+                <div class="row">
+                  <div class="col">
+                    1/<%= myrequest.number_of_pax %> people found
+                  </div>
+                </div>
+              </div>
+              <div class="col-2">
+                <%= myrequest.status %>
+              </div>
             </div>
-          <% end %>
-        </div>
       </div>
     </div>
+    <% end %>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
