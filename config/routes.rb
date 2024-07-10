@@ -30,10 +30,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :requests
     end
+    namespace :v2 do
+      resources :reviews, :requests
+    end
   end
     
-  # resources :reviews, only: [:new, :create]
   resources :myrequests do
-    resources :reviews, only: [:new, :create]
+    resources :reviews, only: [:new, :create, :edit, :update]
   end
 end

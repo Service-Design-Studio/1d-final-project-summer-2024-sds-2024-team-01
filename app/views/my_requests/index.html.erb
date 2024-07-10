@@ -86,7 +86,7 @@
     <td>
       <%review = Review.find_by(review_by: current_user, request_id: comprequest.id)%>
       <% if review%>
-        <%= link_to 'Edit Review', edit_myrequest_review_path(comprequest, review)%>
+        <%= link_to 'Edit Review', edit_myrequest_review_path(comprequest, review) %>
       <%else%>
         <%= link_to 'Leave a Review', new_myrequest_review_path(comprequest) %>
       <%end%>

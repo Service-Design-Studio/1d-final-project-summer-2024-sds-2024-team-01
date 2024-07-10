@@ -9,22 +9,11 @@ class ReviewsController < ApplicationController
   
   def create
     @request = Request.find(params[:myrequest_id])
-    p "Found request: #{@request.inspect}"
-
-    @review = Review.new(review_params)
-    p "New review created: #{@review.inspect}"
-
-    @review.request = @request
-    p "Set request_id: #{@review.request_id}"
-
-    @review.created_by = current_user
-    p "Set created_by: #{@review.created_by}"
-
-    @review.review_for = @request.user
-    p "Set review_for: #{@review.review_for}"
-    
-    @review.created_at = DateTime.now
-    @review.updated_at = DateTime.now
+    review_for_user = User.find(@request.created_by)
+    # review_by_user = User.find(current_user.id)
+    review_by_user = current_user
+    @review = Review.new(review_params.merge(request: @request, review_by: review_by_user, review_for: review_for_user))
+    # p "REVIEW = ID: #{@review.id}, RATING: #{@review.rating}, COMMENT: #{@review.review_content}, REQUEST_ID: #{@review.request_id}, REVIEW_FOR: #{@review.review_for}, REVIEW_BY: #{review_by_user}"
     if @review.save
       redirect_to @request, notice: "Review was successfully created."
     else
@@ -42,6 +31,7 @@ class ReviewsController < ApplicationController
   end
   
   def edit
+    @review = Request.find(params[:myrequest_id]).reviews.find(params[:id])
   end
 
   private
@@ -55,6 +45,6 @@ class ReviewsController < ApplicationController
   end
 
   def review_params
-    params.require(:review).permit(:rating, :review_content)#, :created_by, :review_for, :request_id)
+    params.require(:review).permit(:rating, :review_content, :review_by, :review_for, :request_id)
   end
 end
