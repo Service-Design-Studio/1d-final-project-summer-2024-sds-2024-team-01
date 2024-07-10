@@ -1,28 +1,37 @@
-Given('I am logged in') do
-  role_list = [[1, 'User']]
+Given('Roles are seeded') do
+  role_list = [[1, 'User'], [2, 'Admin'], [3, 'Corporate Manager'], [4, 'Corporate User'], [5, 'Charity Manager']]
 
-  if Role.count.zero?
+  if Role.count == 0
     p 'No roles found, seeding role data...'
     role_list.each do |role_id, role_name|
-      Role.create!(id: role_id, role_name:)
+      role = Role.new({ id: role_id, role_name: })
+      role.save(validate: false) # Skipping validations
     end
+    p 'Created Roles'
   end
+end
 
-  user = User.find_or_create_by!(number: '56789012') do |new_user|
-    new_user.id = 123
-    new_user.name = 'Evan Green'
-    new_user.nric = 'S5678901E'
-    new_user.email = 'evan.green@example.com'
-    new_user.status = 'Active'
-    new_user.role_id = Role.find_by(role_name: 'User').id
-    new_user.password = 'password'
-    new_user.password_confirmation = 'password'
-  end
+Then('There should be 5 roles') do
+expect(Role.count).to eq(5)
+end
 
+Given('I have an account') do
+    visit new_user_registration_path
+    fill_in 'user_name', with: 'Harrison Ford'
+    fill_in 'user_number', with: '56789012'
+    fill_in 'user_email', with: 'harrison@example.com'
+    fill_in 'user_password', with: 'asdfasdf'
+    fill_in 'user_password_confirmation', with: 'asdfasdf'
+    click_button 'Sign up!'
+    expect(page).to have_content('signed up successfully.')
+end
+
+And('I login') do
   visit new_user_session_path
-  fill_in 'user_number', with: user.number
-  fill_in 'user_password', with: 'password'
+  fill_in 'user_number', with: '56789012'
+  fill_in 'user_password', with: 'asdfasdf'
   click_button 'Login'
+  expect(page).to have_content('Signed in successfully.')
 end
 
 Given('I am on the {string} page') do |page|
@@ -68,7 +77,7 @@ And('I have a request') do
     reward: '$20',
     reward_type: 'Cash',
     status: 'Open',
-    created_by: current_user.id
+    created_by: 123
   )
 end
 
@@ -85,10 +94,10 @@ end
 Given('there is a registered user on the app') do
   User.create(
     id: 1,
-    name: 'Hannah Black',
+    name: 'Alice Smith',
     nric: 'S8901234H',
-    number: '89012345',
-    email: 'hannah.black@example.com',
+    number: '12345678',
+    email: 'alice.smith@example.com',
     status: 'Active',
     role_id: 1,
     created_at: DateTime.now,

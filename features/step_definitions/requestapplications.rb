@@ -54,19 +54,18 @@ end
 # end
 
 Then('I should see the applicants who have applied for each request') do
-  expect 
+  expect(find('.applicant-profile')).to have_content('Alice Smith')
 end
 
 Then('I should see the name of each applicant') do
-  pending
+  expect(find('.applicant-profile > p')).to have_content('Alice Smith')
 end
 
 When('I click on the profile section of the first applicant') do
-  # Add the code to click on the profile section of the first applicant
-  pending
+  find('.applicant-profile').click
 end
 
 Then('I should see the applicants profile') do
-  # Add the code to verify the applicant's profile
-  pending
+  expect(page).to have_content('Alice Smith')
+  expect(page).to have_selector('.body-container_profile')
 end
