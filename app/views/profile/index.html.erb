@@ -1,81 +1,87 @@
-<!-- app/views/reviews/new_temp.html.erb -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leave a Review</title>
-  <%= stylesheet_link_tag 'application', media: 'all' %>
-  <style>
-    .star-rating .fa-star {
-      font-size: 2rem;
-      color: #ddd;
-      cursor: pointer;
-    }
-    .star-rating .fa-star.checked {
-      color: #ffcc00;
-    }
-    .breadcrumb {
-      background: none;
-      padding: 0;
-    }
-    .breadcrumb-item + .breadcrumb-item::before {
-      content: ">";
-    }
-  </style>
-</head>
 <body>
-  <div class="container mt-4">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">My Requests</a></li>
-        <li class="breadcrumb-item"><a href="#">Request Details</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Leave a Review</li>
-      </ol>
-    </nav>
-    
-    <h1>Review</h1>
-    
-    <div class="mb-3">
-      <label for="rating" class="form-label">Rate the overall experience:</label>
-      <div id="rating" class="star-rating">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <span class="rating-text">(0)</span>
+  <div class="container content">
+    <div class="card mb-0 custom-card_profile header-card_profile">
+      <div class="card-body header-container_profile">
+        <!-- Profile picture container -->
+        <div class="profile-picture-container">
+          <div class="profile-picture"></div>
+        </div>
+        <!-- Profile info container -->
+        <div class="profile-info-container">
+          <!-- Profile name -->
+          <h5><%= @profile.name %></h5>
+          <!-- Star ratings -->
+          <p class="mb-1 stars_user_profile">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i> (120)
+          </p>
+        </div>
       </div>
     </div>
-    
-    <form>
-      <div class="mb-3">
-        <textarea class="form-control" id="reviewContent" rows="5" placeholder="Share details of your own experience with them and any feedback you might have."></textarea>
+    <div class="card mb-0 custom-card_profile body-card_profile">
+      <div class="card-body body-container_profile">
+        <div class="follow-btn-profile">
+          <button type="submit" class="btn follow-btn-profile">Follow</button>
+          <button type="submit" class="btn follow-btn-profile">Edit profile</button>
+        </div>
+        <div class="options-icon-follow">
+          <i class="fas fa-ellipsis-h"></i>
+        </div>
+        <!-- Tabs container -->
+        <div class="tabs-container">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="requests-tab" data-toggle="tab" href="#requests" role="tab" aria-controls="requests" aria-selected="true">Requests</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="requests" role="tabpanel" aria-labelledby="requests-tab">
+              <!-- Content for Requests -->
+              <div class="requests-grid">
+                <% @requests.each do |request| %>
+                  <div class="request-item">
+                    <div class="request-content">
+                      <a href="<%= request_path(request) %>">
+                        <div class="request-square">
+                          <% if request.thumbnail.attached? %> 
+                          <img src="<%= image_url(request.thumbnail) %>" class="card-img-top" alt="<%= request.title %>"/> 
+                          <% end %> 
+                          <!-- Using inline style to set background image -->
+                          <div class="request-popup">
+                            <p> Number of slots available (TBI) </p>
+                          </div>
+                        </div>
+                      </a>
+                      <p class="request-name"><%= request.title %></p>
+                      <div class="availability-indicator_profile_requests"><%= request.status %></div>
+                      <div class="options-icon-requests">
+                        <i class="fas fa-ellipsis-h"></i>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+              <!-- Content for Reviews -->
+              <div class="review-item">Review 1</div>
+              <div class="review-item">Review 2</div>
+            </div>
+          </div>
+        </div>
+        <!--Profile user description container-->
+        <div class="card mb-0 profile-user_description_container">
+          <p> This holds the user written description. </p>
+        </div>
       </div>
-      <input type="hidden" id="reviewRating" name="rating" value="">
-      <input type="hidden" id="reviewForId" name="review_for_id" value="1"> <!-- Placeholder -->
-      <input type="hidden" id="createdById" name="created_by_id" value="1"> <!-- Placeholder -->
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
   </div>
-
-  <%= javascript_include_tag 'application' %>
-
-  <script>
-    // Placeholder for star rating interaction
-    document.querySelectorAll('.star-rating i').forEach(function(star, index) {
-      star.addEventListener('click', function() {
-        document.querySelectorAll('.star-rating i').forEach(function(s, i) {
-          if (i <= index) {
-            s.classList.add('checked');
-          } else {
-            s.classList.remove('checked');
-          }
-        });
-        // Set the rating value to the hidden field
-        document.getElementById('reviewRating').value = index + 1;
-      });
-    });
-  </script>
 </body>
-</html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
