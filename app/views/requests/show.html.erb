@@ -27,11 +27,11 @@
               <h5>Details</h5>
               <div class="details-item_requests_details">
                 <i class="fas fa-calendar-alt"></i>
-                <span><%= @request.date %></span>
+                <span><%= @request.date.strftime('%d %B %Y') %></span>
               </div>
               <div class="details-item_requests_details">
                 <i class="fas fa-clock"></i>
-                <span><%= @request.duration %> hours</span>
+                <span><%= @request.start_time.strftime('%H:%M') %> , lasting <%= @request.duration %> hours</span>
               </div>
               <div class="details-item_requests_details">
                 <i class="fas fa-users"></i>

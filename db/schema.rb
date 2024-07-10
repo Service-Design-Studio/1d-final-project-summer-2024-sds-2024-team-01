@@ -142,7 +142,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
 
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
-    t.string "nric", limit: 9, null: false
     t.string "email", null: false
     t.string "number", default: "", null: false
     t.string "status", default: "active", null: false

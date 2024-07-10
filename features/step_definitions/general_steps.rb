@@ -1,27 +1,26 @@
-Given('I am logged in') do
-  role_list = [[1, 'User']]
+Given('Roles are seeded') do
+    role = Role.new({ id: 1, role_name: 'User'})
+    role.save
+end
 
-  if Role.count.zero?
-    p 'No roles found, seeding role data...'
-    role_list.each do |role_id, role_name|
-      Role.create!(id: role_id, role_name:)
-    end
-  end
+Given('I have an account') do
+    visit new_user_registration_path
+    fill_in 'user_name', with: 'Harrison Ford'
+    fill_in 'user_number', with: '56789012'
+    fill_in 'user_email', with: 'harrison@example.com'
+    fill_in 'user_password', with: 'asdfasdf'
+    fill_in 'user_password_confirmation', with: 'asdfasdf'
+    click_button 'Sign up!'
+    expect(page).to have_content('signed up successfully.')
+    click_button 'Logout'
+end
 
-  user = User.find_or_create_by!(number: '56789012') do |new_user|
-    new_user.name = 'Evan Green'
-    new_user.nric = 'S5678901E'
-    new_user.email = 'evan.green@example.com'
-    new_user.status = 'Active'
-    new_user.role_id = Role.find_by(role_name: 'User').id
-    new_user.password = 'password'
-    new_user.password_confirmation = 'password'
-  end
-
+And('I login') do
   visit new_user_session_path
-  fill_in 'user_number', with: user.number
-  fill_in 'user_password', with: 'password'
+  fill_in 'user_number', with: '56789012'
+  fill_in 'user_password', with: 'asdfasdf'
   click_button 'Login'
+  expect(page).to have_content('Signed in successfully.')
 end
 
 Given('I am on the {string} page') do |page|
@@ -51,4 +50,45 @@ end
 
 Then('I should see a message {string}') do |string|
   expect(page).to have_content(string)
+end
+
+And('I have a request') do
+  Request.create(
+    title: 'Test Request',
+    description: 'Need someone to walk my dog for an hour every afternoon',
+    category: 'Pet Care',
+    location: 'POINT(34.052235 -118.243683)',
+    date: Date.new(2024, 7, 2),
+    number_of_pax: 1,
+    duration: 1,
+    start_time: '12:00',
+    reward: '$20',
+    reward_type: 'Cash',
+    status: 'Open',
+    created_by: User.where(name: 'Harrison Ford').take.id
+  )
+end
+
+And('there is an application for my request') do
+  RequestApplication.create(
+    status: 'Pending',
+    applicant_id: User.where(name: 'Alice Smith').take.id,
+    request_id: Request.where(title: 'Test Request').take.id,
+    created_at: DateTime.now,
+    updated_at: DateTime.now
+  )
+end
+
+Given('there is a registered user on the app') do
+  User.create(
+    name: 'Alice Smith',
+    number: '12345678',
+    email: 'alice.smith@example.com',
+    status: 'Active',
+    role_id: 1,
+    created_at: DateTime.now,
+    password: 'password',
+    password_confirmation: 'password',
+    updated_at: DateTime.now
+  )
 end
