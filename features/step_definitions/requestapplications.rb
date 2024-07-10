@@ -8,9 +8,17 @@ Then('I should not be able to accept any applicants') do
   # Add the code to verify that no applicants can be accepted
 end
 
-When('I reject the first applicant') do
-  # Add the code to reject the first applicant
-  pending
+When('I {string} the first applicant') do |action|
+  find('.clickable-card_requests_index-wrapper').hover
+  if action == 'Accept'
+    find('.accept-btn_requests_index', visible: false).click
+  else
+    find('.reject-btn_requests_index', visible: false).click
+  end
+end
+
+Then('the application should be {string}') do |status|
+  expect(RequestApplication.where(request_id: Request.where(title: 'Test Request').take.id).take.status).to eq(status)
 end
 
 Given('there is at least one request') do

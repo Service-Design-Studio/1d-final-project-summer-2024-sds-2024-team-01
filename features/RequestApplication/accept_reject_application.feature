@@ -3,23 +3,27 @@ Feature:
     So that I can receive help 
     I want to be able to accept an appropriate applicant
 
-Scenario:
-        Given I am on the 'MyRequests' Page
-        And I click on the header of the first request 
-        And the first request is not fully filled
-        When I accept the first applicant
-        Then I should see "Applicant accepted"
-
-
-Scenario:
-        Given I am on the 'MyRequests' Page
-        And I click on the header of the first request 
-        And the first request is fully filled
-        Then I should not be able to accept any applicants 
+Background:
+    Given I have an account
+    And I login 
+    And there is a registered user on the app
+    And I have a request
+    And there is an application for my request
 
 Scenario:
-        Given I am on the 'MyRequests' Page
-        And I click on the header of the first request 
-        When I reject the first applicant
-        Then I should see "Applicant rejected"
+        Given I am on the 'myrequests' page
+        When I "Accept" the first applicant
+        Then the application should be "Accepted"
+        And I should see "Application accepted"
+
+# Scenario:
+#         Given I am on the 'myrequests' page
+#         And the first request is fully filled
+#         Then I should see "Unable to accept more applicants"
+
+Scenario:
+        Given I am on the 'myrequests' page
+        When I "Reject" the first applicant
+        Then the application should be "Rejected"
+        And I should see "Application rejected"
 

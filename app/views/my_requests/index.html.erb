@@ -63,8 +63,12 @@
                       </a>
                       <!-- Split button -->
                       <div class="split-button_requests_index">
-                        <a href="/accept?id=<%=application.id%>" class="btn accept-btn_requests_index">Accept</a>
-                        <a href="/reject?id=<%=application.id%>" class="btn reject-btn_requests_index">Reject</a>
+                        <form action="/myrequests/accept?id=<%= application.id %>" method="post">
+                          <button type="submit" class="btn accept-btn_requests_index">Accept</button>
+                        </form>
+                        <form action="/myrequests/reject?id=<%= application.id %>" method="post">
+                          <button type="submit" class="btn reject-btn_requests_index">Reject</button>
+                        </form>
                       </div>
                     </div>
                   <% end %>
