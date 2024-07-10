@@ -1,0 +1,25 @@
+<!-- app/views/my_requests/reviews/new.html.erb -->
+<h1>Leave a Review for <%= @request.user.name %></h1>
+<%= form_with(model: [@request, @review],url: myrequest_reviews_path(@request), local: true) do |form| %>
+  <div>
+    <%= form.label :rating %>
+    <%= form.number_field :rating, in: 1..5 %>
+  </div>
+  <div>
+    <%= form.label :review_content %>
+    <%= form.text_area :review_content %>
+  </div>
+  <div>
+    <%= form.submit 'Submit Review' %>
+  </div>
+  <% if @review.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
+    <ul>
+    <% @review.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+ <% end %>
+<% end %>

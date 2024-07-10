@@ -16,4 +16,9 @@ class ProfileController < ApplicationController
   def edit; end
 
   def destroy; end
+
+  def show
+    @user = User.find(params[:id])
+    @average_rating = @user.received_reviews.average(:rating)
+  end
 end

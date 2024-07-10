@@ -132,13 +132,12 @@ if User.count == 0
   p "No users found, seeding user data..."
   users.each do |user_attributes|
     user = User.new(user_attributes)
-    user.save(validate: false) # Skipping validations
+    user.save!(validate: false)
     downloaded_image = URI.parse("https://innostudio.de/fileuploader/images/default-avatar.png").open
     user.avatar.attach(io: downloaded_image, filename: "foo.png")
   end
   p "Created Users"
 end
-
 
 requests = [
   {
@@ -153,7 +152,7 @@ requests = [
     reward: "$50",
     reward_type: "Cash",
     status: "Open",
-    created_by: 1,
+    # created_by: 12,
   },
   {
     title: "Dog Walking",
@@ -167,7 +166,7 @@ requests = [
     reward: "$20",
     reward_type: "Cash",
     status: "Open",
-    created_by: 2,
+    # created_by: 13,
   },
   {
     title: "Grocery Shopping",
@@ -181,7 +180,7 @@ requests = [
     reward: "£30",
     reward_type: "Cash",
     status: "Open",
-    created_by: 3,
+    # created_by: 14,
   },
   {
     title: "Moving Assistance",
@@ -195,7 +194,7 @@ requests = [
     reward: "€100",
     reward_type: "Cash",
     status: "Open",
-    created_by: 4,
+    # created_by: 15,
   },
   {
     title: "Painting Job",
@@ -209,7 +208,7 @@ requests = [
     reward: "¥5000",
     reward_type: "Cash",
     status: "Open",
-    created_by: 5,
+    # created_by: 16,
   },
   {
     title: "Car Wash",
@@ -223,7 +222,7 @@ requests = [
     reward: "$30",
     reward_type: "Cash",
     status: "Open",
-    created_by: 6,
+    # created_by: 17,
   },
   {
     title: "Babysitting",
@@ -237,7 +236,7 @@ requests = [
     reward: "2000₽",
     reward_type: "Cash",
     status: "Open",
-    created_by: 7,
+    # created_by: 18,
     created_at: DateTime.now,
     updated_at: DateTime.now
   },
@@ -253,7 +252,7 @@ requests = [
     reward: "€50",
     reward_type: "Cash",
     status: "Open",
-    created_by: 8,
+    # created_by: 19,
     created_at: DateTime.now,
     updated_at: DateTime.now
   },
@@ -269,7 +268,7 @@ requests = [
     reward: "¥200",
     reward_type: "Cash",
     status: "Open",
-    created_by: 9,
+    # created_by: 20,
     created_at: DateTime.now,
     updated_at: DateTime.now
   },
@@ -285,19 +284,142 @@ requests = [
     reward: "€150",
     reward_type: "Cash",
     status: "Open",
-    created_by: 10,
+    # created_by: 21,
     created_at: DateTime.now,
     updated_at: DateTime.now
   }
 ]
 
-if Request.count == 0
-  p "No requests found, seeding fake request data..."
-  requests.each do |rq_attr|
-    req = Request.new(rq_attr)
-    req.save
-    downloaded_imagee = URI.parse("https://www.houselogic.com/wp-content/uploads/2011/03/exterior-house-painting-epspainting-standard_c231db00f6cd6e9389489e72c0f32fe0.jpg").open
+comp_requests = [
+  {
+    title: "Help with Gardening",
+    description: "Looking for someone to help with my backyard garden",
+    category: "Gardening",
+    location: "POINT(40.712776 -74.005974)",
+    date: Date.new(2024, 7, 1),
+    number_of_pax: 2,
+    start_time: '12:00',
+    duration: 3,
+    reward: "$50",
+    reward_type: "Cash",
+    status: "Completed",
+    # created_by: 1,
+  },
+  {
+    title: "Dog Walking",
+    description: "Need someone to walk my dog for an hour every afternoon",
+    category: "Pet Care",
+    location: "POINT(34.052235 -118.243683)",
+    date: Date.new(2024, 7, 2),
+    number_of_pax: 1,
+    duration: 1,
+    start_time: '12:00',
+    reward: "$20",
+    reward_type: "Cash",
+    status: "Completed",
+    # created_by: 2,
+  },
+  {
+    title: "Grocery Shopping",
+    description: "Need help with weekly grocery shopping",
+    category: "Errands",
+    location: "POINT(51.507351 -0.127758)",
+    date: Date.new(2024, 7, 3),
+    number_of_pax: 1,
+    duration: 2,
+    start_time: '12:00',
+    reward: "£30",
+    reward_type: "Cash",
+    status: "Completed",
+    # created_by: 3,
+  },
+  {
+    title: "Moving Assistance",
+    description: "Help needed with moving furniture to a new apartment",
+    category: "Moving",
+    location: "POINT(48.856613 2.352222)",
+    date: Date.new(2024, 7, 4),
+    number_of_pax: 3,
+    duration: 5,
+    start_time: '12:00',
+    reward: "€100",
+    reward_type: "Cash",
+    status: "Completed",
+    # created_by: 4,
+  },
+  {
+    title: "Painting Job",
+    description: "Need help painting a room",
+    category: "Household",
+    location: "POINT(35.689487 139.691711)",
+    date: Date.new(2024, 7, 5),
+    number_of_pax: 2,
+    duration: 4,
+    start_time: '12:00',
+    reward: "¥5000",
+    reward_type: "Cash",
+    status: "Completed",
+    # created_by: 5,
+  }
+]
+
+begin
+  if Request.count == 0
+    p "No requests found, seeding fake request data..."
+    user_ids = User.pluck(:id)
+
+    requests.each do |rq_attr|
+      rq_attr[:created_by] = user_ids.sample
+      req = Request.create!(rq_attr)
+      downloaded_imagee = URI.parse("https://www.houselogic.com/wp-content/uploads/2011/03/exterior-house-painting-epspainting-standard_c231db00f6cd6e9389489e72c0f32fe0.jpg").open
       req.thumbnail.attach(io: downloaded_imagee, filename: "painting.jpg")
+    end
+    comp_requests.each do |comp|
+      comp[:created_by] = user_ids.sample
+      compl = Request.create!(comp)
+    end
   end
-  p "Fake request data seeded"
+rescue => e
+  p "Error during seeding: #{e.message}"
+ensure
+  p "seed completed"
 end
+
+# reviews = [
+#   {
+#     rating: 5,
+#     review_content: "Nice",
+#     created_at: DateTime.now,
+#   },
+#   {
+#     rating: 3,
+#     review_content: "Alright",
+#     created_at: DateTime.now,
+#   },  
+#   {
+#     rating: 1,
+#     review_content: "Bad",
+#     created_at: DateTime.now,
+#   }
+# ]
+
+# begin
+#   if Review.count == 0
+#     p "No reviews found, seeding review data..."
+#     completed_requests = Request.where(status: "Completed")
+#     completed_requests.each do |request|
+#       # The creator of the request is being reviewed
+#       review_for_id = request.created_by
+#       # Find a random user who didn't create the request to be the reviewer
+#       review_by_id = User.where.not(id: review_for_id).pluck(:id).sample
+#       reviews.each do |review_attr|
+#         review_attr[:request_id] = request.id
+#         review_attr[:review_for] = review_for_id
+#         review_attr[:review_by] = review_by_id
+#         review = Review.new(review_attr)
+#         review.save!(validate: false)
+#       end
+#     end
+#     p "Created Reviews"
+#   end
+# end
