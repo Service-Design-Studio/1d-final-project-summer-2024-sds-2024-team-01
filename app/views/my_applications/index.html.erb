@@ -40,13 +40,25 @@
                   </div>
                   <div class="card-actions_requests_index">
                     <div class="application-indicator_requests_index">
-                     <p>button</p>
+                     <div class="application-indicator_requests_index">
+                      <span class="application-status_indicator <%= myapplication.status.downcase %>"><%= myapplication.status %></span>
+                    </div>
                     </div>
                   </div>
                 </a>
                 <div class="popups-container">
                     <div class="popup_requests_index">
                       <!-- Content for the popup -->
+                      <div class="applicant-info_requests_index">
+                        <% if myapplication.request.user.avatar.attached? %>
+                          <img src="<%= image_url(myapplication.request.user.avatar) %>" alt="<%= myapplication.request.user.name %>" class="profile-pic_requests_index">
+                        <% end %>
+                        <p><%= myapplication.request.user.name %></p>
+                        <button class="btn custom-btn-chat">Chat</button>
+                      </div>
+                      <div class="withdraw-button_requests_index">
+                        <a href="#" class="btn withdraw-btn_requests_index">Withdraw</a>
+                      </div>
                     </div>
                 </div>
               </div>

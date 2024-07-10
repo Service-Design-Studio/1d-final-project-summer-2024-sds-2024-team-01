@@ -818,7 +818,7 @@ font-weight: bold;
   padding-left: 10px; /* Optional: Add padding for better spacing */
 }
 
-/*my requests page CSSs styling*/
+/*my requests page + my applications CSSs styling*/
 .thumbnail_requests_index {
   height: 100px;
   width: auto;
@@ -1048,4 +1048,54 @@ font-weight: bold;
   background: #555;
 }
 
+/* application indicator */
+.application-status_indicator {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 40px;
+  border-radius: 5px;
+  color: #333;
+  font-size: 14px;
+  text-align: center;
+  background-color: #ddd; /* Default background color for statuses */
+}
 
+.application-status_indicator.pending {
+  background-color: #ddd;
+  color: #333;
+}
+
+.application-status_indicator.accepted {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.application-status_indicator.rejected {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* tmp withdraw button */
+.withdraw-button_requests_index {
+  position: relative;
+  top: -20px;
+  display: flex;
+  justify-content: flex-end; /* Align the button to the right */
+  align-items: center;
+}
+
+.withdraw-btn_requests_index {
+  background-color: #dc3545;
+  color: white;
+  text-align: center;
+  width: 200px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  padding: 10px 20px; /* Add padding for better appearance */
+  border-radius: 5px; /* Add rounded corners */
+  cursor: pointer;
+}
+
+.withdraw-btn_requests_index:hover {
+  background-color: #c82333; /* Slightly darker shade for hover effect */
+  border-color: #c82333;
+}
