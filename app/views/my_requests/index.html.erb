@@ -52,6 +52,7 @@
                   <% myrequest.request_applications.each_with_index do |application, index| %>
                     <div class="popup_requests_index" style="--index: <%= index %>;">
                       <!-- Content for the popup -->
+                      <a class="applicant-profile" href="/profile?id=<%=application.applicant.id%>">
                       <div class="applicant-info_requests_index">
                         <% if application.applicant.avatar.attached? %>
                           <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index">
@@ -59,10 +60,11 @@
                         <p><%= application.applicant.name %></p>
                         <button class="btn custom-btn-chat">Chat</button>
                       </div>
+                      </a>
                       <!-- Split button -->
                       <div class="split-button_requests_index">
-                        <a href="#" class="btn accept-btn_requests_index">Accept</a>
-                        <a href="#" class="btn reject-btn_requests_index">Reject</a>
+                        <a href="/accept?id=<%=application.id%>" class="btn accept-btn_requests_index">Accept</a>
+                        <a href="/reject?id=<%=application.id%>" class="btn reject-btn_requests_index">Reject</a>
                       </div>
                     </div>
                   <% end %>

@@ -1099,3 +1099,8 @@ font-weight: bold;
   background-color: #c82333; /* Slightly darker shade for hover effect */
   border-color: #c82333;
 }
+
+.profile-pic_requests_index{
+    width:60px;
+    border-radius: 50%;
+}
