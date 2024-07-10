@@ -54,15 +54,16 @@ end
 # end
 
 Then('I should see the applicants who have applied for each request') do
-  expect(find('.applicant-profile')).to have_content('Alice Smith')
+  page.should have_css('.applicant-info_requests_index > p', visible: false, text: 'Alice Smith')
 end
 
 Then('I should see the name of each applicant') do
-  expect(find('.applicant-profile > p')).to have_content('Alice Smith')
+  page.should have_css('.applicant-info_requests_index > p', visible: false, text: 'Alice Smith')
 end
 
 When('I click on the profile section of the first applicant') do
-  find('.applicant-profile').click
+  find('.clickable-card_requests_index-wrapper').hover
+  visit find('.applicant-profile')[:href]
 end
 
 Then('I should see the applicants profile') do

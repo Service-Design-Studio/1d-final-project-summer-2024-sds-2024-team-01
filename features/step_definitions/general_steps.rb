@@ -54,7 +54,6 @@ end
 
 And('I have a request') do
   Request.create(
-    id: 123,
     title: 'Test Request',
     description: 'Need someone to walk my dog for an hour every afternoon',
     category: 'Pet Care',
@@ -66,15 +65,15 @@ And('I have a request') do
     reward: '$20',
     reward_type: 'Cash',
     status: 'Open',
-    created_by: 123
+    created_by: User.where(name: 'Harrison Ford').take.id
   )
 end
 
 And('there is an application for my request') do
   RequestApplication.create(
     status: 'Pending',
-    applicant_id: 1,
-    request_id: 123,
+    applicant_id: User.where(name: 'Alice Smith').take.id,
+    request_id: Request.where(title: 'Test Request').take.id,
     created_at: DateTime.now,
     updated_at: DateTime.now
   )
@@ -82,9 +81,7 @@ end
 
 Given('there is a registered user on the app') do
   User.create(
-    id: 1,
     name: 'Alice Smith',
-    nric: 'S8901234H',
     number: '12345678',
     email: 'alice.smith@example.com',
     status: 'Active',

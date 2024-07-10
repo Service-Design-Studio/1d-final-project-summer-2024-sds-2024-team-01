@@ -8,7 +8,8 @@ Feature:
 #         Then I should see "Pending" under the status of the first request 
 
 Background:
-    Given I am logged in 
+    Given I have an account
+    And I login 
     And there is a registered user on the app
     And I have a request
     And there is an application for my request

@@ -17,6 +17,5 @@ end
 Before do |scenario|
     load Rails.root.join('db/seeds.rb')
 end
-
 # Before each scenario, start a transaction
 Cucumber::Rails::Database.javascript_strategy = :truncation
