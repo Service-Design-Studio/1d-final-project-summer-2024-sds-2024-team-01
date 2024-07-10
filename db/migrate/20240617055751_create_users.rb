@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration[7.1]
       t.string :email, null: false
       t.string :number, null: false, default: ""
       t.string :status, null: false, default: "active"
-      # t.references :role, foreign_key: true, default: "1"
+      t.references :role, foreign_key: true, default: "1"
       t.references :company, foreign_key: true, null: true
       t.references :charity, foreign_key: true, null: true
       t.string :encrypted_password, null: false, default: ""

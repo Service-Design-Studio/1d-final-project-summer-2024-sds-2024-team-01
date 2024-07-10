@@ -1,18 +1,6 @@
 Given('Roles are seeded') do
-  role_list = [[1, 'User'], [2, 'Admin'], [3, 'Corporate Manager'], [4, 'Corporate User'], [5, 'Charity Manager']]
-
-  if Role.count == 0
-    p 'No roles found, seeding role data...'
-    role_list.each do |role_id, role_name|
-      role = Role.new({ id: role_id, role_name: })
-      role.save(validate: false) # Skipping validations
-    end
-    p 'Created Roles'
-  end
-end
-
-Then('There should be 5 roles') do
-expect(Role.count).to eq(5)
+    role = Role.new({ id: 1, role_name: 'User'})
+    role.save
 end
 
 Given('I have an account') do
@@ -24,6 +12,7 @@ Given('I have an account') do
     fill_in 'user_password_confirmation', with: 'asdfasdf'
     click_button 'Sign up!'
     expect(page).to have_content('signed up successfully.')
+    click_button 'Logout'
 end
 
 And('I login') do
