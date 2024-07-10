@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <body>
   <div class="container content_requests_index">
     <div class="card custom-card_requests_index">
       <div class="card-body header-container_requests_index">
         <h2 class="header-text_requests_index">My Requests</h2>
+        <h5 class="subheader-text_requests_index">Check on your own requests and accept help from applicants!</h5>
       </div>
     </div>
 
@@ -47,13 +47,24 @@
                     </div>
                   </div>
                 </a>
-                <div class="popup_requests_index">
-                  <!-- Content for the popup -->
-                  <!-- Split button -->
-                  <div class="split-button_requests_index">
-                    <a href="#" class="btn accept-btn_requests_index">Accept</a>
-                    <a href="#" class="btn reject-btn_requests_index">Reject</a>
-                  </div>
+                <div class="popups-container">
+                  <% myrequest.request_applications.each_with_index do |application, index| %>
+                    <div class="popup_requests_index" style="--index: <%= index %>;">
+                      <!-- Content for the popup -->
+                      <div class="applicant-info_requests_index">
+                        <% if application.applicant.avatar.attached? %>
+                          <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index">
+                        <% end %>
+                        <p><%= application.applicant.name %></p>
+                        <button class="btn custom-btn-chat">Chat</button>
+                      </div>
+                      <!-- Split button -->
+                      <div class="split-button_requests_index">
+                        <a href="#" class="btn accept-btn_requests_index">Accept</a>
+                        <a href="#" class="btn reject-btn_requests_index">Reject</a>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -70,12 +81,14 @@
 
       searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.toLowerCase().trim();
+        console.log('Search term:', searchTerm); // Debug log
 
         requestCards.forEach(card => {
-          const title = card.querySelector('.card-title_requests_index').innerText.toLowerCase();
-          const category = card.querySelector('.card-subtitle_requests_index').innerText.toLowerCase();
+          const titleElement = card.querySelector('.card-title_requests_index');
+          const title = titleElement ? titleElement.innerText.toLowerCase() : '';
+          console.log('Card title:', title); // Debug log
 
-          if (title.includes(searchTerm) || category.includes(searchTerm)) {
+          if (title.includes(searchTerm)) {
             card.style.display = 'block'; // Show the card
           } else {
             card.style.display = 'none'; // Hide the card
@@ -87,22 +100,21 @@
       const clickableCards = document.querySelectorAll('.clickable-card_requests_index-wrapper');
 
       clickableCards.forEach(card => {
-        const popup = card.querySelector('.popup_requests_index');
+        const popupsContainer = card.querySelector('.popups-container');
+        const popups = card.querySelectorAll('.popup_requests_index');
+        
         card.addEventListener('mouseenter', () => {
-          popup.style.display = 'block';
-          popup.style.pointerEvents = 'auto';
+          popupsContainer.style.display = 'block';
+          popups.forEach(popup => {
+            popup.style.display = 'block';
+          });
         });
+        
         card.addEventListener('mouseleave', () => {
-          popup.style.display = 'none';
-          popup.style.pointerEvents = 'none';
-        });
-        popup.addEventListener('mouseenter', () => {
-          popup.style.display = 'block';
-          popup.style.pointerEvents = 'auto';
-        });
-        popup.addEventListener('mouseleave', () => {
-          popup.style.display = 'none';
-          popup.style.pointerEvents = 'none';
+          popupsContainer.style.display = 'none';
+          popups.forEach(popup => {
+            popup.style.display = 'none';
+          });
         });
       });
     });
