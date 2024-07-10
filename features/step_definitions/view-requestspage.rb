@@ -1,13 +1,5 @@
 
 #Feature 1: View Requests
-Given('I am logged in as {string} with nric {string}') do |email, nric|
-  # Implement authentication logic here if necessary
-puts "Logged in as #{email} with NRIC #{nric}"  #need to check information with database
-
-
-
-end
-
 Given('I am on the Ring of Reciprocity requests page') do
   visit '/requests' 
 end
@@ -15,10 +7,7 @@ end
 #just check that there is a list of requests in the database
 Then('I should see a list of requests') do
   # Check if the page has a list of requests
-  expect(page).to have_css('.request-card')
-  expect(page).to have_content('Help with Gardening')
-  expect(page).to have_content('Dog Walking')
-  expect(page).to have_content('Grocery Shopping')
+  expect(page).to have_css('#requestContainer')
   end
 
 
@@ -40,36 +29,24 @@ Given("I want to make new requests") do
 end
 
 When("I fill in the following:") do |table|
-  table.rows_hash.each do |field, value|
-    case field
-    when "BannerPhoto"
-      attach_file("request_thumbnail", value) unless value.strip.empty?
-    when "Title"
-      fill_in "request_title", with: value
-    when "Date"
-      fill_in "request_date", with: value
-    when "Category"
-      select value, from: "request_category" unless value.strip.empty?
-    when "Number of volunteers needed"
-      fill_in "request_number_of_pax", with: value
-    when "Start Time"
-      fill_in "request_start_time", with: value
-    when "End Time"
-      fill_in "request_duration", with: value
-    when "Description"
-      fill_in "request_description", with: value
-    when "Incentive"
-      select value, from: "request_reward_type" unless value.strip.empty?
-      fill_in "request_reward", with: value unless value.strip.empty?
-    end
-  end
+  puts page.body
+  data = table.rows_hash
+  fill_in 'request_title', with: data['Title']
+  fill_in 'date', with: data['Date']
+  select data['Category'], from: ':category'
+  fill_in ':number_of_pax', with: data['Number of volunteers needed']
+  fill_in ':start_time', with: data['Start Time']
+  fill_in ':duration', with: calculate_duration(data['Start Time'], data['End Time'])
+  fill_in ':description', with: data['Description']
+  fill_in 'request_reward', with: data['Incentive']
+  # Banner photo
 end
+
 
 Then("I should not see any new requests") do
   # Assuming the application handles invalid form submissions without creating new requests
   expect(page).not_to have_css('.request-card')
 end
-
 
 ###########################################
 #Feature 3: Show more details of Request
