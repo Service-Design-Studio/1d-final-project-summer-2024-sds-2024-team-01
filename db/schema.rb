@@ -115,7 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
     t.text "review_content"
     t.bigint "request_id", null: false
     t.bigint "review_for", null: false
-    t.bigint "created_by", null: false
+    t.bigint "review_by", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -180,7 +180,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   add_foreign_key "request_applications", "users", column: "applicant_id"
   add_foreign_key "requests", "users", column: "created_by"
   add_foreign_key "reviews", "requests"
-  add_foreign_key "reviews", "users", column: "created_by"
+  add_foreign_key "reviews", "users", column: "review_by"
   add_foreign_key "reviews", "users", column: "review_for"
   add_foreign_key "summary_reports", "users", column: "requested_by"
   add_foreign_key "user_reports", "users", column: "requested_by"

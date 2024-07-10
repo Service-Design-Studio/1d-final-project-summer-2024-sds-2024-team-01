@@ -1,4 +1,5 @@
 class MyRequestsController < ApplicationController
+  
   def index
     @requests =
       Request.includes(:request_applications)
@@ -9,6 +10,7 @@ class MyRequestsController < ApplicationController
     
     @comprequests = 
       Request.where(status: 'Completed')
+
   end
 
   # GET /requests/1

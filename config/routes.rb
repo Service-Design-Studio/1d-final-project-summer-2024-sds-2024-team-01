@@ -3,7 +3,7 @@ Rails.application.routes.draw do
              controllers: { registrations: 'my_devise/registrations', sessions: 'my_devise/sessions' }, path: '', path_names: { sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register', sign_out: 'logout' }
 
   # ,path: "", controllers: {sessions: "sessions", registrations:"registrations"}, path_names: {sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register', sign_out: 'logout'}
-  # resources :requests
+  resources :requests
   resources :devise
   root 'requests#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   get 'myrequests' => 'my_requests#index'
   get 'myapplications' => 'my_applications#index'
 
-  post 'reviews/edit'=> 'reviews#edit'
+  # get 'myrequests/reviews' => 'reviews#new'
+  
+
   namespace :api do
     namespace :v1 do
       resources :requests
@@ -31,8 +33,7 @@ Rails.application.routes.draw do
   end
     
   # resources :reviews, only: [:new, :create]
-  resources :requests do
+  resources :myrequests do
     resources :reviews, only: [:new, :create]
   end
-  resources :reviews, only: [:edit, :update, :index, :new, :create]
 end
