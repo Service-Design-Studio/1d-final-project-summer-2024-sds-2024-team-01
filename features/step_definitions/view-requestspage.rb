@@ -28,21 +28,23 @@ Given("I want to make new requests") do
   visit '/requests/new'
 end
 
-When("I fill in the following:") do |table|
-  puts page.body
-  data = table.rows_hash
-  fill_in 'request_title', with: data['Title']
-  fill_in 'date', with: data['Date']
-  select data['Category'], from: ':category'
-  fill_in ':number_of_pax', with: data['Number of volunteers needed']
-  fill_in ':start_time', with: data['Start Time']
-  fill_in ':duration', with: calculate_duration(data['Start Time'], data['End Time'])
-  fill_in ':description', with: data['Description']
-  fill_in 'request_reward', with: data['Incentive']
-  # Banner photo
+When('I fill in the following:') do |table|
+  table.hashes.each do |row|
+    attach_file('Banner Photo', row['BannerPhoto'], make_visible: true) if row['BannerPhoto'].present?
+
+    fill_in 'request_title', with: row['Title']
+    fill_in 'request_date', with: row['Date']
+    select row['Category'], from: 'request_category'
+    fill_in 'request_number_of_pax', with: row['Number of volunteers needed']
+    fill_in 'request_start_time', with: row['Start Time']
+    fill_in 'request_duration', with: row['Duration']
+    fill_in 'request_location', with: row['Location']
+    fill_in 'request_description', with: row['Description']
+    select row['Incentive provided'], from: 'request_reward_type'
+    fill_in 'request_reward', with: row['Incentive']
+  end
 end
-
-
+ 
 Then("I should not see any new requests") do
   # Assuming the application handles invalid form submissions without creating new requests
   expect(page).not_to have_css('.request-card')
@@ -172,23 +174,41 @@ end
 
 ############################
 #Feature 6: sort_requests
+When('I enter {string} in the Search requests field') do |string|
+  fill_in 'searchInput', with: string
+  end
 
+  # features/step_definitions/view-requestspage.rb
 
+Then('I should see the requests that contain the keyword {string}') do |keyword|
+  keyword_downcased = keyword.downcase
 
+  # Find all request cards on the page
+  request_cards = all('.request-card_requests_index')
 
+  matching_cards = []
+  request_cards.each do |card|
+    title = card.find('.card-title_requests_index').text
+    puts "Found title: #{title}" # Debugging output
+    if title.downcase.include?(keyword_downcased)
+      matching_cards << card
+    end
+  end
 
-
-
-Then('I should see {string} in the table of requests') do |content|
-  expect(page).to have_selector('table#requests-table', text: content)
+  # Ensure there is at least one matching card
+  expect(matching_cards).not_to be_empty, "expected to find text '#{keyword}' in the requests, but did not"
 end
 
+# Then('I should see {string} in the table of requests') do |content|
+#   expect(page).to have_selector('table#requests-table', text: content)
+# end
 
 
 
-Then('I should see {string} on the request details page') do |title|
-  expect(page).to have_content(title)
-end
+
+# Then('I should see {string} on the request details page') do |title|
+#   expect(page).to have_content(title)
+# end
 
 
 
