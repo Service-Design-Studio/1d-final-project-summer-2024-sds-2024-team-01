@@ -23,10 +23,6 @@ When('I click on the request') do
   click_link @request.title
 end
 
-When('I click on {string}') do |link_text|
-  click_link link_text
-end
-
 When('I fill out the review form with rating {int} and comment {string}') do |rating, comment|
   fill_in 'Rating', with: rating
   fill_in 'Review content', with: comment
