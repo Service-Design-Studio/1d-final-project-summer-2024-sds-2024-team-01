@@ -21,6 +21,10 @@ Rails.application.routes.draw do
 
   post 'requests/apply' => 'requests#apply'
   get 'myrequests' => 'my_requests#index'
+  post 'myrequests/complete' => 'my_requests#accept'
+  post 'myrequests/accept' => 'my_requests#accept'
+  post 'myrequests/reject' => 'my_requests#reject'
+
   get 'myapplications' => 'my_applications#index'
 
   namespace :api do

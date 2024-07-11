@@ -5,13 +5,9 @@ Feature: Login
 
   # Happy Case
   Scenario: Login with valid credentials
-    Given I am on the login page
-    When I enter the following credentials:
-    | field         | value  |
-    | Phone number  | 000    |
-    | Password      | 123456 |
-    And I click on "Login" button
-    Then I should be brought to the request page
+    Given I have an account
+    When I login
+    Then I should see "Signed in successfully."
 
   # Sad Case
   Scenario: Login with invalid credentials
@@ -22,3 +18,5 @@ Feature: Login
     | Password      |        |
     And I click on "Login" button
     Then I should see a message "Invalid Number or password."
+
+    Scenario: Test login
