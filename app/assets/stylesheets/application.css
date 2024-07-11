@@ -1078,10 +1078,11 @@ font-weight: bold;
 /* tmp withdraw button */
 .withdraw-button_requests_index {
   position: relative;
-  top: -20px;
+  top: -30px;
   display: flex;
   justify-content: flex-end; /* Align the button to the right */
   align-items: center;
+  margin-top:10px;
 }
 
 .withdraw-btn_requests_index {
