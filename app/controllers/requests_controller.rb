@@ -59,7 +59,15 @@ class RequestsController < ApplicationController
     @request.updated_at = DateTime.now
 
     if @request.save
-      @request.thumbnail.attach(request_params[:thumbnail])
+      if request_params[:thumbnail].present?
+        @request.thumbnail.attach(request_params[:thumbnail])
+      else
+        @request.thumbnail.attach(
+          io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
+          filename: 'freepik-lmao.jpg',
+          content_type: 'image/jpeg'
+        )
+      end
       redirect_to @request, notice: 'Request was successfully created.'
     else
       puts @request.errors.full_messages

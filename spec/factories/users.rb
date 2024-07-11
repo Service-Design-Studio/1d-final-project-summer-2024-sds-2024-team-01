@@ -1,9 +1,18 @@
 FactoryBot.define do
-  factory :user do
+  factory :user, class: 'User' do
     name { 'Testing User' }
-    nric { 'T1234567J' }
     email { Faker::Internet.email }
     number { '91112222' }
+    status { 'Active' }
+    role_id { 1 }
+    password { 'password' }
+    password_confirmation { 'password' }
+  end
+
+  factory :random_user, class: 'User' do
+    name { 'Random User' }
+    email { Faker::Internet.email }
+    number { "9#{Faker::Number.number(digits: 7)}" }
     status { 'Active' }
     role_id { 1 }
     password { 'password' }

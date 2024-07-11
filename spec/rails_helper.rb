@@ -32,6 +32,11 @@ RSpec.configure do |config|
     Rails.root.join('spec/fixtures')
   ]
 
+  # For loading seeds before every test suite
+  config.before(:suite) do
+    Rails.application.load_seed # loading seeds
+  end
+
   config.include FactoryBot::Syntax::Methods
   # Include Shoulda Matchers methods
   config.include Shoulda::Matchers::ActiveModel, type: :model
@@ -40,7 +45,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
@@ -65,10 +70,10 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   # Disable ActiveStorage during tests
-  config.before(:each, type: :model) do
-    allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attach).and_return(true)
-    allow_any_instance_of(ActiveStorage::Attached::Many).to receive(:attach).and_return(true)
-    allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attached?).and_return(false)
-    allow_any_instance_of(ActiveStorage::Attached::Many).to receive(:attached?).and_return(false)
-  end
+  # config.before(:each, type: :model) do
+  #   allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attach).and_return(true)
+  #   allow_any_instance_of(ActiveStorage::Attached::Many).to receive(:attach).and_return(true)
+  #   allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attached?).and_return(false)
+  #   allow_any_instance_of(ActiveStorage::Attached::Many).to receive(:attached?).and_return(false)
+  # end
 end
