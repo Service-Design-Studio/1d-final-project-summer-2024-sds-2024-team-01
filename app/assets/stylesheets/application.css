@@ -915,19 +915,31 @@ font-weight: bold;
   flex-grow: 1;
 }
 
+.col-md-12.mb-4.request-card_requests_index {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px; /* Consistent spacing between cards */
+}
+
 .clickable-card_requests_index {
   text-decoration: none;
   color: inherit;
-  display: flex; /* Ensure the link covers the entire card */
+  display: flex;
   flex-direction: row;
   align-items: center;
   height: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative; /* Ensure relative positioning for absolute children */
+  width: 100%; /* Ensure the card takes full width of the wrapper */
 }
 
 .clickable-card_requests_index-wrapper {
   position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .clickable-card_requests_index:hover {
