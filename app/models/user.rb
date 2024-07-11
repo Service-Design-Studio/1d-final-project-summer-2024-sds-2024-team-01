@@ -21,5 +21,5 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
   validates :email, presence: true
-  validates :number, presence: true
+  validates :number, presence: true, format: { with: /[89]\d{7}/, message: 'Please enter a valid SG number' }
 end
