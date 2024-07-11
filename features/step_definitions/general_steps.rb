@@ -92,3 +92,7 @@ Given('there is a registered user on the app') do
     updated_at: DateTime.now
   )
 end
+
+Then('I should not see {string}') do |message|
+  expect(page).not_to have_content(message)
+end

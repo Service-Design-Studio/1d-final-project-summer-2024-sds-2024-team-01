@@ -382,6 +382,7 @@ font-weight: bold;
 
 #upload-box {
   position: relative;
+  border-radius: 5px;
 }
 
 #plus-icon_requests_details {
@@ -405,10 +406,12 @@ font-weight: bold;
 .hidden {
   display: none;
 } /*hides instructions when image is uploaded*/
-/* .upload-box_requests_new {
-  cursor: pointer;
-  position: relative;
-} */
+
+.custom-card_requests_details {
+  border: none; /* Removes the border */
+  /* or alternatively */
+  /* border-color: transparent; Makes the border color transparent */
+}
 
 .upload-box_requests_new input[type="file"] {
   display: none;
@@ -1235,4 +1238,38 @@ font-weight: bold;
 .profile-pic_requests_index_my {
   width:60px;
   border-radius: 50%;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:focus, .btn-success.focus {
+  box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
+}
+
+.btn-success.disabled, .btn-success:disabled {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active,
+.show > .btn-success.dropdown-toggle {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus,
+.show > .btn-success.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
 }
