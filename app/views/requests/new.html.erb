@@ -29,6 +29,7 @@
                 <div id="cropper-container" style="display: none;">
                   <img id="image-to-crop" src="#" alt="Image for cropping" style="max-width: 100%; height: auto;" />
                   <button id="crop-and-upload" class="btn btn-primary mt-3">Crop and Upload</button>
+                  <button id="clear-upload" class="btn btn-secondary mt-3">Clear</button>
                 </div>
                 <!-- Plus Symbol -->
                 <i class="bi bi-plus-circle" id="plus-icon_requests_details"></i>
@@ -141,6 +142,7 @@
     const hiddenFileInput = document.getElementById('file-input-hidden');
     const cropperContainer = document.getElementById('cropper-container');
     const cropAndUploadButton = document.getElementById('crop-and-upload');
+    const clearUploadButton = document.getElementById('clear-upload');
     const uploadInstructions = document.getElementById('upload-instructions');
 
     plusIcon.addEventListener('click', function() {
@@ -187,6 +189,25 @@
           dataTransfer.items.add(file);
           hiddenFileInput.files = dataTransfer.files;
         }, 'image/jpeg');
+      }
+    });
+
+    clearUploadButton.addEventListener('click', function() {
+      // Clear the preview image and cropper
+      previewImg.style.display = 'none';
+      previewImg.src = '#';
+      cropperContainer.style.display = 'none';
+      plusIcon.style.display = 'block'; // Show the plus icon
+      uploadInstructions.style.display = 'block'; // Show the upload instructions
+
+      // Clear the file inputs
+      fileInputVisible.value = '';
+      hiddenFileInput.value = '';
+
+      // Destroy the cropper instance if it exists
+      if (cropper) {
+        cropper.destroy();
+        cropper = null;
       }
     });
 
