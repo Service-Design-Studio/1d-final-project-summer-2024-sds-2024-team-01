@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave a Review</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+</head>
+<body>
+  <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to 'My Requests', myrequests_path %></li>
+        <li class="breadcrumb-item"><%= link_to 'Request Details', request_path(params[:request_id]) %></li>
+        <li class="breadcrumb-item active" aria-current="page">Leave a Review</li>
+      </ol>
+    </nav>
+    
+    <h1>Review</h1>
+    
+    <div class="mb-3">
+      <label for="rating" class="form-label">Rate the overall experience:</label>
+      <div id="rating" class="star-rating">
+        <% 5.times do %>
+          <i class="fas fa-star"></i>
+        <% end %>
+      </div>
+    </div>
+    
+    <%= form_with model: @review, url: reviews_path, method: :post, local: true do |form| %>
+      <div class="mb-3">
+        <%= form.text_area :review_content, class: "form-control", id: "reviewContent", rows: 5, placeholder: "Share details of your own experience with them and any feedback you might have." %>
+      </div>
+      <%= form.hidden_field :rating, id: "reviewRating" %>
+      <%= form.hidden_field :review_for_id, value: params[:review_for_id] %>
+      <%= form.hidden_field :created_by_id, value: current_user.id %>
+      <%= form.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <%= javascript_include_tag 'application' %>
+  <script>
+    // Placeholder for star rating interaction
+    document.querySelectorAll('.star-rating i').forEach(function(star, index) {
+      star.addEventListener('click', function() {
+        document.querySelectorAll('.star-rating i').forEach(function(s, i) {
+          if (i <= index) {
+            s.classList.add('checked');
+          } else {
+            s.classList.remove('checked');
+          }
+        });
+        // Set the rating value to the hidden field
+        document.getElementById('reviewRating').value = index + 1;
+      });
+    });
+  </script>
+
+  <style>
+    .star-rating .fa-star {
+      font-size: 2rem;
+      color: #ddd;
+      cursor: pointer;
+    }
+
+    .star-rating .fa-star.checked {
+      color: #ffcc00;
+    }
+  </style>
+</body>
+</html>

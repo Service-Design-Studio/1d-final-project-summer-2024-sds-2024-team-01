@@ -1,0 +1,62 @@
+<!-- app/views/my_requests/reviews/new.html.erb -->
+
+<div class="container content review-container">
+  <div class="breadcrumb">
+    <a href="/myrequests">My Requests</a> /
+    Leave a Review
+  </div>
+  
+  <h1 class="review-header">Review</h1>
+  
+  <%= form_with(model: [@request, @review],url: myrequest_reviews_path(@request), local: true) do |form| %>
+    <div class="rating-container">
+      <span class="rating-label">Rate the overall experience:</span>
+      <div class="rating-stars">
+        <i class="fas fa-star" data-rating="1"></i>
+        <i class="fas fa-star" data-rating="2"></i>
+        <i class="fas fa-star" data-rating="3"></i>
+        <i class="fas fa-star" data-rating="4"></i>
+        <i class="fas fa-star" data-rating="5"></i>
+        <span class="rating-text">(0)</span>
+      </div>
+      <span class="dynamic-text">Leaving a review for <%= @request.user.name %></span>
+    </div>
+    
+    <%= form.hidden_field :rating, id: "review_rating" %> <!-- Hidden field to store the rating -->
+    <%= form.text_area :review_content, class: "review-textarea", placeholder: "Share details of your own experience with them and any feedback you might have." %>
+    
+    <div class="submit-button-container">
+      <%= form.submit "Submit", class: "btn custom-btn-lilac submit-review-button" %>
+    </div>
+
+    <% if @review.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
+      <ul>
+      <% @review.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+    <% end %>
+  <% end %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('.rating-stars i');
+    const ratingInput = document.getElementById('review_rating');
+
+    stars.forEach(star => {
+      star.addEventListener('click', function() {
+        const rating = this.getAttribute('data-rating');
+        document.querySelector('.rating-text').textContent = `(${rating})`;
+        ratingInput.value = rating; // Set the hidden field value
+        stars.forEach(s => s.classList.remove('active'));
+        for (let i = 0; i < rating; i++) {
+          stars[i].classList.add('active');
+        }
+      });
+    });
+  });
+</script>

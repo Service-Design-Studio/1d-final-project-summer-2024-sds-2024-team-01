@@ -1,4 +1,5 @@
 class MyRequestsController < ApplicationController
+  
   def index
     @requests =
       Request.includes(:request_applications)
@@ -14,6 +15,9 @@ class MyRequestsController < ApplicationController
 
     # Fetch all applicants in one query
     @applicants = User.where(id: all_applicant_ids).index_by(&:id)
+    
+    @comprequests = 
+      Request.where(status: 'Completed')
   end
 
   # GET /requests/1
