@@ -26,19 +26,21 @@
 
     <!-- Container for Request Cards -->
     <div class="card mt-0" id="requestContainer">
-      <div class="card-body">
+      <div class="card-body" style =>
         <div class="row">
           <% @requests.each do |myrequest| %>
             <div class="col-md-12 mb-4 request-card_requests_index_my">
               <div class="clickable-card_requests_index-wrapper_my">
-                <a href="<%= request_path(myrequest) %>" class="clickable-card_requests_index_my card h-100 d-flex flex-row align-items-center">
-                  <% if myrequest.thumbnail.attached? %>
-                    <img src="<%= image_url(myrequest.thumbnail) %>" class="thumbnail_requests_index_my" alt="<%= myrequest.title %>"/>
-                  <% end %>
-                  <div class="card-content_requests_index_my flex-grow-1">
-                    <h5 class="card-title_requests_index_my"><%= myrequest.title %></h5>
-                    <p class="card-date_requests_index_my"><%= myrequest.date.strftime('%d %B %Y') %> , <%= myrequest.start_time.strftime('%H:%M') %></p>
-                  </div>
+                <div class="card h-100 d-flex flex-row align-items-center">
+                  <a href="<%= request_path(myrequest) %>" class="clickable-area_requests_index_my">
+                    <% if myrequest.thumbnail.attached? %>
+                      <img src="<%= image_url(myrequest.thumbnail) %>" class="thumbnail_requests_index_my" alt="<%= myrequest.title %>"/>
+                    <% end %>
+                    <div class="card-content_requests_index_my flex-grow-1">
+                      <h5 class="card-title_requests_index_my"><%= myrequest.title %></h5>
+                      <p class="card-date_requests_index_my"><%= myrequest.date.strftime('%d %B %Y') %> , <%= myrequest.start_time.strftime('%H:%M') %></p>
+                    </div>
+                  </a>
                   <div class="card-actions_requests_index_my">
                     <div class="application-indicator_requests_index_my">
                       <% if myrequest.application_count > 0 %>
@@ -46,8 +48,9 @@
                       <% end %>
                       <p class="applicants-status_requests_index_my"><i class="fas fa-users"></i> <%= myrequest.application_count %>/<%= myrequest.number_of_pax %> people found</p>
                     </div>
+                    <button class="btn dropdown-btn_requests_index_my"><i class="fas fa-chevron-down"></i></button>
                   </div>
-                </a>
+                </div>
                 <% if myrequest.request_applications.any? %>
                   <div class="popups-container_my">
                     <% myrequest.request_applications.each_with_index do |application, index| %>
@@ -105,26 +108,62 @@
         });
       });
 
-      // Show popup on hover and keep it visible when hovering over it
-      const clickableCards = document.querySelectorAll('.clickable-card_requests_index-wrapper_my');
+      // Dropdown functionality
+      const dropdownButtons = document.querySelectorAll('.dropdown-btn_requests_index_my');
+      const cardBody = document.querySelector('.card-body');
 
-      clickableCards.forEach(card => {
-        const popupsContainer = card.querySelector('.popups-container_my');
-        const popups = card.querySelectorAll('.popup_requests_index_my');
-        
-        card.addEventListener('mouseenter', () => {
-          popupsContainer.style.display = 'block';
-          popups.forEach(popup => {
-            popup.style.display = 'block';
+      dropdownButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const wrapper = button.closest('.clickable-card_requests_index-wrapper_my');
+          const popupsContainer = wrapper.querySelector('.popups-container_my');
+          
+          // Close all other open popups
+          document.querySelectorAll('.popups-container_my.active').forEach(container => {
+            if (container !== popupsContainer) {
+              closePopup(container);
+            }
           });
+
+          if (popupsContainer.classList.contains('active')) {
+            closePopup(popupsContainer);
+          } else {
+            openPopup(popupsContainer);
+          }
+
+          // Adjust card body height
+          setTimeout(() => {
+            cardBody.style.height = cardBody.scrollHeight + 'px';
+          }, 10);
         });
-        
-        card.addEventListener('mouseleave', () => {
-          popupsContainer.style.display = 'none';
-          popups.forEach(popup => {
-            popup.style.display = 'none';
-          });
-        });
+      });
+
+      function openPopup(container) {
+        container.classList.add('active');
+        container.style.maxHeight = container.scrollHeight + 'px';
+        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
+        button.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = container.scrollHeight + 'px';
+      }
+
+      function closePopup(container) {
+        container.classList.remove('active');
+        container.style.maxHeight = null;
+        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
+        button.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = null;
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (event) => {
+        if (!event.target.closest('.clickable-card_requests_index-wrapper_my')) {
+          const openPopups = document.querySelectorAll('.popups-container_my.active');
+          openPopups.forEach(closePopup);
+
+          // Reset card body height
+          cardBody.style.height = 'auto';
+        }
       });
     });
   </script>

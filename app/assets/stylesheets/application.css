@@ -205,12 +205,12 @@ font-weight: bold;
 
 .header-text_requests_index {
   position: relative;
-  margin: 5px 0 10px 5px; /* Add some bottom margin to separate from subheader */
+  margin: 20px 0 10px 20px; /* Add some bottom margin to separate from subheader */
 }
 
 .subheader-text_requests_index {
   position: relative;
-  margin: 0 0 0 5px;
+  margin: 0 0 0 20px;
   font-weight: normal;
 }
 
@@ -224,6 +224,11 @@ font-weight: bold;
 
 .clickable-card_requests_index:hover .card {
   border-color: #ad88c6; /* Change border color on hover */
+}
+
+.requests-homepage-card-body {
+  padding: 20px;
+  height: 300px;
 }
 
 .card-divider_requests_index {
@@ -904,12 +909,20 @@ font-weight: bold;
 }
 
 /*my requests page + my applications CSSs styling*/
-/*my requests page + my applications CSSs styling*/
+.card-body {
+  padding: 0;
+}
+
+#requestContainer {
+  border: none;
+}
+
 .thumbnail_requests_index_my {
   height: 100px;
+  border-radius: 5px 0 0 5px;
   width: auto;
   object-fit: cover;
-  margin-right: 15px;
+  margin-right: 20px;
 }
 
 .card-content_requests_index_my {
@@ -932,7 +945,7 @@ font-weight: bold;
   height: 100%;
   max-height: 100px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 100%; /* Ensure the card takes full width of the wrapper */
+  width: calc(100% - 150px); /* Ensure the card takes full width of the wrapper except for the button */
   max-width: 1200px; /* Set max-width for consistency */
   margin: 0 auto; /* Center the card */
 }
@@ -940,10 +953,30 @@ font-weight: bold;
 .clickable-card_requests_index-wrapper_my {
   position: relative;
   width: 100%;
-  width: 1200px;
-  margin: 0 auto;
+  max-height: 100px;
+  transition: margin-bottom 0.3s ease-out;
+}
+
+.clickable-area_requests_index_my {
   display: flex;
-  flex-direction: column;
+  flex-grow: 1;
+  text-decoration: none;
+  color: inherit;
+  padding: 0px;
+}
+
+.card-actions_requests_index_my {
+  display: flex;
+  align-items: center;
+  padding-right: 15px;
+}
+
+.dropdown-btn_requests_index_my {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 10px;
 }
 
 .clickable-card_requests_index_my:hover {
@@ -1018,13 +1051,14 @@ font-weight: bold;
 }
 
 .card-title_requests_index_my {
-  margin: 0;
+  
+  margin: 25px 0 0 0;
   font-size: 1.25rem;
   font-weight: 500;
 }
 
 .card-date_requests_index_my {
-  margin: 0;
+  margin: 5px 0 0 0;
   font-size: 0.875rem;
   color: #6c757d;
 }
@@ -1085,43 +1119,33 @@ font-weight: bold;
 }
 
 .popups-container_my {
-  position: relative; /* Make the container relative for child positioning */
-  left: 0;
-  right: 0;
-  z-index: 10;
-  max-height: 390px; /* About 3 pop-ups */
-  overflow-y: auto; /* Add vertical scrollbar when content exceeds max-height */
-  padding-right: 2px; /* Add some padding for the scrollbar */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  width: 100%;
 }
 
 .popup_requests_index_my {
-  display: none;
-  position: relative;
-  top: 0; /* Ensure they stack correctly */
-  left: 0;
-  right: 0;
   background: white;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #656dad;
   border-radius: 5px;
-  z-index: 10; /* Ensure proper stacking */
-  border: 1px solid #9852a6;
+  margin: 5px 0 5px 0;
+  padding: 10px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
-.popup_requests_index_my:first-child {
-  margin-top: 0; /* Remove top margin for the first popup */
+.popups-container_my.active .popup_requests_index_my {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.clickable-card_requests_index-wrapper_my:hover .popup_requests_index_my {
-  display: block;
-  animation: slideDown_my 0.3s ease forwards;
+.card-body {
+  transition: height 0.3s ease-out;
 }
 
-.request-card_requests_index_my:hover .popup_requests_index_my {
-  display: block;
-}
-
-@keyframes slideDown_my {
+@keyframes slideDown {
   from {
     opacity: 0;
     transform: translateY(-10px);
@@ -1131,6 +1155,7 @@ font-weight: bold;
     transform: translateY(0);
   }
 }
+
 /*pop up scroll bar styling*/
 .popups-container_my::-webkit-scrollbar {
   width: 8px;
@@ -1202,8 +1227,7 @@ font-weight: bold;
   border-color: #c82333;
 }
 
-.profile-pic_requests_index_my{
-    width:60px;
-    border-radius: 50%;
+.profile-pic_requests_index_my {
+  width:60px;
+  border-radius: 50%;
 }
-
