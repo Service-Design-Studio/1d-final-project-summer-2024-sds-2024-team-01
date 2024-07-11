@@ -4,23 +4,23 @@
 #     }
 #   end
   
-# #   Given('I have a request with the following details:') do |table|
-# #     data = table.hashes.first
-# #     @request = Request.create!(
-# #       title: data['title'], 
-# #       description: data['description'], 
-# #       category: data['manual labour'], 
-# #       status: data['status'], 
-# #       user: User.find_by(number: '56789012'),
-# #       location: 'Test Location',  # Add required fields
-# #       date: '01/01/2222',           # Assuming date is today for simplicity
-# #       number_of_pax: 5,           # Arbitrary number for test
-# #       duration: '2 hours',        # Arbitrary duration for test
-# #       reward_type: 'Gift',        # Arbitrary reward type for test
-# #       created_by: 'Test Creator'  # Arbitrary created by for test
-# #     )
-# #     visit requests_path # Visit the requests page to see the created request
-# #   end
+#   Given('I have a request with the following details:') do |table|
+#     data = table.hashes.first
+#     @request = Request.create!(
+#       title: data['title'], 
+#       description: data['description'], 
+#       category: data['manual labour'], 
+#       status: data['status'], 
+#       user: User.find_by(number: '56789012'),
+#       location: 'Test Location',  # Add required fields
+#       date: '01/01/2222',           # Assuming date is today for simplicity
+#       number_of_pax: 5,           # Arbitrary number for test
+#       duration: '2 hours',        # Arbitrary duration for test
+#       reward_type: 'Gift',        # Arbitrary reward type for test
+#       created_by: 'Test Creator'  # Arbitrary created by for test
+#     )
+#     visit requests_path # Visit the requests page to see the created request
+#   end
   
 #   Given('I have a request:') do 
 #     visit '/requests/new'
