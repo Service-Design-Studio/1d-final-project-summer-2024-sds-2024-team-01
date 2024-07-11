@@ -43,7 +43,6 @@ Then('a review with rating {int} and comment {string} should be created for {str
   expect(review).not_to be_nil
 end
 
->>>>>>> main
 # When('I have a completed request') do
 #   @request = Request.create!(title: 'Completed Request', status: 'Completed', created_by: @current_user.id)
 # end
