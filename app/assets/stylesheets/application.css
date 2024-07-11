@@ -860,3 +860,36 @@ font-weight: bold;
   text-align: right; /* Align text to the right */
   color:rgba(105, 105, 105, 0.8)
 }
+.stars_user_profile .fa-star {
+  color: #ddd;
+}
+.stars_user_profile .fa-star.checked {
+  color: #ffd700;
+}
+.review-summary {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.review-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.review-filters .sort-by {
+  display: flex;
+  align-items: center;
+}
+.review-filters .sort-by label {
+  margin-right: 10px;
+}
+.review-item .card-body {
+  display: flex;
+  justify-content: space-between;
+}
+.review-item .card-title {
+  margin-bottom: 10px;
+}
+.review-item .card-text {
+  margin-bottom: 10px;
+}
