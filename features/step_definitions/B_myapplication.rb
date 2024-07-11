@@ -1,38 +1,35 @@
-
-Given('I am logged in as a user') do
-  user = User.create!(:phone => '00001', :password => '223344')
-  login_as(user, :scope => :user)
-end
-
-Given('I am on "My Applications" page') do
-  visit '/myapplications'
-end
-
-Then('I should see My Application details') do
-  expect(page).to have_content('My Application')
-  end
-
-When ('I click on one application') do
-  pending ## need to write 
-  end
-
-Then('I should see the application details page') do
-  pending ## need to write
-  end
-
-Then('I should see the status as {string}') do
-  expect(page).to have_content('string')
-end
-
-Then('I should see the application status as {string}') do |string|
-  expect(page).to have_content(string)
-end
-
-When('I click on one succesful application') do
-  click #pending
-  end
-
-Then('I click on {string} button on the pop up') do 
+And('I have already applied for a request recently') do
   pending
+end
+
+
+Given('I am on "My Applications" page') do 
+  visit '/my-applications'
   end
+
+Then('I should see all my applications') do
+  expect(page).to have_content('My Application details')
+  end
+  
+Then('I should see the application details page') do
+    pending # Write code here that turns the phrase above into concrete actions
+  end
+  
+
+Then('I should see status "Successful"') do
+  expect(page).to have_content('Successful')
+  end
+
+When('I click on one application') do
+  find('a', text: 'View').click
+  end
+
+Then('I should see the application status as {string}') do
+  expect(page).to have_content(string)
+  end
+
+Then('I should be able to see a pop up {string}') do |string|
+  expect(page).to have_content(string)
+  end
+
 

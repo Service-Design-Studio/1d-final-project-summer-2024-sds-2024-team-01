@@ -12,7 +12,7 @@ class Request < ActiveRecord::Base
   validates_presence_of :reward_type, message: "Please select a reward type"
   validates_presence_of :status 
   validates_presence_of :created_by
-  # validates_presence_of :created_at
-  # validates_presence_of :updated_at
+  validates_presence_of :created_at
+  validates_presence_of :updated_at
 
 end

@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
+  #method to ensure that the right parameters are being permitted for sign up and account update.
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected

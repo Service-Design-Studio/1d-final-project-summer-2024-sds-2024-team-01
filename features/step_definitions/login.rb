@@ -57,3 +57,4 @@ end
 Then('I will be at request page') do
   visit '/requests'
 end
+### I should not be needing to write this code cos they will ownself go to the request page and then I have to check that I am at the request page and see the items there 

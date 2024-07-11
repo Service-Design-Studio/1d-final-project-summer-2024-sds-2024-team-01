@@ -23,22 +23,38 @@ end
 
 Given('there is at least one request') do
   # Add the code to ensure there is at least one request
-  pending
+  user = User.find_by(email: 'testuser@example.com') || User.create(email: 'testuser@example.com', password: 'password')
+
+  # Log in the user
+  login_as(user, scope: :user)
+
+  # Ensure the request is created
+  request = Request.find_by(title: 'Test Request')
+  unless request
+    Request.create(title: 'Test Request', description: 'This is a test request')
+  end
+
+  # Visit the requests index page
+  visit requests_path
+
+  # Check that the request is displayed on the page
+  expect(page).to have_content('Test Request')
 end
 
 When('I click on the first request') do
   # Add the code to click on the first request
-  pending
+  find('.clickable-card_requests_index-wrapper').hover
 end
 
 When('I click on Apply') do
   # Add the code to click on the Apply button
-  pending
+  find('.apply-btn_requests_index', visible: false).click
+  
 end
 
 When('I apply for a request') do
   # Add the code to apply for a request
-  pending
+  find('.apply-btn_requests_index', visible: false).click
 end
 
 Then('I should see {string} in the status column of the most recent request') do |_status|
