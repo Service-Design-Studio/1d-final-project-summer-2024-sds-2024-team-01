@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
   <div class="container content_requests_index">
     <div class="card custom-card_requests_index">
@@ -15,7 +16,7 @@
         <div class="row">
           <div class="col-md-12">
             <form class="search-form_requests_index">
-              <input type="text" class="search-input_requests_index form-control" id="searchInput" placeholder="Search my requests...">
+              <input type="text" class="search-input_requests_index_my form-control" id="searchInput" placeholder="Search my applications...">
               <button type="submit" class="btn search-btn_requests_index"><i class="fas fa-search"></i></button>
             </form>
           </div>
@@ -28,38 +29,39 @@
       <div class="card-body">
         <div class="row">
           <% @applications.each do |myapplication| %>
-            <div class="col-md-12 mb-4 request-card_requests_index">
-              <div class="clickable-card_requests_index-wrapper">
-                <a href="<%= request_path(myapplication) %>" class="clickable-card_requests_index card h-100 d-flex flex-row align-items-center">
-                  <% if myapplication.request.thumbnail.attached? %>
-                    <img src="<%= image_url(myapplication.request.thumbnail) %>" class="thumbnail_requests_index" alt="<%= myapplication.request.title %>"/>
-                  <% end %>
-                  <div class="card-content_requests_index flex-grow-1">
-                    <h5 class="card-title_requests_index"><%= myapplication.request.title %></h5>
-                    <p class="card-date_requests_index"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>
+            <div class="col-md-12 mb-4 request-card_requests_index_my">
+              <div class="clickable-card_requests_index-wrapper_my">
+                <div class="card h-100 d-flex flex-row align-items-center">
+                  <a href="<%= request_path(myapplication.request) %>" class="clickable-area_requests_index_my">
+                    <% if myapplication.request.thumbnail.attached? %>
+                      <img src="<%= image_url(myapplication.request.thumbnail) %>" class="thumbnail_requests_index_my" alt="<%= myapplication.request.title %>"/>
+                    <% end %>
+                    <div class="card-content_requests_index_my flex-grow-1">
+                      <h5 class="card-title_requests_index_my"><%= myapplication.request.title %></h5>
+                      <p class="card-date_requests_index_my"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>
+                    </div>
+                  </a>
+                  <div class="card-actions_requests_index_my">
+                    <div class="application-indicator_requests_index_my">
+                      <span class="application-status_indicator_my <%= myapplication.status.downcase %>"><%= myapplication.status %></span>
+                    </div>
+                    <button class="btn dropdown-btn_requests_index_my"><i class="fas fa-chevron-down"></i></button>
                   </div>
-                  <div class="card-actions_requests_index">
-                    <div class="application-indicator_requests_index">
-                     <div class="application-indicator_requests_index">
-                      <span class="application-status_indicator <%= myapplication.status.downcase %>"><%= myapplication.status %></span>
+                </div>
+                <div class="popups-container_my">
+                  <div class="popup_requests_index_my">
+                    <!-- Content for the popup -->
+                    <div class="applicant-info_requests_index_my">
+                      <% if myapplication.request.user.avatar.attached? %>
+                        <img src="<%= image_url(myapplication.request.user.avatar) %>" alt="<%= myapplication.request.user.name %>" class="profile-pic_requests_index_my">
+                      <% end %>
+                      <p><%= myapplication.request.user.name %></p>
+                      <button class="btn custom-btn-chat_my">Chat</button>
                     </div>
+                    <div class="withdraw-button_requests_index_my">
+                      <a href="#" class="btn withdraw-btn_requests_index_my">Withdraw</a>
                     </div>
                   </div>
-                </a>
-                <div class="popups-container">
-                    <div class="popup_requests_index">
-                      <!-- Content for the popup -->
-                      <div class="applicant-info_requests_index">
-                        <% if myapplication.request.user.avatar.attached? %>
-                          <img src="<%= image_url(myapplication.request.user.avatar) %>" alt="<%= myapplication.request.user.name %>" class="profile-pic_requests_index">
-                        <% end %>
-                        <p><%= myapplication.request.user.name %></p>
-                        <button class="btn custom-btn-chat">Chat</button>
-                      </div>
-                      <div class="withdraw-button_requests_index">
-                        <a href="#" class="btn withdraw-btn_requests_index">Withdraw</a>
-                      </div>
-                    </div>
                 </div>
               </div>
             </div>
@@ -72,14 +74,14 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const searchInput = document.getElementById('searchInput');
-      const requestCards = document.querySelectorAll('.request-card_requests_index');
+      const requestCards = document.querySelectorAll('.request-card_requests_index_my');
 
       searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.toLowerCase().trim();
         console.log('Search term:', searchTerm); // Debug log
 
         requestCards.forEach(card => {
-          const titleElement = card.querySelector('.card-title_requests_index');
+          const titleElement = card.querySelector('.card-title_requests_index_my');
           const title = titleElement ? titleElement.innerText.toLowerCase() : '';
           console.log('Card title:', title); // Debug log
 
@@ -91,26 +93,62 @@
         });
       });
 
-      // Show popup on hover and keep it visible when hovering over it
-      const clickableCards = document.querySelectorAll('.clickable-card_requests_index-wrapper');
+      // Dropdown functionality
+      const dropdownButtons = document.querySelectorAll('.dropdown-btn_requests_index_my');
+      const cardBody = document.querySelector('.card-body');
 
-      clickableCards.forEach(card => {
-        const popupsContainer = card.querySelector('.popups-container');
-        const popups = card.querySelectorAll('.popup_requests_index');
-        
-        card.addEventListener('mouseenter', () => {
-          popupsContainer.style.display = 'block';
-          popups.forEach(popup => {
-            popup.style.display = 'block';
+      dropdownButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const wrapper = button.closest('.clickable-card_requests_index-wrapper_my');
+          const popupsContainer = wrapper.querySelector('.popups-container_my');
+          
+          // Close all other open popups
+          document.querySelectorAll('.popups-container_my.active').forEach(container => {
+            if (container !== popupsContainer) {
+              closePopup(container);
+            }
           });
+
+          if (popupsContainer.classList.contains('active')) {
+            closePopup(popupsContainer);
+          } else {
+            openPopup(popupsContainer);
+          }
+
+          // Adjust card body height
+          setTimeout(() => {
+            cardBody.style.height = cardBody.scrollHeight + 'px';
+          }, 10);
         });
-        
-        card.addEventListener('mouseleave', () => {
-          popupsContainer.style.display = 'none';
-          popups.forEach(popup => {
-            popup.style.display = 'none';
-          });
-        });
+      });
+
+      function openPopup(container) {
+        container.classList.add('active');
+        container.style.maxHeight = container.scrollHeight + 'px';
+        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
+        button.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = container.scrollHeight + 'px';
+      }
+
+      function closePopup(container) {
+        container.classList.remove('active');
+        container.style.maxHeight = null;
+        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
+        button.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = null;
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (event) => {
+        if (!event.target.closest('.clickable-card_requests_index-wrapper_my')) {
+          const openPopups = document.querySelectorAll('.popups-container_my.active');
+          openPopups.forEach(closePopup);
+
+          // Reset card body height
+          cardBody.style.height = 'auto';
+        }
       });
     });
   </script>
