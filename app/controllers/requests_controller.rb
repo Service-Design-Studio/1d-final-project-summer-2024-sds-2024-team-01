@@ -2,7 +2,7 @@
 require 'date'
 
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[show edit]
+  before_action :set_request, only: %i[show edit destroy]
   skip_before_action :authenticate_user!, only: %i[index show]
 
   # GET /requests
@@ -59,11 +59,28 @@ class RequestsController < ApplicationController
     @request.updated_at = DateTime.now
 
     if @request.save
-      @request.thumbnail.attach(request_params[:thumbnail])
+      if request_params[:thumbnail].present?
+        @request.thumbnail.attach(request_params[:thumbnail])
+      else
+        @request.thumbnail.attach(
+          io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
+          filename: 'freepik-lmao.jpg',
+          content_type: 'image/jpeg'
+        )
+      end
       redirect_to @request, notice: 'Request was successfully created.'
     else
       puts @request.errors.full_messages
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  # destroy request feature implmentation?
+  def destroy
+    @request.destroy
+    respond_to do |format|
+      format.html { redirect_to requests_url, notice: 'Request was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
@@ -80,4 +97,6 @@ class RequestsController < ApplicationController
                                     :reward_type, :reward, :thumbnail)
     # params.fetch(:request, {}).permit(:thumbnail)
   end
+
+  
 end

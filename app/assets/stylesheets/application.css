@@ -205,12 +205,12 @@ font-weight: bold;
 
 .header-text_requests_index {
   position: relative;
-  margin: 5px 0 10px 5px; /* Add some bottom margin to separate from subheader */
+  margin: 20px 0 10px 20px; /* Add some bottom margin to separate from subheader */
 }
 
 .subheader-text_requests_index {
   position: relative;
-  margin: 0 0 0 5px;
+  margin: 0 0 0 20px;
   font-weight: normal;
 }
 
@@ -224,6 +224,11 @@ font-weight: bold;
 
 .clickable-card_requests_index:hover .card {
   border-color: #ad88c6; /* Change border color on hover */
+}
+
+.requests-homepage-card-body {
+  padding: 20px;
+  height: 300px;
 }
 
 .card-divider_requests_index {
@@ -377,6 +382,7 @@ font-weight: bold;
 
 #upload-box {
   position: relative;
+  border-radius: 5px;
 }
 
 #plus-icon_requests_details {
@@ -400,10 +406,12 @@ font-weight: bold;
 .hidden {
   display: none;
 } /*hides instructions when image is uploaded*/
-/* .upload-box_requests_new {
-  cursor: pointer;
-  position: relative;
-} */
+
+.custom-card_requests_details {
+  border: none; /* Removes the border */
+  /* or alternatively */
+  /* border-color: transparent; Makes the border color transparent */
+}
 
 .upload-box_requests_new input[type="file"] {
   display: none;
@@ -632,6 +640,10 @@ font-weight: bold;
   background-color: #ccc; /* Grey background to represent profile picture */
 }
 
+.body-container_profile {
+  min-height: 800px;
+}
+
 .body-container_profile h5 {
   margin-top: 0; /* Remove margin to prevent overlap */
   padding-left: 0; /* Remove padding for central alignment */
@@ -676,19 +688,19 @@ font-weight: bold;
 
 .profile-user_description_container{
   position: absolute;
-  top: 250px;
-  right: 687px;
+  top: 300px;
+  right: 700px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-right: 290px; /* Adjust this value for spacing from the profile-info-container */
   padding-bottom: 40%; /* Adjust this value for spacing below the header-card_profile */
-  width: calc(100% - 990px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
+  width: calc(100% - 1000px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
 }
 
 /* Tabs container */
 .tabs-container {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   margin-left: 290px; /* Adjust this value for spacing from the profile-info-container */
-  margin-top: 100px; /* Adjust this value for spacing below the header-card_profile */
+  margin-top: 130px; /* Adjust this value for spacing below the header-card_profile */
   width: calc(100% - 300px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
 }
 
@@ -703,7 +715,7 @@ font-weight: bold;
 
 .nav-tabs .nav-link {
   color: #ad88c6; /* Lilac text color for tabs */
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
   border-color: #ad88c6;
   margin-right: -1px; /* Adjust margin to remove spacing */
   width: 150px;
@@ -795,6 +807,7 @@ font-weight: bold;
 }
 
 .options-icon-requests {
+  position: relative;
   margin-top: 5px; /* Space between name and options icon */
   margin-left: 275px;
   color: #ad88c6;
@@ -904,44 +917,88 @@ font-weight: bold;
 }
 
 /*my requests page + my applications CSSs styling*/
-.thumbnail_requests_index {
-  height: 100px;
-  width: auto;
-  object-fit: cover;
-  margin-right: 15px;
+.card-body {
+  padding: 0;
 }
 
-.card-content_requests_index {
+#requestContainer {
+  border: none;
+}
+
+.thumbnail_requests_index_my {
+  height: 100px;
+  border-radius: 5px 0 0 5px;
+  width: auto;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.card-content_requests_index_my {
   flex-grow: 1;
 }
 
-.clickable-card_requests_index {
+.col-md-12.mb-4.request-card_requests_index_my {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px; /* Consistent spacing between cards */
+}
+
+.clickable-card_requests_index_my {
   text-decoration: none;
   color: inherit;
-  display: flex; /* Ensure the link covers the entire card */
+  display: flex;
   flex-direction: row;
   align-items: center;
   height: 100%;
+  max-height: 100px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative; /* Ensure relative positioning for absolute children */
+  width: calc(100% - 150px); /* Ensure the card takes full width of the wrapper except for the button */
+  max-width: 1200px; /* Set max-width for consistency */
+  margin: 0 auto; /* Center the card */
 }
 
-.clickable-card_requests_index-wrapper {
+.clickable-card_requests_index-wrapper_my {
   position: relative;
+  width: 100%;
+  max-height: 100px;
+  transition: margin-bottom 0.3s ease-out;
 }
 
-.clickable-card_requests_index:hover {
+.clickable-area_requests_index_my {
+  display: flex;
+  flex-grow: 1;
+  text-decoration: none;
+  color: inherit;
+  padding: 0px;
+}
+
+.card-actions_requests_index_my {
+  display: flex;
+  align-items: center;
+  padding-right: 15px;
+}
+
+.dropdown-btn_requests_index_my {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+.clickable-card_requests_index_my:hover {
   border-color: #ad88c6; /* Change border color on hover */
 }
 
-.applicant-info_requests_index {
+.applicant-info_requests_index_my {
   display: flex;
   justify-content: left;
   align-items: center;
   margin-left: 20px;
 }
 
-.custom-btn-chat {
+.custom-btn-chat_my {
   position: absolute;
   bottom: 50px;
   left: 180px;
@@ -958,37 +1015,37 @@ font-weight: bold;
   z-index: 1000;
 }
 
-.custom-btn-chat:hover {
+.custom-btn-chat_my:hover {
   background-color: #9852a6; /* Slightly darker shade for hover effect */
   border-color: #9852a6;
 } 
 
-.application-indicator_requests_index {
+.application-indicator_requests_index_my {
   text-align: center;
   font-weight: bold;
   margin-bottom: 10px;
   margin-right: 25px;
 }
 
-.application-indicator_requests_index p {
+.application-indicator_requests_index_my p {
   margin: 0;
   width: fit-content; /* Set the width to fit the content */
 }
 
-.application-count_requests_index {
+.application-count_requests_index_my {
   color: #28a745; /* Green text for the number of applicants */
 }
 
-.applicants-status_requests_index {
+.applicants-status_requests_index_my {
   color: #6c757d; /* Dark grey text for the status */
 }
 
-.applicants-status_requests_index i {
+.applicants-status_requests_index_my i {
   color: #656dad; /* Purple icon for the people indicator */
   margin-right: 5px;
 }
 
-.custom-btn-complete-request {
+.custom-btn-complete-request_my {
   background-color: #6c757d;
   border-color: #6c757d;
   color: white;
@@ -996,36 +1053,37 @@ font-weight: bold;
   align-self: center; /* Center vertically */
 }
 
-.custom-btn-complete-request:hover {
+.custom-btn-complete-request_my:hover {
   background-color: #5a6268; /* Slightly darker shade for hover effect */
   border-color: #545b62;
 }
 
-.card-title_requests_index {
-  margin: 0;
+.card-title_requests_index_my {
+  
+  margin: 25px 0 0 0;
   font-size: 1.25rem;
   font-weight: 500;
 }
 
-.card-date_requests_index {
-  margin: 0;
+.card-date_requests_index_my {
+  margin: 5px 0 0 0;
   font-size: 0.875rem;
   color: #6c757d;
 }
 
-.card-actions_requests_index {
+.card-actions_requests_index_my {
   display: flex;
   flex-direction: row;
   align-items: center; /* Center items vertically */
 }
 
-.card-divider_requests_index {
+.card-divider_requests_index_my {
   border-top: 1px solid #dee2e6;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.split-button_requests_index {
+.split-button_requests_index_my {
   position: relative;
   top: -30px;
   display: flex;
@@ -1033,14 +1091,14 @@ font-weight: bold;
   margin-top: 10px;
 }
 
-.split-button_requests_index .btn {
+.split-button_requests_index_my .btn {
   width: 100px; /* Adjust the width as needed */
   margin-left: -1px; /* Slight overlap to remove gap between buttons */
   text-align: center;
   padding: 10px 20px; /* Add padding for better appearance */
 }
 
-.accept-btn_requests_index {
+.accept-btn_requests_index_my {
   background-color: #28a745;
   color: white;
   text-align: center;
@@ -1050,11 +1108,11 @@ font-weight: bold;
   border-bottom-right-radius: 0; /* No rounding for the bottom-right corner */
 }
 
-.accept-btn_requests_index:hover {
+.accept-btn_requests_index_my:hover {
   background-color: #218838;
 }
 
-.reject-btn_requests_index {
+.reject-btn_requests_index_my {
   background-color: #dc3545;
   color: white;
   text-align: center;
@@ -1064,45 +1122,35 @@ font-weight: bold;
   border-bottom-left-radius: 0; /* No rounding for the bottom-left corner */
 }
 
-.reject-btn_requests_index:hover {
+.reject-btn_requests_index_my:hover {
   background-color: #c82333;
 }
 
-.popups-container {
-  position: relative; /* Make the container relative for child positioning */
-  left: 0;
-  right: 0;
-  z-index: 10;
-  max-height: 390px; /* About 3 pop-ups */
-  overflow-y: auto; /* Add vertical scrollbar when content exceeds max-height */
-  padding-right: 2px; /* Add some padding for the scrollbar */
+.popups-container_my {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  width: 100%;
 }
 
-.popup_requests_index {
-  display: none;
-  position: relative;
-  top: 0; /* Ensure they stack correctly */
-  left: 0;
-  right: 0;
+.popup_requests_index_my {
   background: white;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #656dad;
   border-radius: 5px;
-  z-index: 10; /* Ensure proper stacking */
-  border: 1px solid #9852a6;
+  margin: 5px 0 5px 0;
+  padding: 10px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
-.popup_requests_index:first-child {
-  margin-top: 0; /* Remove top margin for the first popup */
+.popups-container_my.active .popup_requests_index_my {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.clickable-card_requests_index-wrapper:hover .popup_requests_index {
-  display: block;
-  animation: slideDown 0.3s ease forwards;
-}
-
-.request-card_requests_index:hover .popup_requests_index {
-  display: block;
+.card-body {
+  transition: height 0.3s ease-out;
 }
 
 @keyframes slideDown {
@@ -1115,26 +1163,27 @@ font-weight: bold;
     transform: translateY(0);
   }
 }
+
 /*pop up scroll bar styling*/
-.popups-container::-webkit-scrollbar {
+.popups-container_my::-webkit-scrollbar {
   width: 8px;
 }
 
-.popups-container::-webkit-scrollbar-track {
+.popups-container_my::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-.popups-container::-webkit-scrollbar-thumb {
+.popups-container_my::-webkit-scrollbar-thumb {
   background: #656dad;
   border-radius: 4px;
 }
 
-.popups-container::-webkit-scrollbar-thumb:hover {
+.popups-container_my::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
 /* application indicator */
-.application-status_indicator {
+.application-status_indicator_my {
   display: inline-block;
   margin-top: 15px;
   padding: 10px 40px;
@@ -1145,31 +1194,32 @@ font-weight: bold;
   background-color: #ddd; /* Default background color for statuses */
 }
 
-.application-status_indicator.pending {
+.application-status_indicator_my.pending {
   background-color: #ddd;
   color: #333;
 }
 
-.application-status_indicator.accepted {
+.application-status_indicator_my.accepted {
   background-color: #28a745;
   color: #fff;
 }
 
-.application-status_indicator.rejected {
+.application-status_indicator_my.rejected {
   background-color: #dc3545;
   color: #fff;
 }
 
 /* tmp withdraw button */
-.withdraw-button_requests_index {
+.withdraw-button_requests_index_my {
   position: relative;
-  top: -20px;
+  top: -30px;
   display: flex;
   justify-content: flex-end; /* Align the button to the right */
   align-items: center;
+  margin-top:10px;
 }
 
-.withdraw-btn_requests_index {
+.withdraw-btn_requests_index_my {
   background-color: #dc3545;
   color: white;
   text-align: center;
@@ -1180,12 +1230,46 @@ font-weight: bold;
   cursor: pointer;
 }
 
-.withdraw-btn_requests_index:hover {
+.withdraw-btn_requests_index_my:hover {
   background-color: #c82333; /* Slightly darker shade for hover effect */
   border-color: #c82333;
 }
 
-.profile-pic_requests_index{
-    width:60px;
-    border-radius: 50%;
+.profile-pic_requests_index_my {
+  width:60px;
+  border-radius: 50%;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:focus, .btn-success.focus {
+  box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
+}
+
+.btn-success.disabled, .btn-success:disabled {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active,
+.show > .btn-success.dropdown-toggle {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus,
+.show > .btn-success.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
 }
