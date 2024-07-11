@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
   <div class="container content_requests_index">
     <div class="card custom-card_requests_index">
@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-md-12">
             <form class="search-form_requests_index">
-              <input type="text" class="search-input_requests_index form-control" id="searchInput" placeholder="Search my requests...">
+              <input type="text" class="search-input_requests_index_my form-control" id="searchInput" placeholder="Search my requests...">
               <button type="submit" class="btn search-btn_requests_index"><i class="fas fa-search"></i></button>
             </form>
           </div>
@@ -29,68 +29,71 @@
       <div class="card-body">
         <div class="row">
           <% @requests.each do |myrequest| %>
-            <div class="col-md-12 mb-4 request-card_requests_index">
-              <div class="clickable-card_requests_index-wrapper">
-                <a href="<%= request_path(myrequest) %>" class="clickable-card_requests_index card h-100 d-flex flex-row align-items-center">
+            <div class="col-md-12 mb-4 request-card_requests_index_my">
+              <div class="clickable-card_requests_index-wrapper_my">
+                <a href="<%= request_path(myrequest) %>" class="clickable-card_requests_index_my card h-100 d-flex flex-row align-items-center">
                   <% if myrequest.thumbnail.attached? %>
-                    <img src="<%= image_url(myrequest.thumbnail) %>" class="thumbnail_requests_index" alt="<%= myrequest.title %>"/>
+                    <img src="<%= image_url(myrequest.thumbnail) %>" class="thumbnail_requests_index_my" alt="<%= myrequest.title %>"/>
                   <% end %>
-                  <div class="card-content_requests_index flex-grow-1">
-                    <h5 class="card-title_requests_index"><%= myrequest.title %></h5>
-                    <p class="card-date_requests_index"><%= myrequest.date.strftime('%d %B %Y') %> , <%= myrequest.start_time.strftime('%H:%M') %></p>
+                  <div class="card-content_requests_index_my flex-grow-1">
+                    <h5 class="card-title_requests_index_my"><%= myrequest.title %></h5>
+                    <p class="card-date_requests_index_my"><%= myrequest.date.strftime('%d %B %Y') %> , <%= myrequest.start_time.strftime('%H:%M') %></p>
                   </div>
-                  <div class="card-actions_requests_index">
-                    <div class="application-indicator_requests_index">
+                  <div class="card-actions_requests_index_my">
+                    <div class="application-indicator_requests_index_my">
                       <% if myrequest.application_count > 0 %>
-                        <p class="application-count_requests_index"><%= myrequest.application_count %> Applicants</p>
+                        <p class="application-count_requests_index_my"><%= myrequest.application_count %> Applicants</p>
                       <% end %>
-                      <p class="applicants-status_requests_index"><i class="fas fa-users"></i> <%= myrequest.application_count %>/<%= myrequest.number_of_pax %> people found</p>
+                      <p class="applicants-status_requests_index_my"><i class="fas fa-users"></i> <%= myrequest.application_count %>/<%= myrequest.number_of_pax %> people found</p>
                     </div>
                   </div>
                 </a>
-                <div class="popups-container">
-                  <% myrequest.request_applications.each_with_index do |application, index| %>
-                    <div class="popup_requests_index" style="--index: <%= index %>;">
-                      <!-- Content for the popup -->
-                      <a class="applicant-profile" href="/profile?id=<%=application.applicant.id%>">
-                      <div class="applicant-info_requests_index">
-                        <% if application.applicant.avatar.attached? %>
-                          <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index">
-                        <% end %>
-                        <p><%= application.applicant.name %></p>
-                        <button class="btn custom-btn-chat">Chat</button>
+                <% if myrequest.request_applications.any? %>
+                  <div class="popups-container_my">
+                    <% myrequest.request_applications.each_with_index do |application, index| %>
+                      <div class="popup_requests_index_my" style="--index: <%= index %>;">
+                        <!-- Content for the popup -->
+                        <a class="applicant-profile_my" href="/profile?id=<%=application.applicant.id%>">
+                        <div class="applicant-info_requests_index_my">
+                          <% if application.applicant.avatar.attached? %>
+                            <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index_my">
+                          <% end %>
+                          <p><%= application.applicant.name %></p>
+                          <button class="btn custom-btn-chat_my">Chat</button>
+                        </div>
+                        </a>
+                        <!-- Split button -->
+                        <div class="split-button_requests_index_my">
+                          <form action="/myrequests/accept?id=<%= application.id %>" method="post">
+                            <button type="submit" class="btn accept-btn_requests_index_my">Accept</button>
+                          </form>
+                          <form action="/myrequests/reject?id=<%= application.id %>" method="post">
+                            <button type="submit" class="btn reject-btn_requests_index_my">Reject</button>
+                          </form>
+                        </div>
                       </div>
-                      </a>
-                      <!-- Split button -->
-                      <div class="split-button_requests_index">
-                        <form action="/myrequests/accept?id=<%= application.id %>" method="post">
-                          <button type="submit" class="btn accept-btn_requests_index">Accept</button>
-                        </form>
-                        <form action="/myrequests/reject?id=<%= application.id %>" method="post">
-                          <button type="submit" class="btn reject-btn_requests_index">Reject</button>
-                        </form>
-                      </div>
-                    </div>
-                  <% end %>
-                </div>
+                    <% end %>
+                  </div>
+                <% end %>
               </div>
             </div>
+          <% end %>
+        </div>
       </div>
     </div>
-    <% end %>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const searchInput = document.getElementById('searchInput');
-      const requestCards = document.querySelectorAll('.request-card_requests_index');
+      const requestCards = document.querySelectorAll('.request-card_requests_index_my');
 
       searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.toLowerCase().trim();
         console.log('Search term:', searchTerm); // Debug log
 
         requestCards.forEach(card => {
-          const titleElement = card.querySelector('.card-title_requests_index');
+          const titleElement = card.querySelector('.card-title_requests_index_my');
           const title = titleElement ? titleElement.innerText.toLowerCase() : '';
           console.log('Card title:', title); // Debug log
 
@@ -103,11 +106,11 @@
       });
 
       // Show popup on hover and keep it visible when hovering over it
-      const clickableCards = document.querySelectorAll('.clickable-card_requests_index-wrapper');
+      const clickableCards = document.querySelectorAll('.clickable-card_requests_index-wrapper_my');
 
       clickableCards.forEach(card => {
-        const popupsContainer = card.querySelector('.popups-container');
-        const popups = card.querySelectorAll('.popup_requests_index');
+        const popupsContainer = card.querySelector('.popups-container_my');
+        const popups = card.querySelectorAll('.popup_requests_index_my');
         
         card.addEventListener('mouseenter', () => {
           popupsContainer.style.display = 'block';

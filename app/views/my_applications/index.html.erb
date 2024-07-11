@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
   <div class="container content_requests_index">
     <div class="card custom-card_requests_index">
@@ -28,36 +29,36 @@
       <div class="card-body">
         <div class="row">
           <% @applications.each do |myapplication| %>
-            <div class="col-md-12 mb-4 request-card_requests_index">
-              <div class="clickable-card_requests_index-wrapper">
-                <a href="<%= request_path(myapplication) %>" class="clickable-card_requests_index card h-100 d-flex flex-row align-items-center">
+            <div class="col-md-12 mb-4 request-card_requests_index_my">
+              <div class="clickable-card_requests_index-wrapper_my">
+                <a href="<%= request_path(myapplication) %>" class="clickable-card_requests_index_my card h-100 d-flex flex-row align-items-center">
                   <% if myapplication.request.thumbnail.attached? %>
-                    <img src="<%= image_url(myapplication.request.thumbnail) %>" class="thumbnail_requests_index" alt="<%= myapplication.request.title %>"/>
+                    <img src="<%= image_url(myapplication.request.thumbnail) %>" class="thumbnail_requests_index_my" alt="<%= myapplication.request.title %>"/>
                   <% end %>
-                  <div class="card-content_requests_index flex-grow-1">
-                    <h5 class="card-title_requests_index"><%= myapplication.request.title %></h5>
-                    <p class="card-date_requests_index"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>
+                  <div class="card-content_requests_index_my flex-grow-1">
+                    <h5 class="card-title_requests_index_my"><%= myapplication.request.title %></h5>
+                    <p class="card-date_requests_index_my"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>
                   </div>
-                  <div class="card-actions_requests_index">
-                    <div class="application-indicator_requests_index">
-                     <div class="application-indicator_requests_index">
-                      <span class="application-status_indicator <%= myapplication.status.downcase %>"><%= myapplication.status %></span>
+                  <div class="card-actions_requests_index_my">
+                    <div class="application-indicator_requests_index_my">
+                     <div class="application-indicator_requests_index_my">
+                      <span class="application-status_indicator_my <%= myapplication.status.downcase %>"><%= myapplication.status %></span>
                     </div>
                     </div>
                   </div>
                 </a>
-                <div class="popups-container">
-                    <div class="popup_requests_index">
+                <div class="popups-container_my">
+                    <div class="popup_requests_index_my">
                       <!-- Content for the popup -->
-                      <div class="applicant-info_requests_index">
+                      <div class="applicant-info_requests_index_my">
                         <% if myapplication.request.user.avatar.attached? %>
-                          <img src="<%= image_url(myapplication.request.user.avatar) %>" alt="<%= myapplication.request.user.name %>" class="profile-pic_requests_index">
+                          <img src="<%= image_url(myapplication.request.user.avatar) %>" alt="<%= myapplication.request.user.name %>" class="profile-pic_requests_index_my">
                         <% end %>
                         <p><%= myapplication.request.user.name %></p>
-                        <button class="btn custom-btn-chat">Chat</button>
+                        <button class="btn custom-btn-chat_my">Chat</button>
                       </div>
-                      <div class="withdraw-button_requests_index">
-                        <a href="#" class="btn withdraw-btn_requests_index">Withdraw</a>
+                      <div class="withdraw-button_requests_index_my">
+                        <a href="#" class="btn withdraw-btn_requests_index_my">Withdraw</a>
                       </div>
                     </div>
                 </div>
@@ -72,14 +73,14 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const searchInput = document.getElementById('searchInput');
-      const requestCards = document.querySelectorAll('.request-card_requests_index');
+      const requestCards = document.querySelectorAll('.request-card_requests_index_my');
 
       searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.toLowerCase().trim();
         console.log('Search term:', searchTerm); // Debug log
 
         requestCards.forEach(card => {
-          const titleElement = card.querySelector('.card-title_requests_index');
+          const titleElement = card.querySelector('.card-title_requests_index_my');
           const title = titleElement ? titleElement.innerText.toLowerCase() : '';
           console.log('Card title:', title); // Debug log
 
@@ -92,11 +93,11 @@
       });
 
       // Show popup on hover and keep it visible when hovering over it
-      const clickableCards = document.querySelectorAll('.clickable-card_requests_index-wrapper');
+      const clickableCards = document.querySelectorAll('.clickable-card_requests_index-wrapper_my');
 
       clickableCards.forEach(card => {
-        const popupsContainer = card.querySelector('.popups-container');
-        const popups = card.querySelectorAll('.popup_requests_index');
+        const popupsContainer = card.querySelector('.popups-container_my');
+        const popups = card.querySelectorAll('.popup_requests_index_my');
         
         card.addEventListener('mouseenter', () => {
           popupsContainer.style.display = 'block';
