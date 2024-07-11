@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<body onload="initialize()">
-  
+<body>
   <div class="container content_requests_index">
     <div class="card custom-card_requests_index">
       <div class="card-body header-container_requests_index">
-        <h2 class="header-text_requests_index">My applications</h2>
+        <h2 class="header-text_requests_index">My Applications</h2>
+        <h5 class="subheader-text_requests_index">Check on the requests you applied for here!</h5>
       </div>
     </div>
 
@@ -16,7 +15,7 @@
         <div class="row">
           <div class="col-md-12">
             <form class="search-form_requests_index">
-              <input type="text" class="search-input_requests_index form-control" id="searchInput" placeholder="Search my applications...">
+              <input type="text" class="search-input_requests_index form-control" id="searchInput" placeholder="Search my requests...">
               <button type="submit" class="btn search-btn_requests_index"><i class="fas fa-search"></i></button>
             </form>
           </div>
@@ -28,47 +27,41 @@
     <div class="card mt-0" id="requestContainer">
       <div class="card-body">
         <div class="row">
-          <% @applications.each do | myapplication | %>
-            <div class="col-md-6 mb-4 request-card_requests_index">
-              <a href="<%= request_path(myapplication.request.id) %>" class="clickable-card_requests_index">
-                <div class="card h-100">
-                  <% if myapplication.request.thumbnail.attached? %> 
-                  <img src="<%= image_url(myapplication.request.thumbnail) %>" class="card-img-top" alt="<%= myapplication.request.title %>"/> 
-                  <% end %> 
-                  <div class="card-body">
-                    <div class="profile-info_requests_index">
-                      <% if myapplication.request.user.avatar.attached? %>
-                      <img src="<%= image_url(request.user.avatar) %>" alt="<%= request.user.name %>" width="30" height="30"/>
-                      <%end%>
-                      <span><%= myapplication.request.user.name %></span>
-                    </div>
+          <% @applications.each do |myapplication| %>
+            <div class="col-md-12 mb-4 request-card_requests_index">
+              <div class="clickable-card_requests_index-wrapper">
+                <a href="<%= request_path(myapplication) %>" class="clickable-card_requests_index card h-100 d-flex flex-row align-items-center">
+                  <% if myapplication.request.thumbnail.attached? %>
+                    <img src="<%= image_url(myapplication.request.thumbnail) %>" class="thumbnail_requests_index" alt="<%= myapplication.request.title %>"/>
+                  <% end %>
+                  <div class="card-content_requests_index flex-grow-1">
                     <h5 class="card-title_requests_index"><%= myapplication.request.title %></h5>
-                    <h6 class="card-subtitle_requests_index mb-2 text-muted"><%= myapplication.request.category %></h6>
-                    <div class="reward-text_requests_index">
-                      <p class="card-text_requests_index">Your application is still pending</p>
+                    <p class="card-date_requests_index"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>
+                  </div>
+                  <div class="card-actions_requests_index">
+                    <div class="application-indicator_requests_index">
+                     <div class="application-indicator_requests_index">
+                      <span class="application-status_indicator <%= myapplication.status.downcase %>"><%= myapplication.status %></span>
                     </div>
-                    <div class="card-divider_requests_index"></div>
-                    <div class="card-details_requests_index">
-                      <div class="row">
-                        <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-map-marker-alt"></i> <span id="address-<%= myapplication.request.id %>">Loading address...</span></p>
-                        </div>
-                        <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-users"></i><span class="icon-text_requests_index"><%= myapplication.request.number_of_pax %></span></p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-clock"></i><span class="icon-text_requests_index"><%= myapplication.request.duration %> hours</span></p>
-                        </div>
-                        <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-calendar-alt"></i><span class="icon-text_requests_index"><%= myapplication.request.date %></span></p>
-                        </div>
-                      </div>
                     </div>
                   </div>
+                </a>
+                <div class="popups-container">
+                    <div class="popup_requests_index">
+                      <!-- Content for the popup -->
+                      <div class="applicant-info_requests_index">
+                        <% if myapplication.request.user.avatar.attached? %>
+                          <img src="<%= image_url(myapplication.request.user.avatar) %>" alt="<%= myapplication.request.user.name %>" class="profile-pic_requests_index">
+                        <% end %>
+                        <p><%= myapplication.request.user.name %></p>
+                        <button class="btn custom-btn-chat">Chat</button>
+                      </div>
+                      <div class="withdraw-button_requests_index">
+                        <a href="#" class="btn withdraw-btn_requests_index">Withdraw</a>
+                      </div>
+                    </div>
                 </div>
-              </a>
+              </div>
             </div>
           <% end %>
         </div>
@@ -76,74 +69,50 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
   <script>
-
     document.addEventListener('DOMContentLoaded', function() {
       const searchInput = document.getElementById('searchInput');
       const requestCards = document.querySelectorAll('.request-card_requests_index');
 
       searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.toLowerCase().trim();
+        console.log('Search term:', searchTerm); // Debug log
 
         requestCards.forEach(card => {
-          const title = card.querySelector('.card-title_requests_index').innerText.toLowerCase();
-          const category = card.querySelector('.card-subtitle_requests_index').innerText.toLowerCase();
+          const titleElement = card.querySelector('.card-title_requests_index');
+          const title = titleElement ? titleElement.innerText.toLowerCase() : '';
+          console.log('Card title:', title); // Debug log
 
-          if (title.includes(searchTerm) || category.includes(searchTerm)) {
+          if (title.includes(searchTerm)) {
             card.style.display = 'block'; // Show the card
           } else {
             card.style.display = 'none'; // Hide the card
           }
         });
       });
-    });
-    function initialize() {
-      var geocoder = new google.maps.Geocoder();
 
-      <% @applications.each do | myapplication | %>
-        (function() {
-          var geocode = "<%= myapplication.request.location %>";
-          var elementId = "address-<%= myapplication.request.id %>";
+      // Show popup on hover and keep it visible when hovering over it
+      const clickableCards = document.querySelectorAll('.clickable-card_requests_index-wrapper');
 
-          var latLngString = geocode.replace('POINT', '').replace('(', '').replace(')', '').trim();
-          var latLngArray = latLngString.split(/\s+/); // Split by one or more spaces
-
-          if (latLngArray.length !== 2) {
-            console.error('Invalid geocode format:', geocode);
-            document.getElementById(elementId).textContent = 'Invalid geocode format';
-            return;
-          }
-
-          var latLng = { lat: parseFloat(latLngArray[1]), lng: parseFloat(latLngArray[0]) };
-
-          // Log the latitude and longitude values
-          console.log('Latitude:', latLng.lat);
-          console.log('Longitude:', latLng.lng);
-
-          if (isNaN(latLng.lat) || isNaN(latLng.lng)) {
-            console.error('Invalid latitude or longitude:', latLng);
-            document.getElementById(elementId).textContent = 'Invalid latitude or longitude';
-            return;
-          }
-
-          geocoder.geocode({ 'location': latLng }, function(results, status) {
-            if (status === 'OK') {
-              if (results[0]) {
-                document.getElementById(elementId).textContent = results[0].formatted_address;
-              } else {
-                document.getElementById(elementId).textContent = 'No results found';
-              }
-            } else {
-              console.error('Geocoder failed due to:', status);
-              document.getElementById(elementId).textContent = 'Geocoder failed due to: ' + status;
-            }
+      clickableCards.forEach(card => {
+        const popupsContainer = card.querySelector('.popups-container');
+        const popups = card.querySelectorAll('.popup_requests_index');
+        
+        card.addEventListener('mouseenter', () => {
+          popupsContainer.style.display = 'block';
+          popups.forEach(popup => {
+            popup.style.display = 'block';
           });
-        })();
-      <% end %>
-    }
-
-    google.maps.event.addDomListener(window, 'load', initialize);
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          popupsContainer.style.display = 'none';
+          popups.forEach(popup => {
+            popup.style.display = 'none';
+          });
+        });
+      });
+    });
   </script>
 </body>
 </html>
