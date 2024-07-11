@@ -4,7 +4,9 @@
 # I want to view my application
 
 # Background
-# Given I am logged in as a user
+# Given I have an account
+# And I login
+
 
 # #Happy Case
 # Scenario: Pending Status
