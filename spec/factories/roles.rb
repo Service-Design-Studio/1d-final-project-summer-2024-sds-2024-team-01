@@ -1,5 +1,6 @@
 FactoryBot.define do
-  factory :role do
-    role_name { 'User' }
+  factory :random_role, class: 'Role' do
+    sequence(:id) {|n| n + Role.maximum(:id) + 1 }
+    role_name { Faker::Kpop.girl_groups }
   end
 end
