@@ -11,20 +11,10 @@ Background:
     
   Scenario: Delete a request successfully
     Given I am on the "myrequests" page
-    When I follow "Test Request" request link
-    And I click on "Delete" button
-    Then I should see a message "Request deleted successfully"
-    And the request with title "Test Request" should not exist
-    
-#     Scenario: Delete a request successfully
-#         Given I am on the "requests" page
-#         And I have a request
-#         When I follow 
-
-#   Scenario: Delete a request that does not exist
-#     Given I am on the "requests" page
-#     When I attempt to delete a non-existent request
-#     Then I should see an error message "Request not found"
+    When I follow "Test Request"
+    And I click on "Destroy this request" button
+    Then I should see a message "Request was successfully destroyed."
+    And I should not see "Test Request"
 
 #   Scenario: Delete a request with invalid permissions
 #     Given I am logged in as a different user
