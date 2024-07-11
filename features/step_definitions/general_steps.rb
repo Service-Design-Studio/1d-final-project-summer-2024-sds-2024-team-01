@@ -23,7 +23,7 @@ And('I login') do
   expect(page).to have_content('Signed in successfully.')
 end
 
-Given('I am on the {string} page') do |page|
+Given('(that) I am on the {string} page') do |page|
   puts page
   if page == 'home'
     visit '/'

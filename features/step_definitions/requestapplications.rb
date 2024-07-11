@@ -21,24 +21,29 @@ Then('the application should be {string}') do |status|
   expect(RequestApplication.where(request_id: Request.where(title: 'Test Request').take.id).take.status).to eq(status)
 end
 
-Given('there is at least one request') do
-  # Add the code to ensure there is at least one request
-  pending
+Given('there is a request to be applied for') do
+  Request.create(
+      title: 'Test Request to Apply',
+      description: 'Need someone to walk my dog for an hour every afternoon',
+      category: 'Pet Care',
+      location: 'POINT(34.052235 -118.243683)',
+      date: Date.new(2024, 7, 2),
+      number_of_pax: 1,
+      duration: 1,
+      start_time: '12:00',
+      reward: '$20',
+      reward_type: 'Cash',
+      status: 'Open',
+      created_by: User.where(name: 'Alice Smith').take.id
+    )
 end
 
-When('I click on the first request') do
-  # Add the code to click on the first request
-  pending
+When('I click on the request') do
+  find('.clickable-card_requests_index').click
 end
 
 When('I click on Apply') do
-  # Add the code to click on the Apply button
-  pending
-end
-
-When('I apply for a request') do
-  # Add the code to apply for a request
-  pending
+  click_on 'Apply'
 end
 
 Then('I should see {string} in the status column of the most recent request') do |_status|
