@@ -64,7 +64,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
   # Disable ActiveStorage during tests
   config.before(:each, type: :model) do
     allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attach).and_return(true)
