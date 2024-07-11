@@ -47,6 +47,10 @@
                       <p class="applicants-status_requests_index"><i class="fas fa-users"></i> <%= myrequest.application_count %>/<%= myrequest.number_of_pax %> people found</p>
                     </div>
                   </div>
+
+                        <form action="/myrequests/complete?id=<%= myrequest.id %>" method="post" class="complete-form me-3">
+                          <button type="submit" class="btn btn-success">Mark as Complete</button>
+                        </form>
                 </a>
                 <div class="popups-container">
                   <% myrequest.request_applications.each_with_index do |application, index| %>
@@ -69,6 +73,10 @@
                         <form action="/myrequests/reject?id=<%= application.id %>" method="post">
                           <button type="submit" class="btn reject-btn_requests_index">Reject</button>
                         </form>
+<<<<<<< Updated upstream
+=======
+                        <a href="/myrequests/<%= myrequest.id %>/reviews/new" class="btn btn-primary review-btn" style="display:none;">Completed. Leave a Review</a>
+>>>>>>> Stashed changes
                       </div>
                     </div>
                   <% end %>
