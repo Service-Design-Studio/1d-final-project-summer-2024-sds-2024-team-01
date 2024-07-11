@@ -3,7 +3,7 @@ FactoryBot.define do
     title { 'Sample Request' }
     description { 'Sample Description' }
     category { 'General' }
-    location { 'Sample Location' }
+    location { 'POINT(1 1)' }
     date { Date.today }
     start_time { '10:00 AM' }
     number_of_pax { 10 }
@@ -22,13 +22,13 @@ FactoryBot.define do
     description { 'Need someone to walk my dog for an hour every afternoon' }
     category { 'Pet Care' }
     location { 'POINT(34.052235 -118.243683)' }
-    date { Date.new(2024, 7, 2) }
+    date { Date.tomorrow }
     number_of_pax { 1 }
     duration { 1 }
     start_time { '12:00' }
     reward { '$20' }
     reward_type { 'Cash' }
     status { 'Open' }
-    association :created_by, factory: :user, name: 'Harrison Ford'
+    association :user, factory: :random_user, strategy: :build
   end
 end

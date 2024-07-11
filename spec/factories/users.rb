@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :user, class: 'User' do
     name { 'Testing User' }
-    nric { 'T1234567J' }
     email { Faker::Internet.email }
     number { '91112222' }
     status { 'Active' }
