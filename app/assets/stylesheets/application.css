@@ -196,20 +196,30 @@ font-weight: bold;
   height: 120px;
 }
 
-.header-container_requests_index {
+.header-text-group_requests_index {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 20px;
+  flex-direction: column;
+  justify-content: left;
+  padding-left: 40px; /* Adjust this value to set the left margin for both heading and subheading */
 }
 
 .header-text_requests_index {
-  margin-bottom: 0;
+  position: relative;
+  margin: 5px 0 10px 5px; /* Add some bottom margin to separate from subheader */
 }
+
+.subheader-text_requests_index {
+  position: relative;
+  margin: 0 0 0 5px;
+  font-weight: normal;
+}
+
+/* Clickable card CSS for all requests display pages, e.g my applications, my requests, requests page*/
 
 .clickable-card_requests_index {
   text-decoration: none;
   color: inherit;
+  display: block; /* Make the link cover the entire card */
 }
 
 .clickable-card_requests_index:hover .card {
@@ -261,6 +271,52 @@ font-weight: bold;
 
 .reward-text_requests_index {
   text-align: right; /* Align reward text to the right */
+}
+
+.custom-btn-review-applications {
+  background-color: #ad88c6;
+  border-color: #ad88c6;
+  color: white;
+  margin-top: 5px;
+  width: fit-content; /* Set the width to fit the content */
+}
+
+.custom-btn-review-applications:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+}
+
+.application-indicator_requests_index {
+  text-align: right;
+  color: #28a745;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align items to the right */
+}
+
+.application-indicator_requests_index p {
+  margin: 0 auto;
+  width: fit-content; /* Set the width to fit the content */
+}
+
+.application-indicator_requests_index a {
+  margin-top: 5px; /* Add margin to separate the button from the text */
+  width: fit-content; /* Set the width to fit the content */
+}
+
+.options-icon-my-requests {
+  position: absolute;
+  bottom: 300px;
+  right: 15px;
+  color: #ad88c6;
+  cursor: pointer;
+  transform: rotate(90deg);
+}
+
+.options-icon-my-requests:hover {
+  color: #ad88c6;
 }
 
 .search-container_requests_index {
@@ -620,8 +676,8 @@ font-weight: bold;
 
 .profile-user_description_container{
   position: absolute;
-  top: 20%;
-  right: 54%;
+  top: 250px;
+  right: 687px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-right: 290px; /* Adjust this value for spacing from the profile-info-container */
   padding-bottom: 40%; /* Adjust this value for spacing below the header-card_profile */
@@ -760,4 +816,410 @@ font-weight: bold;
   display: flex; /* Use flexbox for layout */
   align-items: center; /* Center items vertically */
   padding-left: 10px; /* Optional: Add padding for better spacing */
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.rating-label {
+  margin-right: 10px;
+  font-size: 15px;
+  /* font-weight: bold; */
+}
+
+.rating-stars i {
+  color: #ddd; /* Default star color */
+  cursor: pointer;
+  font-size: 15px; /* Adjust size as needed */
+  margin-right: 5px; /* Add spacing between stars */
+}
+
+.rating-stars i.active {
+  color: #ffc107; /* Yellow color for active stars */
+}
+
+.rating-text {
+  font-size: 15px;
+  margin-left: 10px; /* Adjust spacing after stars */
+}
+
+.review-textarea {
+  width: 100%;
+  height: 300px; /* Adjust height as needed */
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  resize: none; /* Prevent resizing by the user */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.dynamic-text {
+  font-size: 15px;
+  flex: 1; /* Take remaining space */
+  text-align: right; /* Align text to the right */
+  color:rgba(105, 105, 105, 0.8)
+}
+.stars_user_profile .fa-star {
+  color: #ddd;
+}
+.stars_user_profile .fa-star.checked {
+  color: #ffd700;
+}
+.review-summary {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.review-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.review-filters .sort-by {
+  display: flex;
+  align-items: center;
+}
+.review-filters .sort-by label {
+  margin-right: 10px;
+}
+.review-item .card-body {
+  display: flex;
+  justify-content: space-between;
+}
+.review-item .card-title {
+  margin-bottom: 10px;
+}
+.review-item .card-text {
+  margin-bottom: 10px;
+}
+
+/*my requests page + my applications CSSs styling*/
+.thumbnail_requests_index {
+  height: 100px;
+  width: auto;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.card-content_requests_index {
+  flex-grow: 1;
+}
+
+.clickable-card_requests_index {
+  text-decoration: none;
+  color: inherit;
+  display: flex; /* Ensure the link covers the entire card */
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative; /* Ensure relative positioning for absolute children */
+}
+
+.clickable-card_requests_index-wrapper {
+  position: relative;
+}
+
+.clickable-card_requests_index:hover {
+  border-color: #ad88c6; /* Change border color on hover */
+}
+
+.applicant-info_requests_index {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.custom-btn-chat {
+  position: absolute;
+  bottom: 50px;
+  left: 180px;
+  background-color: #656dad;
+  border-color: #656dad;
+  color: white;
+  text-align: center;
+  width: 150px;
+  height: 40px;
+  margin-left: 10px; /* Add some space between name and button */
+  cursor: pointer;
+  justify-content: center; /* Center the text horizontally */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  z-index: 1000;
+}
+
+.custom-btn-chat:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
+} 
+
+.application-indicator_requests_index {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-right: 25px;
+}
+
+.application-indicator_requests_index p {
+  margin: 0;
+  width: fit-content; /* Set the width to fit the content */
+}
+
+.application-count_requests_index {
+  color: #28a745; /* Green text for the number of applicants */
+}
+
+.applicants-status_requests_index {
+  color: #6c757d; /* Dark grey text for the status */
+}
+
+.applicants-status_requests_index i {
+  color: #656dad; /* Purple icon for the people indicator */
+  margin-right: 5px;
+}
+
+.custom-btn-complete-request {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+  margin-right: 20px;
+  align-self: center; /* Center vertically */
+}
+
+.custom-btn-complete-request:hover {
+  background-color: #5a6268; /* Slightly darker shade for hover effect */
+  border-color: #545b62;
+}
+
+.card-title_requests_index {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.card-date_requests_index {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.card-actions_requests_index {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Center items vertically */
+}
+
+.card-divider_requests_index {
+  border-top: 1px solid #dee2e6;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.split-button_requests_index {
+  position: relative;
+  top: -30px;
+  display: flex;
+  justify-content: flex-end; /* Align the buttons to the right */
+  margin-top: 10px;
+}
+
+.split-button_requests_index .btn {
+  width: 100px; /* Adjust the width as needed */
+  margin-left: -1px; /* Slight overlap to remove gap between buttons */
+  text-align: center;
+  padding: 10px 20px; /* Add padding for better appearance */
+}
+
+.accept-btn_requests_index {
+  background-color: #28a745;
+  color: white;
+  text-align: center;
+  border-top-left-radius: 5px; /* Only round the top-left corner */
+  border-bottom-left-radius: 5px; /* Only round the bottom-left corner */
+  border-top-right-radius: 0; /* No rounding for the top-right corner */
+  border-bottom-right-radius: 0; /* No rounding for the bottom-right corner */
+}
+
+.accept-btn_requests_index:hover {
+  background-color: #218838;
+}
+
+.reject-btn_requests_index {
+  background-color: #dc3545;
+  color: white;
+  text-align: center;
+  border-top-right-radius: 5px; /* Only round the top-right corner */
+  border-bottom-right-radius: 5px; /* Only round the bottom-right corner */
+  border-top-left-radius: 0; /* No rounding for the top-left corner */
+  border-bottom-left-radius: 0; /* No rounding for the bottom-left corner */
+}
+
+.reject-btn_requests_index:hover {
+  background-color: #c82333;
+}
+
+.popups-container {
+  position: relative; /* Make the container relative for child positioning */
+  left: 0;
+  right: 0;
+  z-index: 10;
+  max-height: 390px; /* About 3 pop-ups */
+  overflow-y: auto; /* Add vertical scrollbar when content exceeds max-height */
+  padding-right: 2px; /* Add some padding for the scrollbar */
+}
+
+.popup_requests_index {
+  display: none;
+  position: relative;
+  top: 0; /* Ensure they stack correctly */
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 10; /* Ensure proper stacking */
+  border: 1px solid #9852a6;
+}
+
+.popup_requests_index:first-child {
+  margin-top: 0; /* Remove top margin for the first popup */
+}
+
+.clickable-card_requests_index-wrapper:hover .popup_requests_index {
+  display: block;
+  animation: slideDown 0.3s ease forwards;
+}
+
+.request-card_requests_index:hover .popup_requests_index {
+  display: block;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/*pop up scroll bar styling*/
+.popups-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.popups-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.popups-container::-webkit-scrollbar-thumb {
+  background: #656dad;
+  border-radius: 4px;
+}
+
+.popups-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* application indicator */
+.application-status_indicator {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 40px;
+  border-radius: 5px;
+  color: #333;
+  font-size: 14px;
+  text-align: center;
+  background-color: #ddd; /* Default background color for statuses */
+}
+
+.application-status_indicator.pending {
+  background-color: #ddd;
+  color: #333;
+}
+
+.application-status_indicator.accepted {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.application-status_indicator.rejected {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* tmp withdraw button */
+.withdraw-button_requests_index {
+  position: relative;
+  top: -20px;
+  display: flex;
+  justify-content: flex-end; /* Align the button to the right */
+  align-items: center;
+}
+
+.withdraw-btn_requests_index {
+  background-color: #dc3545;
+  color: white;
+  text-align: center;
+  width: 200px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  padding: 10px 20px; /* Add padding for better appearance */
+  border-radius: 5px; /* Add rounded corners */
+  cursor: pointer;
+}
+
+.withdraw-btn_requests_index:hover {
+  background-color: #c82333; /* Slightly darker shade for hover effect */
+  border-color: #c82333;
+}
+
+.profile-pic_requests_index{
+    width:60px;
+    border-radius: 50%;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:focus, .btn-success.focus {
+  box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
+}
+
+.btn-success.disabled, .btn-success:disabled {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active,
+.show > .btn-success.dropdown-toggle {
+  color: #fff;
+  background-color: #383838;
+  border-color: #383838;
+}
+
+.btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus,
+.show > .btn-success.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
 }

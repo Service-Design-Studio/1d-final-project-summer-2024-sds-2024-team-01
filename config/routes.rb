@@ -21,9 +21,16 @@ Rails.application.routes.draw do
 
   post 'requests/apply' => 'requests#apply'
   get 'myrequests' => 'my_requests#index'
+  post 'myrequests/complete' => 'my_requests#accept'
+  post 'myrequests/accept' => 'my_requests#accept'
+  post 'myrequests/reject' => 'my_requests#reject'
+
   get 'myapplications' => 'my_applications#index'
 
-  # get 'myrequests/reviews' => 'reviews#new'
+  #resources :reviews, only: [:edit, :update, :index, :new, :create]
+  
+  #get 'reviews/new_temp' => 'reviews#new_temp'
+  get 'myrequests/reviews' => 'reviews#new'
   
 
   namespace :api do

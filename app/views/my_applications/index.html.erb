@@ -1,5 +1,118 @@
-<% @applications.each do | myapplication | %>
-<p>
-<%= myapplication.request.title %>
-</p>
-<% end %>
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <div class="container content_requests_index">
+    <div class="card custom-card_requests_index">
+      <div class="card-body header-container_requests_index">
+        <h2 class="header-text_requests_index">My Applications</h2>
+        <h5 class="subheader-text_requests_index">Check on the requests you applied for here!</h5>
+      </div>
+    </div>
+
+    <!-- Search Bar Container -->
+    <div class="search-container_requests_index">
+      <div class="">
+        <div class="row">
+          <div class="col-md-12">
+            <form class="search-form_requests_index">
+              <input type="text" class="search-input_requests_index form-control" id="searchInput" placeholder="Search my requests...">
+              <button type="submit" class="btn search-btn_requests_index"><i class="fas fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Container for Request Cards -->
+    <div class="card mt-0" id="requestContainer">
+      <div class="card-body">
+        <div class="row">
+          <% @applications.each do |myapplication| %>
+            <div class="col-md-12 mb-4 request-card_requests_index">
+              <div class="clickable-card_requests_index-wrapper">
+                <a href="<%= request_path(myapplication) %>" class="clickable-card_requests_index card h-100 d-flex flex-row align-items-center">
+                  <% if myapplication.request.thumbnail.attached? %>
+                    <img src="<%= image_url(myapplication.request.thumbnail) %>" class="thumbnail_requests_index" alt="<%= myapplication.request.title %>"/>
+                  <% end %>
+                  <div class="card-content_requests_index flex-grow-1">
+                    <h5 class="card-title_requests_index"><%= myapplication.request.title %></h5>
+                    <p class="card-date_requests_index"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>
+                  </div>
+                  <div class="card-actions_requests_index">
+                    <div class="application-indicator_requests_index">
+                     <div class="application-indicator_requests_index">
+                      <span class="application-status_indicator <%= myapplication.status.downcase %>"><%= myapplication.status %></span>
+                    </div>
+                    </div>
+                  </div>
+                </a>
+                <div class="popups-container">
+                    <div class="popup_requests_index">
+                      <!-- Content for the popup -->
+                      <div class="applicant-info_requests_index">
+                        <% if myapplication.request.user.avatar.attached? %>
+                          <img src="<%= image_url(myapplication.request.user.avatar) %>" alt="<%= myapplication.request.user.name %>" class="profile-pic_requests_index">
+                        <% end %>
+                        <p><%= myapplication.request.user.name %></p>
+                        <button class="btn custom-btn-chat">Chat</button>
+                      </div>
+                      <div class="withdraw-button_requests_index">
+                        <a href="#" class="btn withdraw-btn_requests_index">Withdraw</a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const requestCards = document.querySelectorAll('.request-card_requests_index');
+
+      searchInput.addEventListener('input', function() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        console.log('Search term:', searchTerm); // Debug log
+
+        requestCards.forEach(card => {
+          const titleElement = card.querySelector('.card-title_requests_index');
+          const title = titleElement ? titleElement.innerText.toLowerCase() : '';
+          console.log('Card title:', title); // Debug log
+
+          if (title.includes(searchTerm)) {
+            card.style.display = 'block'; // Show the card
+          } else {
+            card.style.display = 'none'; // Hide the card
+          }
+        });
+      });
+
+      // Show popup on hover and keep it visible when hovering over it
+      const clickableCards = document.querySelectorAll('.clickable-card_requests_index-wrapper');
+
+      clickableCards.forEach(card => {
+        const popupsContainer = card.querySelector('.popups-container');
+        const popups = card.querySelectorAll('.popup_requests_index');
+        
+        card.addEventListener('mouseenter', () => {
+          popupsContainer.style.display = 'block';
+          popups.forEach(popup => {
+            popup.style.display = 'block';
+          });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          popupsContainer.style.display = 'none';
+          popups.forEach(popup => {
+            popup.style.display = 'none';
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
