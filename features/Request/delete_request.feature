@@ -16,6 +16,9 @@ Background:
     Then I should see a message "Request was successfully destroyed."
     And I should not see "Test Request"
 
+
+### feel like we dont need the below scenarios ###
+
 #   Scenario: Delete a request with invalid permissions
 #     Given I am logged in as a different user
 #     And I have a request with the following details:
