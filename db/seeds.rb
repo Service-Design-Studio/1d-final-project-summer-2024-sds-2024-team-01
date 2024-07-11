@@ -28,7 +28,6 @@ if Role.count == 0
   p "Created Roles"
 end
 
-
 # users = [
 #   {
 #     name: "Alice Smith",

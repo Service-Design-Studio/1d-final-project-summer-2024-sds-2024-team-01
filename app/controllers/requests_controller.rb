@@ -2,7 +2,7 @@
 require 'date'
 
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[show edit]
+  before_action :set_request, only: %i[show edit destroy]
   skip_before_action :authenticate_user!, only: %i[index show]
 
   # GET /requests
@@ -67,6 +67,15 @@ class RequestsController < ApplicationController
     end
   end
 
+  # destroy request feature implmentation?
+  def destroy
+    @request.destroy
+    respond_to do |format|
+      format.html { redirect_to requests_url, notice: 'Request was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   # # Use callbacks to share common setup or constraints between actions.
@@ -80,4 +89,6 @@ class RequestsController < ApplicationController
                                     :reward_type, :reward, :thumbnail)
     # params.fetch(:request, {}).permit(:thumbnail)
   end
+
+  
 end

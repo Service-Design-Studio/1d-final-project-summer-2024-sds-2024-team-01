@@ -1,4 +1,5 @@
 class MyRequestsController < ApplicationController
+  
   def index
     @requests =
       Request.includes(:request_applications)
@@ -14,6 +15,9 @@ class MyRequestsController < ApplicationController
 
     # Fetch all applicants in one query
     @applicants = User.where(id: all_applicant_ids).index_by(&:id)
+    
+    @comprequests = 
+      Request.where(status: 'Completed')
   end
 
   # GET /requests/1
@@ -24,6 +28,14 @@ class MyRequestsController < ApplicationController
   # GET /requests/new
   def new
     @request = Request.new
+  end
+
+  def complete
+    @request = Request.find(params[:id])
+    return if current_user.id != (@request.created_by)
+    @request.status = "Completed"
+    @request.save
+    redirect_to '/myrequests', notice: 'Request marked as completed'
   end
 
   def accept
