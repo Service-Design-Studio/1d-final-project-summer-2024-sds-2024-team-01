@@ -23,7 +23,7 @@
               <div class="border p-5 upload-box_requests_details" id="upload-box">
                 <!-- Image Preview Container -->
                 <div id="image-preview_requests_details" class="mb-3">
-                  <img id="preview-img_requests_details" src="#" alt="Your image" style="display: none; max-width: 100%; height: auto;" />
+                  <img id="preview-img_requests_details" src="#" alt="Your image" style="display: none; max-width: 100%; height: auto; cursor: pointer;" />
                 </div>
                 <!-- Cropper Container -->
                 <div id="cropper-container" style="display: none;">
@@ -190,34 +190,49 @@
       }
     });
 
+    previewImg.addEventListener('click', function() {
+      fileInputVisible.click();
+    });
+
     function initAutocomplete() {
       const input = document.getElementById('location');
       const autocomplete = new google.maps.places.Autocomplete(input);
 
+      let place;
+
       autocomplete.addListener('place_changed', function() {
-        const place = autocomplete.getPlace();
+        place = autocomplete.getPlace();
         if (!place.geometry) {
           // User entered the name of a Place that was not suggested and pressed the Enter key,
           // or the Place Details request failed.
           return;
         }
 
-        const latitude = place.geometry.location.lat();
-        const longitude = place.geometry.location.lng();
-        const pointFormat = `POINT(${longitude} ${latitude})`;
+        // Temporarily store the place details
+        document.getElementById('location').dataset.latitude = place.geometry.location.lat();
+        document.getElementById('location').dataset.longitude = place.geometry.location.lng();
+      });
 
-        // Set the hidden fields for latitude and longitude
-        document.getElementById('latitude').value = latitude;
-        document.getElementById('longitude').value = longitude;
+      // On form submission, convert address to geocode
+      const form = document.getElementById('request-form');
+      form.addEventListener('submit', function(event) {
+        if (place && place.geometry) {
+          const latitude = place.geometry.location.lat();
+          const longitude = place.geometry.location.lng();
+          const pointFormat = `POINT(${longitude} ${latitude})`;
 
-        // Set the formatted point in the location field for submission
-        document.getElementById('location').value = pointFormat;
+          // Set the hidden fields for latitude and longitude
+          document.getElementById('latitude').value = latitude;
+          document.getElementById('longitude').value = longitude;
+
+          // Set the formatted point in the location field for submission
+          document.getElementById('location').value = pointFormat;
+        }
       });
     }
 
     // Initialize Google Maps Autocomplete
     google.maps.event.addDomListener(window, 'load', initAutocomplete);
-
 
     // Initialize Flatpickr for time picker
     flatpickr("#start_time", {
@@ -230,5 +245,3 @@
 </body>
 
 </html>
-
-<%# Changes to implement: Enable display of actual address for user, only change to Geocode when user hits create %>
