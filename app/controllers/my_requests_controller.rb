@@ -26,6 +26,14 @@ class MyRequestsController < ApplicationController
     @request = Request.new
   end
 
+  def complete
+    @request = Request.find(params[:id])
+    return if current_user.id != (@request.created_by)
+    @request.status = "Completed"
+    @request.save
+    redirect_to '/myrequests', notice: 'Request marked as completed'
+  end
+
   def accept
     @reqapp = RequestApplication.find(params[:id])
     return if current_user.id != Request.find(@reqapp.request_id).created_by
