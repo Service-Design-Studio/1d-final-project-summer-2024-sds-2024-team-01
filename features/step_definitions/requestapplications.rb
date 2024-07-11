@@ -46,6 +46,16 @@ When('I click on Apply') do
   click_on 'Apply'
 end
 
+Given('I have applied for the request') do
+  RequestApplication.create(
+    status: 'Pending',
+    applicant_id: User.where(name: 'Harrison Ford').take.id,
+    request_id: Request.where(title: 'Test Request to Apply').take.id,
+    created_at: DateTime.now,
+    updated_at: DateTime.now
+  )
+end
+
 Then('I should see {string} in the status column of the most recent request') do |_status|
   # Add the code to check the status of the most recent request
   pending
