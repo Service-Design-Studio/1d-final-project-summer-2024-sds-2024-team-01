@@ -12,11 +12,10 @@
           <h5><%= @profile.name %></h5>
           <!-- Star ratings -->
           <p class="mb-1 stars_user_profile">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i> (120)
+            <% 5.times do |i| %>
+              <i class="fas fa-star <%= 'checked' if @average_rating && i < @average_rating.to_i %>"></i>
+            <% end %>
+            (<%= @reviews_received.count %>)
           </p>
         </div>
       </div>
@@ -68,14 +67,58 @@
             </div>
             <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
               <!-- Content for Reviews -->
-              <div class="review-item">Review 1</div>
-              <div class="review-item">Review 2</div>
+              <div class="review-summary">
+                <h2><%= @average_rating.nil? ? '0.00' : @average_rating.round(2) %></h2>
+                <p class="stars_user_profile">
+                  <% 5.times do |i| %>
+                    <i class="fas fa-star <%= 'checked' if @average_rating && i < @average_rating.to_i %>"></i>
+                  <% end %>
+                  (<%= @reviews_received.count %> Reviews)
+                </p>
+              </div>
+              <div class="review-filters">
+                <button class="btn btn-outline-dark">All</button>
+                <button class="btn btn-outline-dark">From Volunteers</button>
+                <button class="btn btn-outline-dark">From Requesters</button>
+                <div class="sort-by">
+                  <label for="sort-reviews">Sort by</label>
+                  <select id="sort-reviews" class="form-control">
+                    <option>Highest ratings</option>
+                    <option>Lowest ratings</option>
+                    <option>Recent</option>
+                  </select>
+                </div>
+              </div>
+              <% if @reviews_received.any? %>
+                <% @reviews_received.each do |review| %>
+                  <div class="review-item card mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <h5 class="card-title"><%= review.review_by.name %></h5>
+                          <p class="card-text"><%= review.review_content %></p>
+                        </div>
+                        <div>
+                          <p class="stars_user_profile">
+                            <% 5.times do |i| %>
+                              <i class="fas fa-star <%= 'checked' if i < review.rating %>"></i>
+                            <% end %>
+                          </p>
+                          <small class="text-muted"><%= time_ago_in_words(review.created_at) %> ago</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% else %>
+                <p>No reviews yet.</p>
+              <% end %>
             </div>
           </div>
         </div>
         <!--Profile user description container-->
         <div class="card mb-0 profile-user_description_container">
-          <p> This holds the user written description. </p>
+          <p>This holds the user written description.</p>
         </div>
       </div>
     </div>

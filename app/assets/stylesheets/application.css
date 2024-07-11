@@ -818,6 +818,91 @@ font-weight: bold;
   padding-left: 10px; /* Optional: Add padding for better spacing */
 }
 
+.rating-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.rating-label {
+  margin-right: 10px;
+  font-size: 15px;
+  /* font-weight: bold; */
+}
+
+.rating-stars i {
+  color: #ddd; /* Default star color */
+  cursor: pointer;
+  font-size: 15px; /* Adjust size as needed */
+  margin-right: 5px; /* Add spacing between stars */
+}
+
+.rating-stars i.active {
+  color: #ffc107; /* Yellow color for active stars */
+}
+
+.rating-text {
+  font-size: 15px;
+  margin-left: 10px; /* Adjust spacing after stars */
+}
+
+.review-textarea {
+  width: 100%;
+  height: 300px; /* Adjust height as needed */
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  resize: none; /* Prevent resizing by the user */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.dynamic-text {
+  font-size: 15px;
+  flex: 1; /* Take remaining space */
+  text-align: right; /* Align text to the right */
+  color:rgba(105, 105, 105, 0.8)
+}
+.stars_user_profile .fa-star {
+  color: #ddd;
+}
+.stars_user_profile .fa-star.checked {
+  color: #ffd700;
+}
+.review-summary {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.review-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.review-filters .sort-by {
+  display: flex;
+  align-items: center;
+}
+.review-filters .sort-by label {
+  margin-right: 10px;
+}
+.review-item .card-body {
+  display: flex;
+  justify-content: space-between;
+}
+.review-item .card-title {
+  margin-bottom: 10px;
+}
+.review-item .card-text {
+  margin-bottom: 10px;
+}
+
 /*my requests page + my applications CSSs styling*/
 .thumbnail_requests_index {
   height: 100px;
@@ -1099,4 +1184,9 @@ font-weight: bold;
 .withdraw-btn_requests_index:hover {
   background-color: #c82333; /* Slightly darker shade for hover effect */
   border-color: #c82333;
+}
+
+.profile-pic_requests_index{
+    width:60px;
+    border-radius: 50%;
 }
