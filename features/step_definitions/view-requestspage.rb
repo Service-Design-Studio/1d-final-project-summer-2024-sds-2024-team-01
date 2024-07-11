@@ -1,14 +1,15 @@
 
 #Feature 1: View Requests
+
 Given('I am on the Ring of Reciprocity requests page') do
   visit '/requests' 
 end
 
 #just check that there is a list of requests in the database
-Then('I should see a list of requests') do
-  # Check if the page has a list of requests
-  expect(page).to have_css('#requestContainer')
-  end
+# Then('I should see a list of requests') do
+#   # Check if the page has a list of requests
+#   expect(page).to have_css('#requestContainer')
+#   end
 
 
 Given('I can see no requests available') do

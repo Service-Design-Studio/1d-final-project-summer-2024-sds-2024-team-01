@@ -12,33 +12,33 @@ Background:
   Scenario: Create request with valid data
     Given I want to make new requests
 
-    # When I fill in the "Title" with "Test Request"
-    # And I click on "Category","Manual Labour"
-    # And I fill in the "Date" with "01/07/2024"
-    # And I fill in the "Number of volunteers needed" with "5"
-    # And I fill in the "Start time" with "01:10 pm"
-    # And I fill in the "Duration" with "5"
-    # And I fill in the "Location" with "Singapore Zoo"
-    # And I fill in the "Description" with "Looking for someone to help with my backyard garden"
-    # And I fill in the "Incentive provided" with "Money"
-    # And I fill in the "Incentive" with "$30"  
-    # And I press "Create"
-    # Then I should be able to see the request 
-    # Then I should see "Request was successfully created."
-    # Then I should see "Help with Gardening"
+    When I fill in the "Title" with "Test Request"
+    And I click on "Category","Manual Labour"
+    And I fill in the "Date" with "01/07/2024"
+    And I fill in the "Number of volunteers needed" with "5"
+    And I fill in the "Start time" with "01:10 pm"
+    And I fill in the "Duration" with "5"
+    And I fill in the "Location" with "Singapore Zoo"
+    And I fill in the "Description" with "Looking for someone to help with my backyard garden"
+    And I fill in the "Incentive provided" with "Money"
+    And I fill in the "Incentive" with "$30"  
+    And I press "Create"
+    Then I should be able to see the request 
+    Then I should see "Request was successfully created."
+    Then I should see "Help with Gardening"
 
-Given the following request details:
-      | field                   | value                                              |
-      | Title                   | Test Request                                       |
-      | Category                | Manual Labour                                      |
-      | Date                    | 01/07/2024                                         |
-      | Number of volunteers needed | 5                                              |
-      | Start time              | 01:10 pm                                           |
-      | Duration                | 5                                                  |
-      | Location                | Singapore Zoo                                      |
-      | Description             | Looking for someone to help with my backyard garden|
-      | Incentive provided      | Money                                              |
-      | Incentive               | $30                                                |
+# Given the following request details:
+#       | field                   | value                                              |
+#       | Title                   | Test Request                                       |
+#       | Category                | Manual Labour                                      |
+#       | Date                    | 01/07/2024                                         |
+#       | Number of volunteers needed | 5                                              |
+#       | Start time              | 01:10 pm                                           |
+#       | Duration                | 5                                                  |
+#       | Location                | Singapore Zoo                                      |
+#       | Description             | Looking for someone to help with my backyard garden|
+#       | Incentive provided      | Money                                              |
+#       | Incentive               | $30                                                |
 
   # Sad Case
   Scenario: Create request with invalid data

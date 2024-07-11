@@ -5,20 +5,15 @@ Feature: View Requests
 
 Background: 
           Given I have an account
-          And I login         
+          And I login       
           
-
-
-
-
-
   # Happy Path Scenarios
   Scenario: View requests
     Given I am on the Ring of Reciprocity requests page
     Then I should see a list of requests
 
  # Sad Path Scenarios
-Scenario: View user requests on the requests page with no requests available
+Scenario: No requests available 
     Given I can see no requests available
     Then I should see a message indicating no requests are currently available
 

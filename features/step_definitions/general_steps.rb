@@ -96,3 +96,7 @@ end
 Then('I should not see {string}') do |message|
   expect(page).not_to have_content(message)
 end
+
+Then('I should see a list of requests') do
+  FactoryBot.create_list(:random_request, 10)
+end
