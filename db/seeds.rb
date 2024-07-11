@@ -385,6 +385,32 @@ ensure
   p "seed completed"
 end
 
+# # Replace with the ID of the logged-in user
+# logged_in_user_id = User.find_by(email: "dogs@example.com").id
+
+# # Seed reviews
+# completed_requests = [
+#   { title: "Moving Assistance", description: "Help needed with moving furniture to a new apartment", category: "Moving", location: "POINT(48.856613 2.352222)", date: Date.new(2024, 7, 4), number_of_pax: 3, duration: 5, start_time: '12:00', reward: "€100", reward_type: "Cash", status: "Completed", created_by: logged_in_user.id },
+#   { title: "Painting Job", description: "Need help painting a room", category: "Household", location: "POINT(35.689487 139.691711)", date: Date.new(2024, 7, 5), number_of_pax: 2, duration: 4, start_time: '12:00', reward: "¥5000", reward_type: "Cash", status: "Completed", created_by: logged_in_user.id }
+# ]
+
+# completed_requests.each do |request_attributes|
+#   Request.create(request_attributes)
+# end
+
+# # Seed reviews
+# reviews = [
+#   { rating: 5, review_content: "Excellent job!", review_for: logged_in_user.id, review_by: User.find_by(email: "bob.johnson@example.com").id, request_id: Request.find_by(title: "Moving Assistance").id },
+#   { rating: 4, review_content: "Very good, would recommend.", review_for: logged_in_user.id, review_by: User.find_by(email: "charlie.lee@example.com").id, request_id: Request.find_by(title: "Painting Job").id },
+#   { rating: 3, review_content: "It was okay.", review_for: logged_in_user.id, review_by: User.find_by(email: "diana.patel@example.com").id, request_id: Request.find_by(title: "Help with Gardening").id },
+#   { rating: 2, review_content: "Not great, some issues.", review_for: logged_in_user.id, review_by: User.find_by(email: "evan.green@example.com").id, request_id: Request.find_by(title: "Dog Walking").id },
+#   { rating: 1, review_content: "Very disappointing.", review_for: logged_in_user.id, review_by: User.find_by(email: "charlie.lee@example.com").id, request_id: Request.find_by(title: "Grocery Shopping").id }
+# ]
+
+# reviews.each do |review_attributes|
+#   Review.create(review_attributes)
+# end
+
 # reviews = [
 #   {
 #     rating: 5,
