@@ -1,8 +1,8 @@
 class Request < ActiveRecord::Base
   has_one_attached :thumbnail
+  has_many :reviews
   has_many :request_applications, dependent: :destroy
-
-  belongs_to :user, foreign_key: :created_by
+  belongs_to :user, class_name: 'User', foreign_key: 'created_by'
   validates_presence_of :title, message: "Please enter a title"
   validates_presence_of :category, message: "Please select a category"
   validates_presence_of :location, message: "Please enter a location"
@@ -11,7 +11,7 @@ class Request < ActiveRecord::Base
   validates_presence_of :duration, message: "Please enter a duration"
   validates_presence_of :reward_type, message: "Please select a reward type"
   validates_presence_of :status 
-  validates_presence_of :created_by
+  # validates_presence_of :created_by
   # validates_presence_of :created_at
   # validates_presence_of :updated_at
 

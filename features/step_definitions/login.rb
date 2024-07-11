@@ -16,14 +16,6 @@ When('I enter the following credentials:') do |table|
   end
 end
 
-
-
-Then('I should be brought to the request page') do
-  visit '/requests'
-end
-
-
-
 #################################### features/step_definitions/forgot_password_steps.rb################################################
 
 ## Forgot Password
