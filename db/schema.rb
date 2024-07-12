@@ -135,7 +135,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   create_table "user_reports", force: :cascade do |t|
     t.text "report_reason", null: false
     t.string "status", null: false
-    t.bigint "requested_by", null: false
+    t.bigint "reported_by", null: false
+    t.bigint "reported_user", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -182,7 +183,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   add_foreign_key "reviews", "users", column: "review_by"
   add_foreign_key "reviews", "users", column: "review_for"
   add_foreign_key "summary_reports", "users", column: "requested_by"
-  add_foreign_key "user_reports", "users", column: "requested_by"
+  add_foreign_key "user_reports", "users", column: "reported_by"
+  add_foreign_key "user_reports", "users", column: "reported_user"
   add_foreign_key "users", "charities"
   add_foreign_key "users", "companies"
   add_foreign_key "users", "roles"
