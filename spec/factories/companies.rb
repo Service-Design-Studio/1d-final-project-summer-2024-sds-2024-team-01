@@ -1,8 +1,9 @@
 FactoryBot.define do
-          factory :company do
-            company_name { "Sample Company" }
-            company_code { "COMP123" }
-            status { "active" }
-          end
-        end
-        
+  factory :random_company, class: 'Company' do
+    company_name { Faker::Adjective.positive + 'Company' }
+    status { 'Active' }
+    created_at { DateTime.now }
+    updated_at { DateTime.now }
+  end
+end
+
