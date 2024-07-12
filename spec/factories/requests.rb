@@ -4,7 +4,7 @@ FactoryBot.define do
     description { 'Sample Description' }
     category { 'General' }
     location { 'POINT(1 1)' }
-    date { Date.today }
+    date { Date.tomorrow }
     start_time { '10:00 AM' }
     number_of_pax { 10 }
     duration { 2 }
