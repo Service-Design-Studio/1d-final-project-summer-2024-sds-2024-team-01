@@ -1,7 +1,7 @@
 class CreateMessages < ActiveRecord::Migration[7.1]
   def change
     create_table :messages do |t|
-      t.text :messageText, limit: 1000, null: false
+      t.text :message_text, limit: 1000, null: false
       t.boolean :read, null: false
 
       t.references :chat, foreign_key: true, null: true
