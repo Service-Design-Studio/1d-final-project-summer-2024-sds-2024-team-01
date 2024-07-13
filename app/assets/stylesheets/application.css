@@ -1032,8 +1032,13 @@ font-weight: bold;
   width: fit-content; /* Set the width to fit the content */
 }
 
+.applicants-status_requests_index_my.full-capacity {
+  color: #28a745;
+  font-weight: bold;
+}
+
 .application-count_requests_index_my {
-  color: #28a745; /* Green text for the number of applicants */
+  color: #656dad; /* Green text for the number of applicants */
 }
 
 .applicants-status_requests_index_my {

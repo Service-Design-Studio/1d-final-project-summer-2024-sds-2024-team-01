@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <body>
   <div class="container content_requests_index">
     <div class="card custom-card_requests_index">
@@ -26,7 +25,7 @@
 
     <!-- Container for Request Cards -->
     <div class="card mt-0" id="requestContainer">
-      <div class="card-body" style =>
+      <div class="card-body" style=>
         <div class="row">
           <% @requests.each do |myrequest| %>
             <div class="col-md-12 mb-4 request-card_requests_index_my">
@@ -46,7 +45,9 @@
                       <% if myrequest.application_count > 0 %>
                         <p class="application-count_requests_index_my"><%= myrequest.application_count %> Applicants</p>
                       <% end %>
-                      <p class="applicants-status_requests_index_my"><i class="fas fa-users"></i> <%= myrequest.application_count %>/<%= myrequest.number_of_pax %> people found</p>
+                      <p class="applicants-status_requests_index_my <%= 'full-capacity' if myrequest.accepted_application_count >= myrequest.number_of_pax %>" data-accepted-count="<%= myrequest.accepted_application_count %>" data-number-of-pax="<%= myrequest.number_of_pax %>">
+                        <i class="fas fa-users"></i> <%= myrequest.accepted_application_count %>/<%= myrequest.number_of_pax %> people found
+                      </p>
                     </div>
                     <form action="/myrequests/complete?id=<%= myrequest.id %>" method="post" class="complete-form me-3">
                       <button type="submit" class="btn complete-btn_mark_completed">
@@ -196,6 +197,9 @@
           // Immediately update the UI
           updateUI(buttonContainer, newStatus);
 
+          // Immediately update the count
+          updateApplicantCountImmediately(buttonContainer, newStatus);
+
           fetch(action, {
             method: method,
             body: formData,
@@ -214,7 +218,16 @@
           .then(data => {
             // Confirm the UI update based on the server response
             updateUI(buttonContainer, data.status);
+            // Update the applicant count based on the server response
+            updateApplicantCountFromServer(buttonContainer, data.acceptedCount, data.numberOfPax);
           })
+          .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            // Revert the UI change if there was an error
+            revertUI(buttonContainer);
+            // Revert the count change
+            updateApplicantCountImmediately(buttonContainer, 'Revert');
+          });
         });
       });
 
@@ -225,9 +238,56 @@
         indicator.textContent = status;
         container.appendChild(indicator);
       }
-    });
-       
 
+      function updateApplicantCountImmediately(container, status) {
+        const cardWrapper = container.closest('.clickable-card_requests_index-wrapper_my');
+        const statusIndicator = cardWrapper.querySelector('.applicants-status_requests_index_my');
+        let acceptedCount = parseInt(statusIndicator.dataset.acceptedCount);
+        const numberOfPax = parseInt(statusIndicator.dataset.numberOfPax);
+
+        if (status === 'Accepted') {
+          acceptedCount++;
+        } else if (status === 'Rejected') {
+          // Only decrease if it was previously accepted
+          if (container.querySelector('.status-indicator_my.accepted')) {
+            acceptedCount--;
+          }
+        } else if (status === 'Revert') {
+          // If reverting an accept, decrease; if reverting a reject of a previously accepted application, increase
+          if (container.querySelector('.status-indicator_my.accepted')) {
+            acceptedCount--;
+          } else if (container.querySelector('.status-indicator_my.rejected') && 
+                    container.closest('.popup_requests_index_my').querySelector('.status-indicator_my.accepted')) {
+            acceptedCount++;
+          }
+        }
+
+        statusIndicator.dataset.acceptedCount = acceptedCount;
+        statusIndicator.innerHTML = `<i class="fas fa-users"></i> ${acceptedCount}/${numberOfPax} people found`;
+
+        // Change color to green if the count meets the number of pax
+        if (acceptedCount >= numberOfPax) {
+          statusIndicator.classList.add('full-capacity');
+        } else {
+          statusIndicator.classList.remove('full-capacity');
+        }
+      }
+
+      function updateApplicantCountFromServer(container, acceptedCount, numberOfPax) {
+        const cardWrapper = container.closest('.clickable-card_requests_index-wrapper_my');
+        const statusIndicator = cardWrapper.querySelector('.applicants-status_requests_index_my');
+        
+        statusIndicator.dataset.acceptedCount = acceptedCount;
+        statusIndicator.innerHTML = `<i class="fas fa-users"></i> ${acceptedCount}/${numberOfPax} people found`;
+
+        // Change color to green if the count meets the number of pax
+        if (acceptedCount >= numberOfPax) {
+          statusIndicator.classList.add('full-capacity');
+        } else {
+          statusIndicator.classList.remove('full-capacity');
+        }
+      }
+    });
   </script>
 </body>
 </html>

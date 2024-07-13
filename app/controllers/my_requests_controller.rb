@@ -8,6 +8,7 @@ class MyRequestsController < ApplicationController
              .group('requests.id')
              .select('requests.*,
              COUNT(request_applications.id) as application_count,
+             COUNT(CASE WHEN request_applications.status = \'Accepted\' THEN 1 END) as accepted_application_count,
              array_agg(request_applications.applicant_id) as applicant_ids')
 
     # Fetch all unique applicant IDs
@@ -40,12 +41,18 @@ class MyRequestsController < ApplicationController
 
   def accept
     @reqapp = RequestApplication.find(params[:id])
-    return if current_user.id != Request.find(@reqapp.request_id).created_by
+    @request = Request.find(@reqapp.request_id)
+    return if current_user.id != @request.created_by
     @reqapp.status = "Accepted"
     if @reqapp.save
+      update_counts(@request)
       respond_to do |format|
         format.html { redirect_to '/myrequests', notice: 'Application accepted' }
-        format.json { render json: { status: "Accepted" } }
+        format.json { render json: { 
+          status: "Accepted", 
+          acceptedCount: @request.accepted_application_count,
+          numberOfPax: @request.number_of_pax 
+        } }
       end
     else
       respond_to do |format|
@@ -57,12 +64,18 @@ class MyRequestsController < ApplicationController
   
   def reject
     @reqapp = RequestApplication.find(params[:id])
-    return if current_user.id != Request.find(@reqapp.request_id).created_by
+    @request = Request.find(@reqapp.request_id)
+    return if current_user.id != @request.created_by
     @reqapp.status = "Rejected"
     if @reqapp.save
+      update_counts(@request)
       respond_to do |format|
         format.html { redirect_to '/myrequests', notice: 'Application rejected' }
-        format.json { render json: { status: "Rejected" } }
+        format.json { render json: { 
+          status: "Rejected", 
+          acceptedCount: @request.accepted_application_count,
+          numberOfPax: @request.number_of_pax 
+        } }
       end
     else
       respond_to do |format|
@@ -70,5 +83,12 @@ class MyRequestsController < ApplicationController
         format.json { render json: { error: 'Failed to reject application' }, status: :unprocessable_entity }
       end
     end
-  end  
+  end
+
+  private
+
+  def update_counts(request)
+    accepted_count = request.request_applications.where(status: 'Accepted').count
+    request.update(accepted_application_count: accepted_count)
+  end
 end
