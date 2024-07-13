@@ -11,8 +11,7 @@ FactoryBot.define do
     reward_type { 'None' }
     reward { 'None' }
     status { 'Available' }
-    association :user, factory: :user, strategy: :build
-    created_by { user.id }
+    created_by { create(:random_user).id }
     created_at { DateTime.now }
     updated_at { DateTime.now }
   end
