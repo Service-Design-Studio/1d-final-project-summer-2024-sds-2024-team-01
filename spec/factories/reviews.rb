@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :random_review, class: 'Review' do
+  factory :review, class: 'Review' do
     rating { Faker::Number.between(from: 1, to: 5) }
     review_content { Faker::Quote.famous_last_words }
     association :request, factory: :test_request, strategy: :build
