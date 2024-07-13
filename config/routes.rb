@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   
   #get 'reviews/new_temp' => 'reviews#new_temp'
   get 'myrequests/reviews' => 'reviews#new'
+  get 'reviews/edit' => 'reviews#update'
   
 
   namespace :api do
