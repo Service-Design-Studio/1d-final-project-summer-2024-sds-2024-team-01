@@ -63,23 +63,28 @@
                       <div class="popup_requests_index_my" style="--index: <%= index %>;">
                         <!-- Content for the popup -->
                         <a class="applicant-profile_my" href="/profile?id=<%=application.applicant.id%>">
-                        <div class="applicant-info_requests_index_my">
-                          <% if application.applicant.avatar.attached? %>
-                            <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index_my">
-                          <% end %>
-                          <p><%= application.applicant.name %></p>
-                          <button class="btn custom-btn-chat_my">Chat</button>
-                        </div>
+                          <div class="applicant-info_requests_index_my">
+                            <% if application.applicant.avatar.attached? %>
+                              <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index_my">
+                            <% end %>
+                            <p><%= application.applicant.name %></p>
+                            <button class="btn custom-btn-chat_my">Chat</button>
+                          </div>
                         </a>
-                        <!-- Split button -->
-                        <div class="split-button_requests_index_my">
-                          <form action="/myrequests/accept?id=<%= application.id %>" method="post">
-                            <button type="submit" class="btn accept-btn_requests_index_my">Accept</button>
-                          </form>
-                          <form action="/myrequests/reject?id=<%= application.id %>" method="post">
-                            <button type="submit" class="btn reject-btn_requests_index_my">Reject</button>
-                            <a href="/myrequests/<%= myrequest.id %>/reviews/new" class="btn btn-primary review-btn" style="display:none;">Completed. Leave a Review</a>
-                          </form>
+                        <!-- Split button or status indicator -->
+                        <div class="split-button_requests_index_my" data-application-id="<%= application.id %>">
+                          <% if application.status == 'Accepted' %>
+                            <div class="status-indicator_my accepted">Accepted</div>
+                          <% elsif application.status == 'Rejected' %>
+                            <div class="status-indicator_my rejected">Rejected</div>
+                          <% else %>
+                            <form action="/myrequests/accept?id=<%= application.id %>" method="post" class="accept-form">
+                              <button type="submit" class="btn accept-btn_requests_index_my">Accept</button>
+                            </form>
+                            <form action="/myrequests/reject?id=<%= application.id %>" method="post" class="reject-form">
+                              <button type="submit" class="btn reject-btn_requests_index_my">Reject</button>
+                            </form>
+                          <% end %>
                         </div>
                       </div>
                     <% end %>
@@ -173,7 +178,56 @@
           cardBody.style.height = 'auto';
         }
       });
+
+      // Handle form submissions and update the UI
+      document.querySelectorAll('.accept-form, .reject-form').forEach(form => {
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          const form = event.target;
+          const action = form.getAttribute('action');
+          const method = form.getAttribute('method');
+          const formData = new FormData(form);
+          const buttonContainer = form.closest('.split-button_requests_index_my');
+          const applicationId = buttonContainer.dataset.applicationId;
+
+          // Determine the new status based on which form was submitted
+          const newStatus = form.classList.contains('accept-form') ? 'Accepted' : 'Rejected';
+
+          // Immediately update the UI
+          updateUI(buttonContainer, newStatus);
+
+          fetch(action, {
+            method: method,
+            body: formData,
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+            }
+          })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('Network response was not ok.');
+            }
+          })
+          .then(data => {
+            // Confirm the UI update based on the server response
+            updateUI(buttonContainer, data.status);
+          })
+        });
+      });
+
+      function updateUI(container, status) {
+        container.innerHTML = '';
+        const indicator = document.createElement('div');
+        indicator.classList.add('status-indicator_my', status.toLowerCase());
+        indicator.textContent = status;
+        container.appendChild(indicator);
+      }
     });
+       
+
   </script>
 </body>
 </html>

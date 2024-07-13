@@ -1168,6 +1168,26 @@ font-weight: bold;
 .reject-btn_requests_index_my:hover {
   background-color: #c82333;
 }
+/* changes split button to 'Accepted' or 'Rejected' after requester chooses*/
+.status-indicator_my {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+}
+
+.status-indicator_my.accepted {
+  background-color: #28a745;
+}
+
+.status-indicator_my.rejected {
+  background-color: #dc3545;
+}
+
+.status-indicator_my.visible {
+  display: block;
+}
 
 .popups-container_my {
   max-height: 0;

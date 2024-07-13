@@ -42,15 +42,33 @@ class MyRequestsController < ApplicationController
     @reqapp = RequestApplication.find(params[:id])
     return if current_user.id != Request.find(@reqapp.request_id).created_by
     @reqapp.status = "Accepted"
-    @reqapp.save
-    redirect_to '/myrequests', notice: 'Application accepted'
+    if @reqapp.save
+      respond_to do |format|
+        format.html { redirect_to '/myrequests', notice: 'Application accepted' }
+        format.json { render json: { status: "Accepted" } }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to '/myrequests', alert: 'Failed to accept application' }
+        format.json { render json: { error: 'Failed to accept application' }, status: :unprocessable_entity }
+      end
+    end
   end
-
+  
   def reject
     @reqapp = RequestApplication.find(params[:id])
     return if current_user.id != Request.find(@reqapp.request_id).created_by
     @reqapp.status = "Rejected"
-    @reqapp.save
-    redirect_to '/myrequests', notice: 'Application rejected'
-  end
+    if @reqapp.save
+      respond_to do |format|
+        format.html { redirect_to '/myrequests', notice: 'Application rejected' }
+        format.json { render json: { status: "Rejected" } }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to '/myrequests', alert: 'Failed to reject application' }
+        format.json { render json: { error: 'Failed to reject application' }, status: :unprocessable_entity }
+      end
+    end
+  end  
 end
