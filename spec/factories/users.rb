@@ -21,7 +21,7 @@ FactoryBot.define do
 
   factory :requester, class: 'User' do
     name { 'Harrison Ford' }
-    number { '56789012' }
+    number { "9#{Faker::Number.number(digits: 7)}" }
     email { 'harrison@example.com' }
     status { 'Active' }
     role_id { 1 }
@@ -31,7 +31,7 @@ FactoryBot.define do
 
   factory :applicant, class: 'User' do
     name { 'Alice Smith' }
-    number { '12345678' }
+    number { "9#{Faker::Number.number(digits: 7)}" }
     email { 'alice.smith@example.com' }
     status { 'Active' }
     role_id { 1 }
