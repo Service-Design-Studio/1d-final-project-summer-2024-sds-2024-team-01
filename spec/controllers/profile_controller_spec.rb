@@ -6,6 +6,7 @@ RSpec.describe ProfileController, type: :controller do
   describe 'GET #index' do
     context 'when user is authenticated' do
       let(:user) { create(:random_user) }
+      let(:other_user) { create(:random_user) }
 
       before do
         sign_in user
@@ -28,14 +29,27 @@ RSpec.describe ProfileController, type: :controller do
         expect(assigns(:average_rating)).to be_nil
       end
 
+      it 'shows the profile of another user when the id is specified' do
+        get :index, params: { id: other_user.id }
+        expect(assigns(:profile)).to eq(other_user)
+      end
       # Add more specific tests as needed
     end
 
     context 'when user is not authenticated' do
-      before { get :index }
+        let(:other_user) { create(:random_user) }
+
+      before do
+        get :index
+      end
 
       it 'redirects to login page' do
         expect(response).to redirect_to('/login')
+      end
+
+      it 'shows the profile of another user when the id is specified' do
+        get :index, params: { id: other_user.id }
+        expect(assigns(:profile)).to eq(other_user)
       end
     end
   end
@@ -46,6 +60,6 @@ RSpec.describe ProfileController, type: :controller do
   #     expect(response).to have_http_status(:success)
   #   end
 
-    # Add more specific tests as needed
+  # Add more specific tests as needed
   # end
 end
