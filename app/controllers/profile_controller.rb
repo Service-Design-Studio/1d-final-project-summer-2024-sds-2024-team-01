@@ -6,7 +6,8 @@ class ProfileController < ApplicationController
   def index
     if params[:id].nil?
       if current_user.nil?
-        render '/login'
+        redirect_to '/login'
+        return
       else
         @profile = current_user
       end
@@ -15,17 +16,9 @@ class ProfileController < ApplicationController
     end
 
     @requests = Request.where(created_by: @profile.id)
-    @reviews_received = Review.where(review_for: @profile.id)
+    @reviews_received = @profile.received_reviews
     @average_rating = @reviews_received.average(:rating)
   end
 
-  def edit; end
-
-  def destroy; end
-
-  def show
-    @user = User.find(params[:id])
-    @average_rating = @user.received_reviews.average(:rating)
-  end
-  
+  # def edit; end
 end

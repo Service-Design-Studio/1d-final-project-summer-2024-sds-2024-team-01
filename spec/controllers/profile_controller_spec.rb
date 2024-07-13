@@ -39,40 +39,13 @@ RSpec.describe ProfileController, type: :controller do
       end
     end
   end
-
-  describe 'GET #show' do
-    let(:user) { create(:user) }
-    let(:review) { create(:review, review_for: user) }
-
-    before { get :show, params: { id: user.id } }
-
-    it 'assigns @user with the correct user' do
-      expect(assigns(:user)).to eq(user)
-    end
-
-    it 'assigns @average_rating for the received reviews' do
-      expect(assigns(:average_rating)).to eq(user.received_reviews.average(:rating))
-    end
+  #
+  # describe 'GET #edit' do
+  #   it 'returns http success' do
+  #     get :edit
+  #     expect(response).to have_http_status(:success)
+  #   end
 
     # Add more specific tests as needed
-  end
-
-  describe 'GET #edit' do
-    it 'returns http success' do
-      get :edit
-      expect(response).to have_http_status(:success)
-    end
-
-    # Add more specific tests as needed
-  end
-
-  describe 'DELETE #destroy' do
-    it 'returns http success' do
-      delete :destroy, params: { id: 1 } # Adjust params as necessary
-      expect(response).to have_http_status(:success)
-    end
-
-    # Add more specific tests as needed
-  end
+  # end
 end
-
