@@ -1,5 +1,4 @@
 class MyRequestsController < ApplicationController
-  
   def index
     @requests =
       Request.includes(:request_applications)
@@ -16,25 +15,23 @@ class MyRequestsController < ApplicationController
 
     # Fetch all applicants in one query
     @applicants = User.where(id: all_applicant_ids).index_by(&:id)
-    
-    @comprequests = 
+
+    @comprequests =
       Request.where(status: 'Completed')
   end
 
+  # Redirect directly to let requestcontroller handle
   # GET /requests/1
-  def show
-    @request = Request.find(params[:id])
-  end
-
-  # GET /requests/new
-  def new
-    @request = Request.new
-  end
+  # def show
+  #   redirect_to controller: :requests, action: :show
+  #   # @request = Request.find(params[:id])
+  # end
 
   def complete
     @request = Request.find(params[:id])
     return if current_user.id != (@request.created_by)
-    @request.status = "Completed"
+
+    @request.status = 'Completed'
     @request.save
     redirect_to '/myrequests', notice: 'Request marked as completed'
   end
@@ -90,5 +87,6 @@ class MyRequestsController < ApplicationController
   def update_counts(request)
     accepted_count = request.request_applications.where(status: 'Accepted').count
     request.update(accepted_application_count: accepted_count)
+
   end
 end

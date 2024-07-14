@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Review, type: :model do
   subject do
-    create(:random_review)
+    create(:review)
   end
 
   it 'is valid with valid attributes' do
