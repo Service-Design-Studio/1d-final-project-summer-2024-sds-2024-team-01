@@ -8,12 +8,10 @@ class User < ActiveRecord::Base
   belongs_to :company, optional: true
   belongs_to :role
 
-  has_many :reviews, foreign_key: 'review_by'
-  # has_many :written_reviews, class_name: 'Review', foreign_key: 'created_by'
-  has_many :received_reviews, class_name: 'Review', foreign_key: 'created_by'
+  has_many :written_reviews, class_name: 'Review', foreign_key: 'review_by'
+  has_many :received_reviews, class_name: 'Review', foreign_key: 'review_for'
   has_many :chats, foreign_key: :applicant_id
   has_many :messages, foreign_key: :sender_id
-  has_many :reviews, foreign_key: :review_for
   has_many :summaryreports, foreign_key: :requested_by
   has_many :userreports, foreign_key: :created_by
   has_many :requests, foreign_key: :created_by
@@ -21,5 +19,5 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
   validates :email, presence: true
-  validates :number, presence: true
+  validates :number, presence: true, format: { with: /[89]\d{7}/, message: 'Please enter a valid SG number' }
 end

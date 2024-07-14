@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!-- Meta tags and stylesheets -->
-</head>
 <body>
   <div class="container content_requests_index">
     <div class="card custom-card_requests_index">
@@ -18,7 +15,7 @@
         <div class="row">
           <div class="col-md-12">
             <form class="search-form_requests_index">
-              <input type="text" class="search-input_requests_index form-control" id="searchInput" placeholder="Search my requests...">
+              <input type="text" class="search-input_requests_index_my form-control" id="searchInput" placeholder="Search my requests...">
               <button type="submit" class="btn search-btn_requests_index"><i class="fas fa-search"></i></button>
             </form>
           </div>
@@ -28,57 +25,72 @@
 
     <!-- Container for Request Cards -->
     <div class="card mt-0" id="requestContainer">
-      <div class="card-body">
+      <div class="card-body" style=>
         <div class="row">
           <% @requests.each do |myrequest| %>
-            <div class="col-md-12 mb-4 request-card_requests_index">
-              <div class="clickable-card_requests_index-wrapper">
-                <a href="<%= request_path(myrequest) %>" class="clickable-card_requests_index card h-100 d-flex flex-row align-items-center">
-                  <% if myrequest.thumbnail.attached? %>
-                    <img src="<%= image_url(myrequest.thumbnail) %>" class="thumbnail_requests_index" alt="<%= myrequest.title %>"/>
-                  <% end %>
-                  <div class="card-content_requests_index flex-grow-1">
-                    <h5 class="card-title_requests_index"><%= myrequest.title %></h5>
-                    <p class="card-date_requests_index"><%= myrequest.date.strftime('%d %B %Y') %> , <%= myrequest.start_time.strftime('%H:%M') %></p>
-                  </div>
-                  <div class="card-actions_requests_index">
-                    <div class="application-indicator_requests_index">
+            <div class="col-md-12 mb-4 request-card_requests_index_my">
+              <div class="clickable-card_requests_index-wrapper_my">
+                <div class="card h-100 d-flex flex-row align-items-center">
+                  <a href="<%= request_path(myrequest) %>" class="clickable-area_requests_index_my">
+                    <% if myrequest.thumbnail.attached? %>
+                      <img src="<%= image_url(myrequest.thumbnail) %>" class="thumbnail_requests_index_my" alt="<%= myrequest.title %>"/>
+                    <% end %>
+                    <div class="card-content_requests_index_my flex-grow-1">
+                      <h5 class="card-title_requests_index_my"><%= myrequest.title %></h5>
+                      <p class="card-date_requests_index_my"><%= myrequest.date.strftime('%d %B %Y') %> , <%= myrequest.start_time.strftime('%H:%M') %></p>
+                    </div>
+                  </a>
+                  <div class="card-actions_requests_index_my">
+                    <div class="application-indicator_requests_index_my">
                       <% if myrequest.application_count > 0 %>
-                        <p class="application-count_requests_index"><%= myrequest.application_count %> Applicants</p>
+                        <p class="application-count_requests_index_my"><%= myrequest.application_count %> Applicants</p>
                       <% end %>
-                      <p class="applicants-status_requests_index"><i class="fas fa-users"></i> <%= myrequest.application_count %>/<%= myrequest.number_of_pax %> people found</p>
+                      <p class="applicants-status_requests_index_my <%= 'full-capacity' if myrequest.accepted_application_count >= myrequest.number_of_pax %>" data-accepted-count="<%= myrequest.accepted_application_count %>" data-number-of-pax="<%= myrequest.number_of_pax %>">
+                        <i class="fas fa-users"></i> <%= myrequest.accepted_application_count %>/<%= myrequest.number_of_pax %> people found
+                      </p>
                     </div>
+                    <form action="/myrequests/complete?id=<%= myrequest.id %>" method="post" class="complete-form me-3">
+                      <button type="submit" class="btn complete-btn_mark_completed">
+                        <i class="bi bi-check-lg tick-icon_mark_completed"></i>
+                        <span class="complete-text_mark_completed">Mark as Complete</span>
+                      </button>
+                    </form>
+                    <button class="btn dropdown-btn_requests_index_my"><i class="fas fa-chevron-down"></i></button>
                   </div>
-                </a>
-                <div class="popups-container">
-                  <% myrequest.request_applications.each_with_index do |application, index| %>
-                    <div class="popup_requests_index" style="--index: <%= index %>;">
-                      <!-- Content for the popup -->
-                      <a class="applicant-profile" href="/profile?id=<%=application.applicant.id%>">
-                        <div class="applicant-info_requests_index">
-                          <% if application.applicant.avatar.attached? %>
-                            <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index">
-                          <% end %>
-                          <p><%= application.applicant.name %></p>
-                          <button class="btn custom-btn-chat">Chat</button>
-                        </div>
-                      </a>
-                      <!-- Split button -->
-                      <div class="split-button_requests_index">
-                        <form action="/myrequests/accept?id=<%= application.id %>" method="post" class="accept-reject-form">
-                          <button type="submit" class="btn accept-btn_requests_index">Accept</button>
-                        </form>
-                        <form action="/myrequests/reject?id=<%= application.id %>" method="post" class="accept-reject-form">
-                          <button type="submit" class="btn reject-btn_requests_index">Reject</button>
-                        </form>
-                        <form action="/myrequests/complete?id=<%= myrequest.id %>" method="post" class="complete-form" style="display:none;">
-                          <button type="submit" class="btn btn-success">Mark as Complete</button>
-                        </form>
-                        <a href="/myrequests/<%= myrequest.id %>/reviews/new" class="btn btn-primary review-btn" style="display:none;">Completed. Leave a Review</a>
-                      </div>
-                    </div>
-                  <% end %>
                 </div>
+                <% if myrequest.request_applications.any? %>
+                  <div class="popups-container_my">
+                    <% myrequest.request_applications.each_with_index do |application, index| %>
+                      <div class="popup_requests_index_my" style="--index: <%= index %>;">
+                        <!-- Content for the popup -->
+                        <a class="applicant-profile_my" href="/profile?id=<%=application.applicant.id%>">
+                          <div class="applicant-info_requests_index_my">
+                            <% if application.applicant.avatar.attached? %>
+                              <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index_my">
+                            <% end %>
+                            <p><%= application.applicant.name %></p>
+                            <button class="btn custom-btn-chat_my">Chat</button>
+                          </div>
+                        </a>
+                        <!-- Split button or status indicator -->
+                        <div class="split-button_requests_index_my" data-application-id="<%= application.id %>">
+                          <% if application.status == 'Accepted' %>
+                            <div class="status-indicator_my accepted">Accepted</div>
+                          <% elsif application.status == 'Rejected' %>
+                            <div class="status-indicator_my rejected">Rejected</div>
+                          <% else %>
+                            <form action="/myrequests/accept?id=<%= application.id %>" method="post" class="accept-form">
+                              <button type="submit" class="btn accept-btn_requests_index_my">Accept</button>
+                            </form>
+                            <form action="/myrequests/reject?id=<%= application.id %>" method="post" class="reject-form">
+                              <button type="submit" class="btn reject-btn_requests_index_my">Reject</button>
+                            </form>
+                          <% end %>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
               </div>
             </div>
           <% end %>
@@ -91,14 +103,14 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const searchInput = document.getElementById('searchInput');
-      const requestCards = document.querySelectorAll('.request-card_requests_index');
+      const requestCards = document.querySelectorAll('.request-card_requests_index_my');
 
       searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.toLowerCase().trim();
         console.log('Search term:', searchTerm); // Debug log
 
         requestCards.forEach(card => {
-          const titleElement = card.querySelector('.card-title_requests_index');
+          const titleElement = card.querySelector('.card-title_requests_index_my');
           const title = titleElement ? titleElement.innerText.toLowerCase() : '';
           console.log('Card title:', title); // Debug log
 
@@ -110,84 +122,171 @@
         });
       });
 
-      // Show popup on hover and keep it visible when hovering over it
-      const clickableCards = document.querySelectorAll('.clickable-card_requests_index-wrapper');
+      // Dropdown functionality
+      const dropdownButtons = document.querySelectorAll('.dropdown-btn_requests_index_my');
+      const cardBody = document.querySelector('.card-body');
 
-      clickableCards.forEach(card => {
-        const popupsContainer = card.querySelector('.popups-container');
-        const popups = card.querySelectorAll('.popup_requests_index');
-        
-        card.addEventListener('mouseenter', () => {
-          popupsContainer.style.display = 'block';
-          popups.forEach(popup => {
-            popup.style.display = 'block';
+      dropdownButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const wrapper = button.closest('.clickable-card_requests_index-wrapper_my');
+          const popupsContainer = wrapper.querySelector('.popups-container_my');
+          
+          // Close all other open popups
+          document.querySelectorAll('.popups-container_my.active').forEach(container => {
+            if (container !== popupsContainer) {
+              closePopup(container);
+            }
           });
-        });
-        
-        card.addEventListener('mouseleave', () => {
-          popupsContainer.style.display = 'none';
-          popups.forEach(popup => {
-            popup.style.display = 'none';
-          });
+
+          if (popupsContainer.classList.contains('active')) {
+            closePopup(popupsContainer);
+          } else {
+            openPopup(popupsContainer);
+          }
+
+          // Adjust card body height
+          setTimeout(() => {
+            cardBody.style.height = cardBody.scrollHeight + 'px';
+          }, 10);
         });
       });
 
-      // Handle Accept button click
-      document.querySelectorAll('.accept-reject-form').forEach(form => {
+      function openPopup(container) {
+        container.classList.add('active');
+        container.style.maxHeight = container.scrollHeight + 'px';
+        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
+        button.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = container.scrollHeight + 'px';
+      }
+
+      function closePopup(container) {
+        container.classList.remove('active');
+        container.style.maxHeight = null;
+        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
+        button.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = null;
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (event) => {
+        if (!event.target.closest('.clickable-card_requests_index-wrapper_my')) {
+          const openPopups = document.querySelectorAll('.popups-container_my.active');
+          openPopups.forEach(closePopup);
+
+          // Reset card body height
+          cardBody.style.height = 'auto';
+        }
+      });
+
+      // Handle form submissions and update the UI
+      document.querySelectorAll('.accept-form, .reject-form').forEach(form => {
         form.addEventListener('submit', function(event) {
           event.preventDefault();
+          const form = event.target;
+          const action = form.getAttribute('action');
+          const method = form.getAttribute('method');
           const formData = new FormData(form);
-          fetch(form.action, {
-            method: 'POST',
+          const buttonContainer = form.closest('.split-button_requests_index_my');
+          const applicationId = buttonContainer.dataset.applicationId;
+
+          // Determine the new status based on which form was submitted
+          const newStatus = form.classList.contains('accept-form') ? 'Accepted' : 'Rejected';
+
+          // Immediately update the UI
+          updateUI(buttonContainer, newStatus);
+
+          // Immediately update the count
+          updateApplicantCountImmediately(buttonContainer, newStatus);
+
+          fetch(action, {
+            method: method,
             body: formData,
             headers: {
-              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
             }
           })
           .then(response => {
             if (response.ok) {
-              // Hide the accept and reject buttons
-              form.querySelector('.accept-btn_requests_index').style.display = 'none';
-              form.nextElementSibling.querySelector('.reject-btn_requests_index').style.display = 'none';
-              // Show the mark as complete button
-              form.parentElement.querySelector('.complete-form').style.display = 'block';
+              return response.json();
             } else {
-              console.error('Failed to accept the request.');
+              throw new Error('Network response was not ok.');
             }
           })
+          .then(data => {
+            // Confirm the UI update based on the server response
+            updateUI(buttonContainer, data.status);
+            // Update the applicant count based on the server response
+            updateApplicantCountFromServer(buttonContainer, data.acceptedCount, data.numberOfPax);
+          })
           .catch(error => {
-            console.error('Error:', error);
+            console.error('There was a problem with the fetch operation:', error);
+            // Revert the UI change if there was an error
+            revertUI(buttonContainer);
+            // Revert the count change
+            updateApplicantCountImmediately(buttonContainer, 'Revert');
           });
         });
       });
 
-      // Handle Mark as Complete button click
-      document.querySelectorAll('.complete-form').forEach(form => {
-        form.addEventListener('submit', function(event) {
-          event.preventDefault();
-          const formData = new FormData(form);
-          fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-          })
-          .then(response => {
-            if (response.ok) {
-              // Hide the mark as complete button
-              form.style.display = 'none';
-              // Show the review button
-              form.parentElement.querySelector('.review-btn').style.display = 'block';
-            } else {
-              console.error('Failed to mark the request as complete.');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-        });
-      });
+      function updateUI(container, status) {
+        container.innerHTML = '';
+        const indicator = document.createElement('div');
+        indicator.classList.add('status-indicator_my', status.toLowerCase());
+        indicator.textContent = status;
+        container.appendChild(indicator);
+      }
+
+      function updateApplicantCountImmediately(container, status) {
+        const cardWrapper = container.closest('.clickable-card_requests_index-wrapper_my');
+        const statusIndicator = cardWrapper.querySelector('.applicants-status_requests_index_my');
+        let acceptedCount = parseInt(statusIndicator.dataset.acceptedCount);
+        const numberOfPax = parseInt(statusIndicator.dataset.numberOfPax);
+
+        if (status === 'Accepted') {
+          acceptedCount++;
+        } else if (status === 'Rejected') {
+          // Only decrease if it was previously accepted
+          if (container.querySelector('.status-indicator_my.accepted')) {
+            acceptedCount--;
+          }
+        } else if (status === 'Revert') {
+          // If reverting an accept, decrease; if reverting a reject of a previously accepted application, increase
+          if (container.querySelector('.status-indicator_my.accepted')) {
+            acceptedCount--;
+          } else if (container.querySelector('.status-indicator_my.rejected') && 
+                    container.closest('.popup_requests_index_my').querySelector('.status-indicator_my.accepted')) {
+            acceptedCount++;
+          }
+        }
+
+        statusIndicator.dataset.acceptedCount = acceptedCount;
+        statusIndicator.innerHTML = `<i class="fas fa-users"></i> ${acceptedCount}/${numberOfPax} people found`;
+
+        // Change color to green if the count meets the number of pax
+        if (acceptedCount >= numberOfPax) {
+          statusIndicator.classList.add('full-capacity');
+        } else {
+          statusIndicator.classList.remove('full-capacity');
+        }
+      }
+
+      function updateApplicantCountFromServer(container, acceptedCount, numberOfPax) {
+        const cardWrapper = container.closest('.clickable-card_requests_index-wrapper_my');
+        const statusIndicator = cardWrapper.querySelector('.applicants-status_requests_index_my');
+        
+        statusIndicator.dataset.acceptedCount = acceptedCount;
+        statusIndicator.innerHTML = `<i class="fas fa-users"></i> ${acceptedCount}/${numberOfPax} people found`;
+
+        // Change color to green if the count meets the number of pax
+        if (acceptedCount >= numberOfPax) {
+          statusIndicator.classList.add('full-capacity');
+        } else {
+          statusIndicator.classList.remove('full-capacity');
+        }
+      }
     });
   </script>
 </body>

@@ -1,20 +1,28 @@
 FactoryBot.define do
   factory :request do
-    title { 'Sample Request' }
-    description { 'Sample Description' }
+    title { "Help with #{Faker::Verb.ing_form} #{Faker::Hacker.noun}" }
+    description { Faker::Quote.fortune_cookie }
     category { 'General' }
-    location { 'Sample Location' }
-    date { Date.today }
+    location { "POINT(#{Faker::Number.between(from: 103.8, to: 104.0).round(3)} #{Faker::Number.between(from: 1.30, to: 1.40).round(3)})" }
+    date { Faker::Date.forward(from: Date.tomorrow, days: 90) }
     start_time { '10:00 AM' }
-    number_of_pax { 10 }
+    number_of_pax { Faker::Number.between(from: 1, to: 10) }
     duration { 2 }
     reward_type { 'None' }
     reward { 'None' }
     status { 'Available' }
-    association :user, factory: :user, strategy: :build
-    created_by { user.id }
+    created_by { create(:random_user).id }
     created_at { DateTime.now }
     updated_at { DateTime.now }
+
+    after(:build) do |request|
+      image_path = Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')
+      request.thumbnail.attach(
+        io: File.open(image_path),
+        filename: 'my_image.jpg',
+        content_type: 'image/jpeg'
+      )
+    end
   end
 
   factory :test_request, class: 'Request' do
@@ -22,13 +30,13 @@ FactoryBot.define do
     description { 'Need someone to walk my dog for an hour every afternoon' }
     category { 'Pet Care' }
     location { 'POINT(34.052235 -118.243683)' }
-    date { Date.new(2024, 7, 2) }
+    date { Date.tomorrow }
     number_of_pax { 1 }
     duration { 1 }
     start_time { '12:00' }
     reward { '$20' }
     reward_type { 'Cash' }
     status { 'Open' }
-    association :created_by, factory: :user, name: 'Harrison Ford'
+    association :user, factory: :random_user, strategy: :build
   end
 end

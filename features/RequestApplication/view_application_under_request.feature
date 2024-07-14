@@ -15,11 +15,11 @@ Background:
     And there is an application for my request
 
 Scenario:
-        Given I am on the 'myrequests' page
-        Then I should see the applicants who have applied for each request
-        And I should see the name of each applicant
+    Given I am on the 'myrequests' page
+    Then I should see the applicants who have applied for each request
+    And I should see the name of each applicant
 
 Scenario:
-        Given I am on the 'myrequests' page
-        When I click on the profile section of the first applicant
-        Then I should see the applicants profile
+    Given I am on the 'myrequests' page
+    When I click on the profile section of the first applicant
+    Then I should see the applicants profile

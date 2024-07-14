@@ -3,23 +3,21 @@
 
 class ProfileController < ApplicationController
   def index
-    @profile = if params[:id].nil?
-                 current_user
-               else
-                 User.find(params[:id])
-               end
+    if params[:id].nil?
+      if current_user.nil?
+        redirect_to '/login'
+        return
+      else
+        @profile = current_user
+      end
+    else
+      @profile = User.find(params[:id])
+    end
+
     @requests = Request.where(created_by: @profile.id)
-    @reviews_received = Review.where(review_for: @profile.id)
+    @reviews_received = @profile.received_reviews
     @average_rating = @reviews_received.average(:rating)
   end
 
-  def edit; end
-
-  def destroy; end
-
-  def show
-    @user = User.find(params[:id])
-    @average_rating = @user.received_reviews.average(:rating)
-  end
-  
+  # def edit; end
 end

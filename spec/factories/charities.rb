@@ -1,7 +1,7 @@
 FactoryBot.define do
-  factory :charity do
-    charity_name { "Sample Charity" }
-    charity_code { "SC12345" }
-    status { "active" }
+  factory :random_charity, class: 'Charity' do
+    charity_name { Faker::Adjective.positive + ' Charity' }
+    charity_code { 'CHAR' + Faker::Number.number(digits: 10).to_s }
+    status { 'Active' }
   end
 end

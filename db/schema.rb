@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -64,14 +64,28 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
 
   create_table "companies", force: :cascade do |t|
     t.string "company_name", null: false
-    t.string "company_code", limit: 20, null: false
     t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "company_charities", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.bigint "charity_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "company_codes", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.string "status", null: false
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "messages", force: :cascade do |t|
-    t.text "messageText", null: false
+    t.text "message_text", null: false
     t.boolean "read", null: false
     t.bigint "chat_id"
     t.bigint "sender_id", null: false
@@ -135,7 +149,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   create_table "user_reports", force: :cascade do |t|
     t.text "report_reason", null: false
     t.string "status", null: false
-    t.bigint "requested_by", null: false
+    t.bigint "reported_by", null: false
+    t.bigint "reported_user", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -172,6 +187,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   add_foreign_key "chats", "request_applications", column: "application_id"
   add_foreign_key "chats", "users", column: "applicant_id"
   add_foreign_key "chats", "users", column: "requester_id"
+  add_foreign_key "company_charities", "charities"
+  add_foreign_key "company_charities", "companies"
+  add_foreign_key "company_codes", "companies"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users", column: "receiver_id"
   add_foreign_key "messages", "users", column: "sender_id"
@@ -182,7 +200,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_073015) do
   add_foreign_key "reviews", "users", column: "review_by"
   add_foreign_key "reviews", "users", column: "review_for"
   add_foreign_key "summary_reports", "users", column: "requested_by"
-  add_foreign_key "user_reports", "users", column: "requested_by"
+  add_foreign_key "user_reports", "users", column: "reported_by"
+  add_foreign_key "user_reports", "users", column: "reported_user"
   add_foreign_key "users", "charities"
   add_foreign_key "users", "companies"
   add_foreign_key "users", "roles"

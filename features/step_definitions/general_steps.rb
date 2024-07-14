@@ -6,7 +6,7 @@ end
 Given('I have an account') do
     visit new_user_registration_path
     fill_in 'user_name', with: 'Harrison Ford'
-    fill_in 'user_number', with: '56789012'
+    fill_in 'user_number', with: '96789012'
     fill_in 'user_email', with: 'harrison@example.com'
     fill_in 'user_password', with: 'asdfasdf'
     fill_in 'user_password_confirmation', with: 'asdfasdf'
@@ -17,13 +17,13 @@ end
 
 And('I login') do
   visit new_user_session_path
-  fill_in 'user_number', with: '56789012'
+  fill_in 'user_number', with: '96789012'
   fill_in 'user_password', with: 'asdfasdf'
   click_button 'Login'
   expect(page).to have_content('Signed in successfully.')
 end
 
-Given('I am on the {string} page') do |page|
+Given('(that) I am on the {string} page') do |page|
   puts page
   if page == 'home'
     visit '/'
@@ -82,7 +82,7 @@ end
 Given('there is a registered user on the app') do
   User.create(
     name: 'Alice Smith',
-    number: '12345678',
+    number: '92345678',
     email: 'alice.smith@example.com',
     status: 'Active',
     role_id: 1,
@@ -91,4 +91,8 @@ Given('there is a registered user on the app') do
     password_confirmation: 'password',
     updated_at: DateTime.now
   )
+end
+
+Then('I should not see {string}') do |message|
+  expect(page).not_to have_content(message)
 end

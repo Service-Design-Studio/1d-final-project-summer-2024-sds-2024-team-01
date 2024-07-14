@@ -32,7 +32,14 @@ RSpec.configure do |config|
     Rails.root.join('spec/fixtures')
   ]
 
+  # For loading seeds before every test suite
+  config.before(:suite) do
+    Rails.application.load_seed # loading seeds
+  end
+
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::ControllerHelpers, :type => :controller
+  config.include Warden::Test::Helpers
   # Include Shoulda Matchers methods
   config.include Shoulda::Matchers::ActiveModel, type: :model
   config.include Shoulda::Matchers::ActiveRecord, type: :model
@@ -64,12 +71,11 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
   # Disable ActiveStorage during tests
-  config.before(:each, type: :model) do
-    allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attach).and_return(true)
-    allow_any_instance_of(ActiveStorage::Attached::Many).to receive(:attach).and_return(true)
-    allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attached?).and_return(false)
-    allow_any_instance_of(ActiveStorage::Attached::Many).to receive(:attached?).and_return(false)
-  end
+  # config.before(:each, type: :model) do
+  #   allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attach).and_return(true)
+  #   allow_any_instance_of(ActiveStorage::Attached::Many).to receive(:attach).and_return(true)
+  #   allow_any_instance_of(ActiveStorage::Attached::One).to receive(:attached?).and_return(false)
+  #   allow_any_instance_of(ActiveStorage::Attached::Many).to receive(:attached?).and_return(false)
+  # end
 end
