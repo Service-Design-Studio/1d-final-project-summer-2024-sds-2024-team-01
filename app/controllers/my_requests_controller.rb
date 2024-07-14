@@ -38,8 +38,18 @@ class MyRequestsController < ApplicationController
 
   def accept
     @reqapp = RequestApplication.find(params[:id])
-    @request = Request.find(@reqapp.request_id)
+    # @request = Request.find(@reqapp.request_id)
+    @request =
+      Request.includes(:request_applications)
+             .where(id: @reqapp.request_id)
+             .left_outer_joins(:request_applications)
+             .group('requests.id')
+             .select('requests.*,
+             COUNT(request_applications.id) as application_count,
+             COUNT(CASE WHEN request_applications.status = \'Accepted\' THEN 1 END) as accepted_application_count,
+          array_agg(request_applications.applicant_id) as applicant_ids').first
     return if current_user.id != @request.created_by
+
     @reqapp.status = "Accepted"
     if @reqapp.save
       update_counts(@request)
@@ -61,7 +71,15 @@ class MyRequestsController < ApplicationController
   
   def reject
     @reqapp = RequestApplication.find(params[:id])
-    @request = Request.find(@reqapp.request_id)
+    @request =
+      Request.includes(:request_applications)
+             .where(id: @reqapp.request_id)
+             .left_outer_joins(:request_applications)
+             .group('requests.id')
+             .select('requests.*,
+             COUNT(request_applications.id) as application_count,
+             COUNT(CASE WHEN request_applications.status = \'Accepted\' THEN 1 END) as accepted_application_count,
+          array_agg(request_applications.applicant_id) as applicant_ids').first
     return if current_user.id != @request.created_by
     @reqapp.status = "Rejected"
     if @reqapp.save

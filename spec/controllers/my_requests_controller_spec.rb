@@ -13,8 +13,8 @@ RSpec.describe MyRequestsController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns @requests with requests created by current_user' do
-      # get :index
-      # expect(assigns(:requests)).to match_array([request])
+      get :index
+      expect(assigns(:requests)).to match_array([request])
     end
 
     it 'assigns @applicants with users who have applied to the requests' do
