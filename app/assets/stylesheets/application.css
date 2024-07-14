@@ -535,6 +535,7 @@ font-weight: bold;
 /* Flexbox container for the indicator and button */
 .request-availability_requests_details {
   display: flex;
+  align-items: center;
   margin-top: 10px;
   width: 100%; /* Ensure it takes full width */
 }
@@ -543,7 +544,7 @@ font-weight: bold;
 .availability-indicator_requests_details,
 .accept-button_requests_details {
   flex: 1;
-  padding: 20px;
+  padding: 10px;
   border-radius: 5px;
   text-align: center; /* Center text horizontally */
   display: flex;
@@ -555,8 +556,7 @@ font-weight: bold;
   background-color: #f8f9fa;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  height: 20px;
-  margin-top: 21px;
+  height: 40px;
 }
 
 .accept-button_requests_details {
@@ -564,12 +564,55 @@ font-weight: bold;
   color: white;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  height: 20px;
+  height: 40px;
   cursor: pointer;
 }
 
 .accept-button_requests_details:hover {
   background-color: #218838;
+}
+
+.complete-btn_mark_completed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #6c757d;
+  background-color: #6c757d;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  position: relative;
+  white-space: nowrap; /* Ensure text stays in a single line */
+}
+
+.complete-btn_mark_completed:hover {
+  width: 160px;
+  border-radius: 5px; /* Ensure rounded corners are maintained */
+}
+
+.tick-icon_mark_completed {
+  font-size: 24px;
+  color: white;
+}
+
+.complete-text_mark_completed {
+  display: none;
+  background-color: #6c757d;
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+  padding: 10px;
+  white-space: nowrap; /* Ensure text stays in a single line */
+}
+
+.complete-btn_mark_completed:hover .tick-icon_mark_completed {
+  display: none;
+}
+
+.complete-btn_mark_completed:hover .complete-text_mark_completed {
+  display: inline;
 }
 
 .divider_requests_details {
@@ -1032,8 +1075,13 @@ font-weight: bold;
   width: fit-content; /* Set the width to fit the content */
 }
 
+.applicants-status_requests_index_my.full-capacity {
+  color: #28a745;
+  font-weight: bold;
+}
+
 .application-count_requests_index_my {
-  color: #28a745; /* Green text for the number of applicants */
+  color: #656dad; /* Green text for the number of applicants */
 }
 
 .applicants-status_requests_index_my {
@@ -1045,18 +1093,61 @@ font-weight: bold;
   margin-right: 5px;
 }
 
-.custom-btn-complete-request_my {
+/* .custom-btn-complete-request_my {
   background-color: #6c757d;
   border-color: #6c757d;
   color: white;
   margin-right: 20px;
-  align-self: center; /* Center vertically */
+  align-self: center; 
 }
 
 .custom-btn-complete-request_my:hover {
-  background-color: #5a6268; /* Slightly darker shade for hover effect */
+  background-color: #5a6268; 
   border-color: #545b62;
+} */
+
+/* .complete-btn_mark_completed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #6c757d;
+  background-color: #6c757d;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  position: relative;
+  white-space: nowrap; 
 }
+
+.complete-btn_mark_completed:hover {
+  width: 160px;
+  border-radius: 5px; 
+}
+
+.tick-icon_mark_completed {
+  font-size: 24px;
+  color: white;
+}
+
+.complete-text_mark_completed {
+  display: none;
+  background-color: #6c757d;
+  color: white;
+  font-weight: bold;
+  margin-left: 0px;
+  padding: 40px;
+  white-space: nowrap;
+}
+
+.complete-btn_mark_completed:hover .tick-icon_mark_completed {
+  display: none;
+}
+
+.complete-btn_mark_completed:hover .complete-text_mark_completed {
+  display: inline;
+} */
 
 .card-title_requests_index_my {
   
@@ -1124,6 +1215,26 @@ font-weight: bold;
 
 .reject-btn_requests_index_my:hover {
   background-color: #c82333;
+}
+/* changes split button to 'Accepted' or 'Rejected' indicator after requester chooses*/
+.status-indicator_my {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+}
+
+.status-indicator_my.accepted {
+  background-color: #28a745;
+}
+
+.status-indicator_my.rejected {
+  background-color: #dc3545;
+}
+
+.status-indicator_my.visible {
+  display: block;
 }
 
 .popups-container_my {
