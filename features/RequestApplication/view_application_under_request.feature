@@ -1,7 +1,7 @@
-# Feature:
-#     As a user who posted a request
-#     So that I can accept or reject applications
-#     I want to be able to see applicant details for each request
+Feature:
+    As a user who posted a request
+    So that I can accept or reject applications
+    I want to be able to see applicant details for each request
 
 # # Scenario:
 # #         Given that I am on the 'MyRequests' page
