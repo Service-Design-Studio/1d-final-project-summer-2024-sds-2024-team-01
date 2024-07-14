@@ -33,10 +33,6 @@ When('I fill out the review form with rating {int} and comment {string}') do |ra
   fill_in 'Review content', with: comment
 end
 
-When('I press {string}') do |button|
-  click_button button
-end
-
 Then('a review with rating {int} and comment {string} should be created for {string}') do |rating, comment, user_name|
   reviewee = User.find_by(name: user_name)
   review = Review.find_by(rating: rating, review_content: comment, review_for: reviewee.id)
