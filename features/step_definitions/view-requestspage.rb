@@ -29,61 +29,67 @@ Given("I want to make new requests") do
   visit '/requests/new'
 end
  
-When('I fill in the {string} with {string}') do |input, value|
-  case input
-  when 'Banner Photo'
-    attach_file('Banner Photo', value, make_visible: true) if value.present?
-  when 'Title'
-    fill_in 'Title', with: value
-  when 'Date'
-    fill_in 'Date', with: value
-  # when 'Category'
-  #   select(value, from: 'request_category')
-  when 'Number of volunteers needed'
-    fill_in 'Number of volunteers needed', with: value
-  when 'Start time'
-    #find('#request_start_time').find(:xpath, 'option[2]').select_option
-    fill_in 'request[start_time]', with: value
-  when 'Duration'
-    fill_in 'Duration', with: value
-  when 'Location'
-    fill_in 'request[location]', with: value
-  when 'Description'
-    fill_in 'Description', with: value
-  when 'Incentive provided'
-    find('#request_reward_type').find(:xpath, 'option[2]').select_option
-  when 'Incentive'
-    fill_in 'request[reward]', with: value
-  else
-    raise "Field '#{input}' is not defined in the step definition."
-  end
-end
-# Given('the following request details:') do |table|
-#   table.hashes.each do |row|
-#     case row['field']
-#     when 'Title'
-#       fill_in 'Title', with: row['value']
-#     when 'Category'
-#       select row['value'], from: 'Category'
-#     when 'Date'
-#       fill_in 'Date', with: row['value']
-#     when 'Number of volunteers needed'
-#       fill_in 'Number of volunteers needed', with: row['value']
-#     when 'Start time'
-#       fill_in 'Start time', with: row['value']
-#     when 'Duration'
-#       fill_in 'Duration', with: row['value']
-#     when 'Location'
-#       fill_in 'Location', with: row['value']
-#     when 'Description'
-#       fill_in 'Description', with: row['value']
-#     when 'Incentive provided'
-#       select row['value'], from: 'Incentive provided'
-#     when 'Incentive'
-#       fill_in 'Incentive', with: row['value']
-#     end
+# When('I fill in the {string} with {string}') do |input, value|
+#   case input
+#   when 'Banner Photo'
+#     attach_file('Banner Photo', value, make_visible: true) if value.present?
+#   when 'Title'
+#     fill_in 'Title', with: value
+#   when 'Date'
+#     fill_in 'Date', with: value
+#   # when 'Category'
+#   #   select(value, from: 'request_category')
+#   when 'Number of volunteers needed'
+#     fill_in 'Number of volunteers needed', with: value
+#   when 'Start time'
+#     #find('#request_start_time').find(:xpath, 'option[2]').select_option
+#     fill_in 'request[start_time]', with: value
+#   when 'Duration'
+#     fill_in 'Duration', with: value
+#   when 'Location'
+#     fill_in 'request[location]', with: value
+#   when 'Description'
+#     fill_in 'Description', with: value
+#   when 'Incentive provided'
+#     find('#request_reward_type').find(:xpath, 'option[2]').select_option
+#   when 'Incentive'
+#     fill_in 'request[reward]', with: value
+#   else
+#     raise "Field '#{input}' is not defined in the step definition."
 #   end
 # end
+Then('I fill in the following details:') do |table|
+  table.hashes.each do |row|
+    input = row['Field']
+    value = row['Value']
+    case input
+    when 'Banner Photo'
+      attach_file('Banner Photo', value, make_visible: true) if value.present?
+    when 'Title'
+      fill_in 'Title', with: value
+    when 'Category'
+      find('#request_category').find(:xpath, 'option[2]').select_option
+    when 'Date'
+      fill_in 'Date', with: value
+    when 'Number of volunteers needed'
+      fill_in 'Number of volunteers needed', with: value
+    when 'Start time'
+      fill_in 'request[start_time]', with: value
+    when 'Duration'
+      fill_in 'Duration', with: value
+    when 'Location'
+      fill_in 'request[location]', with: value
+    when 'Description'
+      fill_in 'Description', with: value
+    when 'Incentive provided'
+      find('#request_reward_type').find(:xpath, 'option[2]').select_option
+    when 'Incentive'
+      fill_in 'request[reward]', with: value
+    else
+      raise "Field '#{input}' is not defined in the step definition."
+    end
+  end
+end
 
 When('I click on {string},{string}') do |label, option|
   find('#request_category').find(:xpath, 'option[2]').select_option
@@ -99,7 +105,9 @@ Then('I should be able to see the request') do
   visit'/requests/1'
   end
 
-
+Then('I should be returned back to new requests page') do
+  expect(page).to have_current_path('/requests/new')
+end
 
 ###########################################
 #Feature 3: Show more details of Request
