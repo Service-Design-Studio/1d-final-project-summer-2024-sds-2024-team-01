@@ -1,7 +1,7 @@
-# Feature: Create an application
-#     As a user
-#     So that I can help someone with their request
-#     I want to be able to apply for their request
+Feature: Create an application
+    As a user
+    So that I can help someone with their request
+    I want to be able to apply for their request
 
 Background:
     Given I have an account
