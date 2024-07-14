@@ -41,6 +41,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'rails-controller-testing'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-active_record'
   gem 'selenium-webdriver'

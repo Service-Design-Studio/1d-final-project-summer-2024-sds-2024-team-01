@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   post 'requests/apply' => 'requests#apply'
   get 'myrequests' => 'my_requests#index'
-  post 'myrequests/complete' => 'my_requests#accept'
+  post 'myrequests/complete' => 'my_requests#complete'
   post 'myrequests/accept' => 'my_requests#accept'
   post 'myrequests/reject' => 'my_requests#reject'
 
@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   
   #get 'reviews/new_temp' => 'reviews#new_temp'
   get 'myrequests/reviews' => 'reviews#new'
+  get 'reviews/edit' => 'reviews#update'
   
 
   namespace :api do

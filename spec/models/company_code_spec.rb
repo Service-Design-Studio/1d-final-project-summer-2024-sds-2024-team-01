@@ -1,17 +1,21 @@
 require 'rails_helper'
 
-RSpec.describe Charity, type: :model do
+RSpec.describe CompanyCode, type: :model do
   subject do
-    create(:random_charity)
+    create(:random_company_code)
   end
 
-  it 'is not valid without a name' do
-    subject.charity_name = nil
+  it 'is valid with valid attributes' do
+    expect(subject).to be_valid
+  end
+
+  it 'is not valid without a company' do
+    subject.company_id = nil
     expect(subject).to_not be_valid
   end
 
   it 'is not valid without a code' do
-    subject.charity_code = nil
+    subject.code = nil
     expect(subject).to_not be_valid
   end
 

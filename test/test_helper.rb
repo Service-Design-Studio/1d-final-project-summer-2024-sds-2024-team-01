@@ -1,14 +1,16 @@
-require 'simplecov'
-SimpleCov.start
-
-# ENV["RAILS_ENV"] ||= "test"
-# require_relative "../config/environment"
-# require "rails/test_help"
-if ENV['RAILS_ENV'] == 'test'
-  require 'simplecov'
-  SimpleCov.start 'rails'
-  puts "required simplecov"
-end
+# We are not using rails test to test our application
+#
+# require 'simplecov'
+# SimpleCov.start
+#
+# # ENV["RAILS_ENV"] ||= "test"
+# # require_relative "../config/environment"
+# # require "rails/test_help"
+# if ENV['RAILS_ENV'] == 'test'
+#   require 'simplecov'
+#   SimpleCov.start 'rails'
+#   puts "required simplecov"
+# end
 
 module ActiveSupport
   class TestCase

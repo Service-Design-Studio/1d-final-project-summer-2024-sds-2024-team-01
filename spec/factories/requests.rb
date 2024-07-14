@@ -1,20 +1,28 @@
 FactoryBot.define do
   factory :request do
-    title { 'Sample Request' }
-    description { 'Sample Description' }
+    title { "Help with #{Faker::Verb.ing_form} #{Faker::Hacker.noun}" }
+    description { Faker::Quote.fortune_cookie }
     category { 'General' }
-    location { 'POINT(1 1)' }
-    date { Date.today }
+    location { "POINT(#{Faker::Number.between(from: 103.8, to: 104.0).round(3)} #{Faker::Number.between(from: 1.30, to: 1.40).round(3)})" }
+    date { Faker::Date.forward(from: Date.tomorrow, days: 90) }
     start_time { '10:00 AM' }
-    number_of_pax { 10 }
+    number_of_pax { Faker::Number.between(from: 1, to: 10) }
     duration { 2 }
     reward_type { 'None' }
     reward { 'None' }
     status { 'Available' }
-    association :user, factory: :user, strategy: :build
-    created_by { user.id }
+    created_by { create(:random_user).id }
     created_at { DateTime.now }
     updated_at { DateTime.now }
+
+    after(:build) do |request|
+      image_path = Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')
+      request.thumbnail.attach(
+        io: File.open(image_path),
+        filename: 'my_image.jpg',
+        content_type: 'image/jpeg'
+      )
+    end
   end
 
   factory :test_request, class: 'Request' do

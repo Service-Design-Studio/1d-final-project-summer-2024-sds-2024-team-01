@@ -1,28 +1,32 @@
+# spec/controllers/my_applications_controller_spec.rb
+
 require 'rails_helper'
 
 RSpec.describe MyApplicationsController, type: :controller do
+  let(:user) { create(:random_user) } # Assuming you have a factory for User
+  let(:request) { create(:test_request) } # Assuming you have a factory for User
 
+  before { sign_in user }
 
-  describe "GET /index" do
-    it "returns a successful response" do
+  describe 'GET #index' do
+    it 'assigns @applications with applications belonging to current_user' do
+      application = create(:random_application, applicant_id: user.id)
       get :index
-      expect(response).to be_successful
+      expect(assigns(:applications)).to match_array([application])
     end
 
-    it "returns an unsuccessful response" do
-      allow(controller).to receive(:index).and_raise(StandardError)
-      expect { get :index }.to raise_error(StandardError)
-    end
+    # Add more specific tests as needed
   end
 
-  describe "GET /show" do
-    it "returns a successful response" do
-      get :show, params: { id: request_application.id }
-      expect(response).to be_successful
-    end
-
-    it "returns an unsuccessful response" do
-      expect { get :show, params: { id: 0 } }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
+  # There isn't really a need for a show action
+  # describe 'GET #show' do
+  #   let(:application) { create(:random_application, applicant_id: user.id) }
+  #
+  #   it 'assigns @application with the correct application' do
+  #     get :show, params: { id: application.id }
+  #     expect(assigns(:application)).to eq(application)
+  #   end
+  #
+  #   # Add more specific tests as needed
+  # end
 end
