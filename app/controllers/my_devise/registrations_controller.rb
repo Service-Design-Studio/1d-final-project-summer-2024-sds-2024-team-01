@@ -1,5 +1,8 @@
 # app/controllers/my_devise/registrations_controller.rb
 class MyDevise::RegistrationsController < Devise::RegistrationsController
+  def choose_register_method
+  end
+
   def create
     # add custom create logic here
     build_resource(sign_up_params)
