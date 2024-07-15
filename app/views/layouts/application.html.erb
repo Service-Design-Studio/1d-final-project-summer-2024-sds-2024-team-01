@@ -14,7 +14,11 @@
 </head>
 
   <body class="<%= "#{controller_name}-#{action_name}" %>">
+    <% if controller_name == 'sessions' || controller_name == 'registrations'%>
+      <nav class="navbar fixed-top" style="background-color: transparent !important">
+    <% else %>
       <nav class="navbar fixed-top">
+    <% end %>
         <div class="container-fluid d-flex justify-content-start align-items-center">
           <a class="navbar-brand d-flex align-items-center" href="<%= root_path %>">
             <img src="/app/assets/images/OIG.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
@@ -22,7 +26,8 @@
           </a>
 
           <% if !user_signed_in? %>
-            <%= link_to "Login", new_user_session_path, class: "btn ms-auto" %>
+            <%= link_to "Register", new_user_registration_path, class: "btn ms-auto" %>
+            <%= link_to "Login", new_user_session_path, class: "btn ms-3" %>
           <% else %>
             <div class="d-flex ms-4">
               <a class="nav-link" href="/myapplications">My Applications</a>
