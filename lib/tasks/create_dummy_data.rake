@@ -34,6 +34,10 @@ namespace :db do
       4.times { create(:reviewapplicant, review_by: third) }
       4.times { create(:reviewapplicant, review_for: third) }
 
+      6.times { create(:application, applicant_id: first.id, request_id: create(:request).id) }
+      3.times { create(:application, applicant_id: second.id, request_id: create(:request).id) }
+      5.times { create(:application, applicant_id: third.id, request_id: create(:request).id) }
+
       user_ids = [first.id, second.id, third.id]
       non_completed_requests = Request.where(created_by: user_ids).where.not(status: 'Completed').pluck(:id)
 

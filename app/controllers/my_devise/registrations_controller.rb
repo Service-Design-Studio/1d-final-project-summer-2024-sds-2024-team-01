@@ -1,5 +1,8 @@
 # app/controllers/my_devise/registrations_controller.rb
 class MyDevise::RegistrationsController < Devise::RegistrationsController
+  def choose_register_method
+  end
+
   def create
     # add custom create logic here
     build_resource(sign_up_params)
@@ -23,5 +26,37 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
       respond_with resource
     end
 
+  end
+
+  def corporate
+    @resource = Company.new
+  end
+
+  def create_corporate
+    @resource = Company.new(company_params)
+    if @resource.save
+      # Handle successful save
+    else
+      render :new_company
+    end
+  end
+
+  def charity
+    @resource = Charity.new
+  end
+
+  def createcharity
+    @resource = Charity.new(company_params)
+    if @resource.save
+      # Handle successful save
+    else
+      render :new_company
+    end
+  end
+
+  private
+
+  def company_params
+    params.require(:company).permit(:name)
   end
 end 
