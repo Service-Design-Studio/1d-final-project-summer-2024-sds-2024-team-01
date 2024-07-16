@@ -67,19 +67,32 @@
                   </p>
                 </div>
               </div>
-              <button class="btn custom-btn-dark-purple my-4 w-60">Chat</button>
-              <div class="request-availability_requests_details mt-2">
-                <div class="availability-indicator_requests_details">50 slots</div>
-                <%= button_to 'Apply', {:controller => "requests", :action => "apply", :id => @request.id, :method => :post }, { class: 'accept-button_requests_details'} %>
-              </div>
+              <% if @is_creator %>
+                <button class="btn custom-btn-dark-purple my-4 w-60">View related Chats</button>
+                <div class="request-availability_requests_details mt-2 d-flex align-items-center">
+                  <div class="availability-indicator_requests_details"><%= @slots_remaining %> slots remaining</div>
+                  <form action="/myrequests/complete?id=<%= @request.id %>" method="post" class="complete-form ms-3">
+                    <button type="submit" class="btn complete-btn_mark_completed">
+                      <i class="bi bi-check-lg tick-icon_mark_completed"></i>
+                      <span class="complete-text_mark_completed">Mark as Complete</span>
+                    </button>
+                  </form>
+                </div>
+                <div class="mt-3 w-100">
+                  <%= link_to "Edit this request", edit_request_path(@request), class: "btn btn-warning w-100" %>
+                  <%= button_to "Destroy this request", @request, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger w-100 mt-2" %>
+                </div>
+              <% else %>
+                <button class="btn custom-btn-dark-purple my-4 w-60">Chat</button>
+                <div class="request-availability_requests_details mt-2 d-flex align-items-center">
+                  <div class="availability-indicator_requests_details"><%= @slots_remaining %> slots remaining</div>
+                  <%= button_to 'Apply', {:controller => "requests", :action => "apply", :id => @request.id, :method => :post }, { class: 'accept-button_requests_details ms-3'} %>
+                </div>
+              <% end %>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="mt-3">
-      <%= link_to "Edit this request", edit_request_path(@request), class: "btn btn-warning w-100" %>
-      <%= button_to "Destroy this request", @request, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger w-100 mt-2" %>
     </div>
   </div>
 

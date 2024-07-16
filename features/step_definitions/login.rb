@@ -31,7 +31,7 @@ end
 
 ## Signup
 Given('I am on the signup page') do
-  visit '/register'
+  visit '/register/user'
 end
 
 When('I fill in the follwing:') do |table|
