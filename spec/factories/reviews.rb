@@ -5,7 +5,7 @@ FactoryBot.define do
     association :review_for, factory: :random_user, strategy: :build
     association :review_by, factory: :random_user, strategy: :build
     request do
-      association(:test_request, created_by: review_for)
+      association(:request, created_by: review_for)
     end
     created_at { DateTime.now }
     updated_at { DateTime.now }
@@ -17,7 +17,7 @@ FactoryBot.define do
     association :review_for, factory: :random_user, strategy: :build
     association :review_by, factory: :random_user, strategy: :build
     request do
-      association(:test_request, created_by: review_by)
+      association(:request, created_by: review_by)
     end
     created_at { DateTime.now }
     updated_at { DateTime.now }
