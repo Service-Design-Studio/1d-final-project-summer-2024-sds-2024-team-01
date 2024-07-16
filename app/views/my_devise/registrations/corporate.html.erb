@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= stylesheet_link_tag "application.css"%>
+  </head>
+
+<div class="signup-container">
+  <img src="<%= 'logo.png' %>" alt="Logo">
+  <h2 class="signup-header">Start your own account!</h2>
+
+  <%= form_for(@resource, url: "/registrations/createcompany") do |f| %>
+
+    <div class="field">
+      <%= f.text_field :company_name, placeholder: "Company Name", autofocus: true, class: "form-control"%>
+    </div>
+
+  <% end %>
+  <div class="devise-links">
+    <%= render "devise/shared/links" %>
+  </div>
+</div>
+</html>

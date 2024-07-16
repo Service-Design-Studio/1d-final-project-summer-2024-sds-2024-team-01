@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   devise_scope :user do
     get 'register' => 'my_devise/registrations#choose_register_method'
+    get 'register/charity' => 'my_devise/registrations#charity'
+    get 'register/corporate' => 'my_devise/registrations#corporate'
   end
 
   get 'up' => 'rails/health#show', as: :rails_health_check

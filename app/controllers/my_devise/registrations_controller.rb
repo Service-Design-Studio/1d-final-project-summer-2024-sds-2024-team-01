@@ -27,4 +27,36 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     end
 
   end
+
+  def corporate
+    @resource = Company.new
+  end
+
+  def create_corporate
+    @resource = Company.new(company_params)
+    if @resource.save
+      # Handle successful save
+    else
+      render :new_company
+    end
+  end
+
+  def charity
+    @resource = Charity.new
+  end
+
+  def createcharity
+    @resource = Charity.new(company_params)
+    if @resource.save
+      # Handle successful save
+    else
+      render :new_company
+    end
+  end
+
+  private
+
+  def company_params
+    params.require(:company).permit(:name)
+  end
 end 
