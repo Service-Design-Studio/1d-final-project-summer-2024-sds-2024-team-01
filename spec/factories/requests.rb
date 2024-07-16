@@ -14,15 +14,16 @@ FactoryBot.define do
     created_by { create(:random_user).id }
     created_at { DateTime.now }
     updated_at { DateTime.now }
-
-    after(:build) do |request|
-      image_path = Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')
-      request.thumbnail.attach(
-        io: File.open(image_path),
+    thumbnail { ActiveStorage::Blob.create_and_upload!( 
+        io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
         filename: 'my_image.jpg',
         content_type: 'image/jpeg'
-      )
-    end
+    )}
+
+    # after(:build) do |request|
+    #   image_path =       request.thumbnail.attach(
+    #   )
+    # end
   end
 
   factory :test_request, class: 'Request' do
