@@ -71,6 +71,7 @@ Then('I fill in the following details:') do |table|
       find('#request_category').find(:xpath, 'option[2]').select_option
     when 'Date'
       fill_in 'Date', with: value
+      page.execute_script("document.querySelector('input[type=\"date\"]').value = '#{Date.parse(value).strftime("%Y-%m-%d")}';")
     when 'Number of volunteers needed'
       fill_in 'Number of volunteers needed', with: value
     when 'Start time'
@@ -108,7 +109,13 @@ Then('I should be able to see the request') do
 Then('I should be returned back to new requests page') do
   expect(page).to have_current_path('/requests/new')
 end
-
+Then('I should see message {string}') do |string|
+  sleep 30
+  expect(page).to have_button('Create')
+  click_button 'Create'
+  expect(page).to have_current_path(%r{/requests/\d+})
+  expect(page).to have_content('Request was successfully created.')
+  end
 ###########################################
 #Feature 3: Show more details of Request
 
