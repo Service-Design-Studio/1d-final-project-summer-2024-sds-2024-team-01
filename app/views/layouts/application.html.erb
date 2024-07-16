@@ -26,7 +26,7 @@
           </a>
 
           <% if !user_signed_in? %>
-            <%= link_to "Register", new_user_registration_path, class: "btn ms-auto" %>
+            <%= link_to "Register", register_path, class: "btn ms-auto" %>
             <%= link_to "Login", new_user_session_path, class: "btn ms-3" %>
           <% else %>
             <div class="d-flex ms-4">
