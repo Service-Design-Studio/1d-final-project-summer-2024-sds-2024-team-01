@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ReviewsController, type: :controller do
   let(:user) { create(:user) }
   let(:request) { create(:request) }
-  let(:review) { create(:review, request: request, review_by: user, review_for: create(:user)) }
+  let(:review) { create(:reviewrequester, review_by: user, request:) }
 
   before do
     sign_in user
@@ -17,7 +17,7 @@ RSpec.describe ReviewsController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:valid_attributes) { attributes_for(:review, review_by: user, review_for: create(:user)) }
+    let(:valid_attributes) { attributes_for(:reviewrequester, review_by: user) }
 
     context 'with valid params' do
       it 'creates a new Review' do

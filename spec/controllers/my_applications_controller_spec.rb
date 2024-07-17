@@ -14,7 +14,6 @@ RSpec.describe MyApplicationsController, type: :controller do
       get :index
       expect(assigns(:applications)).to match_array([application])
     end
-
     # Add more specific tests as needed
   end
 
