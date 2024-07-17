@@ -617,11 +617,29 @@ font-weight: bold;
   overflow: hidden;
   transition: width 0.3s ease;
   position: relative;
-  white-space: nowrap; /* Ensure text stays in a single line */
+  white-space: nowrap;
 }
 
 .review-btn_mark_completed:hover {
-  width: 270px; /* Adjust width to accommodate the text */
+  width: 290px; /* Adjust width to accommodate the text */
+}
+
+.review-btn_mark_completed:not(.d-none) {
+  display: inline-block;
+}
+
+/* Static leave review button styling for each applicant */
+.leave-review-btn {
+  position: relative;
+  top: 25%;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: black;
+  background-color: #ffc107;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
 }
 
 .review-btn_mark_completed:hover .star-icon_mark_completed {
@@ -1176,6 +1194,11 @@ font-weight: bold;
 .complete-btn_mark_completed:hover .complete-text_mark_completed {
   display: inline;
 } */
+
+.application-status_indicator_my.concluded {
+  background-color: #4a4a4a;
+  color: white;
+}
 
 .card-title_requests_index_my {
   

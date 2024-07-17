@@ -75,7 +75,11 @@
                               <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index_my">
                             <% end %>
                             <p><%= application.applicant.name %><% if application.applicant.role_id == 4 %><i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i><% end %></p>
-                            <button class="btn custom-btn-chat_my">Chat</button>
+                            <% if application.status == 'Accepted' %>
+                              <button class="btn leave-review-btn">Leave a Review</button>
+                            <% elsif application.status == 'Pending' %>
+                              <button class="btn custom-btn-chat_my">Chat</button>
+                            <% end %>
                           </div>
                         </a>
                         <!-- Split button or status indicator -->
@@ -133,6 +137,29 @@
           this.style.display = 'none';
           reviewButton.classList.remove('d-none');
 
+          // Update buttons for all applicants
+          const applicantPopups = requestCard.querySelectorAll('.popup_requests_index_my');
+          applicantPopups.forEach(popup => {
+            const chatButton = popup.querySelector('.custom-btn-chat_my');
+            const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
+            const splitButton = popup.querySelector('.split-button_requests_index_my');
+            const applicationStatus = splitButton.querySelector('.status-indicator_my')?.textContent.trim();
+
+            // Remove chat button
+            if (chatButton) chatButton.remove();
+
+            // Add review button if the applicant was accepted
+            if (applicationStatus === 'Accepted' && applicantInfo && !applicantInfo.querySelector('.leave-review-btn')) {
+              const reviewButton = document.createElement('button');
+              reviewButton.classList.add('btn', 'leave-review-btn');
+              reviewButton.textContent = 'Leave a Review';
+              applicantInfo.appendChild(reviewButton);
+            }
+          });
+
+          // Update request card status
+          requestCard.dataset.status = 'Completed';
+
           fetch(this.action, {
             method: this.method,
             body: new FormData(this),
@@ -144,18 +171,12 @@
           .then(response => response.json())
           .then(data => {
             if (!data.success) {
-              // If the server returns an error, revert the UI changes
-              applicationIndicator.style.display = 'block';
-              this.style.display = 'block';
-              reviewButton.classList.add('d-none');
+              // If the server returns an error, log it but don't revert the UI changes
               console.error(data.message);
             }
           })
           .catch(error => {
-            // If there's an error, revert the UI changes
-            applicationIndicator.style.display = 'block';
-            this.style.display = 'block';
-            reviewButton.classList.add('d-none');
+            // If there's an error, log it but don't revert the UI changes
             console.error('Error:', error);
           });
         });
@@ -170,9 +191,53 @@
           const reviewButton = card.querySelector('.review-btn_mark_completed');
 
           if (status === 'Completed') {
+            // Hide elements for completed requests
             if (applicationIndicator) applicationIndicator.style.display = 'none';
             if (completeForm) completeForm.style.display = 'none';
             if (reviewButton) reviewButton.classList.remove('d-none');
+
+            // Update buttons for all applicants
+            const applicantPopups = card.querySelectorAll('.popup_requests_index_my');
+            applicantPopups.forEach(popup => {
+              const chatButton = popup.querySelector('.custom-btn-chat_my');
+              const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
+              const applicationStatus = popup.dataset.applicationStatus;
+
+              // Remove chat button
+              if (chatButton) chatButton.remove();
+
+              // Add review button if the applicant was accepted
+              if (applicationStatus === 'Accepted' && applicantInfo && !applicantInfo.querySelector('.leave-review-btn')) {
+                const reviewButton = document.createElement('button');
+                reviewButton.classList.add('btn', 'leave-review-btn');
+                reviewButton.textContent = 'Leave a Review';
+                applicantInfo.appendChild(reviewButton);
+              }
+            });
+          } else {
+            // For non-completed requests, ensure original state
+            if (applicationIndicator) applicationIndicator.style.display = '';
+            if (completeForm) completeForm.style.display = '';
+            if (reviewButton) reviewButton.classList.add('d-none');
+
+            // Ensure chat buttons are present for all applicants in non-completed requests
+            const applicantPopups = card.querySelectorAll('.popup_requests_index_my');
+            applicantPopups.forEach(popup => {
+              const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
+              let chatButton = popup.querySelector('.custom-btn-chat_my');
+              const reviewButton = applicantInfo.querySelector('.leave-review-btn');
+
+              // Add chat button if it doesn't exist
+              if (!chatButton) {
+                chatButton = document.createElement('button');
+                chatButton.classList.add('btn', 'custom-btn-chat_my');
+                chatButton.textContent = 'Chat';
+                applicantInfo.appendChild(chatButton);
+              }
+
+              // Remove review button if it exists
+              if (reviewButton) reviewButton.remove();
+            });
           }
         });
       }
@@ -181,7 +246,7 @@
       updateUIBasedOnStatus();
 
       // Dropdown functionality
-      const dropdownButtons = document.querySelectorAll('.dropdown-btn_requests_index_my, .review-btn_mark_completed');
+      const dropdownButtons = document.querySelectorAll('.dropdown-btn_requests_index_my');
       const cardBody = document.querySelector('.card-body');
 
       dropdownButtons.forEach(button => {
@@ -214,7 +279,7 @@
       function openPopup(container) {
         container.classList.add('active');
         container.style.maxHeight = container.scrollHeight + 'px';
-        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my, .review-btn_mark_completed');
+        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
         button.innerHTML = '<i class="fas fa-chevron-up"></i>';
         container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = container.scrollHeight + 'px';
       }
@@ -222,7 +287,7 @@
       function closePopup(container) {
         container.classList.remove('active');
         container.style.maxHeight = null;
-        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my, .review-btn_mark_completed');
+        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
         button.innerHTML = '<i class="fas fa-chevron-down"></i>';
         container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = null;
       }
@@ -343,3 +408,4 @@
   </script>
 </body>
 </html>
+

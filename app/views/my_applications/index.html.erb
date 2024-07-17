@@ -29,7 +29,7 @@
       <div class="card-body">
         <div class="row">
           <% @applications.each do |myapplication| %>
-            <div class="col-md-12 mb-4 request-card_requests_index_my">
+            <div class="col-md-12 mb-4 request-card_requests_index_my" data-request-status="<%= myapplication.request.status %>">
               <div class="clickable-card_requests_index-wrapper_my">
                 <div class="card h-100 d-flex flex-row align-items-center">
                   <a href="<%= request_path(myapplication.request) %>" class="clickable-area_requests_index_my">
@@ -43,7 +43,9 @@
                   </a>
                   <div class="card-actions_requests_index_my">
                     <div class="application-indicator_requests_index_my">
-                      <span class="application-status_indicator_my <%= myapplication.status.downcase %>"><%= myapplication.status %></span>
+                      <span class="application-status_indicator_my <%= myapplication.status.downcase %>" data-application-status="<%= myapplication.status %>">
+                        <%= myapplication.status %>
+                      </span>
                     </div>
                     <button class="btn dropdown-btn_requests_index_my"><i class="fas fa-chevron-down"></i></button>
                   </div>
@@ -55,11 +57,12 @@
                       <% if myapplication.request.user.avatar.attached? %>
                         <img src="<%= image_url(myapplication.request.user.avatar) %>" alt="<%= myapplication.request.user.name %>" class="profile-pic_requests_index_my">
                       <% end %>
-                      <p><%= myapplication.request.user.name %><% if myapplication.request.user.role_id == 4 %><i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i><% end %></p>
+                      <p><%= myapplication.request.user.name %></p>
                       <button class="btn custom-btn-chat_my">Chat</button>
                     </div>
-                    <div class="withdraw-button_requests_index_my">
+                    <div class="action-button-container_my">
                       <a href="#" class="btn withdraw-btn_requests_index_my">Withdraw</a>
+                      <a href="#" class="btn leave-review-btn" style="display: none;">Leave a Review</a>
                     </div>
                   </div>
                 </div>
@@ -150,6 +153,36 @@
           cardBody.style.height = 'auto';
         }
       });
+      function updateUIBasedOnStatus() {
+        document.querySelectorAll('.request-card_requests_index_my').forEach(card => {
+          const requestStatus = card.dataset.requestStatus;
+          const applicationStatusElement = card.querySelector('.application-status_indicator_my');
+          const applicationStatus = applicationStatusElement.dataset.applicationStatus;
+          const chatButton = card.querySelector('.custom-btn-chat_my');
+          const withdrawButton = card.querySelector('.withdraw-btn_requests_index_my');
+          const reviewButton = card.querySelector('.leave-review-btn');
+
+          if (requestStatus === 'Completed' && applicationStatus === 'Accepted') {
+            // Change status to 'Concluded'
+            applicationStatusElement.textContent = 'Concluded';
+            applicationStatusElement.classList.remove('accepted');
+            applicationStatusElement.classList.add('concluded');
+
+            // Hide chat button
+            if (chatButton) chatButton.style.display = 'none';
+
+            // Hide withdraw button and show review button
+            if (withdrawButton) withdrawButton.style.display = 'none';
+            if (reviewButton) reviewButton.style.display = 'block';
+          }
+        });
+      }
+
+      // Call this function when the page loads
+      updateUIBasedOnStatus();
+
+      // You might also want to call this function after any AJAX updates
+      // that might change the status of requests
     });
   </script>
 </body>
