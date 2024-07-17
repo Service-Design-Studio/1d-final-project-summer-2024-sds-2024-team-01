@@ -72,19 +72,9 @@ form {
   border-color: #9852a6;
 }
 
-/* Login, Register, Password reset gradient background */
-body.sessions-new {
-  background: linear-gradient(180deg, #AC88C6 0%, #666DAD 100%);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-}
-
 /* Register page CSS functions*/
 
-body.registrations-new {
+body.registrations-new, .registrations-charity, .registrations-corporate, .registrations-choose_register_method, body.sessions-new {
   background: linear-gradient(180deg, #AC88C6 0%, #666DAD 100%);
   height: 100vh;
   display: flex;
@@ -1383,4 +1373,11 @@ font-weight: bold;
 .btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus,
 .show > .btn-success.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5);
+}
+
+.chooseregistercard{
+    background-color: #656dad;
+    color: #fff;
+    padding: 0px;
+    border-radius: 5px;
 }

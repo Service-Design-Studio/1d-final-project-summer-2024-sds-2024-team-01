@@ -20,10 +20,15 @@ Given('there is a user named {string}') do |name|
   @reviewee = User.create!(name: name, email: 'volunteer@example.com', password: 'password')
 end
 
-# When('I click on the request') do
-#   click_link @request.title
+
+# When('I am on the {string} page') do |page_name|
+#   visit myrequests_path
 # end
-#
+
+When('I click on the request') do
+  click_link @request.title
+end
+
 When('I fill out the review form with rating {int} and comment {string}') do |rating, comment|
   fill_in 'Rating', with: rating
   fill_in 'Review content', with: comment

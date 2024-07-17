@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users,
-             controllers: { registrations: 'my_devise/registrations', sessions: 'my_devise/sessions' }, path: '', path_names: { sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register', sign_out: 'logout' }
+             controllers: { registrations: 'my_devise/registrations', sessions: 'my_devise/sessions' }, path: '', path_names: { sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register/user', sign_out: 'logout' }
 
   # ,path: "", controllers: {sessions: "sessions", registrations:"registrations"}, path_names: {sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register', sign_out: 'logout'}
   resources :requests
@@ -10,11 +10,13 @@ Rails.application.routes.draw do
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get 'up' => 'rails/health#show', as: :rails_health_check
+  devise_scope :user do
+    get 'register' => 'my_devise/registrations#choose_register_method'
+    get 'register/charity' => 'my_devise/registrations#charity'
+    get 'register/corporate' => 'my_devise/registrations#corporate'
+  end
 
-  # Auth Controller (For authenticataion matters)
-  get 'login' => 'auth#login'
-  get 'register' => 'auth#register'
+  get 'up' => 'rails/health#show', as: :rails_health_check
 
   get 'profile' => 'profile#index'
   get 'profile/edit' => 'profile#edit'
@@ -27,12 +29,11 @@ Rails.application.routes.draw do
 
   get 'myapplications' => 'my_applications#index'
 
-  #resources :reviews, only: [:edit, :update, :index, :new, :create]
-  
-  #get 'reviews/new_temp' => 'reviews#new_temp'
+  # resources :reviews, only: [:edit, :update, :index, :new, :create]
+
+  # get 'reviews/new_temp' => 'reviews#new_temp'
   get 'myrequests/reviews' => 'reviews#new'
   get 'reviews/edit' => 'reviews#update'
-  
 
   namespace :api do
     namespace :v1 do
@@ -42,8 +43,8 @@ Rails.application.routes.draw do
       resources :reviews, :requests
     end
   end
-    
+
   resources :myrequests do
-    resources :reviews, only: [:new, :create, :edit, :update]
+    resources :reviews, only: %i[new create edit update]
   end
 end
