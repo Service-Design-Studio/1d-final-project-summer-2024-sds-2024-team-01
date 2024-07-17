@@ -9,7 +9,7 @@ class MyApplicationsController < ApplicationController
   # GET /requests/1
   def show
     #fetch and display a specific application based on the id
-    @application = RequestApplication.find(params[:id])
+    # @application = RequestApplication.find(params[:id])
   end
 
 end
