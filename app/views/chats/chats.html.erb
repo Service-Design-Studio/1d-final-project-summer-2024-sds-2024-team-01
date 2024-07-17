@@ -1,0 +1,25 @@
+<style>
+    .chat-container {
+        /* Add your styles for the chat container here */
+    }
+
+    .chat-input {
+        /* Add your styles for the chat input here */
+    }
+</style>
+
+<div class="chat-container">
+    <% @messages.each do |message| %>
+        <div class="message">
+            <span class="sender"><%= message.sender %>:</span>
+            <span class="content"><%= message.content %></span>
+        </div>
+    <% end %>
+</div>
+
+<div class="chat-input">
+    <%= form_with url: messages_path, method: :post, remote: true do |form| %>
+        <%= form.text_field :content, placeholder: "Type your message..." %>
+        <%= form.submit "Send" %>
+    <% end %>
+</div>

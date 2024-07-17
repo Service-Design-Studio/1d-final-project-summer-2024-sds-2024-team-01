@@ -32,7 +32,8 @@ Rails.application.routes.draw do
   #get 'reviews/new_temp' => 'reviews#new_temp'
   get 'myrequests/reviews' => 'reviews#new'
   get 'reviews/edit' => 'reviews#update'
-  
+
+  get 'myrequests/chats' => 'chats#new'
 
   namespace :api do
     namespace :v1 do
@@ -44,6 +45,7 @@ Rails.application.routes.draw do
   end
     
   resources :myrequests do
+    resources :reviews, only: [:new, :create, :edit, :update]
     resources :reviews, only: [:new, :create, :edit, :update]
   end
 end
