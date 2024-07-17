@@ -15,6 +15,12 @@ Given('I have an account') do
     click_button 'Logout'
 end
 
+Given('I login as an admin') do
+  admin = create(:user, role_id: 2)
+  # sign_in
+end
+
+
 And('I login') do
   visit new_user_session_path
   fill_in 'user_number', with: '96789012'
@@ -23,8 +29,7 @@ And('I login') do
   expect(page).to have_content('Signed in successfully.')
 end
 
-Given('(that) I am on the {string} page') do |page|
-  puts page
+Given('I am on the {string} page') do |page|
   if page == 'home'
     visit '/'
   else

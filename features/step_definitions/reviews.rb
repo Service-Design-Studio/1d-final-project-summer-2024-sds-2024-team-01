@@ -20,9 +20,9 @@ Given('there is a user named {string}') do |name|
   @reviewee = User.create!(name: name, email: 'volunteer@example.com', password: 'password')
 end
 
-When('I am on the {string} page') do |page_name|
-  visit myrequests_path
-end
+# When('I am on the {string} page') do |page_name|
+#   visit myrequests_path
+# end
 
 When('I click on the request') do
   click_link @request.title
