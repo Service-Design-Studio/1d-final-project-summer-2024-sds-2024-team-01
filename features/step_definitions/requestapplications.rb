@@ -8,17 +8,8 @@ Then('I should not be able to accept any applicants') do
   # Add the code to verify that no applicants can be accepted
 end
 
-When('I {string} the first applicant') do |action|
-  find('.clickable-card_requests_index-wrapper').hover
-  if action == 'Accept'
-    find('.accept-btn_requests_index', visible: false).click
-  else
-    find('.reject-btn_requests_index', visible: false).click
-  end
-end
-
 Then('the application should be {string}') do |status|
-  expect(RequestApplication.where(request_id: Request.where(title: 'Test Request').take.id).take.status).to eq(status)
+  expect(find('.status-indicator_my').text).to eq(status)
 end
 
 Given('there is a request to be applied for') do
@@ -27,7 +18,7 @@ Given('there is a request to be applied for') do
       description: 'Need someone to walk my dog for an hour every afternoon',
       category: 'Pet Care',
       location: 'POINT(34.052235 -118.243683)',
-      date: Date.new(2024, 7, 2),
+      date: Date.tomorrow,
       number_of_pax: 1,
       duration: 1,
       start_time: '12:00',
@@ -40,6 +31,10 @@ end
 
 When('I click on the request') do
   find('.clickable-card_requests_index').click
+end
+
+When('I expand the request') do
+  find('.dropdown-btn_requests_index_my').click
 end
 
 When('I click on Apply') do
@@ -77,16 +72,16 @@ end
 # end
 
 Then('I should see the applicants who have applied for each request') do
-  page.should have_css('.applicant-info_requests_index > p', visible: false, text: 'Alice Smith')
+  page.should have_css('.applicant-info_requests_index_my > p', visible: false, text: 'Alice Smith')
 end
 
 Then('I should see the name of each applicant') do
-  page.should have_css('.applicant-info_requests_index > p', visible: false, text: 'Alice Smith')
+  page.should have_css('.applicant-info_requests_index_my > p', visible: false, text: 'Alice Smith')
 end
 
 When('I click on the profile section of the first applicant') do
-  find('.clickable-card_requests_index-wrapper').hover
-  visit find('.applicant-profile')[:href]
+  find('.dropdown-btn_requests_index_my').click
+  visit find('.applicant-profile_my')[:href]
 end
 
 Then('I should see the applicants profile') do

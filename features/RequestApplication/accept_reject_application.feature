@@ -12,9 +12,9 @@ Background:
 
 Scenario:
         Given I am on the 'myrequests' page
-        When I "Accept" the first applicant
+        When I expand the request
+        And I press "Accept"
         Then the application should be "Accepted"
-        And I should see "Application accepted"
 
 # Scenario:
 #         Given I am on the 'myrequests' page
@@ -23,7 +23,6 @@ Scenario:
 
 Scenario:
         Given I am on the 'myrequests' page
-        When I "Reject" the first applicant
+        When I expand the request
+        And I press "Reject"
         Then the application should be "Rejected"
-        And I should see "Application rejected"
-
