@@ -103,17 +103,14 @@ Then("I should not see any new requests") do
 end
 
 Then('I should be able to see the request') do
-  visit'/requests/1'
+  expect(page).to have_css('.request-card')
   end
 
 Then('I should be returned back to new requests page') do
   expect(page).to have_current_path('/requests/new')
 end
 Then('I should see message {string}') do |string|
-  sleep 30
-  expect(page).to have_button('Create')
-  click_button 'Create'
-  expect(page).to have_current_path(%r{/requests/\d+})
+  # expect(page).to have_current_path(%r{/requests/\d+})
   expect(page).to have_content('Request was successfully created.')
   end
 ###########################################

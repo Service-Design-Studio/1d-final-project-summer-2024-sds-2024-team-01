@@ -40,11 +40,11 @@ Background:
     | Description                     | Looking for someone to help with my backyard garden |
     | Incentive provided              | Money                                               |
     | Incentive                       | $30                                                 |
-    When I press "Create"
+    When I click on "Create" button
     # Then I should be able to see the request
-    # the create is not clicked! 
+    # #the create is not clicked! 
     # And I should see message "Request was successfully created."
-    # And I should see "Test Request"
+   
 
   # Sad Case
   Scenario: Create request with invalid data
@@ -71,6 +71,6 @@ Background:
     | Description                     |                                                     |
     | Incentive provided              | Money                                               |
     | Incentive                       |   $30                                               |
-    And I press "Create"
+    And I click on "Create" button
     Then I should be returned back to new requests page
    
