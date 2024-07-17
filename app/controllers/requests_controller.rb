@@ -1,4 +1,3 @@
-
 require 'date'
 
 class RequestsController < ApplicationController
@@ -6,13 +5,17 @@ class RequestsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
 
   # GET /requests
-  #list all requests
+  # list all requests
   def index
-    @requests = Request.includes(:user).all
+    @requests = if current_user.role_id == 4
+                  Request.includes(:user).where(reward_type: "None")
+                else
+                  Request.includes(:user).all
+                end
   end
 
   # GET /requests/1
-  #show a single request
+  # show a single request
   def show
     @request = Request.find(params[:id])
     @is_creator = @request.created_by == current_user.id
@@ -21,13 +24,13 @@ class RequestsController < ApplicationController
   end
 
   # GET /requests/new
-  #show a form to create a new request
+  # show a form to create a new request
   def new
     @request = Request.new
   end
 
   # POST /requests/apply
-  #create a new request
+  # create a new request
   def apply
     @request = Request.find(params[:id])
     if RequestApplication.find_by(applicant_id: current_user.id, request_id: @request.id).nil?
@@ -49,11 +52,11 @@ class RequestsController < ApplicationController
   end
 
   # GET /requests/1/edit
-  #show a form to edit a request
+  # show a form to edit a request
   def edit; end
 
   # POST /requests
-  #create a new request
+  # create a new request
   def create
     @request = Request.new(request_params)
     @request.status = 'Available'
@@ -100,6 +103,4 @@ class RequestsController < ApplicationController
                                     :reward_type, :reward, :thumbnail)
     # params.fetch(:request, {}).permit(:thumbnail)
   end
-
-  
 end
