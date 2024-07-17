@@ -605,6 +605,44 @@ font-weight: bold;
   display: inline;
 }
 
+.review-btn_mark_completed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #ffc107; /* Gold border for review */
+  background-color: #ffc107; /* Gold background for review */
+  border-radius: 5px;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  position: relative;
+  white-space: nowrap; /* Ensure text stays in a single line */
+}
+
+.review-btn_mark_completed:hover {
+  width: 270px; /* Adjust width to accommodate the text */
+}
+
+.review-btn_mark_completed:hover .star-icon_mark_completed {
+  display: none;
+}
+
+.review-text_mark_completed {
+  display: none;
+  background-color: #ffc107; /* Gold background for review */
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+  padding: 10px;
+  white-space: nowrap; /* Ensure text stays in a single line */
+}
+
+.review-btn_mark_completed:hover .review-text_mark_completed {
+  display: inline;
+}
+
+
 .divider_requests_details {
   border-top: 1px solid #dee2e6;
   margin: 20px 0;
@@ -1381,3 +1419,4 @@ font-weight: bold;
     padding: 0px;
     border-radius: 5px;
 }
+

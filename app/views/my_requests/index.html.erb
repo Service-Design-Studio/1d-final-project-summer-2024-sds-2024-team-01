@@ -28,7 +28,7 @@
       <div class="card-body" style=>
         <div class="row">
           <% @requests.each do |myrequest| %>
-            <div class="col-md-12 mb-4 request-card_requests_index_my">
+            <div class="col-md-12 mb-4 request-card_requests_index_my" data-status="<%= myrequest.status %>">
               <div class="clickable-card_requests_index-wrapper_my">
                 <div class="card h-100 d-flex flex-row align-items-center">
                   <a href="<%= request_path(myrequest) %>" class="clickable-area_requests_index_my">
@@ -49,12 +49,18 @@
                         <i class="fas fa-users"></i> <%= myrequest.accepted_application_count %>/<%= myrequest.number_of_pax %> people found
                       </p>
                     </div>
-                    <form action="/myrequests/complete?id=<%= myrequest.id %>" method="post" class="complete-form me-3">
-                      <button type="submit" class="btn complete-btn_mark_completed">
-                        <i class="bi bi-check-lg tick-icon_mark_completed"></i>
-                        <span class="complete-text_mark_completed">Mark as Complete</span>
+                    <div class="action-buttons">
+                      <form action="/myrequests/complete?id=<%= myrequest.id %>" method="post" class="complete-form me-3">
+                        <button type="submit" class="btn complete-btn_mark_completed">
+                          <i class="bi bi-check-lg tick-icon_mark_completed"></i>
+                          <span class="complete-text_mark_completed">Mark as Complete</span>
+                        </button>
+                      </form>
+                      <button class="btn review-btn_mark_completed d-none">
+                        <i class="fas fa-star star-icon_mark_completed"></i>
+                        <span class="review-text_mark_completed">Leave reviews for your applicants</span>
                       </button>
-                    </form>
+                    </div>
                     <button class="btn dropdown-btn_requests_index_my"><i class="fas fa-chevron-down"></i></button>
                   </div>
                 </div>
@@ -107,23 +113,75 @@
 
       searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.toLowerCase().trim();
-        console.log('Search term:', searchTerm); // Debug log
-
         requestCards.forEach(card => {
           const titleElement = card.querySelector('.card-title_requests_index_my');
           const title = titleElement ? titleElement.innerText.toLowerCase() : '';
-          console.log('Card title:', title); // Debug log
-
-          if (title.includes(searchTerm)) {
-            card.style.display = 'block'; // Show the card
-          } else {
-            card.style.display = 'none'; // Hide the card
-          }
+          card.style.display = title.includes(searchTerm) ? 'block' : 'none';
         });
       });
 
+      // Handle "Mark as Complete" button click
+      document.querySelectorAll('.complete-form').forEach(form => {
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          const requestCard = this.closest('.request-card_requests_index_my');
+          const applicationIndicator = requestCard.querySelector('.application-indicator_requests_index_my');
+          const reviewButton = requestCard.querySelector('.review-btn_mark_completed');
+
+          // Update UI immediately
+          applicationIndicator.style.display = 'none';
+          this.style.display = 'none';
+          reviewButton.classList.remove('d-none');
+
+          fetch(this.action, {
+            method: this.method,
+            body: new FormData(this),
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (!data.success) {
+              // If the server returns an error, revert the UI changes
+              applicationIndicator.style.display = 'block';
+              this.style.display = 'block';
+              reviewButton.classList.add('d-none');
+              console.error(data.message);
+            }
+          })
+          .catch(error => {
+            // If there's an error, revert the UI changes
+            applicationIndicator.style.display = 'block';
+            this.style.display = 'block';
+            reviewButton.classList.add('d-none');
+            console.error('Error:', error);
+          });
+        });
+      });
+
+      // Function to check and update UI based on request status
+      function updateUIBasedOnStatus() {
+        document.querySelectorAll('.request-card_requests_index_my').forEach(card => {
+          const status = card.dataset.status;
+          const applicationIndicator = card.querySelector('.application-indicator_requests_index_my');
+          const completeForm = card.querySelector('.complete-form');
+          const reviewButton = card.querySelector('.review-btn_mark_completed');
+
+          if (status === 'Completed') {
+            if (applicationIndicator) applicationIndicator.style.display = 'none';
+            if (completeForm) completeForm.style.display = 'none';
+            if (reviewButton) reviewButton.classList.remove('d-none');
+          }
+        });
+      }
+
+      // Call this function when the page loads
+      updateUIBasedOnStatus();
+
       // Dropdown functionality
-      const dropdownButtons = document.querySelectorAll('.dropdown-btn_requests_index_my');
+      const dropdownButtons = document.querySelectorAll('.dropdown-btn_requests_index_my, .review-btn_mark_completed');
       const cardBody = document.querySelector('.card-body');
 
       dropdownButtons.forEach(button => {
@@ -156,7 +214,7 @@
       function openPopup(container) {
         container.classList.add('active');
         container.style.maxHeight = container.scrollHeight + 'px';
-        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
+        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my, .review-btn_mark_completed');
         button.innerHTML = '<i class="fas fa-chevron-up"></i>';
         container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = container.scrollHeight + 'px';
       }
@@ -164,7 +222,7 @@
       function closePopup(container) {
         container.classList.remove('active');
         container.style.maxHeight = null;
-        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
+        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my, .review-btn_mark_completed');
         button.innerHTML = '<i class="fas fa-chevron-down"></i>';
         container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = null;
       }
@@ -189,7 +247,6 @@
           const method = form.getAttribute('method');
           const formData = new FormData(form);
           const buttonContainer = form.closest('.split-button_requests_index_my');
-          const applicationId = buttonContainer.dataset.applicationId;
 
           // Determine the new status based on which form was submitted
           const newStatus = form.classList.contains('accept-form') ? 'Accepted' : 'Rejected';
@@ -262,21 +319,16 @@
           }
         }
 
-        statusIndicator.dataset.acceptedCount = acceptedCount;
-        statusIndicator.innerHTML = `<i class="fas fa-users"></i> ${acceptedCount}/${numberOfPax} people found`;
-
-        // Change color to green if the count meets the number of pax
-        if (acceptedCount >= numberOfPax) {
-          statusIndicator.classList.add('full-capacity');
-        } else {
-          statusIndicator.classList.remove('full-capacity');
-        }
+        updateApplicantCountUI(statusIndicator, acceptedCount, numberOfPax);
       }
 
       function updateApplicantCountFromServer(container, acceptedCount, numberOfPax) {
         const cardWrapper = container.closest('.clickable-card_requests_index-wrapper_my');
         const statusIndicator = cardWrapper.querySelector('.applicants-status_requests_index_my');
-        
+        updateApplicantCountUI(statusIndicator, acceptedCount, numberOfPax);
+      }
+
+      function updateApplicantCountUI(statusIndicator, acceptedCount, numberOfPax) {
         statusIndicator.dataset.acceptedCount = acceptedCount;
         statusIndicator.innerHTML = `<i class="fas fa-users"></i> ${acceptedCount}/${numberOfPax} people found`;
 
