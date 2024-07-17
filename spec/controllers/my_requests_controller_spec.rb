@@ -63,6 +63,14 @@ RSpec.describe MyRequestsController, type: :controller do
       expect(application.status).to eq('Accepted')
     end
 
+    context 'when the request application fails to save' do
+      it "shows 'Failed to accept application' and a 422" do
+        allow_any_instance_of(RequestApplication).to receive(:save).and_return(false)
+        post :accept, params: { id: application.id }
+
+        expect(application.status).to_not eq('Accepted')
+      end
+    end
     # Add more specific tests as needed
   end
 
@@ -73,6 +81,14 @@ RSpec.describe MyRequestsController, type: :controller do
       expect(application.status).to eq('Rejected')
     end
 
+    context 'when the request application fails to save' do
+      it "shows 'Failed to reject application' and a 422" do
+        allow_any_instance_of(RequestApplication).to receive(:save).and_return(false)
+        post :reject, params: { id: application.id }
+
+        expect(application.status).to_not eq('Rejected')
+      end
+    end
     # Add more specific tests as needed
   end
 end
