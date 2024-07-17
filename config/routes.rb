@@ -37,6 +37,8 @@ Rails.application.routes.draw do
 
   get 'myrequests/chats' => 'chats#new'
 
+  get 'chats' => 'chats#index'
+
   namespace :api do
     namespace :v1 do
       resources :requests
@@ -47,7 +49,6 @@ Rails.application.routes.draw do
   end
 
   resources :myrequests do
-    resources :chats, only: [:new, :create, :edit, :update]
     resources :reviews, only: %i[new create edit update]
   end
 end
