@@ -11,6 +11,9 @@ end
 require 'cucumber/rails'
 require 'capybara/cucumber'
 require 'selenium-webdriver'
+require 'factory_bot'
+
+World(FactoryBot::Syntax::Methods)
 
 # Use the default Rails driver for Capybara
 Capybara.default_driver = :selenium

@@ -3,7 +3,12 @@ FactoryBot.define do
     title { "Help with #{Faker::Verb.ing_form} #{Faker::Hacker.noun}" }
     description { Faker::Quote.fortune_cookie }
     category { 'General' }
-    location { "POINT(#{Faker::Number.between(from: 103.8, to: 104.0).round(3)} #{Faker::Number.between(from: 1.30, to: 1.40).round(3)})" }
+    location do
+      "POINT(#{Faker::Number.between(from: 103.8,
+                                     to: 104.0).round(3)} #{Faker::Number.between(
+                                       from: 1.30, to: 1.40
+                                     ).round(3)})"
+    end
     date { Faker::Date.forward(from: Date.tomorrow, days: 90) }
     start_time { '10:00 AM' }
     number_of_pax { Faker::Number.between(from: 1, to: 10) }
@@ -14,15 +19,6 @@ FactoryBot.define do
     created_by { create(:random_user).id }
     created_at { DateTime.now }
     updated_at { DateTime.now }
-
-    after(:build) do |request|
-      image_path = Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')
-      request.thumbnail.attach(
-        io: File.open(image_path),
-        filename: 'my_image.jpg',
-        content_type: 'image/jpeg'
-      )
-    end
   end
 
   factory :test_request, class: 'Request' do
@@ -38,5 +34,37 @@ FactoryBot.define do
     reward_type { 'Cash' }
     status { 'Open' }
     association :user, factory: :random_user, strategy: :build
+  end
+
+  factory :requestwiththumbnail do
+    title { "Help with #{Faker::Verb.ing_form} #{Faker::Hacker.noun}" }
+    description { Faker::Quote.fortune_cookie }
+    category { 'General' }
+    location do
+      "POINT(#{Faker::Number.between(from: 103.8,
+                                     to: 104.0).round(3)} #{Faker::Number.between(
+                                       from: 1.30, to: 1.40
+                                     ).round(3)})"
+    end
+    date { Faker::Date.forward(from: Date.tomorrow, days: 90) }
+    start_time { '10:00 AM' }
+    number_of_pax { Faker::Number.between(from: 1, to: 10) }
+    duration { 2 }
+    reward_type { 'None' }
+    reward { 'None' }
+    status { 'Available' }
+    association :user, factory: :random_user, strategy: :build
+    created_at { DateTime.now }
+    updated_at { DateTime.now }
+    thumbnail { ActiveStorage::Blob.create_and_upload!( 
+        io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
+        filename: 'my_image.jpg',
+        content_type: 'image/jpeg'
+    )}
+
+    # after(:build) do |request|
+    #   image_path =       request.thumbnail.attach(
+    #   )
+    # end
   end
 end

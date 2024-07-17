@@ -7,10 +7,10 @@
 #   login_as(@current_user, scope: :user)
 # end
 #
-Given('I am logged in') do
-  @current_user = User.create!(name: 'Test User', email: 'test@example.com', password: 'password')
-  login_as(@current_user, scope: :user)
-end
+# Given('I am logged in') do
+#   @current_user = User.create!(name: 'Test User', email: 'test@example.com', password: 'password')
+#   login_as(@current_user, scope: :user)
+# end
 
 When('I have a completed request') do
   @request = Request.create!(title: 'Completed Request', status: 'Completed', created_by: @current_user.id)
@@ -20,9 +20,10 @@ Given('there is a user named {string}') do |name|
   @reviewee = User.create!(name: name, email: 'volunteer@example.com', password: 'password')
 end
 
-When('I am on the {string} page') do |page_name|
-  visit myrequests_path
-end
+
+# When('I am on the {string} page') do |page_name|
+#   visit myrequests_path
+# end
 
 When('I click on the request') do
   click_link @request.title
@@ -31,10 +32,6 @@ end
 When('I fill out the review form with rating {int} and comment {string}') do |rating, comment|
   fill_in 'Rating', with: rating
   fill_in 'Review content', with: comment
-end
-
-When('I press {string}') do |button|
-  click_button button
 end
 
 Then('a review with rating {int} and comment {string} should be created for {string}') do |rating, comment, user_name|

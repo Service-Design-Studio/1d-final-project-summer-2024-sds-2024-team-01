@@ -15,6 +15,12 @@ Given('I have an account') do
     click_button 'Logout'
 end
 
+Given('I login as an admin') do
+  admin = create(:user, role_id: 2)
+  # sign_in
+end
+
+
 And('I login') do
   visit new_user_session_path
   fill_in 'user_number', with: '96789012'
@@ -23,8 +29,8 @@ And('I login') do
   expect(page).to have_content('Signed in successfully.')
 end
 
-Given('(that) I am on the {string} page') do |page|
-  puts page
+
+Given('I am on the {string} page') do |page|
   if page == 'home'
     visit '/'
   else
@@ -58,7 +64,7 @@ And('I have a request') do
     description: 'Need someone to walk my dog for an hour every afternoon',
     category: 'Pet Care',
     location: 'POINT(34.052235 -118.243683)',
-    date: Date.new(2024, 7, 2),
+    date: Date.tomorrow,
     number_of_pax: 1,
     duration: 1,
     start_time: '12:00',
@@ -95,4 +101,8 @@ end
 
 Then('I should not see {string}') do |message|
   expect(page).not_to have_content(message)
+end
+
+Then('I should see a list of requests') do
+  FactoryBot.create_list(:random_request, 10)
 end
