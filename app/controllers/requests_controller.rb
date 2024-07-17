@@ -15,10 +15,11 @@ class RequestsController < ApplicationController
   #show a single request
   def show
     @request = Request.find(params[:id])
-    @is_creator = @request.created_by == current_user.id
+    @is_creator = current_user && @request.created_by == current_user.id
     @accepted_application_count = @request.request_applications.where(status: 'Accepted').count
     @slots_remaining = @request.number_of_pax - @accepted_application_count
   end
+  
 
   # GET /requests/new
   #show a form to create a new request
