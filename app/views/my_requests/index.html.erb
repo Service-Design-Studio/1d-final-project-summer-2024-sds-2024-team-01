@@ -8,7 +8,6 @@
         <h5 class="subheader-text_requests_index">Check on your own requests and accept help from applicants!</h5>
       </div>
     </div>
-
     <!-- Search Bar Container -->
     <div class="search-container_requests_index">
       <div class="">
@@ -22,89 +21,27 @@
         </div>
       </div>
     </div>
-
+    <ul class="nav nav-tabs mb-3" id="myRequestsTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="in-progress-tab" data-bs-toggle="tab" data-bs-target="#in-progress" type="button" role="tab" aria-controls="in-progress" aria-selected="true">In Progress</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">Completed</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="unfulfilled-tab" data-bs-toggle="tab" data-bs-target="#unfulfilled" type="button" role="tab" aria-controls="unfulfilled" aria-selected="false">Unfulfilled</button>
+      </li>
+    </ul>
     <!-- Container for Request Cards -->
-    <div class="card mt-0" id="requestContainer">
-      <div class="card-body" style=>
-        <div class="row">
-          <% @requests.each do |myrequest| %>
-            <div class="col-md-12 mb-4 request-card_requests_index_my" data-status="<%= myrequest.status %>">
-              <div class="clickable-card_requests_index-wrapper_my">
-                <div class="card h-100 d-flex flex-row align-items-center">
-                  <a href="<%= request_path(myrequest) %>" class="clickable-area_requests_index_my">
-                    <% if myrequest.thumbnail.attached? %>
-                      <img src="<%= image_url(myrequest.thumbnail) %>" class="thumbnail_requests_index_my" alt="<%= myrequest.title %>"/>
-                    <% end %>
-                    <div class="card-content_requests_index_my flex-grow-1">
-                      <h5 class="card-title_requests_index_my"><%= myrequest.title %></h5>
-                      <p class="card-date_requests_index_my"><%= myrequest.date.strftime('%d %B %Y') %> , <%= myrequest.start_time.strftime('%H:%M') %></p>
-                    </div>
-                  </a>
-                  <div class="card-actions_requests_index_my">
-                    <div class="application-indicator_requests_index_my">
-                      <% if myrequest.application_count > 0 %>
-                        <p class="application-count_requests_index_my"><%= myrequest.application_count %> Applicants</p>
-                      <% end %>
-                      <p class="applicants-status_requests_index_my <%= 'full-capacity' if myrequest.accepted_application_count >= myrequest.number_of_pax %>" data-accepted-count="<%= myrequest.accepted_application_count %>" data-number-of-pax="<%= myrequest.number_of_pax %>">
-                        <i class="fas fa-users"></i> <%= myrequest.accepted_application_count %>/<%= myrequest.number_of_pax %> people found
-                      </p>
-                    </div>
-                    <div class="action-buttons">
-                      <form action="/myrequests/complete?id=<%= myrequest.id %>" method="post" class="complete-form me-3">
-                        <button type="submit" class="btn complete-btn_mark_completed">
-                          <i class="bi bi-check-lg tick-icon_mark_completed"></i>
-                          <span class="complete-text_mark_completed">Mark as Complete</span>
-                        </button>
-                      </form>
-                      <button class="btn review-btn_mark_completed d-none">
-                        <i class="fas fa-star star-icon_mark_completed"></i>
-                        <span class="review-text_mark_completed">Leave reviews for your applicants</span>
-                      </button>
-                    </div>
-                    <button class="btn dropdown-btn_requests_index_my"><i class="fas fa-chevron-down"></i></button>
-                  </div>
-                </div>
-                <% if myrequest.request_applications.any? %>
-                  <div class="popups-container_my">
-                    <% myrequest.request_applications.each_with_index do |application, index| %>
-                      <div class="popup_requests_index_my" style="--index: <%= index %>;">
-                        <!-- Content for the popup -->
-                        <a class="applicant-profile_my" href="/profile?id=<%=application.applicant.id%>">
-                          <div class="applicant-info_requests_index_my">
-                            <% if application.applicant.avatar.attached? %>
-                              <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index_my">
-                            <% end %>
-                            <p><%= application.applicant.name %><% if application.applicant.role_id == 4 %><i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i><% end %></p>
-                            <% if application.status == 'Accepted' %>
-                              <button class="btn leave-review-btn">Leave a Review</button>
-                            <% elsif application.status == 'Pending' %>
-                              <button class="btn custom-btn-chat_my">Chat</button>
-                            <% end %>
-                          </div>
-                        </a>
-                        <!-- Split button or status indicator -->
-                        <div class="split-button_requests_index_my" data-application-id="<%= application.id %>">
-                          <% if application.status == 'Accepted' %>
-                            <div class="status-indicator_my accepted">Accepted</div>
-                          <% elsif application.status == 'Rejected' %>
-                            <div class="status-indicator_my rejected">Rejected</div>
-                          <% else %>
-                            <form action="/myrequests/accept?id=<%= application.id %>" method="post" class="accept-form">
-                              <button type="submit" class="btn accept-btn_requests_index_my">Accept</button>
-                            </form>
-                            <form action="/myrequests/reject?id=<%= application.id %>" method="post" class="reject-form">
-                              <button type="submit" class="btn reject-btn_requests_index_my">Reject</button>
-                            </form>
-                          <% end %>
-                        </div>
-                      </div>
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        </div>
+    <div class="tab-content" id="myRequestsTabContent">
+      <div class="tab-pane fade show active" id="in-progress" role="tabpanel" aria-labelledby="in-progress-tab">
+        <%= render partial: 'request_cards', locals: { requests: @in_progress_requests } %>
+      </div>
+      <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+        <%= render partial: 'request_cards', locals: { requests: @completed_requests } %>
+      </div>
+      <div class="tab-pane fade" id="unfulfilled" role="tabpanel" aria-labelledby="unfulfilled-tab">
+        <%= render partial: 'request_cards', locals: { requests: @unfulfilled_requests } %>
       </div>
     </div>
   </div>
