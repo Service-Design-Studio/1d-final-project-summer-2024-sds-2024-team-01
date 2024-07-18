@@ -96,3 +96,7 @@ end
 Then('I should not see {string}') do |message|
   expect(page).not_to have_content(message)
 end
+
+When('I click on the new request button') do
+  visit '/requests/new'
+end

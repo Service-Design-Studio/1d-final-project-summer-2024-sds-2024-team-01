@@ -1,23 +1,13 @@
-# Feature: Sort the requests according to different criteria
-# As a user
-# So that I can easily find the requests that I want
-# I want to sort the requests by different criteria
+Feature: Sort Request
+    As a user
+    I want to be able to sort request
+    so that I can find requests I want
 
-# Scenario: Sort category
-# Given I have a list of requests
-# When I sort the requests by the "category" field
-# Then the requests should be sorted by the "category" field
-# And the requests should be sorted in descending order according to created by
+Background:
+    Given I have an account
+    And I login
+    And there is a registered user on the app
+    And I have a request
 
-# Scenerio: Sort date
-# Given I have a list of requests
-# When I sort the requests by the "date" field
-# Then the requests should be sorted by the "date" field
-# And the requests should be sorted in descending order according to created by
-
-# Scenerio: Sort skillset
-# Given I have a list of requests
-# When I sort the requests by the "skillset" field
-# Then the requests should be sorted by the "skillset" field
-# And the requests should be sorted in descending order according to created by
-
+#Search bar feature#
+ 
