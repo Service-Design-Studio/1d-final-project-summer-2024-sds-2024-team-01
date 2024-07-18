@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Review, type: :model do
   subject do
-    create(:review)
+    create(:reviewrequester)
   end
 
   it 'is valid with valid attributes' do
