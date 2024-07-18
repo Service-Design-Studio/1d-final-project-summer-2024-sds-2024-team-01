@@ -181,9 +181,12 @@ font-weight: bold;
 .custom-card_requests_index {
   margin-top: 30px;
   margin-bottom: 30px; 
-  background-color: #ad88c6; /* Background color for the header container */
-  color: #fff; /* Text color for the header container */
+  background-color: white; /* Background color for the header container */
+  color: black; /* Text color for the header container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
   height: 120px;
+  border: 1px solid transparent; /* Make border transparent */
+  border-radius: 5px; /* Optional: Add rounded corners */
 }
 
 .header-text-group_requests_index {
@@ -1057,13 +1060,12 @@ font-weight: bold;
 }
 
 .my-requests-tabs .nav-link.active {
-  color: #495057;
-  background-color: #fff;
+  color: white;
+  background-color: #ad88c6;
   border-color: #dee2e6 #dee2e6 #fff;
 }
 
 .my-requests-tab-content {
-  /* padding: 20px; */
   background-color: #fff;
   border-top: none;
   border-radius: 0 0 0.25rem 0.25rem;

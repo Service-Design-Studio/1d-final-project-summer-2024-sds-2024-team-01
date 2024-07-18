@@ -9,36 +9,12 @@ function initializeMyRequests() {
 
   // Search functionality
   if (searchInput) {
-    searchInput.addEventListener('input', function() {
-      const searchTerm = this.value.toLowerCase().trim();
-      document.querySelectorAll('.request-card_requests_index_my').forEach(card => {
-        const titleElement = card.querySelector('.card-title_requests_index_my');
-        const title = titleElement ? titleElement.innerText.toLowerCase() : '';
-        card.style.display = title.includes(searchTerm) ? 'block' : 'none';
-      });
-    });
+    searchInput.addEventListener('input', performSearch);
   }
 
   // Use event delegation for dynamically loaded content
   if (requestContainer) {
-    requestContainer.addEventListener('click', function(event) {
-      // Handle "Mark as Complete" button click
-      if (event.target.closest('.complete-form')) {
-        event.preventDefault();
-        handleCompleteForm(event.target.closest('.complete-form'));
-      }
-
-      // Handle dropdown button click
-      if (event.target.closest('.dropdown-btn_requests_index_my')) {
-        handleDropdownClick(event.target.closest('.dropdown-btn_requests_index_my'));
-      }
-
-      // Handle accept/reject form submissions
-      if (event.target.closest('.accept-form, .reject-form')) {
-        event.preventDefault();
-        handleAcceptRejectForm(event.target.closest('.accept-form, .reject-form'));
-      }
-    });
+    requestContainer.addEventListener('click', handleRequestContainerClick);
   }
 
   // Initialize tab functionality
@@ -46,17 +22,39 @@ function initializeMyRequests() {
 
   // Call this function when the page loads
   updateUIBasedOnStatus();
+  hideEmptyDropdowns();
 
   // Close dropdown when clicking outside
-  document.addEventListener('click', (event) => {
-    if (!event.target.closest('.clickable-card_requests_index-wrapper_my')) {
-      const openPopups = document.querySelectorAll('.popups-container_my.active');
-      openPopups.forEach(closePopup);
+  document.addEventListener('click', handleOutsideClick);
+}
 
-      // Reset card body height
-      if (cardBody) cardBody.style.height = 'auto';
-    }
+function performSearch() {
+  const searchTerm = this.value.toLowerCase().trim();
+  document.querySelectorAll('.request-card_requests_index_my').forEach(card => {
+    const titleElement = card.querySelector('.card-title_requests_index_my');
+    const title = titleElement ? titleElement.innerText.toLowerCase() : '';
+    card.style.display = title.includes(searchTerm) ? 'block' : 'none';
   });
+}
+
+function handleRequestContainerClick(event) {
+  // Handle "Mark as Complete" button click
+  if (event.target.closest('.complete-form')) {
+    event.preventDefault();
+    handleCompleteForm(event.target.closest('.complete-form'));
+  }
+
+  // Handle dropdown button click
+  if (event.target.closest('.dropdown-btn_requests_index_my')) {
+    event.preventDefault();
+    handleDropdownClick(event.target.closest('.dropdown-btn_requests_index_my'));
+  }
+
+  // Handle accept/reject form submissions
+  if (event.target.closest('.accept-form, .reject-form')) {
+    event.preventDefault();
+    handleAcceptRejectForm(event.target.closest('.accept-form, .reject-form'));
+  }
 }
 
 function initializeTabs() {
@@ -64,30 +62,35 @@ function initializeTabs() {
   tabButtons.forEach(button => {
     button.addEventListener('click', function(event) {
       event.preventDefault();
-      const tabId = this.getAttribute('data-bs-target').replace('#', '');
-      
-      // Remove active class from all tabs
-      tabButtons.forEach(btn => {
-        btn.classList.remove('active');
-        btn.setAttribute('aria-selected', 'false');
-      });
-
-      // Add active class to clicked tab
-      this.classList.add('active');
-      this.setAttribute('aria-selected', 'true');
-
-      // Hide all tab panes
-      document.querySelectorAll('.tab-pane').forEach(pane => {
-        pane.classList.remove('show', 'active');
-      });
-
-      // Show the selected tab pane
-      const selectedPane = document.querySelector(this.getAttribute('data-bs-target'));
-      selectedPane.classList.add('show', 'active');
-
-      updateRequestCards(tabId);
+      switchTab(this);
     });
   });
+}
+
+function switchTab(tabButton) {
+  const tabId = tabButton.getAttribute('data-bs-target').replace('#', '');
+  
+  // Remove active class from all tabs
+  const tabButtons = document.querySelectorAll('#myRequestsTabs button');
+  tabButtons.forEach(btn => {
+    btn.classList.remove('active');
+    btn.setAttribute('aria-selected', 'false');
+  });
+
+  // Add active class to clicked tab
+  tabButton.classList.add('active');
+  tabButton.setAttribute('aria-selected', 'true');
+
+  // Hide all tab panes
+  document.querySelectorAll('.tab-pane').forEach(pane => {
+    pane.classList.remove('show', 'active');
+  });
+
+  // Show the selected tab pane
+  const selectedPane = document.querySelector(tabButton.getAttribute('data-bs-target'));
+  selectedPane.classList.add('show', 'active');
+
+  updateRequestCards(tabId);
 }
 
 function updateRequestCards(tabId) {
@@ -139,6 +142,26 @@ function handleCompleteForm(form) {
   // Update request card status
   requestCard.dataset.status = 'Completed';
 
+  // Prepare for smooth transition
+  requestCard.style.transition = 'opacity 0.5s ease-out';
+  requestCard.style.opacity = '0';
+
+  setTimeout(() => {
+    // Move the card to the top of the Completed tab
+    const completedTabPane = document.querySelector('#completed');
+    const firstChild = completedTabPane.firstChild;
+    completedTabPane.insertBefore(requestCard, firstChild);
+
+    // Switch to the Completed tab
+    const completedTabButton = document.querySelector('[data-bs-target="#completed"]');
+    switchTab(completedTabButton);
+
+    // Fade the card back in
+    setTimeout(() => {
+      requestCard.style.opacity = '1';
+    }, 50);
+  }, 500);
+
   fetch(form.action, {
     method: form.method,
     body: new FormData(form),
@@ -176,10 +199,8 @@ function handleDropdownClick(button) {
     openPopup(popupsContainer);
   }
 
-  // Adjust card body height
-  setTimeout(() => {
-    if (cardBody) cardBody.style.height = cardBody.scrollHeight + 'px';
-  }, 10);
+  // Adjust card body height immediately
+  if (cardBody) cardBody.style.height = cardBody.scrollHeight + 'px';
 }
 
 function openPopup(container) {
@@ -197,6 +218,32 @@ function closePopup(container) {
   button.innerHTML = '<i class="fas fa-chevron-down"></i>';
   container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = null;
 }
+
+function handleOutsideClick(event) {
+  if (!event.target.closest('.clickable-card_requests_index-wrapper_my')) {
+    const openPopups = document.querySelectorAll('.popups-container_my.active');
+    openPopups.forEach(closePopup);
+
+    // Reset card body height
+    const cardBody = document.querySelector('.card-body');
+    if (cardBody) cardBody.style.height = 'auto';
+  }
+}
+
+function hideEmptyDropdowns() {
+  document.querySelectorAll('.request-card_requests_index_my').forEach(card => {
+    const applicantPopups = card.querySelectorAll('.popup_requests_index_my');
+    const totalApplicants = applicantPopups.length;
+    const dropdownButton = card.querySelector('.dropdown-btn_requests_index_my');
+    
+    if (totalApplicants === 0 && dropdownButton) {
+      dropdownButton.style.display = 'none';
+    } else if (dropdownButton) {
+      dropdownButton.style.display = 'block';
+    }
+  });
+}
+
 
 function handleAcceptRejectForm(form) {
   const action = form.getAttribute('action');
@@ -358,4 +405,18 @@ function updateApplicantCountUI(statusIndicator, acceptedCount, numberOfPax) {
 document.addEventListener('requestCardsUpdated', function(e) {
   // Reinitialize any necessary functionality for the new content
   updateUIBasedOnStatus();
+  initializeDropdowns();
+  hideEmptyDropdowns();
 });
+
+function initializeDropdowns() {
+  const dropdownButtons = document.querySelectorAll('.dropdown-btn_requests_index_my');
+  dropdownButtons.forEach(button => {
+    button.removeEventListener('click', handleDropdownClick);
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      handleDropdownClick(button);
+    });
+  });
+}
