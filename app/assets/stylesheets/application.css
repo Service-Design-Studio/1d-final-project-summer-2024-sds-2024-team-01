@@ -620,6 +620,12 @@ font-weight: bold;
   white-space: nowrap;
 }
 
+.review-btn_mark_completed i {
+  position: relative;
+  margin: 0; /* Ensure there's no margin affecting the icon's position */
+  line-height: 1; /* Adjust line-height to prevent vertical misalignment */
+}
+
 .review-btn_mark_completed:hover {
   width: 290px; /* Adjust width to accommodate the text */
 }
@@ -631,7 +637,8 @@ font-weight: bold;
 /* Static leave review button styling for each applicant */
 .leave-review-btn {
   position: relative;
-  top: 25%;
+  /* top: 25%; */
+  margin-left: 20px;
   display: inline-block;
   padding: 10px 20px;
   font-size: 14px;
@@ -1088,16 +1095,14 @@ font-weight: bold;
 }
 
 .custom-btn-chat_my {
-  position: absolute;
-  bottom: 50px;
-  left: 180px;
+  position: relative;
   background-color: #656dad;
   border-color: #656dad;
   color: white;
   text-align: center;
   width: 150px;
   height: 40px;
-  margin-left: 10px; /* Add some space between name and button */
+  margin-left: 20px; /* Add some space between name and button */
   cursor: pointer;
   justify-content: center; /* Center the text horizontally */
   border-radius: 5px; /* Optional: Add rounded corners */
@@ -1300,7 +1305,7 @@ font-weight: bold;
   border: 1px solid #656dad;
   border-radius: 5px;
   margin: 5px 0 5px 0;
-  padding: 10px;
+  padding: 30px;
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
@@ -1382,8 +1387,11 @@ font-weight: bold;
 }
 
 .withdraw-btn_requests_index_my {
+  position: relative;
+  left: 59%;
   background-color: #dc3545;
   color: white;
+  align-items: center;
   text-align: center;
   width: 200px; /* Adjust the width as needed */
   height: 40px; /* Adjust the height as needed */
