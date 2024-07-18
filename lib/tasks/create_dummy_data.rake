@@ -13,6 +13,8 @@ namespace :db do
       first = create(:dummy_user)
       second = create(:dummy_user_two)
       third = create(:dummy_user_three)
+      corpo = create(:user, role_id: 4, number: 87651234)
+
       6.times do
         rq = build(:request, created_by: first.id, date: Faker::Date.backward(days: 365), status: 'Completed')
         rq.save(validate: false)
