@@ -57,36 +57,48 @@
               <div class="profile-info_requests_details mb-3">
                 <img src="<%= @request.user.avatar %>" alt="<%= @request.user.name %>" width="50" height="50">
                 <div>
-                  <h5 class="mb-1"><%= @request.created_by %></h5>
-                  <p class="mb-1 stars_requests_details">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i> (120 reviews)
-                  </p>
+                  <a href="/profile?id=<%= @request.user.id %>" class="mini-profile">
+                    <div class="profile-text">
+                      <h6 class="mb-1"><%= @request.user.name %></h6>
+                      <p class="stars_user_profile">
+                        <% 5.times do |i| %>
+                          <i class="fas fa-star <%= 'checked' if i < @average_rating %>"></i>
+                        <% end %>
+                        (<%= @review_count %> reviews)
+                      </p>
+                    </div>
+                  </a>
                 </div>
               </div>
               <% if @is_creator %>
-                <button class="btn custom-btn-dark-purple my-4 w-60">View related Chats</button>
-                <div class="request-availability_requests_details mt-2 d-flex align-items-center">
-                  <div class="availability-indicator_requests_details"><%= @slots_remaining %> slots remaining</div>
-                  <form action="/myrequests/complete?id=<%= @request.id %>" method="post" class="complete-form ms-3">
-                    <button type="submit" class="btn complete-btn_mark_completed">
-                      <i class="bi bi-check-lg tick-icon_mark_completed"></i>
-                      <span class="complete-text_mark_completed">Mark as Complete</span>
-                    </button>
-                  </form>
+                <button class="btn custom-btn-dark-purple mb-3 w-100 chat-button">View related Chats</button>
+              <% else %>
+                <button class="btn custom-btn-dark-purple mb-3 w-100 chat-button">Chat</button>
+              <% end %>
+              <% if @request.status == 'Completed' %>
+                <div class="status-indicator_requests_details mb-3 w-100">Concluded</div>
+              <% elsif @is_creator %>
+                <div class="request-availability_requests_details mb-3 w-100">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="availability-indicator_requests_details flex-grow-1"><%= @slots_remaining %> slots remaining</div>
+                    <form action="/myrequests/complete?id=<%= @request.id %>" method="post" class="complete-form ms-2">
+                      <button type="submit" class="btn complete-btn_mark_completed">
+                        <i class="bi bi-check-lg tick-icon_mark_completed"></i>
+                        <span class="complete-text_mark_completed">Mark as Complete</span>
+                      </button>
+                    </form>
+                  </div>
                 </div>
                 <div class="mt-3 w-100">
-                  <%= link_to "Edit this request", edit_request_path(@request), class: "btn btn-warning w-100" %>
-                  <%= button_to "Destroy this request", @request, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger w-100 mt-2" %>
+                  <%= link_to "Edit this request", edit_request_path(@request), class: "btn btn-warning w-100 mb-2" %>
+                  <%= button_to "Destroy this request", @request, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger w-100" %>
                 </div>
               <% else %>
-                <button class="btn custom-btn-dark-purple my-4 w-60">Chat</button>
-                <div class="request-availability_requests_details mt-2 d-flex align-items-center">
-                  <div class="availability-indicator_requests_details"><%= @slots_remaining %> slots remaining</div>
-                  <%= button_to 'Apply', {:controller => "requests", :action => "apply", :id => @request.id, :method => :post }, { class: 'accept-button_requests_details ms-3'} %>
+                <div class="request-availability_requests_details mb-3 w-100">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="availability-indicator_requests_details flex-grow-1"><%= @slots_remaining %> slots remaining</div>
+                    <%= button_to 'Apply', {:controller => "requests", :action => "apply", :id => @request.id, :method => :post }, { class: 'accept-button_requests_details ms-2'} %>
+                  </div>
                 </div>
               <% end %>
             </div>

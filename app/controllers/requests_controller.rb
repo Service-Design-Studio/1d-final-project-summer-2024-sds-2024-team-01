@@ -8,7 +8,10 @@ class RequestsController < ApplicationController
   # GET /requests
   #list all requests
   def index
-    @requests = Request.includes(:user).all
+    # @requests = Request.includes(:user).all
+    @requests_active = Request.where("date > ? OR (date = ? AND start_time > ?)", Date.today, Date.today, Time.now)
+                       .where.not(status: 'Completed')
+                       .order(created_at: :desc)
   end
 
   # GET /requests/1
@@ -18,6 +21,14 @@ class RequestsController < ApplicationController
     @is_creator = current_user && @request.created_by == current_user.id
     @accepted_application_count = @request.request_applications.where(status: 'Accepted').count
     @slots_remaining = @request.number_of_pax - @accepted_application_count
+
+    # Fetch the user who created the request
+    @requester = User.find(@request.created_by)
+    
+    # Fetch reviews and calculate average rating
+    @reviews_received = @requester.received_reviews
+    @average_rating = @reviews_received.average(:rating).to_f.round(1)
+    @review_count = @reviews_received.count
   end
   
 

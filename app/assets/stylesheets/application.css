@@ -51,6 +51,8 @@ form {
 
 /* Common asset: custom purple and lilac button*/
 .custom-btn-dark-purple {
+  display: flex;
+  text-align: center;
   background-color: #656dad;
   border-color: #656dad;
   color: white;
@@ -62,6 +64,7 @@ form {
 }
 
 .custom-btn-lilac {
+  text-align: center;
   background-color: #ad88c6;
   border-color: #ad88c6;
   color: white;
@@ -71,6 +74,45 @@ form {
   background-color: #9852a6; /* Slightly darker shade for hover effect */
   border-color: #9852a6;
 }
+
+/*clickable mini profile*/
+.profile-info_requests_details {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: -25%;
+}
+
+.mini-profile {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.mini-profile:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mini-profile img {
+  margin-right: 10px;
+}
+
+.mini-profile .profile-text {
+  display: flex;
+  flex-direction: column; /* This ensures the name and stars are stacked vertically */
+}
+
+.mini-profile h6 {
+  color: #333; /* Adjust this color as needed */
+  margin-bottom: 0px;
+}
+
+.mini-profile .stars_requests_details {
+  color: #666; /* Adjust this color as needed */
+}
+
 
 /* Register page CSS functions*/
 
@@ -514,7 +556,7 @@ font-weight: bold;
   text-align: left;
 }
 
-.profile-card_requests_details .profile-info_requests_details {
+.profile-card_requests_details {
   display: flex;
   align-items: center;
 }
@@ -524,6 +566,12 @@ font-weight: bold;
   margin-right: 10px;
 }
 
+.chat-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 38px; /* Adjust this value as needed */
+}
 
 /* Flexbox container for the indicator and button */
 .request-availability_requests_details {
@@ -531,6 +579,10 @@ font-weight: bold;
   align-items: center;
   margin-top: 10px;
   width: 100%; /* Ensure it takes full width */
+}
+
+.request-availability_requests_details .d-flex {
+  width: 100%;
 }
 
 /* Ensuring the availability indicator and Apply button have the same width and height */
@@ -543,6 +595,7 @@ font-weight: bold;
   display: flex;
   align-items: center; /* Center text vertically */
   justify-content: center; /* Center text horizontally */
+  
 }
 
 .availability-indicator_requests_details {
@@ -550,6 +603,10 @@ font-weight: bold;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   height: 40px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .accept-button_requests_details {
@@ -559,6 +616,7 @@ font-weight: bold;
   border-bottom-right-radius: 5px;
   height: 40px;
   cursor: pointer;
+  width: 170px;
 }
 
 .accept-button_requests_details:hover {
@@ -987,6 +1045,16 @@ font-weight: bold;
 .stars_user_profile .fa-star.checked {
   color: #ffd700;
 }
+
+.status-indicator_requests_details {
+  background-color: #4a4a4a;
+  color: white;
+  padding: 7px ;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
 .review-summary {
   text-align: center;
   margin-bottom: 20px;
@@ -1289,11 +1357,10 @@ font-weight: bold;
 }
 
 .split-button_requests_index_my {
-  position: relative;
-  top: -30px;
+  margin-left: 70%;
   display: flex;
-  justify-content: flex-end; /* Align the buttons to the right */
-  margin-top: 10px;
+  justify-content: end; /* Align the buttons to the right */
+  /* margin-top: 10px; */
 }
 
 .split-button_requests_index_my .btn {
@@ -1359,6 +1426,8 @@ font-weight: bold;
 }
 
 .popup_requests_index_my {
+  display: flex;
+  align-items: center;
   background: white;
   border: 1px solid #656dad;
   border-radius: 5px;
@@ -1446,7 +1515,7 @@ font-weight: bold;
 
 .withdraw-btn_requests_index_my {
   position: relative;
-  left: 59%;
+  left: 110%;
   background-color: #dc3545;
   color: white;
   align-items: center;

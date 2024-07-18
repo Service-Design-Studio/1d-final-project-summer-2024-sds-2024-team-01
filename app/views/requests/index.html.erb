@@ -29,7 +29,7 @@
     <div class="card mt-0" id="requestContainer">
       <div class="card-body">
         <div class="row">
-          <% @requests.each do |request| %>
+          <% @requests_active.each do |request| %>
             <div class="col-md-6 mb-4 request-card_requests_index">
               <a href="<%= request_path(request) %>" class="clickable-card_requests_index">
                 <div class="card h-100 w-100">
@@ -106,7 +106,7 @@
     function initialize() {
       var geocoder = new google.maps.Geocoder();
 
-      <% @requests.each do |request| %>
+      <% @requests_active.each do |request| %>
         (function() {
           var geocode = "<%= request.location %>";
           var elementId = "address-<%= request.id %>";
