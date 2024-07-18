@@ -7,7 +7,7 @@ class RequestsController < ApplicationController
   # GET /requests
   # list all requests
   def index
-    @requests = if current_user.role_id == 4
+    @requests = if !current_user.nil? && current_user.role_id == 4
                   Request.includes(:user).where(reward_type: "None")
                 else
                   Request.includes(:user).all
