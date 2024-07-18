@@ -1021,6 +1021,62 @@ font-weight: bold;
   border: none;
 }
 
+.my-requests-tabs {
+  border-bottom: 1px transparent;
+  margin-bottom: 20px;
+  display: flex;
+  width: 100%;
+}
+
+.my-requests-tabs .nav-item {
+  flex: 1;
+  margin-bottom: -1px;
+}
+
+.my-requests-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  color: #495057;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 100%;
+  margin-right: 0; /* Remove the right margin */
+}
+
+/* Remove the right margin from the last tab */
+.my-requests-tabs .nav-item:last-child .nav-link {
+  margin-right: 0;
+}
+
+.my-requests-tabs .nav-link:hover {
+  border-color: #e9ecef #e9ecef #dee2e6;
+  background-color: #e9ecef;
+}
+
+.my-requests-tabs .nav-link.active {
+  color: #495057;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.my-requests-tab-content {
+  /* padding: 20px; */
+  background-color: #fff;
+  border-top: none;
+  border-radius: 0 0 0.25rem 0.25rem;
+}
+
+.my-requests-tab-pane {
+  display: none;
+}
+
+.my-requests-tab-pane.show {
+  display: block;
+}
+
 .thumbnail_requests_index_my {
   height: 100px;
   border-radius: 5px 0 0 5px;

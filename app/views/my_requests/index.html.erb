@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <ul class="nav nav-tabs mb-3" id="myRequestsTabs" role="tablist">
+    <ul class="nav nav-tabs my-requests-tabs mb-3" id="myRequestsTabs" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active" id="in-progress-tab" data-bs-toggle="tab" data-bs-target="#in-progress" type="button" role="tab" aria-controls="in-progress" aria-selected="true">In Progress</button>
       </li>
@@ -32,15 +32,15 @@
         <button class="nav-link" id="unfulfilled-tab" data-bs-toggle="tab" data-bs-target="#unfulfilled" type="button" role="tab" aria-controls="unfulfilled" aria-selected="false">Unfulfilled</button>
       </li>
     </ul>
-    <!-- Container for Request Cards -->
-    <div class="tab-content" id="myRequestsTabContent">
-      <div class="tab-pane fade show active" id="in-progress" role="tabpanel" aria-labelledby="in-progress-tab">
+
+    <div class="tab-content my-requests-tab-content" id="myRequestsTabContent">
+      <div class="tab-pane my-requests-tab-pane fade show active" id="in-progress" role="tabpanel" aria-labelledby="in-progress-tab">
         <%= render partial: 'request_cards', locals: { requests: @in_progress_requests } %>
       </div>
-      <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+      <div class="tab-pane my-requests-tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
         <%= render partial: 'request_cards', locals: { requests: @completed_requests } %>
       </div>
-      <div class="tab-pane fade" id="unfulfilled" role="tabpanel" aria-labelledby="unfulfilled-tab">
+      <div class="tab-pane my-requests-tab-pane fade" id="unfulfilled" role="tabpanel" aria-labelledby="unfulfilled-tab">
         <%= render partial: 'request_cards', locals: { requests: @unfulfilled_requests } %>
       </div>
     </div>
