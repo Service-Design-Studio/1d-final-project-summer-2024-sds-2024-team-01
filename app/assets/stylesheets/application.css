@@ -830,32 +830,126 @@ font-weight: bold;
   color: white; /* Ensure the text color is white */
   font-weight: bold;
   margin-left: 10px;
-  padding: 10px;
+  padding: 15px;
   white-space: nowrap; /* Ensure text stays in a single line */
   background-color: transparent; /* Make the background transparent */
 }
 
-.edit-contributions-btn {
-  margin-left: 10px;
-}
-
-/* Static leave review button styling for each applicant */
-.leave-review-btn {
+.edit-contributions-btn_mark_completed {
   position: relative;
-  /* top: 25%; */
-  margin-left: 20px;
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 14px;
-  color: white;
-  background-color: #666DAD;;
-  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: #656dad;
+  color: #fff;
   border: none;
-  border-radius: 5px;
+  padding: 0.375rem 0.75rem;
 }
 
-.leave-review-btn:hover{
-  background-color: #666DAD;
+.edit-contributions-btn_mark_completed i {
+  position: relative;
+  margin: 0;
+  line-height: 1;
+  font-size: 1.0rem;
+}
+
+.edit-contributions-btn_mark_completed .edit-text_mark_completed {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.edit-contributions-btn_mark_completed:hover {
+  padding-right: 170px; /* Adjust based on text length */
+  background-color: #656dad;
+  color: white;
+}
+
+.edit-contributions-btn_mark_completed:hover .edit-text_mark_completed {
+  width: auto;
+  opacity: 1;
+}
+
+.edit-contributions-btn_mark_completed:not(.d-none) {
+  display: inline-block;
+}
+
+.edit-contributions-btn_mark_completed:hover .edit-text_mark_completed {
+  display: inline;
+}
+
+.edit-text_mark_completed {
+  display: none;
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+  padding: 10px;
+  white-space: nowrap;
+  background-color: transparent;
+}
+
+.leave-review-btn_mark_completed {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: #ffc107;
+  color: black;
+  border: none;
+}
+
+.leave-review-btn_mark_completed i {
+  position: relative;
+  margin: 0;
+  line-height: 1;
+  font-size: 1.0rem;
+}
+
+.leave-review-btn_mark_completed .review-text_mark_completed {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: black;
+}
+
+.leave-review-btn_mark_completed:hover {
+  padding-right: 150px; /* Adjust based on text length */
+  background-color: #ffc107;
+  color: black;
+}
+
+.leave-review-btn_mark_completed:hover .review-text_mark_completed {
+  width: auto;
+  opacity: 1;
+}
+
+.leave-review-btn_mark_completed:not(.d-none) {
+  display: inline-block;
+}
+
+.leave-review-btn_mark_completed:hover .review-text_mark_completed {
+  display: inline;
+}
+
+.review-text_mark_completed {
+  display: none;
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+  padding: 10px;
+  white-space: nowrap;
+  background-color: transparent;
 }
 
 .divider_requests_details {
@@ -1486,7 +1580,8 @@ font-weight: bold;
 }
 
 .split-button_requests_index_my {
-  margin-left: 70%;
+  position: absolute;
+  right: 3%;
   display: flex;
   justify-content: end; /* Align the buttons to the right */
   /* margin-top: 10px; */

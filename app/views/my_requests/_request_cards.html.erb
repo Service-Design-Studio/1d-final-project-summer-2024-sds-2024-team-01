@@ -71,7 +71,16 @@
                         </div>
                       </a>
                       <% if application.status == 'Accepted' %>
-                        <button class="btn leave-review-btn">Leave a Review</button>
+                        <button class="btn leave-review-btn_mark_completed">
+                          <i class="bi bi-star-fill review-icon_mark_completed"></i>
+                          <span class="review-text_mark_completed">Leave a Review</span>
+                        </button>
+                        <% if myrequest.status == 'Completed' %>
+                          <button class="btn edit-contributions-btn_mark_completed ms-2">
+                            <i class="bi bi-pencil-square edit-icon_mark_completed"></i>
+                            <span class="edit-text_mark_completed">Edit contributions</span>
+                          </button>
+                        <% end %>
                       <% elsif application.status == 'Pending' %>
                         <button class="btn custom-btn-chat_my">Chat</button>
                       <% end %>
