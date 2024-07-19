@@ -9,10 +9,11 @@ class MyRequestsController < ApplicationController
                                 COUNT(CASE WHEN request_applications.status = \'Accepted\' THEN 1 END) as accepted_application_count,
                                 array_agg(request_applications.applicant_id) as applicant_ids')
 
-    @in_progress_requests = @requests.where("date > ? OR (date = ? AND start_time > ?)", Date.today, Date.today, Time.now)
+    today_start = Date.today.beginning_of_day
+    @in_progress_requests = @requests.where("date > ?", today_start)
                                      .where.not(status: 'Completed')
     @completed_requests = @requests.where(status: 'Completed')
-    @unfulfilled_requests = @requests.where("date < ? OR (date = ? AND start_time < ?)", Date.today, Date.today, Time.now)
+    @unfulfilled_requests = @requests.where("date <= ?", today_start)
                                      .where.not(status: 'Completed')
 
     @requests = case params[:tab]
@@ -32,7 +33,19 @@ class MyRequestsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: { html: render_to_string(partial: 'request_cards', locals: { requests: @requests }, formats: [:html]) } }
+      format.json do
+        @requests = case params[:tab]
+                    when 'completed'
+                      @completed_requests
+                    when 'unfulfilled'
+                      @unfulfilled_requests
+                    else
+                      @in_progress_requests
+                    end
+        render json: { 
+          html: render_to_string(partial: 'request_cards', locals: { requests: @requests }, formats: [:html])
+        }
+      end
     end
   end
 
