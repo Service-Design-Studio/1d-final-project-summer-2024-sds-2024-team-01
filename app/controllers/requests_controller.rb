@@ -7,21 +7,29 @@ class RequestsController < ApplicationController
   # GET /requests
   # list all requests
   def index
-    @requests = if !current_user.nil? && current_user.role_id == 4
-                  Request.includes(:user).where(reward_type: "None")
-                else
-                  Request.includes(:user).all
-                end
+    # @requests = Request.includes(:user).all
+    @requests_active = Request.where("date > ? OR (date = ? AND start_time > ?)", Date.today, Date.today, Time.now)
+                       .where.not(status: 'Completed')
+                       .order(created_at: :desc)
   end
 
   # GET /requests/1
   # show a single request
   def show
     @request = Request.find(params[:id])
-    @is_creator = @request.created_by == current_user.id
+    @is_creator = current_user && @request.created_by == current_user.id
     @accepted_application_count = @request.request_applications.where(status: 'Accepted').count
     @slots_remaining = @request.number_of_pax - @accepted_application_count
+
+    # Fetch the user who created the request
+    @requester = User.find(@request.created_by)
+    
+    # Fetch reviews and calculate average rating
+    @reviews_received = @requester.received_reviews
+    @average_rating = @reviews_received.average(:rating).to_f.round(1)
+    @review_count = @reviews_received.count
   end
+  
 
   # GET /requests/new
   # show a form to create a new request

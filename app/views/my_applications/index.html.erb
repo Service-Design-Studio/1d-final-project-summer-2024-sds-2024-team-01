@@ -29,7 +29,7 @@
       <div class="card-body">
         <div class="row">
           <% @applications.each do |myapplication| %>
-            <div class="col-md-12 mb-4 request-card_requests_index_my">
+            <div class="col-md-12 mb-4 request-card_requests_index_my" data-request-status="<%= myapplication.request.status %>">
               <div class="clickable-card_requests_index-wrapper_my">
                 <div class="card h-100 d-flex flex-row align-items-center">
                   <a href="<%= request_path(myapplication.request) %>" class="clickable-area_requests_index_my">
@@ -43,7 +43,9 @@
                   </a>
                   <div class="card-actions_requests_index_my">
                     <div class="application-indicator_requests_index_my">
-                      <span class="application-status_indicator_my <%= myapplication.status.downcase %>"><%= myapplication.status %></span>
+                      <span class="application-status_indicator_my <%= myapplication.status.downcase %>" data-application-status="<%= myapplication.status %>">
+                        <%= myapplication.status %>
+                      </span>
                     </div>
                     <button class="btn dropdown-btn_requests_index_my"><i class="fas fa-chevron-down"></i></button>
                   </div>
@@ -52,14 +54,34 @@
                   <div class="popup_requests_index_my">
                     <!-- Content for the popup -->
                     <div class="applicant-info_requests_index_my">
-                      <% if myapplication.request.user.avatar.attached? %>
-                        <img src="<%= image_url(myapplication.request.user.avatar) %>" alt="<%= myapplication.request.user.name %>" class="profile-pic_requests_index_my">
+                      <a class="mini-profile" href="/profile?id=<%= myapplication.request.user.id %>">
+                        <div class="profile-info_requests_details mb-3">
+                          <% if myapplication.request.user.avatar.attached? %>
+                            <%= image_tag myapplication.request.user.avatar, alt: myapplication.request.user.name, class: "mini-profile-img", width: 50, height: 50 %>
+                          <% end %>
+                          <div class="profile-text">
+                            <h6 class="mb-1"><%= myapplication.request.user.name %>
+                              <% if myapplication.request.user.role_id == 4 %>
+                                <i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i>
+                              <% end %>
+                            </h6>
+                            <p class="stars_user_profile">
+                              <% average_rating = myapplication.request.user.received_reviews.average(:rating).to_f.round(1) %>
+                              <% 5.times do |i| %>
+                                <i class="fas fa-star <%= 'checked' if i < average_rating %>"></i>
+                              <% end %>
+                              (<%= myapplication.request.user.received_reviews.count %> reviews)
+                            </p>
+                          </div>
+                        </div>
+                      </a>
+                      <% if myapplication.status != 'Rejected' %>
+                        <button class="btn custom-btn-chat_my">Chat</button>
+                        <a href="#" class="btn withdraw-btn_requests_index_my">Withdraw</a>
                       <% end %>
-                      <p><%= myapplication.request.user.name %></p>
-                      <button class="btn custom-btn-chat_my">Chat</button>
-                    </div>
-                    <div class="withdraw-button_requests_index_my">
-                      <a href="#" class="btn withdraw-btn_requests_index_my">Withdraw</a>
+                      <% if myapplication.status == 'Accepted' && myapplication.request.status == 'Completed' %>
+                        <a href="#" class="btn leave-review-btn">Leave a Review</a>
+                      <% end %>
                     </div>
                   </div>
                 </div>
@@ -70,87 +92,6 @@
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const searchInput = document.getElementById('searchInput');
-      const requestCards = document.querySelectorAll('.request-card_requests_index_my');
-
-      searchInput.addEventListener('input', function() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        console.log('Search term:', searchTerm); // Debug log
-
-        requestCards.forEach(card => {
-          const titleElement = card.querySelector('.card-title_requests_index_my');
-          const title = titleElement ? titleElement.innerText.toLowerCase() : '';
-          console.log('Card title:', title); // Debug log
-
-          if (title.includes(searchTerm)) {
-            card.style.display = 'block'; // Show the card
-          } else {
-            card.style.display = 'none'; // Hide the card
-          }
-        });
-      });
-
-      // Dropdown functionality
-      const dropdownButtons = document.querySelectorAll('.dropdown-btn_requests_index_my');
-      const cardBody = document.querySelector('.card-body');
-
-      dropdownButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          const wrapper = button.closest('.clickable-card_requests_index-wrapper_my');
-          const popupsContainer = wrapper.querySelector('.popups-container_my');
-          
-          // Close all other open popups
-          document.querySelectorAll('.popups-container_my.active').forEach(container => {
-            if (container !== popupsContainer) {
-              closePopup(container);
-            }
-          });
-
-          if (popupsContainer.classList.contains('active')) {
-            closePopup(popupsContainer);
-          } else {
-            openPopup(popupsContainer);
-          }
-
-          // Adjust card body height
-          setTimeout(() => {
-            cardBody.style.height = cardBody.scrollHeight + 'px';
-          }, 10);
-        });
-      });
-
-      function openPopup(container) {
-        container.classList.add('active');
-        container.style.maxHeight = container.scrollHeight + 'px';
-        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
-        button.innerHTML = '<i class="fas fa-chevron-up"></i>';
-        container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = container.scrollHeight + 'px';
-      }
-
-      function closePopup(container) {
-        container.classList.remove('active');
-        container.style.maxHeight = null;
-        const button = container.closest('.clickable-card_requests_index-wrapper_my').querySelector('.dropdown-btn_requests_index_my');
-        button.innerHTML = '<i class="fas fa-chevron-down"></i>';
-        container.closest('.clickable-card_requests_index-wrapper_my').style.marginBottom = null;
-      }
-
-      // Close dropdown when clicking outside
-      document.addEventListener('click', (event) => {
-        if (!event.target.closest('.clickable-card_requests_index-wrapper_my')) {
-          const openPopups = document.querySelectorAll('.popups-container_my.active');
-          openPopups.forEach(closePopup);
-
-          // Reset card body height
-          cardBody.style.height = 'auto';
-        }
-      });
-    });
-  </script>
 </body>
+<%= javascript_include_tag 'myapplications' %>
 </html>

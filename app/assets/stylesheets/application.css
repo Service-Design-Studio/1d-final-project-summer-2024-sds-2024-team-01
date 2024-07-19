@@ -51,6 +51,8 @@ form {
 
 /* Common asset: custom purple and lilac button*/
 .custom-btn-dark-purple {
+  display: flex;
+  text-align: center;
   background-color: #656dad;
   border-color: #656dad;
   color: white;
@@ -62,6 +64,7 @@ form {
 }
 
 .custom-btn-lilac {
+  text-align: center;
   background-color: #ad88c6;
   border-color: #ad88c6;
   color: white;
@@ -71,6 +74,45 @@ form {
   background-color: #9852a6; /* Slightly darker shade for hover effect */
   border-color: #9852a6;
 }
+
+/*clickable mini profile*/
+.profile-info_requests_details {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: -25%;
+}
+
+.mini-profile {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.mini-profile:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mini-profile img {
+  margin-right: 10px;
+}
+
+.mini-profile .profile-text {
+  display: flex;
+  flex-direction: column; /* This ensures the name and stars are stacked vertically */
+}
+
+.mini-profile h6 {
+  color: #333; /* Adjust this color as needed */
+  margin-bottom: 0px;
+}
+
+.mini-profile .stars_requests_details {
+  color: #666; /* Adjust this color as needed */
+}
+
 
 /* Register page CSS functions*/
 
@@ -181,9 +223,12 @@ font-weight: bold;
 .custom-card_requests_index {
   margin-top: 30px;
   margin-bottom: 30px; 
-  background-color: #ad88c6; /* Background color for the header container */
-  color: #fff; /* Text color for the header container */
+  background-color: white; /* Background color for the header container */
+  color: black; /* Text color for the header container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
   height: 120px;
+  border: 1px solid transparent; /* Make border transparent */
+  border-radius: 5px; /* Optional: Add rounded corners */
 }
 
 .header-text-group_requests_index {
@@ -511,7 +556,7 @@ font-weight: bold;
   text-align: left;
 }
 
-.profile-card_requests_details .profile-info_requests_details {
+.profile-card_requests_details {
   display: flex;
   align-items: center;
 }
@@ -521,6 +566,12 @@ font-weight: bold;
   margin-right: 10px;
 }
 
+.chat-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 38px; /* Adjust this value as needed */
+}
 
 /* Flexbox container for the indicator and button */
 .request-availability_requests_details {
@@ -528,6 +579,10 @@ font-weight: bold;
   align-items: center;
   margin-top: 10px;
   width: 100%; /* Ensure it takes full width */
+}
+
+.request-availability_requests_details .d-flex {
+  width: 100%;
 }
 
 /* Ensuring the availability indicator and Apply button have the same width and height */
@@ -540,6 +595,7 @@ font-weight: bold;
   display: flex;
   align-items: center; /* Center text vertically */
   justify-content: center; /* Center text horizontally */
+  
 }
 
 .availability-indicator_requests_details {
@@ -547,6 +603,10 @@ font-weight: bold;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   height: 40px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .accept-button_requests_details {
@@ -556,6 +616,7 @@ font-weight: bold;
   border-bottom-right-radius: 5px;
   height: 40px;
   cursor: pointer;
+  width: 170px;
 }
 
 .accept-button_requests_details:hover {
@@ -604,6 +665,69 @@ font-weight: bold;
 .complete-btn_mark_completed:hover .complete-text_mark_completed {
   display: inline;
 }
+
+.review-btn_mark_completed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #ffc107; /* Gold border for review */
+  background-color: #ffc107; /* Gold background for review */
+  border-radius: 5px;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  position: relative;
+  white-space: nowrap;
+}
+
+.review-btn_mark_completed i {
+  position: relative;
+  margin: 0; /* Ensure there's no margin affecting the icon's position */
+  line-height: 1; /* Adjust line-height to prevent vertical misalignment */
+}
+
+.review-btn_mark_completed:hover {
+  width: 290px; /* Adjust width to accommodate the text */
+}
+
+.review-btn_mark_completed:not(.d-none) {
+  display: inline-block;
+}
+
+/* Static leave review button styling for each applicant */
+.leave-review-btn {
+  position: relative;
+  /* top: 25%; */
+  margin-left: 20px;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: black;
+  background-color: #ffc107;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+}
+
+.review-btn_mark_completed:hover .star-icon_mark_completed {
+  display: none;
+}
+
+.review-text_mark_completed {
+  display: none;
+  background-color: #ffc107; /* Gold background for review */
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+  padding: 10px;
+  white-space: nowrap; /* Ensure text stays in a single line */
+}
+
+.review-btn_mark_completed:hover .review-text_mark_completed {
+  display: inline;
+}
+
 
 .divider_requests_details {
   border-top: 1px solid #dee2e6;
@@ -921,6 +1045,16 @@ font-weight: bold;
 .stars_user_profile .fa-star.checked {
   color: #ffd700;
 }
+
+.status-indicator_requests_details {
+  background-color: #4a4a4a;
+  color: white;
+  padding: 7px ;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
 .review-summary {
   text-align: center;
   margin-bottom: 20px;
@@ -956,6 +1090,61 @@ font-weight: bold;
 
 #requestContainer {
   border: none;
+}
+
+.my-requests-tabs {
+  border-bottom: 1px transparent;
+  margin-bottom: 20px;
+  display: flex;
+  width: 100%;
+}
+
+.my-requests-tabs .nav-item {
+  flex: 1;
+  margin-bottom: -1px;
+}
+
+.my-requests-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  color: #495057;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 100%;
+  margin-right: 0; /* Remove the right margin */
+}
+
+/* Remove the right margin from the last tab */
+.my-requests-tabs .nav-item:last-child .nav-link {
+  margin-right: 0;
+}
+
+.my-requests-tabs .nav-link:hover {
+  border-color: #e9ecef #e9ecef #dee2e6;
+  background-color: #e9ecef;
+}
+
+.my-requests-tabs .nav-link.active {
+  color: white;
+  background-color: #ad88c6;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.my-requests-tab-content {
+  background-color: #fff;
+  border-top: none;
+  border-radius: 0 0 0.25rem 0.25rem;
+}
+
+.my-requests-tab-pane {
+  display: none;
+}
+
+.my-requests-tab-pane.show {
+  display: block;
 }
 
 .thumbnail_requests_index_my {
@@ -1032,16 +1221,14 @@ font-weight: bold;
 }
 
 .custom-btn-chat_my {
-  position: absolute;
-  bottom: 50px;
-  left: 180px;
+  position: relative;
   background-color: #656dad;
   border-color: #656dad;
   color: white;
   text-align: center;
   width: 150px;
   height: 40px;
-  margin-left: 10px; /* Add some space between name and button */
+  margin-left: 20px; /* Add some space between name and button */
   cursor: pointer;
   justify-content: center; /* Center the text horizontally */
   border-radius: 5px; /* Optional: Add rounded corners */
@@ -1139,6 +1326,11 @@ font-weight: bold;
   display: inline;
 } */
 
+.application-status_indicator_my.concluded {
+  background-color: #4a4a4a;
+  color: white;
+}
+
 .card-title_requests_index_my {
   
   margin: 25px 0 0 0;
@@ -1165,11 +1357,10 @@ font-weight: bold;
 }
 
 .split-button_requests_index_my {
-  position: relative;
-  top: -30px;
+  margin-left: 70%;
   display: flex;
-  justify-content: flex-end; /* Align the buttons to the right */
-  margin-top: 10px;
+  justify-content: end; /* Align the buttons to the right */
+  /* margin-top: 10px; */
 }
 
 .split-button_requests_index_my .btn {
@@ -1235,11 +1426,13 @@ font-weight: bold;
 }
 
 .popup_requests_index_my {
+  display: flex;
+  align-items: center;
   background: white;
   border: 1px solid #656dad;
   border-radius: 5px;
   margin: 5px 0 5px 0;
-  padding: 10px;
+  padding: 30px;
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
@@ -1321,8 +1514,11 @@ font-weight: bold;
 }
 
 .withdraw-btn_requests_index_my {
+  position: relative;
+  left: 110%;
   background-color: #dc3545;
   color: white;
+  align-items: center;
   text-align: center;
   width: 200px; /* Adjust the width as needed */
   height: 40px; /* Adjust the height as needed */
@@ -1381,3 +1577,4 @@ font-weight: bold;
     padding: 0px;
     border-radius: 5px;
 }
+

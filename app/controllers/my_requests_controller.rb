@@ -1,14 +1,28 @@
 class MyRequestsController < ApplicationController
   def index
-    @requests =
-      Request.includes(:request_applications)
-             .where(created_by: current_user.id)
-             .left_outer_joins(:request_applications)
-             .group('requests.id')
-             .select('requests.*,
-             COUNT(request_applications.id) as application_count,
-             COUNT(CASE WHEN request_applications.status = \'Accepted\' THEN 1 END) as accepted_application_count,
-             array_agg(request_applications.applicant_id) as applicant_ids')
+    @requests = Request.includes(:request_applications)
+                       .where(created_by: current_user.id)
+                       .left_outer_joins(:request_applications)
+                       .group('requests.id')
+                       .select('requests.*,
+                                COUNT(request_applications.id) as application_count,
+                                COUNT(CASE WHEN request_applications.status = \'Accepted\' THEN 1 END) as accepted_application_count,
+                                array_agg(request_applications.applicant_id) as applicant_ids')
+
+    @in_progress_requests = @requests.where("date > ? OR (date = ? AND start_time > ?)", Date.today, Date.today, Time.now)
+                                     .where.not(status: 'Completed')
+    @completed_requests = @requests.where(status: 'Completed')
+    @unfulfilled_requests = @requests.where("date < ? OR (date = ? AND start_time < ?)", Date.today, Date.today, Time.now)
+                                     .where.not(status: 'Completed')
+
+    @requests = case params[:tab]
+                when 'completed'
+                  @completed_requests
+                when 'unfulfilled'
+                  @unfulfilled_requests
+                else
+                  @in_progress_requests
+                end
 
     # Fetch all unique applicant IDs
     all_applicant_ids = @requests.map(&:applicant_ids).flatten.uniq.compact
@@ -16,8 +30,10 @@ class MyRequestsController < ApplicationController
     # Fetch all applicants in one query
     @applicants = User.where(id: all_applicant_ids).index_by(&:id)
 
-    @comprequests =
-      Request.where(status: 'Completed')
+    respond_to do |format|
+      format.html
+      format.json { render json: { html: render_to_string(partial: 'request_cards', locals: { requests: @requests }, formats: [:html]) } }
+    end
   end
 
   # Redirect directly to let requestcontroller handle
