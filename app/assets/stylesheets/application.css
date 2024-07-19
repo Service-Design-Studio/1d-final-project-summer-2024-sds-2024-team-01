@@ -628,75 +628,195 @@ font-weight: bold;
 }
 
 .complete-btn_mark_completed {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 0.375rem 0.75rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 2px solid #6c757d;
-  background-color: #6c757d;
-  border-radius: 5px;
-  overflow: hidden;
-  transition: width 0.3s ease;
+  justify-content: center; /* Center the tick icon */
+  height: 40px; /* Ensure consistent button height */
+}
+
+.complete-btn_mark_completed i {
   position: relative;
-  white-space: nowrap; /* Ensure text stays in a single line */
+  margin: 0; /* Ensure there's no margin affecting the icon's position */
+  line-height: 1; /* Adjust line-height to prevent vertical misalignment */
+  font-size: 1.3rem;
+  transition: margin-right 0.3s ease; 
+}
+
+.complete-btn_mark_completed .complete-text_mark_completed {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: white; /* Ensure the text color is white */
+  background-color: transparent; /* Make the background transparent */
 }
 
 .complete-btn_mark_completed:hover {
-  width: 160px;
-  border-radius: 5px; /* Ensure rounded corners are maintained */
-}
-
-.tick-icon_mark_completed {
-  font-size: 24px;
-  color: white;
-}
-
-.complete-text_mark_completed {
-  display: none;
+  padding-right: 150px;  /* Adjust based on text length */
   background-color: #6c757d;
   color: white;
-  font-weight: bold;
-  margin-left: 10px;
-  padding: 10px;
-  white-space: nowrap; /* Ensure text stays in a single line */
+  justify-content: flex-start; /* Align items to the start on hover */
 }
 
 .complete-btn_mark_completed:hover .tick-icon_mark_completed {
-  display: none;
+  margin-right: 10px; /* Move icon to the left */
 }
 
 .complete-btn_mark_completed:hover .complete-text_mark_completed {
-  display: inline;
+  width: auto;
+  opacity: 1;
 }
 
-.review-btn_mark_completed {
+.complete-btn_mark_completed:not(.d-none) {
+  display: inline-block;
+}
+
+.complete-text_mark_completed {
+  color: white; /* Ensure the text color is white */
+  font-weight: bold;
+  padding: 0; /* Remove padding to maintain consistent height */
+  white-space: nowrap; /* Ensure text stays in a single line */
+  background-color: transparent; /* Make the background transparent */
+}
+
+.repost-btn_unfulfilled {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: #656dad;  /* Use an appropriate color */
+  color: #fff;
+  border: none;
+  padding: 0.375rem 0.75rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 2px solid #ffc107; /* Gold border for review */
-  background-color: #ffc107; /* Gold background for review */
-  border-radius: 5px;
-  overflow: hidden;
-  transition: width 0.3s ease;
+  justify-content: center; /* Center the refresh icon */
+  height: 40px; /* Ensure consistent button height */
+}
+
+.repost-btn_unfulfilled .refresh-icon_unfulfilled {
   position: relative;
+  margin: 0; /* Ensure there's no margin affecting the icon's position */
+  line-height: 1; /* Adjust line-height to prevent vertical misalignment */
+  font-size: 1.0rem;
+  transition: margin-right 0.3s ease; /* Smooth transition for margin */
+}
+
+.repost-btn_unfulfilled .repost-text_unfulfilled {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
   white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: white; /* Ensure the text color is white */
+  background-color: transparent; /* Make the background transparent */
+}
+
+.repost-btn_unfulfilled:hover {
+  padding-right: 168px;  /* Adjust based on text length */
+  background-color: #656dad;
+  color: white;
+  justify-content: flex-start; /* Align items to the start on hover */
+}
+
+.repost-btn_unfulfilled:hover .refresh-icon_unfulfilled {
+  margin-right: 10px; /* Move icon to the left */
+}
+
+.repost-btn_unfulfilled:hover .repost-text_unfulfilled {
+  width: auto;
+  opacity: 1;
+}
+
+.repost-btn_unfulfilled:not(.d-none) {
+  display: inline-block;
+}
+
+.repost-text_unfulfilled {
+  color: white; /* Ensure the text color is white */
+  font-weight: bold;
+  padding: 0; /* Remove padding to maintain consistent height */
+  white-space: nowrap; /* Ensure text stays in a single line */
+  background-color: transparent; /* Make the background transparent */
+}
+
+
+.review-btn_mark_completed {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: #656dad;  /* Use an appropriate color */
+  color: #fff;
+  border: none;
+  /* padding: 0.375rem 0.75rem; */
 }
 
 .review-btn_mark_completed i {
   position: relative;
   margin: 0; /* Ensure there's no margin affecting the icon's position */
   line-height: 1; /* Adjust line-height to prevent vertical misalignment */
+  font-size: 1.0rem;
+}
+
+.review-btn_mark_completed .review-text_mark_completed {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: white; /* Ensure the text color is white */
 }
 
 .review-btn_mark_completed:hover {
-  width: 290px; /* Adjust width to accommodate the text */
+  padding-right: 280px;  /* Adjust based on text length */
+  background-color: #656dad;
+  color: white;
+}
+
+.review-btn_mark_completed:hover .review-text_mark_completed {
+  width: auto;
+  opacity: 1;
 }
 
 .review-btn_mark_completed:not(.d-none) {
   display: inline-block;
+}
+
+/* .review-btn_mark_completed:hover .star-icon_mark_completed {
+  display: none;
+} */
+
+.review-btn_mark_completed:hover .review-text_mark_completed {
+  display: inline;
+}
+
+.review-text_mark_completed {
+  display: none;
+  color: white; /* Ensure the text color is white */
+  font-weight: bold;
+  margin-left: 10px;
+  padding: 10px;
+  white-space: nowrap; /* Ensure text stays in a single line */
+  background-color: transparent; /* Make the background transparent */
 }
 
 /* Static leave review button styling for each applicant */
@@ -713,25 +833,6 @@ font-weight: bold;
   border: none;
   border-radius: 5px;
 }
-
-.review-btn_mark_completed:hover .star-icon_mark_completed {
-  display: none;
-}
-
-.review-text_mark_completed {
-  display: none;
-  background-color: #ffc107; /* Gold background for review */
-  color: white;
-  font-weight: bold;
-  margin-left: 10px;
-  padding: 10px;
-  white-space: nowrap; /* Ensure text stays in a single line */
-}
-
-.review-btn_mark_completed:hover .review-text_mark_completed {
-  display: inline;
-}
-
 
 .divider_requests_details {
   border-top: 1px solid #dee2e6;
