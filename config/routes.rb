@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   get 'profile' => 'profile#index'
-  get 'profile/edit' => 'profile#edit'
+  post 'profile/edit' => 'profile#edit'
 
   post 'requests/apply' => 'requests#apply'
   get 'myrequests' => 'my_requests#index'
@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   post 'myrequests/reject' => 'my_requests#reject'
 
   get 'myapplications' => 'my_applications#index'
+  post 'myapplications/withdraw' => 'my_applications#withdraw'
 
   # resources :reviews, only: [:edit, :update, :index, :new, :create]
 

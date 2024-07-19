@@ -16,20 +16,20 @@ namespace :db do
       corpo = create(:user, role_id: 4, number: 87651234)
 
       6.times do
-        rq = build(:request, created_by: first.id, date: Faker::Date.backward(days: 365), status: 'Completed')
+        rq = build(:requestwiththumbnail, created_by: first.id, date: Faker::Date.backward(days: 365), status: 'Completed')
         rq.save(validate: false)
       end
       4.times do
-        create(:request,
+        create(:requestwiththumbnail,
                created_by: first.id,
                reward: "$#{Faker::Number.between(from: 10, to: 200)}",
                reward_type: 'Cash')
       end
       print "\r10% Complete                      "
-      4.times { create(:request, created_by: second.id) }
-      4.times { create(:request, created_by: third.id) }
+      4.times { create(:requestwiththumbnail, created_by: second.id) }
+      4.times { create(:requestwiththumbnail, created_by: third.id) }
       print "\r20% Complete                      "
-      10.times { create(:request) }
+      10.times { create(:requestwiththumbnail) }
       2.times { create(:reviewrequester, review_by: first) }
       2.times { create(:reviewrequester, review_for: first) }
       print "\r30% Complete                      "
@@ -42,10 +42,10 @@ namespace :db do
       print "\r50% Complete                      "
       4.times { create(:reviewapplicant, review_for: third) }
 
-      6.times { create(:application, applicant_id: first.id, request_id: create(:request).id) }
+      6.times { create(:application, applicant_id: first.id, request_id: create(:requestwiththumbnail).id) }
       print "\r60% Complete                      "
-      3.times { create(:application, applicant_id: second.id, request_id: create(:request).id) }
-      5.times { create(:application, applicant_id: third.id, request_id: create(:request).id) }
+      3.times { create(:application, applicant_id: second.id, request_id: create(:requestwiththumbnail).id) }
+      5.times { create(:application, applicant_id: third.id, request_id: create(:requestwiththumbnail).id) }
 
       user_ids = [first.id, second.id, third.id]
       non_completed_requests = Request.where(created_by: user_ids).where.not(status: 'Completed').pluck(:id)

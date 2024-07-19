@@ -19,10 +19,9 @@
     <% else %>
       <nav class="navbar fixed-top">
     <% end %>
-        <div class="container-fluid d-flex justify-content-start align-items-center">
+        <div class="container d-flex justify-content-start align-items-center">
           <a class="navbar-brand d-flex align-items-center" href="<%= root_path %>">
             <img src="/app/assets/images/OIG.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-            <span>Ring of Reciprocity</span>
           </a>
 
           <% if !user_signed_in? %>
@@ -36,19 +35,18 @@
             </div>
             <div class="d-flex align-items-center ms-auto">
               <!-- New request button -->
-              <a href="<%= new_request_path %>" class="btn custom-btn-dark-purple me-3">
-                <i class="fas fa-plus"></i>
+              <a href="<%= new_request_path %>" class="btn custom-btn-dark-purple me-5">
+                <span> New Request </span> <i class="fas fa-plus ms-2 m-auto"></i>
               </a>
               <!-- Profile on the right of Navbar -->
-              <a href="<%= profile_path %>" class="nav-bar-name">
+              <a href="<%= profile_path %>" class="text-decoration-none text-neutral-dark">
                 <% if current_user.avatar.attached? %>
-                  <img src="<%= image_url(current_user.avatar) %>" alt="Profile Picture" width="30" height="30" class="rounded-circle"> <!-- Profile pic -->
+                  <img src="<%= image_url(current_user.avatar) %>" alt="Profile Picture" width="40" height="40" class="rounded-circle m-auto"> <!-- Profile pic -->
+                <% else %>
+                  <img src="/default-avatar.png" alt="Profile Picture" width="40" height="40" class="rounded-circle"> <!-- Profile pic -->
                 <% end %>
-                <span class="ms-2"><%= current_user.name %></span> <!-- Profile name -->
               </a>
-              <%= button_to destroy_user_session_path, method: :delete, class: "btn ms-5" do %>
-                <i class="bi bi-box-arrow-right" style="font-size: 1.5em;" ></i>
-              <% end %>
+              <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn ms-5 " %>
             </div>
           <% end %>
         </div>

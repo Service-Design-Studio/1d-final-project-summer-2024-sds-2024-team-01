@@ -20,7 +20,9 @@ form {
 .navbar {
   width: 100%;
   padding: 0rem; /* Adjust padding as needed */
-  background: linear-gradient(270deg, #AC88C6 0%, #666DAD 100%) !important;
+  background-color: #ad88c6 !important;
+    background-color: linear;
+    background: linear-gradient(45deg, #ad88c6, #656DAD);
   height: 80px; /* Set a fixed height */
   display: flex;
   align-items: center; /* Center items vertically */
@@ -47,17 +49,16 @@ form {
   margin-right: 40px; /* Adjust this value to increase spacing */
 }
 
-.nav-bar-name {
-  color: #333; /* Adjust this color as needed */
-  font-weight: 650;
-  text-decoration: none;
+
+.text-neutral-dark{
+    color: #505050
 }
 
 /* Common asset: custom purple and lilac button*/
 .custom-btn-dark-purple {
   display: flex;
   text-align: center;
-  background-color: #656dad;
+  background-color: #505050;
   border-color: #656dad;
   color: white;
 }
@@ -513,7 +514,8 @@ font-weight: bold;
 
 .request-image_requests_details {
   width: 100%;
-  height: auto;
+  height: 300px;
+  object-fit: cover;
 }
 
 .btn-back_to_requests {
