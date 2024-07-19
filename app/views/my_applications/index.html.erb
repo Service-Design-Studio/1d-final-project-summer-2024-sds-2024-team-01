@@ -28,7 +28,7 @@
     <div class="card mt-0" id="requestContainer">
       <div class="card-body">
         <div class="row">
-          <% @applications.each do |myapplication| %>
+          <% @pendingapplications.each do |myapplication| %>
             <div class="col-md-12 mb-4 request-card_requests_index_my" data-request-status="<%= myapplication.request.status %>">
               <div class="clickable-card_requests_index-wrapper_my">
                 <div class="card h-100 d-flex flex-row align-items-center">
@@ -85,7 +85,7 @@
                       <p><%= myapplication.request.user.name %></p>
                       <button class="btn custom-btn-chat_my">Chat</button>
                     </div>
-                    <form method="patch" action="/withdraw?id=<%myapplication.id %>" class="withdraw-button_requests_index_my">
+                    <form method="post" action="/myapplications/withdraw?id=<%= myapplication.id %>" class="withdraw-button_requests_index_my">
                       <button type="submit" class="btn withdraw-btn_requests_index_my">Withdraw</button>
                     </form>
                   </div>

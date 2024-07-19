@@ -19,16 +19,16 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   get 'profile' => 'profile#index'
-  patch 'profile/edit' => 'profile#edit'
+  post 'profile/edit' => 'profile#edit'
 
   post 'requests/apply' => 'requests#apply'
   get 'myrequests' => 'my_requests#index'
-  patch 'myrequests/complete' => 'my_requests#complete'
-  patch 'myrequests/accept' => 'my_requests#accept'
-  patch 'myrequests/reject' => 'my_requests#reject'
+  post 'myrequests/complete' => 'my_requests#complete'
+  post 'myrequests/accept' => 'my_requests#accept'
+  post 'myrequests/reject' => 'my_requests#reject'
 
   get 'myapplications' => 'my_applications#index'
-  patch 'myapplications/withdraw' => 'my_applications#withdraw'
+  post 'myapplications/withdraw' => 'my_applications#withdraw'
 
   # resources :reviews, only: [:edit, :update, :index, :new, :create]
 
