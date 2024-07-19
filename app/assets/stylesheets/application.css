@@ -20,7 +20,7 @@ form {
 .navbar {
   width: 100%;
   padding: 0rem; /* Adjust padding as needed */
-  background-color: #ad88c6 !important;
+  background: linear-gradient(270deg, #AC88C6 0%, #666DAD 100%) !important;
   height: 80px; /* Set a fixed height */
   display: flex;
   align-items: center; /* Center items vertically */
@@ -47,7 +47,11 @@ form {
   margin-right: 40px; /* Adjust this value to increase spacing */
 }
 
-
+.nav-bar-name {
+  color: #333; /* Adjust this color as needed */
+  font-weight: 650;
+  text-decoration: none;
+}
 
 /* Common asset: custom purple and lilac button*/
 .custom-btn-dark-purple {

@@ -14,7 +14,7 @@
 </head>
 
   <body class="<%= "#{controller_name}-#{action_name}" %>">
-    <% if controller_name == 'sessions' || controller_name == 'registrations'%>
+    <% if controller_name == 'sessions' || controller_name == 'registrations' %>
       <nav class="navbar fixed-top" style="background-color: transparent !important">
     <% else %>
       <nav class="navbar fixed-top">
@@ -40,13 +40,15 @@
                 <i class="fas fa-plus"></i>
               </a>
               <!-- Profile on the right of Navbar -->
-              <a href="<%= profile_path %>">
+              <a href="<%= profile_path %>" class="nav-bar-name">
                 <% if current_user.avatar.attached? %>
                   <img src="<%= image_url(current_user.avatar) %>" alt="Profile Picture" width="30" height="30" class="rounded-circle"> <!-- Profile pic -->
                 <% end %>
                 <span class="ms-2"><%= current_user.name %></span> <!-- Profile name -->
               </a>
-              <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn  ms-5 " %>
+              <%= button_to destroy_user_session_path, method: :delete, class: "btn ms-5" do %>
+                <i class="bi bi-box-arrow-right" style="font-size: 1.5em;" ></i>
+              <% end %>
             </div>
           <% end %>
         </div>
