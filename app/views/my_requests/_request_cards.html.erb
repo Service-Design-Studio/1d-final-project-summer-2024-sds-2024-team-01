@@ -69,7 +69,7 @@
                       <% if application.status == 'Accepted' %>
                         <button class="btn leave-review-btn">Leave a Review</button>
                       <% elsif application.status == 'Pending' %>
-                        <button class="btn custom-btn-chat_my">Chat</button>
+                        <a href="<%= chat_path_with_request_and_user(myrequest, application.applicant) %>" class="btn custom-btn-chat_my">Chat</a> 
                       <% end %>
                     </div>
                     <!-- Split button or status indicator -->

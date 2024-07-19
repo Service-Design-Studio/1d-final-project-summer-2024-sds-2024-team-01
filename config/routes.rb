@@ -37,13 +37,10 @@ Rails.application.routes.draw do
 
   get 'myrequests/chats' => 'chats#new'
 
-  get 'chats' => 'chats#index'
 
   resources :chats, only: [:index, :show, :new, :create] do
     resources :messages, only: [:create]
   end
-
-  get 'chats/:id/messages' => 'chats#show', as: :chat_messages
   
 
   namespace :api do
@@ -57,10 +54,6 @@ Rails.application.routes.draw do
 
   resources :myrequests do
     resources :reviews, only: %i[new create edit update]
-  end
-
-  resources :chats, only: [:index, :show, :new, :create] do
-    resources :messages, only: [:create]
   end
 
 end

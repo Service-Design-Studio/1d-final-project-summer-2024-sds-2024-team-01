@@ -86,7 +86,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.text "messageText", null: false
+    t.text "message_text", null: false
     t.boolean "read", null: false
     t.bigint "chat_id"
     t.bigint "sender_id", null: false
