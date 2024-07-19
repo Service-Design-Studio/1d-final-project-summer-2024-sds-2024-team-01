@@ -469,6 +469,22 @@ font-weight: bold;
   max-width: 100%;
   height: auto;
 }
+/*icons for inout fields*/
+.input-with-icon {
+  position: relative;
+}
+.input-with-icon input {
+  padding-right: 2.5rem;
+}
+.input-with-icon .input-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 72%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #495057;
+}
 
 /* Request details CSS functions */
 .header-container_requests_details {
@@ -827,11 +843,15 @@ font-weight: bold;
   display: inline-block;
   padding: 10px 20px;
   font-size: 14px;
-  color: black;
-  background-color: #ffc107;
+  color: white;
+  background-color: #666DAD;;
   text-decoration: none;
   border: none;
   border-radius: 5px;
+}
+
+.leave-review-btn:hover{
+  background-color: #666DAD;
 }
 
 .divider_requests_details {

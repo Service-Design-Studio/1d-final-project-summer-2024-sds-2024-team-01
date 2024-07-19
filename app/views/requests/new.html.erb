@@ -54,9 +54,10 @@
             <%= f.label :title, class: "form-label" %>
             <%= f.text_field :title, class: "form-control", placeholder: "A few words will do!", required: true %>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6 input-with-icon">
             <%= f.label :date, class: "form-label" %>
-            <%= f.date_field :date, class: "form-control", placeholder: "When will it be?", required: true %>
+            <%= f.date_field :date, class: "form-control", placeholder: "When will it be?" , required: true %>
+            <i class="fa fa-calendar input-icon" id="date-icon"></i>
           </div>
         </div>
         <div class="row mb-3">
@@ -68,9 +69,10 @@
             <%= f.label :number_of_pax, "Number of volunteers needed:", class: "form-label" %>
             <%= f.number_field :number_of_pax, class: "form-control", required: true, min: 1 %>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 input-with-icon">
             <%= f.label :start_time, class: "form-label" %>
             <%= f.time_field :start_time, class: "form-control", placeholder: "Time of the event", required: true, id: "start_time" %>
+            <i class="fa fa-clock input-icon" id="time-icon"></i>
           </div>
           <div class="col-md-3">
             <%= f.label :duration, class: "form-label" %>
@@ -257,10 +259,100 @@
 
     // Initialize Flatpickr for time picker
     flatpickr("#start_time", {
-      enableTime: true,
-      noCalendar: true,
-      dateFormat: "H:i",
-      time_24hr: true
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true,
+    allowInput: true,
+    onClose: function(selectedDates, dateStr, instance) {
+        if (!dateStr) {
+            instance.input.value = ''; // Clear the input if no valid time was selected
+        }
+        instance.input.dispatchEvent(new Event('change')); // Trigger change event for validation
+        }
+    });
+
+    // Initialize Flatpickr for date picker with restriction
+    flatpickr("#request_date", {
+        minDate: "today",
+        dateFormat: "Y-m-d",
+        allowInput: true,
+        onReady: function(selectedDates, dateStr, instance) {
+            instance.set("minDate", new Date().fp_incr(1)); // Ensure date is at least 1 day after today
+        },
+        onChange: function(selectedDates, dateStr, instance) {
+            instance.set("minDate", new Date().fp_incr(1)); // Ensure date is at least 1 day after today
+        },
+        onClose: function(selectedDates, dateStr, instance) {
+            if (!dateStr) {
+                instance.input.value = ''; // Clear the input if no valid date was selected
+            }
+            instance.input.dispatchEvent(new Event('change')); // Trigger change event for validation
+        }
+    });
+
+    // Form validation for number of volunteers and duration
+    document.getElementById('request-form').addEventListener('submit', function(event) {
+      const numberOfPax = document.getElementById('number_of_pax').value;
+      const duration = document.getElementById('duration').value;
+      const rewardType = document.getElementById('request_reward_type').value;
+      const rewardDescription = document.getElementById('request_reward').value.trim();
+      const requestDate = document.getElementById('request_date');
+      const startTime = document.getElementById('start_time');
+
+      let isValid = true;
+
+      if (parseInt(numberOfPax) <= 0) {
+          document.getElementById('number_of_pax').setCustomValidity('Number of volunteers needed must be at least 1.');
+          isValid = false;
+      } else {
+          document.getElementById('number_of_pax').setCustomValidity('');
+      }
+
+      if (parseInt(duration) <= 0) {
+          document.getElementById('duration').setCustomValidity('Duration must be at least 1 hour.');
+          isValid = false;
+      } else {
+          document.getElementById('duration').setCustomValidity('');
+      }
+
+      if (rewardType !== 'None' && (rewardDescription === '' || rewardDescription === 'None')) {
+          document.getElementById('request_reward').setCustomValidity('Please provide a description for the incentive.');
+          isValid = false;
+      } else {
+          document.getElementById('request_reward').setCustomValidity('');
+      }
+
+      // The date and time fields will be validated by the browser due to the 'required' attribute
+
+      if (!isValid) {
+          event.preventDefault();
+      }
+  });
+
+    // Make icons clickable and trigger the respective Flatpickr input fields
+    document.getElementById('date-icon').addEventListener('click', function() {
+      document.getElementById('request_date').click();
+    });
+
+    document.getElementById('time-icon').addEventListener('click', function() {
+      document.getElementById('start_time').click();
+    });
+
+    // Add real-time validation for reward description
+    document.getElementById('request_reward_type').addEventListener('change', function() {
+      const rewardType = this.value;
+      const rewardDescription = document.getElementById('request_reward');
+      
+      if (rewardType === 'None') {
+        rewardDescription.value = 'None';
+        rewardDescription.readOnly = true;
+        rewardDescription.removeAttribute('required');
+      } else {
+        rewardDescription.value = '';
+        rewardDescription.readOnly = false;
+        rewardDescription.setAttribute('required', '');
+      }
     });
   </script>
 </body>
