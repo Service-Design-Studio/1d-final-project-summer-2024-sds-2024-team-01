@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :myrequests do
+  resources :request_application, path: 'applications' do
     resources :reviews, only: %i[new create edit update]
   end
 end
