@@ -49,21 +49,20 @@
                           </div>
                         </div>
                       </a>
+                      <div>
                       <% if myapplication.status != 'Rejected' %>
                         <button class="btn custom-btn-chat_my">Chat</button>
-                        <a href="#" class="btn withdraw-btn_requests_index_my">Withdraw</a>
+                        <% if myapplication.status != 'Withdrawn' %>
+                          <form method="post" action="/myapplications/withdraw?id=<%= myapplication.id %>" class="withdraw-button_requests_index_my">
+                          <button type="submit" class="btn withdraw-btn_requests_index_my">Withdraw</button>
+                          </form>
+                        <% end %>
                       <% end %>
                       <% if myapplication.status == 'Accepted' && myapplication.request.status == 'Completed' %>
                         <a href="#" class="btn leave-review-btn">Leave a Review</a>
                       <% end %>
-                      <p><%= myapplication.request.user.name %></p>
-                      <button class="btn custom-btn-chat_my">Chat</button>
-                    </div>
-                        <% if myapplication.status != 'Withdrawn' %>
-                    <form method="post" action="/myapplications/withdraw?id=<%= myapplication.id %>" class="withdraw-button_requests_index_my">
-                      <button type="submit" class="btn withdraw-btn_requests_index_my">Withdraw</button>
-                      <% end %>
-                    </form>
+                      </div>
+                    </div>    
                   </div>
                 </div>
               </div>

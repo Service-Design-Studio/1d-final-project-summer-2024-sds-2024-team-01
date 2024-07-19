@@ -1740,8 +1740,9 @@ font-weight: bold;
 }
 
 .withdraw-btn_requests_index_my {
-  position: relative;
-  left: 110%;
+  position: absolute;
+  left: 450%;
+  top: -60%;
   background-color: #dc3545;
   color: white;
   align-items: center;
