@@ -47,6 +47,8 @@ class MyRequestsController < ApplicationController
     @request = Request.find(params[:id])
     return if current_user.id != (@request.created_by)
 
+    @applications = RequestApplication.where(request_id: params[:id]).where(status: 'Accepted')
+
     @request.status = 'Completed'
     @request.save
     redirect_to '/myrequests', notice: 'Request marked as completed'

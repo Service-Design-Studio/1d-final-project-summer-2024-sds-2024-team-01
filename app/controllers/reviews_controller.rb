@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
   end
   
   def create
-    @request = Request.find(params[:myrequest_id])
+    @request = Request.find(params[:request_id])
     review_for_user = User.find(@request.created_by)
     # review_by_user = User.find(current_user.id)
     review_by_user = current_user
@@ -41,7 +41,7 @@ class ReviewsController < ApplicationController
   end
 
   def set_request
-    @request = Request.find(params[:myrequest_id])
+    @request = Request.find(params[:request_id])
   end
 
   def review_params
