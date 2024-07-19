@@ -82,7 +82,12 @@
                       <% if myapplication.status == 'Accepted' && myapplication.request.status == 'Completed' %>
                         <a href="#" class="btn leave-review-btn">Leave a Review</a>
                       <% end %>
+                      <p><%= myapplication.request.user.name %></p>
+                      <button class="btn custom-btn-chat_my">Chat</button>
                     </div>
+                    <form method="patch" action="/withdraw?id=<%myapplication.id %>" class="withdraw-button_requests_index_my">
+                      <button type="submit" class="btn withdraw-btn_requests_index_my">Withdraw</button>
+                    </form>
                   </div>
                 </div>
               </div>
