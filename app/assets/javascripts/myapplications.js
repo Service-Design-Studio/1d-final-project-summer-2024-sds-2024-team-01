@@ -186,6 +186,7 @@ function updateApplicationCards(tabId) {
         .then((data) => {
             const tabPane = document.querySelector(`#${tabId}`);
             tabPane.innerHTML = data.html;
+            console.log("retreived")
             // Dispatch a custom event after content is loaded
             document.dispatchEvent(
                 new CustomEvent("requestCardsUpdated", { detail: { tabId: tabId } }),

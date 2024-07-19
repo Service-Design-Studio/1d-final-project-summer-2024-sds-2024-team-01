@@ -67,7 +67,11 @@
                         </div>
                       </a>
                       <% if application.status == 'Accepted' %>
-                        <button class="btn leave-review-btn">Leave a Review</button>
+                        <% if application.reviewed?(current_user) != true %>
+                          <a href="/reviews/new?request_application_id=<%= application.id %>"
+                            <button class="btn leave-review-btn">Leave a Review</button>
+                          </a>
+                        <% end %>
                       <% elsif application.status == 'Pending' %>
                         <button class="btn custom-btn-chat_my">Chat</button>
                       <% end %>
