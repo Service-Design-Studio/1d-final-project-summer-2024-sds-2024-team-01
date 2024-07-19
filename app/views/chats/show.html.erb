@@ -1,0 +1,23 @@
+<h1>Chat with <%= @chat.applicant_id == current_user.id ? @chat.requester.name : @chat.applicant.name %></h1>
+
+<div id="messages">
+  <% @messages.each do |message| %>
+    <div class="message">
+      <strong><%= message.sender.name %>:</strong>
+      <p><%= message.message_text %></p>
+      <span><%= message.created_at.strftime("%Y-%m-%d %H:%M:%S") %></span>
+    </div>
+  <% end %>
+</div>
+
+<%= form_with(model: [@chat, @chat.messages.build], local: true) do |form| %>
+  <div class="field">
+    <%= form.label :message_text %>
+    <%= form.text_area :message_text %>
+  </div>
+  <%= form.hidden_field :sender_id, value: current_user.id %>
+  <%= form.hidden_field :receiver_id, value: (@chat.applicant_id == current_user.id ? @chat.requester_id : @chat.applicant_id) %>
+  <div class="actions">
+    <%= form.submit "Send" %>
+  </div>
+<% end %>

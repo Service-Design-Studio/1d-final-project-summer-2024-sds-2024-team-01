@@ -1,0 +1,12 @@
+<h1>Your Chats</h1>
+
+<div id="participants">
+  <h2>Participants</h2>
+  <ul>
+    <% @participants.each do |participant| %>
+      <li>
+        <%= link_to participant.name, chat_path(id: @chats.find { |chat| chat.applicant_id == participant.id || chat.requester_id == participant.id }.id) %>
+      </li>
+    <% end %>
+  </ul>
+</div>

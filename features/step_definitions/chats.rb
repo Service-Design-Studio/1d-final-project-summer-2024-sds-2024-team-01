@@ -33,16 +33,6 @@ Then("I should be redirected to a chat with that user") do
     # Write code to verify that you are redirected to a chat with that user
 end
 
-
-#send_chat.feature
-When("I send a message to another user") do
-    # Write code to simulate sending a message to another user
-end
-
-Then("the message should appear in the chat") do
-    # Write code to verify that the message appears in the chat
-end
-
 #notification_chat.feature
 When("another user sends me a message") do
     # Write code to simulate another user sending a message to the current user

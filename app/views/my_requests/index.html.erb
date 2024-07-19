@@ -69,7 +69,7 @@
                               <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" class="profile-pic_requests_index_my">
                             <% end %>
                             <p><%= application.applicant.name %></p>
-                            <button class="btn custom-btn-chat_my">Chat</button>
+                            <a href="<%= chat_path_with_user(application.applicant) %>" class="btn custom-btn-chat_my">Chat</a>
                           </div>
                         </a>
                         <!-- Split button or status indicator -->
