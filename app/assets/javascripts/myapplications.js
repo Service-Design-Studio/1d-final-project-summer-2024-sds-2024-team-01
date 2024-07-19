@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Call this function when the page loads
     initMyApplications();
-
+    initializeTabs();
+    handleDropdowns();
     // You might also want to call this function after any AJAX updates
     // that might change the status of requests
 });
@@ -28,8 +29,9 @@ function initMyApplications() {
         });
     });
 
-    initializeTabs();
     // Dropdown functionality
+}
+function handleDropdowns(){
     const dropdownButtons = document.querySelectorAll(
         ".dropdown-btn_requests_index_my",
     );
@@ -102,37 +104,37 @@ function initMyApplications() {
             cardBody.style.height = "auto";
         }
     });
-    function updateUIBasedOnStatus() {
-        document
-            .querySelectorAll(".request-card_requests_index_my")
-            .forEach((card) => {
-                const requestStatus = card.dataset.requestStatus;
-                const applicationStatusElement = card.querySelector(
-                    ".application-status_indicator_my",
-                );
-                const applicationStatus =
-                    applicationStatusElement.dataset.applicationStatus;
-                const chatButton = card.querySelector(".custom-btn-chat_my");
-                const withdrawButton = card.querySelector(
-                    ".withdraw-btn_requests_index_my",
-                );
-                const reviewButton = card.querySelector(".leave-review-btn");
+}
+function updateUIBasedOnStatus() {
+    document
+        .querySelectorAll(".request-card_requests_index_my")
+        .forEach((card) => {
+            const requestStatus = card.dataset.requestStatus;
+            const applicationStatusElement = card.querySelector(
+                ".application-status_indicator_my",
+            );
+            const applicationStatus =
+                applicationStatusElement.dataset.applicationStatus;
+            const chatButton = card.querySelector(".custom-btn-chat_my");
+            const withdrawButton = card.querySelector(
+                ".withdraw-btn_requests_index_my",
+            );
+            const reviewButton = card.querySelector(".leave-review-btn");
 
-                if (requestStatus === "Completed" && applicationStatus === "Accepted") {
-                    // Change status to 'Concluded'
-                    applicationStatusElement.textContent = "Concluded";
-                    applicationStatusElement.classList.remove("accepted");
-                    applicationStatusElement.classList.add("concluded");
+            if (requestStatus === "Completed" && applicationStatus === "Accepted") {
+                // Change status to 'Concluded'
+                applicationStatusElement.textContent = "Concluded";
+                applicationStatusElement.classList.remove("accepted");
+                applicationStatusElement.classList.add("concluded");
 
-                    // Hide chat button
-                    if (chatButton) chatButton.style.display = "none";
+                // Hide chat button
+                if (chatButton) chatButton.style.display = "none";
 
-                    // Hide withdraw button and show review button
-                    if (withdrawButton) withdrawButton.style.display = "none";
-                    if (reviewButton) reviewButton.style.display = "block";
-                }
-            });
-    }
+                // Hide withdraw button and show review button
+                if (withdrawButton) withdrawButton.style.display = "none";
+                if (reviewButton) reviewButton.style.display = "block";
+            }
+        });
 }
 
 function initializeTabs() {
@@ -195,8 +197,8 @@ document.addEventListener("requestCardsUpdated", function(e) {
     // Reinitialize any necessary functionality for the new content
     initMyApplications();
     updateUIBasedOnStatus();
+    handleDropdowns();
     initializeDropdowns();
-    hideEmptyDropdowns();
 });
 
 function initializeDropdowns() {
