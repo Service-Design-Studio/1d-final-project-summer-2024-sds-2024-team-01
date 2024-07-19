@@ -79,8 +79,10 @@
                             </button>
                           </a>
                         <% else %>
-                          <a href="/reviews/new?request_application_id=<%= application.id %>"
-                            <button class="btn leave-review-btn">Edit Review</button>
+                          <a href="/reviews/edit?request_application_id=<%= application.id %>"
+                            <button class="btn leave-review-btn_mark_completed">
+                            <i class="bi bi-star-fill review-icon_mark_completed"></i>
+                            <span class="review-text_mark_completed">Edit Review</span>
                           </a>
                         <% end %>
                           <% if application.request.status == 'Completed' %>
