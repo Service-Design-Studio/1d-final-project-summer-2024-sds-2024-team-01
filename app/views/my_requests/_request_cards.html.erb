@@ -3,7 +3,7 @@
   <div class="card-body" style=>
     <div class="row">
       <% @requests.each do |myrequest| %>
-        <div class="col-md-12 mb-4 request-card_requests_index_my" data-status="<%= myrequest.status %>">
+        <div class="col-md-12 mb-4 request-card_requests_index_my" data-status="<%= myrequest.status %>" data-date="<%= myrequest.date.strftime('%Y-%m-%d') %>" data-time="<%= myrequest.start_time.strftime('%H:%M') %>">
           <div class="clickable-card_requests_index-wrapper_my">
             <div class="card h-100 d-flex flex-row align-items-center">
               <a href="<%= request_path(myrequest) %>" class="clickable-area_requests_index_my">
@@ -25,13 +25,17 @@
                   </p>
                 </div>
                 <div class="action-buttons">
-                  <form action="/myrequests/complete?id=<%= myrequest.id %>" method="post" class="complete-form me-3">
-                    <button type="submit" class="btn complete-btn_mark_completed">
-                      <i class="bi bi-check-lg tick-icon_mark_completed"></i>
-                      <span class="complete-text_mark_completed">Mark as Complete</span>
-                    </button>
-                  </form>
-                  <button class="btn review-btn_mark_completed d-none">
+                <button class="btn repost-btn_unfulfilled d-none" data-request-id="<%= myrequest.id %>">
+                  <i class="fas fa-sync-alt refresh-icon_unfulfilled"></i>
+                  <span class="repost-text_unfulfilled">Repost your request!</span>
+                </button>
+                <form action="/myrequests/complete?id=<%= myrequest.id %>" method="post" class="complete-form me-3">
+                  <button type="submit" class="btn complete-btn_mark_completed">
+                    <i class="bi bi-check-lg tick-icon_mark_completed"></i>
+                    <span class="complete-text_mark_completed">Mark as Complete</span>
+                  </button>
+                </form>
+              <button class="btn review-btn_mark_completed">
                     <i class="fas fa-star star-icon_mark_completed"></i>
                     <span class="review-text_mark_completed">Leave reviews for your applicants</span>
                   </button>
@@ -69,9 +73,22 @@
                       <% if application.status == 'Accepted' %>
                         <% if application.reviewed?(current_user) != true %>
                           <a href="/reviews/new?request_application_id=<%= application.id %>"
-                            <button class="btn leave-review-btn">Leave a Review</button>
+                            <button class="btn leave-review-btn_mark_completed">
+                            <i class="bi bi-star-fill review-icon_mark_completed"></i>
+                            <span class="review-text_mark_completed">Leave a Review</span>
+                            </button>
+                          </a>
+                        <% else %>
+                          <a href="/reviews/new?request_application_id=<%= application.id %>"
+                            <button class="btn leave-review-btn">Edit Review</button>
                           </a>
                         <% end %>
+                          <% if application.request.status == 'Completed' %>
+                            <button class="btn edit-contributions-btn_mark_completed ms-2">
+                              <i class="bi bi-pencil-square edit-icon_mark_completed"></i>
+                              <span class="edit-text_mark_completed">Edit contributions</span>
+                            </button>
+                          <% end %>
                       <% elsif application.status == 'Pending' %>
                         <button class="btn custom-btn-chat_my">Chat</button>
                       <% end %>
