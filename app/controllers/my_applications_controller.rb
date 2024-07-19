@@ -2,8 +2,12 @@ class MyApplicationsController < ApplicationController
   def index
     # fetch and display a list of applications that belong to the current logged-in user
     # filtered applications are assigned to '@applications' instance variable
-    @pendingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Pending')
-    @completedapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Completed')
+    @upcomingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Accepted').where.not(request: { status: 'Completed' })
+
+    @pendingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Pending').or(RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Rejected'))
+
+    @completedapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(request: { status: 'Completed' })
+
     @withdrawnapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Withdrawn')
 
     @applications = case params[:tab]
@@ -11,9 +15,12 @@ class MyApplicationsController < ApplicationController
                       @withdrawnapplications
                     when 'completed'
                       @completedapplications
-                    else
+                    when 'pending'
                       @pendingapplications
+                    else
+                      @upcomingapplications
                     end
+    puts @applications.count
     respond_to do |format|
       format.html
       format.json do

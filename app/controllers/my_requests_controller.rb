@@ -60,6 +60,14 @@ class MyRequestsController < ApplicationController
     @request = Request.find(params[:id])
     return if current_user.id != (@request.created_by)
 
+    @applications = RequestApplication.where(request_id: params[:id])
+    @pendingapplications = @applications.where.not(status: "Accepted").where.not(status: "Rejected")
+
+    @pendingapplications.each do | pending | 
+      pending.status = "Rejected"
+      pending.save
+    end
+
     @request.status = 'Completed'
     @request.save
     redirect_to '/myrequests', notice: 'Request marked as completed'
