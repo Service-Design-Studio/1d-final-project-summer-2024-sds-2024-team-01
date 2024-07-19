@@ -835,6 +835,10 @@ font-weight: bold;
   background-color: transparent; /* Make the background transparent */
 }
 
+.edit-contributions-btn {
+  margin-left: 10px;
+}
+
 /* Static leave review button styling for each applicant */
 .leave-review-btn {
   position: relative;
