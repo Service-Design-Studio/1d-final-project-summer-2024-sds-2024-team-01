@@ -31,7 +31,7 @@ FactoryBot.define do
       status { 'Unfulfilled' }
     end
     association :applicant, factory: :random_user
-    association :request, factory: :test_request
+    association :request, factory: :requestwiththumbnail
     created_at { DateTime.now }
     updated_at { DateTime.now }
   end

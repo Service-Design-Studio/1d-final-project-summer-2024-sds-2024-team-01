@@ -15,9 +15,9 @@ RSpec.describe RequestsController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns @requests with requests to user ' do
-      request = create(:test_request, created_by: user.id)
+      create(:test_request, created_by: user.id)
       get :index
-      expect(assigns(:requests)).to be_present
+      expect(assigns(:requests_active)).to be_present
     end
   end
 
