@@ -3,7 +3,24 @@ class MyApplicationsController < ApplicationController
     # fetch and display a list of applications that belong to the current logged-in user
     # filtered applications are assigned to '@applications' instance variable
     @pendingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Pending')
-    @nonpendingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where.not(status: 'Pending')
+    @completedapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Completed')
+    @withdrawnapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Withdrawn')
+
+    @applications = case params[:tab]
+                    when 'withdrawn'
+                      @withdrawnapplications
+                    when 'completed'
+                      @completedapplications
+                    else
+                      @pendingapplications
+                    end
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: { html: render_to_string(partial: 'request_cards', locals: { requests: @applications },
+                                              formats: [:html]) }
+      end
+    end
   end
 
   def withdraw

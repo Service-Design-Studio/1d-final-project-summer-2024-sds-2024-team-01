@@ -24,78 +24,27 @@
       </div>
     </div>
 
-    <!-- Container for Request Cards -->
-    <div class="card mt-0" id="requestContainer">
-      <div class="card-body">
-        <div class="row">
-          <% @pendingapplications.each do |myapplication| %>
-            <div class="col-md-12 mb-4 request-card_requests_index_my" data-request-status="<%= myapplication.request.status %>">
-              <div class="clickable-card_requests_index-wrapper_my">
-                <div class="card h-100 d-flex flex-row align-items-center">
-                  <a href="<%= request_path(myapplication.request) %>" class="clickable-area_requests_index_my">
-                    <% if myapplication.request.thumbnail.attached? %>
-                      <img src="<%= image_url(myapplication.request.thumbnail) %>" class="thumbnail_requests_index_my" alt="<%= myapplication.request.title %>"/>
-                    <% end %>
-                    <div class="card-content_requests_index_my flex-grow-1">
-                      <h5 class="card-title_requests_index_my"><%= myapplication.request.title %></h5>
-                      <p class="card-date_requests_index_my"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>
-                    </div>
-                  </a>
-                  <div class="card-actions_requests_index_my">
-                    <div class="application-indicator_requests_index_my">
-                      <span class="application-status_indicator_my <%= myapplication.status.downcase %>" data-application-status="<%= myapplication.status %>">
-                        <%= myapplication.status %>
-                      </span>
-                    </div>
-                    <button class="btn dropdown-btn_requests_index_my"><i class="fas fa-chevron-down"></i></button>
-                  </div>
-                </div>
-                <div class="popups-container_my">
-                  <div class="popup_requests_index_my">
-                    <!-- Content for the popup -->
-                    <div class="applicant-info_requests_index_my">
-                      <a class="mini-profile" href="/profile?id=<%= myapplication.request.user.id %>">
-                        <div class="profile-info_requests_details mb-3">
-                          <% if myapplication.request.user.avatar.attached? %>
-                            <%= image_tag myapplication.request.user.avatar, alt: myapplication.request.user.name, class: "mini-profile-img", width: 50, height: 50 %>
-                          <% end %>
-                          <div class="profile-text">
-                            <h6 class="mb-1"><%= myapplication.request.user.name %>
-                              <% if myapplication.request.user.role_id == 4 %>
-                                <i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i>
-                              <% end %>
-                            </h6>
-                            <p class="stars_user_profile">
-                              <% average_rating = myapplication.request.user.received_reviews.average(:rating).to_f.round(1) %>
-                              <% 5.times do |i| %>
-                                <i class="fas fa-star <%= 'checked' if i < average_rating %>"></i>
-                              <% end %>
-                              (<%= myapplication.request.user.received_reviews.count %> reviews)
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                      <% if myapplication.status != 'Rejected' %>
-                        <button class="btn custom-btn-chat_my">Chat</button>
-                        <a href="#" class="btn withdraw-btn_requests_index_my">Withdraw</a>
-                      <% end %>
-                      <% if myapplication.status == 'Accepted' && myapplication.request.status == 'Completed' %>
-                        <a href="#" class="btn leave-review-btn">Leave a Review</a>
-                      <% end %>
-                      <p><%= myapplication.request.user.name %></p>
-                      <button class="btn custom-btn-chat_my">Chat</button>
-                    </div>
-                    <form method="post" action="/myapplications/withdraw?id=<%= myapplication.id %>" class="withdraw-button_requests_index_my">
-                      <button type="submit" class="btn withdraw-btn_requests_index_my">Withdraw</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
+    <ul class="nav nav-tabs my-requests-tabs mb-3" id="myApplicationsTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="in-progress-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">Pending</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">Completed</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="unfulfilled-tab" data-bs-toggle="tab" data-bs-target="#withdrawn" type="button" role="tab" aria-controls="withdrawn" aria-selected="false">Withdrawn</button>
+      </li>
+    </ul>
+
+    <div class="tab-content my-requests-tab-content" id="myApplicationsTabContent">
+      <div class="tab-pane my-requests-tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+        <%= render partial: 'request_cards', locals: { applications: @pendingapplications} %>
       </div>
-    </div>
+      <div class="tab-pane my-requests-tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+        <%= render partial: 'request_cards', locals: { applications: @completedapplications} %>
+      </div>
+      <div class="tab-pane my-requests-tab-pane fade" id="withdrawn" role="tabpanel" aria-labelledby="withdrawn-tab">
+        <%= render partial: 'request_cards', locals: { applications: @withdrawnapplications} %>
   </div>
 </body>
 <%= javascript_include_tag 'myapplications' %>
