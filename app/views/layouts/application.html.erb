@@ -10,6 +10,7 @@
   <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
   <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet" />
   <%= stylesheet_link_tag "application.css"%>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 
@@ -54,12 +55,16 @@
 
     <div class="container mt-5 pt-5">
       <!-- Displaying notices and errors to user -->
-      <% flash.each do |type, msg| %>
-        <div>
-          <%= msg %>
+      <% flash.each do |key, message| %>
+        <div class="alert <%= flash_class(key) %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
       <% end %>
       <%= yield %>
     </div>
   </body>
+  <%# <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %> 
 </html>
