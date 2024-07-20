@@ -9,14 +9,15 @@ namespace :db do
     include FactoryBot::Syntax::Methods
 
     ActiveRecord::Base.logger.silence do
-      print "Creating dummy data..."
+      print 'Creating dummy data...'
       first = create(:dummy_user)
       second = create(:dummy_user_two)
       third = create(:dummy_user_three)
-      corpo = create(:user, role_id: 4, number: 87651234)
+      corpo = create(:user, role_id: 4, number: 87_651_234)
 
       6.times do
-        rq = build(:requestwiththumbnail, created_by: first.id, date: Faker::Date.backward(days: 365), status: 'Completed')
+        rq = build(:requestwiththumbnail, created_by: first.id, date: Faker::Date.backward(days: 365),
+                                          status: 'Completed')
         rq.save(validate: false)
       end
       4.times do
@@ -60,11 +61,11 @@ namespace :db do
 
       Chat.all.each do |chat|
         rand(1..3).times do
-          rand(1..4).times do 
-            create(:random_message, chat: chat, sender: chat.requester, receiver: chat.applicant)
+          rand(1..4).times do
+            create(:random_message, chat:, sender: chat.requester, receiver: chat.applicant)
           end
-          rand(1..4).times do 
-            create(:random_message, chat: chat, sender: chat.applicant, receiver: chat.requester)
+          rand(1..4).times do
+            create(:random_message, chat:, sender: chat.applicant, receiver: chat.requester)
           end
         end
       end
@@ -76,7 +77,10 @@ namespace :db do
 
         create(:application, request_id:, applicant_id:)
       end
-        print "\r100% Complete                      "
+      5.times do
+        create(:test_notification, notification_for: first)
+      end
+      print "\r100% Complete                      "
     end
   end
 end

@@ -1809,6 +1809,15 @@ font-weight: bold;
     color: #505050 !important;
 }
 
+.lighthoverdark{
+    color: white;
+    cursor: pointer;
+}
+
+.lighthoverdark:hover{
+    color: black !important;
+}
+
 .h-divider{
     display: block;
     width: 100%;

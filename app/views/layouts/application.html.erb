@@ -50,7 +50,7 @@
               <div class="text-white h-100 ms-5 d-flex align-items-center " onclick="togglenotifs()">
               <i class="fas fa-bell notifbell"></i>
               </div>
-              <%= render 'notifications/index' %>
+              <%= render partial:'notifications/index', locals: { notifications: @notifications }  %>
                 <%= button_to destroy_user_session_path, method: :delete, class: "logoutbutton ms-5 text-white btn" do %>
                 <i class="bi bi-box-arrow-right " style="font-size: 1.5em;" ></i>
               <% end %>
@@ -68,6 +68,6 @@
       <% end %>
       <%= yield %>
     </div>
-  </body>
   <%= javascript_include_tag 'notifs' %>
+  </body>
 </html>

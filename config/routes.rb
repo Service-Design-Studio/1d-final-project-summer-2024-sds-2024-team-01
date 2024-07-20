@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   get 'reviews/new' => 'reviews#new'
   get 'reviews/edit' => 'reviews#update'
 
+  post 'notifications/read' => 'notifications#read'
+
   namespace :api do
     namespace :v1 do
       resources :requests

@@ -14,7 +14,6 @@
     color:white;
     padding: 10px;
     border-radius: 5px;
-    border: solid 1px white ;
     display:none;
     position: absolute;
     top: 80px;
@@ -22,9 +21,19 @@
     background: #505050;
     opacity: 0.95;
     width: 360px;
+    max-height:600px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    box-shadow: 3px 3px 10px black;
+}
+
+#notificationpopup::-webkit-scrollbar {
+  display: none;
 }
 
 .notifcolumn{
     padding-top:10px;
     padding-bottom:10px;
 }
+

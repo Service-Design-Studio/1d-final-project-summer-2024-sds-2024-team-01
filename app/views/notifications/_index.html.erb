@@ -1,7 +1,27 @@
 <div id="notificationpopup">
   <div class="d-flex mb-2">
-    <h5 class="m-0 flex-grow-1"> Notifications</h5> <div class="align-self-end">Clear all</div>
+    <h5 class="m-0 flex-grow-1"> Notifications</h5> <div class="lighthoverdark">Clear all</div>
   </div>
   <span class="h-divider bg-white"></span>
-  <%= render 'notifications/column' %>
+    <% if @notifications.present? %>
+      <% @notifications.each do | notif | %>
+        <div class="notifcolumn d-flex">
+          <div class="d-flex flex-column flex-grow-1">
+          <b>
+            <%= notif.header %>
+          </b> 
+          <p>
+            <%= notif.message %>
+          </p>
+          </div>
+          <%= button_to "/notifications/read", method: :post, params:{ id: notif.id}, class: "btn m-0 px-2 py-0 lighthoverdark" do %>
+            <i class="fas fa-times"></i>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+        <div class="notifcolumn d-flex">
+          No notifications
+        </div>
+    <% end %>
 </div>
