@@ -56,9 +56,10 @@
     <div class="container mt-5 pt-5">
       <!-- Displaying notices and errors to user -->
       <% flash.each do |key, message| %>
-        <div class="alert <%= flash_class(key) %> alert-dismissible fade show" role="alert">
-          <%= message %>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <div class="alert <%= flash_class(key) %> alert-dismissible" role="alert">
+          <i class="<%= flash_icon(key) %>"></i>
+          <span class="alert-message"><%= message %></span>
+          <button type="button" class="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

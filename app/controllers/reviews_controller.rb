@@ -15,16 +15,16 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params.merge(request: @request, review_by: review_by_user, review_for: review_for_user))
     # p "REVIEW = ID: #{@review.id}, RATING: #{@review.rating}, COMMENT: #{@review.review_content}, REQUEST_ID: #{@review.request_id}, REVIEW_FOR: #{@review.review_for}, REVIEW_BY: #{review_by_user}"
     if @review.save
-      redirect_to @request, notice: "Review was successfully created."
+      redirect_to @request, flash: { success: "Review saved! Thank you for your contributions!" }
     else
       p @review.errors.full_messages
-      render :new, notice: 'Review not saved.'
+      render :new, flash: { error: "There was an error with uploading your review." }
     end
   end
 
   def update
     if @review.update(review_params)
-      redirect_to request_path(@review.request), notice: 'Review was successfully updated.'
+      redirect_to request_path(@review.request), flash: { success: "Your review has been updated successfully!" }
     else
       render :edit
     end

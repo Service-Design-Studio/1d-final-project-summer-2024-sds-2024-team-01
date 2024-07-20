@@ -50,13 +50,12 @@ class RequestsController < ApplicationController
       @application.status = 'Pending'
 
       if @application.save
-        flash[:success] = "You have successfully applied for the request!"
+        redirect_to @request, flash: { success: "You have successfully applied for the request!" }
       else
-        flash[:error] = "Sorry, you have failed to apply for this request."
+        redirect_to @request, flash: { error: "Sorry, you have failed to apply for this request." }
       end
     else
-      flash[:notice] = "You have already applied for this request." 
-    redirect_to @request
+      redirect_to @request, flash: { warning: "You have already applied for this request." }
     end
   end
 
@@ -83,7 +82,7 @@ class RequestsController < ApplicationController
           content_type: 'image/jpeg'
         )
       end
-      redirect_to @request, notice: 'Request was successfully created.'
+      redirect_to @request, flash: { success: 'Request was successfully created.' }
     else
       puts @request.errors.full_messages
       render :new, status: :unprocessable_entity
