@@ -63,12 +63,13 @@ class RequestsController < ApplicationController
       @notification.save
 
       if @application.save
-        redirect_to @request, notice: 'Successfully applied for the request.'
+        flash[:success] = "You have successfully applied for the request!"
       else
-        redirect_to @request, notice: 'Failed to apply for this request'
+        flash[:error] = "Sorry, you have failed to apply for this request."
       end
     else
-      redirect_to @request, alert: 'You have already applied for this request.'
+      flash[:notice] = "You have already applied for this request." 
+    redirect_to @request
     end
   end
 
