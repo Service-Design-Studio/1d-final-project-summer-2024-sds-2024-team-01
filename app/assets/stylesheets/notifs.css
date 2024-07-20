@@ -6,3 +6,25 @@
    color:#505050 !important; 
 }
 
+#notificationpopup::before{
+    
+}
+
+#notificationpopup{
+    color:white;
+    padding: 10px;
+    border-radius: 5px;
+    border: solid 1px white ;
+    display:none;
+    position: absolute;
+    top: 80px;
+    z-index: 9999;
+    background: #505050;
+    opacity: 0.95;
+    width: 360px;
+}
+
+.notifcolumn{
+    padding-top:10px;
+    padding-bottom:10px;
+}

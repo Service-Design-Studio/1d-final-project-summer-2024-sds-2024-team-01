@@ -1808,3 +1808,9 @@ font-weight: bold;
 .logoutbutton:hover{
     color: #505050 !important;
 }
+
+.h-divider{
+    display: block;
+    width: 100%;
+    height: 2px;
+}
