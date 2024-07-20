@@ -5,13 +5,23 @@ class RequestsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
 
   # GET /requests
-  # list all requests
+  # list only active requests
+ 
   def index
-    # @requests = Request.includes(:user).all
-    @requests_active = Request.where("date > ? OR (date = ? AND start_time > ?)", Date.today, Date.today, Time.now)
-                       .where.not(status: 'Completed')
-                       .order(created_at: :desc)
+    today_start = Date.today.beginning_of_day
+
+    @in_progress_requests = Request.includes(:user, :request_applications)
+                                   .where("date > ?", today_start)
+                                   .where.not(status: 'Completed')
+                                   .order(date: :asc, start_time: :asc)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @in_progress_requests }
+    end
   end
+
+  
 
   # GET /requests/1
   # show a single request
