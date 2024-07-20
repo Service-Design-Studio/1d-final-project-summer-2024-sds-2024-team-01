@@ -1,0 +1,8 @@
+.notifbell{
+   cursor: pointer; 
+}
+
+.notifbell:hover{
+   color:#505050 !important; 
+}
+
