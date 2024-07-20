@@ -113,6 +113,8 @@ function updateRequestCards(tabId) {
   .then(data => {
     const tabPane = document.querySelector(`#${tabId}`);
     tabPane.innerHTML = data.html;
+    // Update UI based on the new tab content
+    updateUIBasedOnStatus();
     // Dispatch a custom event after content is loaded
     document.dispatchEvent(new CustomEvent('requestCardsUpdated', { detail: { tabId: tabId } }));
   });
@@ -198,20 +200,18 @@ function handleCompleteForm(form) {
   });
 }
 
-function checkIfUnfulfilled(requestCard) {
-  const status = requestCard.dataset.status;
-  const requestDate = new Date(requestCard.dataset.date);
-  const requestTime = requestCard.dataset.time;
-  const [hours, minutes] = requestTime.split(':').map(Number);
-  requestDate.setHours(hours, minutes);
+// function checkIfUnfulfilled(requestCard) {
+//   const status = requestCard.dataset.status;
+//   const requestDate = new Date(requestCard.dataset.date);
+//   const requestTime = requestCard.dataset.time;
+//   const [hours, minutes] = requestTime.split(':').map(Number);
+//   requestDate.setHours(hours, minutes);
 
-  const now = new Date();
+//   const now = new Date();
 
-  // A request is unfulfilled if:
-  // 1. It's not marked as 'Completed'
-  // 2. Its date and time have passed
-  return status !== 'Completed' && requestDate < now;
-}
+  
+//   return status !== 'Completed' && requestDate < now;
+// }
 
 function handleDropdownClick(button) {
   const wrapper = button.closest('.clickable-card_requests_index-wrapper_my');
@@ -329,26 +329,23 @@ function updateUIBasedOnStatus() {
     const reviewButton = card.querySelector('.review-btn_mark_completed');
     const repostButton = card.querySelector('.repost-btn_unfulfilled');
 
-    const isCompleted = card.dataset.status === 'Completed';
-    const isUnfulfilled = checkIfUnfulfilled(card);
+    const currentTab = card.closest('.tab-pane').id;
 
-    if (isCompleted) {
-      // Hide elements for completed requests
+    if (currentTab === 'completed') {
+      // For completed requests
       if (applicationIndicator) applicationIndicator.style.display = 'none';
       if (completeForm) completeForm.style.display = 'none';
       if (repostButton) repostButton.classList.add('d-none');
       if (reviewButton) reviewButton.classList.remove('d-none');
 
-      // Update buttons for all applicants
       updateApplicantButtonsForCompleted(card);
-    } else if (isUnfulfilled) {
+    } else if (currentTab === 'unfulfilled') {
       // For unfulfilled requests
       if (applicationIndicator) applicationIndicator.style.display = 'none';
       if (completeForm) completeForm.style.display = 'none';
       if (reviewButton) reviewButton.classList.add('d-none');
       if (repostButton) repostButton.classList.remove('d-none');
 
-      // Update buttons for all applicants
       updateApplicantButtons(card);
     } else {
       // For in-progress requests
@@ -357,7 +354,6 @@ function updateUIBasedOnStatus() {
       if (reviewButton) reviewButton.classList.add('d-none');
       if (repostButton) repostButton.classList.add('d-none');
 
-      // Update buttons for all applicants
       updateApplicantButtons(card);
     }
   });
