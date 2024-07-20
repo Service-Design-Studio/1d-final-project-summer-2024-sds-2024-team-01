@@ -87,6 +87,13 @@ class MyRequestsController < ApplicationController
           array_agg(request_applications.applicant_id) as applicant_ids').first
     return if current_user.id != @request.created_by
 
+    @notification = Notification.new
+    @notification.message = 'Your application for a request has been accepted! Click here to view.'
+    @notification.url = '/myapplications'
+    @notification.header = 'Application accepted'
+    @notification.notification_for = User.find(@reqapp.applicant_id)
+    @notification.save
+
     @reqapp.status = "Accepted"
     if @reqapp.save
       update_counts(@request)
@@ -118,6 +125,14 @@ class MyRequestsController < ApplicationController
              COUNT(CASE WHEN request_applications.status = \'Accepted\' THEN 1 END) as accepted_application_count,
           array_agg(request_applications.applicant_id) as applicant_ids').first
     return if current_user.id != @request.created_by
+
+    @notification = Notification.new
+    @notification.message = 'Your application for a request has been rejected. Click here to view.'
+    @notification.url = '/myapplications'
+    @notification.header = 'Application rejected'
+    @notification.notification_for = User.find(@reqapp.applicant_id)
+    @notification.save
+
     @reqapp.status = "Rejected"
     if @reqapp.save
       update_counts(@request)

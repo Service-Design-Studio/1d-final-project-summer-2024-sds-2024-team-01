@@ -8,9 +8,9 @@ class RequestsController < ApplicationController
   # list all requests
   def index
     # @requests = Request.includes(:user).all
-    @requests_active = Request.where("date > ? OR (date = ? AND start_time > ?)", Date.today, Date.today, Time.now)
-                       .where.not(status: 'Completed')
-                       .order(created_at: :desc)
+    @requests_active = Request.where('date > ? OR (date = ? AND start_time > ?)', Date.today, Date.today, Time.now)
+                              .where.not(status: 'Completed')
+                              .order(created_at: :desc)
   end
 
   # GET /requests/1
@@ -23,13 +23,12 @@ class RequestsController < ApplicationController
 
     # Fetch the user who created the request
     @requester = User.find(@request.created_by)
-    
+
     # Fetch reviews and calculate average rating
     @reviews_received = @requester.received_reviews
     @average_rating = @reviews_received.average(:rating).to_f.round(1)
     @review_count = @reviews_received.count
   end
-  
 
   # GET /requests/new
   # show a form to create a new request
@@ -48,6 +47,12 @@ class RequestsController < ApplicationController
       @application.created_at = DateTime.now
       @application.updated_at = DateTime.now
       @application.status = 'Pending'
+
+      @notification = Notification.new
+      @notification.message = 'Someone has applied for your request! Click here to view.'
+      @notification.url = '/myrequests'
+      @notification.header = 'New application'
+      @notification.notification_for = User.find(@request.created_by)
 
       if @application.save
         redirect_to @request, notice: 'Successfully applied for the request.'
