@@ -10,6 +10,7 @@
   <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
   <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet" />
   <%= stylesheet_link_tag "application.css"%>
+  <%= stylesheet_link_tag "notifs.css"%>
   <%= csrf_meta_tags %>
 </head>
 
@@ -46,11 +47,15 @@
                   <img src="/default-avatar.png" alt="Profile Picture" width="40" height="40" class="rounded-circle"> <!-- Profile pic -->
                 <% end %>
               </a>
-              <div class="text-white h-100 ms-5 d-flex align-items-center">
-              <i class="fas fa-bell"></i>
+              <div id="shownotifs" class="text-white notifbell h-100 ms-5 d-flex align-items-center " onclick="togglenotifs()">
+              <% if @unreadcount > 0 %>
+                <span class="bg-danger rounded notifalertcount"><%= @unreadcount%></span>
+              <% end %>
+              <i class="fas fa-bell " id="shownotifsicon"></i>
               </div>
-                <%= button_to destroy_user_session_path, method: :delete, class: "btn ms-5" do %>
-                <i class="bi bi-box-arrow-right text-white" style="font-size: 1.5em;" ></i>
+              <%= render partial:'notifications/index', locals: { notifications: @notifications }  %>
+                <%= button_to destroy_user_session_path, method: :delete, class: "logoutbutton ms-5 text-white btn" do %>
+                <i class="bi bi-box-arrow-right " style="font-size: 1.5em;" ></i>
               <% end %>
             </div>
           <% end %>
@@ -66,5 +71,6 @@
       <% end %>
       <%= yield %>
     </div>
+  <%= javascript_include_tag 'notifs' %>
   </body>
 </html>

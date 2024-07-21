@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_20_030415) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -95,6 +95,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
     t.index ["chat_id"], name: "index_messages_on_chat_id"
     t.index ["receiver_id"], name: "index_messages_on_receiver_id"
     t.index ["sender_id"], name: "index_messages_on_sender_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "header", null: false
+    t.string "message", null: false
+    t.string "url", null: false
+    t.boolean "read", default: false
+    t.boolean "show", default: true
+    t.bigint "notification_for_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notification_for_id"], name: "index_notifications_on_notification_for_id"
   end
 
   create_table "request_applications", force: :cascade do |t|
@@ -194,6 +206,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users", column: "receiver_id"
   add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "notifications", "users", column: "notification_for_id"
   add_foreign_key "request_applications", "requests"
   add_foreign_key "request_applications", "users", column: "applicant_id"
   add_foreign_key "requests", "users", column: "created_by"

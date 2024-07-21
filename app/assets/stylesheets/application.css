@@ -1805,3 +1805,21 @@ font-weight: bold;
     border-radius: 5px;
 }
 
+.logoutbutton:hover{
+    color: #505050 !important;
+}
+
+.lighthoverdark{
+    color: white;
+    cursor: pointer;
+}
+
+.lighthoverdark:hover{
+    color: black !important;
+}
+
+.h-divider{
+    display: block;
+    width: 100%;
+    height: 2px;
+}
