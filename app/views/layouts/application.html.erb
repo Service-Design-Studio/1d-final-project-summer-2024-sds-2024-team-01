@@ -48,6 +48,7 @@
                 <% end %>
               </a>
               <div class="text-white h-100 ms-5 d-flex align-items-center " onclick="togglenotifs()">
+              <span class="bg-danger rounded notifalertcount"><%= @unreadcount%></span>
               <i class="fas fa-bell notifbell"></i>
               </div>
               <%= render partial:'notifications/index', locals: { notifications: @notifications }  %>

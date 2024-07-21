@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
 
   def set_notifications
     @notifications = Notification.where(notification_for: current_user, read: false)
+    @unreadcount = @notifications.count
   end
 
   protected
