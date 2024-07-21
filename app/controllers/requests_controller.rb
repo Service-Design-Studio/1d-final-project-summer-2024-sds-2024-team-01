@@ -53,6 +53,7 @@ class RequestsController < ApplicationController
       @notification.url = '/myrequests'
       @notification.header = 'New application'
       @notification.notification_for = User.find(@request.created_by)
+      @notification.save
 
       if @application.save
         redirect_to @request, notice: 'Successfully applied for the request.'

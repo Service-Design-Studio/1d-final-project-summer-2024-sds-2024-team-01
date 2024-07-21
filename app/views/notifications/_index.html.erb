@@ -1,11 +1,14 @@
 <div id="notificationpopup">
   <div class="d-flex mb-2">
-    <h5 class="m-0 flex-grow-1"> Notifications</h5> <div class="lighthoverdark">Clear all</div>
+    <h5 class="m-0 flex-grow-1"> Notifications</h5>
+          <form class="m-0" method="post" action="/notifications/clear" onsubmit="removeallnotifs(event)">
+            <button type="submit" class="border-0 bg-transparent  lighthoverdark">Clear all</button> 
+          </form>
   </div>
   <span class="h-divider bg-white"></span>
     <% if @notifications.present? %>
-      <% @notifications.each do | notif | %>
-        <div class="notifcolumn d-flex">
+      <% @notifications.each_with_index do | notif, index| %>
+        <div id="notif-<%= index %>"class="notifcolumn d-flex">
           <div class="d-flex flex-column flex-grow-1">
           <b>
             <%= notif.header %>
@@ -14,13 +17,15 @@
             <%= notif.message %>
           </p>
           </div>
-          <%= button_to "/notifications/read", method: :post, params:{ id: notif.id}, class: "btn m-0 px-2 py-0 lighthoverdark" do %>
+          <form class="button_to" method="post" action="/notifications/read?id=<%= notif.id %>" onsubmit="removenotif(event,<%=index%>)">
+              <button class="btn m-0 px-2 py-0 lighthoverdark" type="submit" >
             <i class="fas fa-times"></i>
-          <% end %>
+            </button>
+          </form>
         </div>
       <% end %>
     <% else %>
-        <div class="notifcolumn d-flex">
+        <div id="nonotifs" class="notifcolumn d-flex">
           No notifications
         </div>
     <% end %>

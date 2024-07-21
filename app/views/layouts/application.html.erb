@@ -47,9 +47,11 @@
                   <img src="/default-avatar.png" alt="Profile Picture" width="40" height="40" class="rounded-circle"> <!-- Profile pic -->
                 <% end %>
               </a>
-              <div class="text-white h-100 ms-5 d-flex align-items-center " onclick="togglenotifs()">
-              <span class="bg-danger rounded notifalertcount"><%= @unreadcount%></span>
-              <i class="fas fa-bell notifbell"></i>
+              <div id="shownotifs" class="text-white notifbell h-100 ms-5 d-flex align-items-center " onclick="togglenotifs()">
+              <% if @unreadcount > 0 %>
+                <span class="bg-danger rounded notifalertcount"><%= @unreadcount%></span>
+              <% end %>
+              <i class="fas fa-bell " id="shownotifsicon"></i>
               </div>
               <%= render partial:'notifications/index', locals: { notifications: @notifications }  %>
                 <%= button_to destroy_user_session_path, method: :delete, class: "logoutbutton ms-5 text-white btn" do %>
