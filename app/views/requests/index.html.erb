@@ -29,19 +29,24 @@
     <div class="card mt-0" id="requestContainer">
       <div class="card-body">
         <div class="row">
-          <% @requests.each do |request| %>
+          <% @requests_active.each do |request| %>
             <div class="col-md-6 mb-4 request-card_requests_index">
               <a href="<%= request_path(request) %>" class="clickable-card_requests_index">
                 <div class="card h-100 w-100">
                   <% if request.thumbnail.attached? %> 
-                  <img src="<%= image_url(request.thumbnail) %>" class="card-img-top" alt="<%= request.title %>"/> 
+                    <img src="<%= image_url(request.thumbnail) %>" class="card-img-top" alt="<%= request.title %>"/> 
                   <% end %> 
                   <div class="requests-homepage-card-body">
                     <div class="profile-info_requests_index">
                       <% if request.user.avatar.attached? %>
-                      <img src="<%= image_url(request.user.avatar) %>" alt="<%= request.user.name %>" width="30" height="30"/>
-                      <%end%>
-                      <span><%= request.user.name %></span>
+                        <img src="<%= image_url(request.user.avatar) %>" alt="<%= request.user.name %>" width="30" height="30"/>
+                      <% end %>
+                      <span>
+                        <%= request.user.name %>
+                        <% if request.user.role_id == 4 %>
+                          <i class="fas fa-building" style="font-size: 16px;"></i>
+                        <% end %>
+                      </span>
                     </div>
                     <h5 class="card-title_requests_index"><%= request.title %></h5>
                     <h6 class="card-subtitle_requests_index mb-2 text-muted"><%= request.category %></h6>
@@ -101,7 +106,7 @@
     function initialize() {
       var geocoder = new google.maps.Geocoder();
 
-      <% @requests.each do |request| %>
+      <% @requests_active.each do |request| %>
         (function() {
           var geocode = "<%= request.location %>";
           var elementId = "address-<%= request.id %>";

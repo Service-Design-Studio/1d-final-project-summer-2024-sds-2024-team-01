@@ -22,9 +22,9 @@ RSpec.describe MyRequestsController, type: :controller do
       expect(assigns(:applicants).values).to include(applicant)
     end
 
-    it "assigns @comprequests with requests marked as 'Completed'" do
+    it "assigns @completed_requests with requests marked as 'Completed'" do
       get :index
-      expect(assigns(:comprequests)).to match_array(Request.where(status: 'Completed'))
+      expect(assigns(:completed_requests)).to match_array(Request.where(status: 'Completed'))
     end
   end
 
