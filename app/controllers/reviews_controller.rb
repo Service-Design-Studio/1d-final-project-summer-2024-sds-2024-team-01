@@ -22,8 +22,16 @@ class ReviewsController < ApplicationController
                                              review_for: review_for_user))
     # p "REVIEW = ID: #{@review.id}, RATING: #{@review.rating}, COMMENT: #{@review.review_content}, REQUEST_ID: #{@review.request_id}, REVIEW_FOR: #{@review.review_for}, REVIEW_BY: #{review_by_user}"
     if @review.save
-      puts @review.id
+
+      @notification = Notification.new
+      @notification.message = 'Someone left a review on your profile! Click here to view.'
+      @notification.url = '/profile'
+      @notification.header = 'Someone left you a review'
+      @notification.notification_for = User.find(@review.review_for)
+      @notification.save
+
       redirect_to redir, notice: 'Review was successfully created.'
+
     else
       p @review.errors.full_messages
       render :new, notice: 'Review not saved.'

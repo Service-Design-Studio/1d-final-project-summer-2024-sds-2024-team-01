@@ -10,10 +10,10 @@ class MyRequestsController < ApplicationController
                                 array_agg(request_applications.applicant_id) as applicant_ids')
 
     today_start = Date.today.beginning_of_day
-    @in_progress_requests = @requests.where("date > ?", today_start)
+    @in_progress_requests = @requests.where('date > ?', today_start)
                                      .where.not(status: 'Completed')
     @completed_requests = @requests.where(status: 'Completed')
-    @unfulfilled_requests = @requests.where("date <= ?", today_start)
+    @unfulfilled_requests = @requests.where('date <= ?', today_start)
                                      .where.not(status: 'Completed')
 
     @requests = case params[:tab]
@@ -42,7 +42,7 @@ class MyRequestsController < ApplicationController
                     else
                       @in_progress_requests
                     end
-        render json: { 
+        render json: {
           html: render_to_string(partial: 'request_cards', locals: { requests: @requests }, formats: [:html])
         }
       end
@@ -61,10 +61,20 @@ class MyRequestsController < ApplicationController
     return if current_user.id != (@request.created_by)
 
     @applications = RequestApplication.where(request_id: params[:id])
-    @pendingapplications = @applications.where.not(status: "Accepted").where.not(status: "Rejected")
+    @pendingapplications = @applications.where.not(status: 'Accepted').where.not(status: 'Rejected')
+    @acceptedapplications = @applications.where(status: 'Accepted')
 
-    @pendingapplications.each do | pending | 
-      pending.status = "Rejected"
+    @acceptedapplications.each do |accepted|
+      @notification = Notification.new
+      @notification.message = 'Congratulations! You\'ve helped to complete a request! Click here to view.'
+      @notification.url = '/myapplications'
+      @notification.header = 'Request Completed'
+      @notification.notification_for = User.find(accepted.applicant_id)
+      @notification.save
+    end
+
+    @pendingapplications.each do |pending|
+      pending.status = 'Rejected'
       pending.save
     end
 
@@ -87,23 +97,26 @@ class MyRequestsController < ApplicationController
           array_agg(request_applications.applicant_id) as applicant_ids').first
     return if current_user.id != @request.created_by
 
-    @notification = Notification.new
-    @notification.message = 'Your application for a request has been accepted! Click here to view.'
-    @notification.url = '/myapplications'
-    @notification.header = 'Application accepted'
-    @notification.notification_for = User.find(@reqapp.applicant_id)
-    @notification.save
 
-    @reqapp.status = "Accepted"
+    @reqapp.status = 'Accepted'
     if @reqapp.save
+      @notification = Notification.new
+      @notification.message = 'Your application for a request has been accepted! Click here to view.'
+      @notification.url = '/myapplications'
+      @notification.header = 'Application accepted'
+      @notification.notification_for = User.find(@reqapp.applicant_id)
+      @notification.save
+
       update_counts(@request)
       respond_to do |format|
         format.html { redirect_to '/myrequests', notice: 'Application accepted' }
-        format.json { render json: { 
-          status: "Accepted", 
-          acceptedCount: @request.accepted_application_count,
-          numberOfPax: @request.number_of_pax 
-        } }
+        format.json do
+          render json: {
+            status: 'Accepted',
+            acceptedCount: @request.accepted_application_count,
+            numberOfPax: @request.number_of_pax
+          }
+        end
       end
     else
       respond_to do |format|
@@ -112,7 +125,7 @@ class MyRequestsController < ApplicationController
       end
     end
   end
-  
+
   def reject
     @reqapp = RequestApplication.find(params[:id])
     @request =
@@ -126,23 +139,26 @@ class MyRequestsController < ApplicationController
           array_agg(request_applications.applicant_id) as applicant_ids').first
     return if current_user.id != @request.created_by
 
-    @notification = Notification.new
-    @notification.message = 'Your application for a request has been rejected. Click here to view.'
-    @notification.url = '/myapplications'
-    @notification.header = 'Application rejected'
-    @notification.notification_for = User.find(@reqapp.applicant_id)
-    @notification.save
 
-    @reqapp.status = "Rejected"
+    @reqapp.status = 'Rejected'
     if @reqapp.save
+      @notification = Notification.new
+      @notification.message = 'Your application for a request has been rejected. Click here to view.'
+      @notification.url = '/myapplications'
+      @notification.header = 'Application rejected'
+      @notification.notification_for = User.find(@reqapp.applicant_id)
+      @notification.save
+
       update_counts(@request)
       respond_to do |format|
         format.html { redirect_to '/myrequests', notice: 'Application rejected' }
-        format.json { render json: { 
-          status: "Rejected", 
-          acceptedCount: @request.accepted_application_count,
-          numberOfPax: @request.number_of_pax 
-        } }
+        format.json do
+          render json: {
+            status: 'Rejected',
+            acceptedCount: @request.accepted_application_count,
+            numberOfPax: @request.number_of_pax
+          }
+        end
       end
     else
       respond_to do |format|
@@ -157,6 +173,5 @@ class MyRequestsController < ApplicationController
   def update_counts(request)
     accepted_count = request.request_applications.where(status: 'Accepted').count
     request.update(accepted_application_count: accepted_count)
-
   end
 end
