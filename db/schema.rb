@@ -98,10 +98,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_20_030415) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.string "header"
-    t.string "message"
-    t.string "url"
+    t.string "header", null: false
+    t.string "message", null: false
+    t.string "url", null: false
     t.boolean "read", default: false
+    t.boolean "show", default: true
     t.bigint "notification_for_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
