@@ -1,5 +1,4 @@
 function togglenotifs() {
-    console.log(document.getElementById("notificationpopup").style.display);
     if (document.getElementById("notificationpopup").style.display == "block") {
         document.getElementById("notificationpopup").style.display = "none";
     } else {
@@ -13,8 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const showNotificationsIcon = document.getElementById("shownotifsicon");
 
     document.addEventListener("click", function(event) {
-        // Check if the click is outside the notification popup
-        console.log(event.target);
         if (
             !notificationpopup.contains(event.target) &&
             event.target != showNotificationsButton &&
