@@ -36,6 +36,9 @@ gem 'devise'
 # for role management and belongs_to
 gem 'rolify'
 
+# for rails ujs 
+gem 'rails-ujs'
+
 group :development do
   gem 'web-console', '~> 4.2.1'
 end

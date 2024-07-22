@@ -1,2 +1,5 @@
-// for like super long js code
+// app/javascript/packs/application.js
+//= require rails-ujs
+import Rails from "@rails/ujs";
+Rails.start();
 

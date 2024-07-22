@@ -315,6 +315,8 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
+    rails-ujs (0.1.0)
+      railties (>= 3.1)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
@@ -466,6 +468,7 @@ DEPENDENCIES
   puma
   rails (~> 7.1.3, >= 7.1.3.4)
   rails-controller-testing
+  rails-ujs
   rails_12factor
   rgeo (~> 3.0.1)
   rolify

@@ -1,0 +1,8 @@
+<!-- app/views/chats/_messages.html.erb -->
+<div class="message-area flex-grow-1 d-flex flex-column">
+  <% @messages.each do |message| %>
+    <div class="message <%= message.sender == current_user ? 'sent' : 'received' %>">
+      <%= message.message_text %>
+    </div>
+  <% end %>
+</div>

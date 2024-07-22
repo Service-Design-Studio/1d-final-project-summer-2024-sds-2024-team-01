@@ -37,6 +37,8 @@ Rails.application.routes.draw do
 
   get 'myrequests/chats' => 'chats#new'
 
+  get 'myapplications/chats' => 'chats#new'
+
 
   resources :chats, only: [:index, :show, :new, :create] do
     resources :messages, only: [:create]
