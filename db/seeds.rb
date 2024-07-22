@@ -28,6 +28,15 @@ if Role.count == 0
   p "Created Roles"
 end
 
+# Create an initial admin user if it doesn't exist
+admin_role = Role.find_by(role_name: 'Admin')
+User.find_or_create_by!(email: 'admin@example.com') do |user|
+  user.name = 'Admin User'
+  user.number = '90000000'
+  user.password = 'password'
+  user.password_confirmation = 'password'
+  user.role = admin_role
+end
 # users = [
 #   {
 #     name: "Alice Smith",
