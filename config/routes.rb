@@ -30,11 +30,11 @@ Rails.application.routes.draw do
   get 'myapplications' => 'my_applications#index'
   post 'myapplications/withdraw' => 'my_applications#withdraw'
 
-  # resources :reviews, only: [:edit, :update, :index, :new, :create]
+  resources :reviews, only: [:edit, :update, :index, :new, :create]
 
   # get 'reviews/new_temp' => 'reviews#new_temp'
-  get 'reviews/new' => 'reviews#new'
-  get 'reviews/edit' => 'reviews#update'
+  # get 'reviews/new' => 'reviews#new'
+  # get 'reviews/edit' => 'reviews#update'
 
   post 'notifications/read' => 'notifications#read'
   post 'notifications/clear' => 'notifications#clear'
