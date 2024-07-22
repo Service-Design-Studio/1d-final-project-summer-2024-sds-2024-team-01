@@ -3,7 +3,7 @@ require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 
 require 'shoulda/matchers'
@@ -32,22 +32,24 @@ RSpec.configure do |config|
     Rails.root.join('spec/fixtures')
   ]
 
-  # For loading seeds before every test suite
-  config.before(:suite) do
-    Rails.application.load_seed # loading seeds
-  end
-
   config.include FactoryBot::Syntax::Methods
-  config.include Devise::Test::ControllerHelpers, :type => :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Warden::Test::Helpers
   # Include Shoulda Matchers methods
   config.include Shoulda::Matchers::ActiveModel, type: :model
   config.include Shoulda::Matchers::ActiveRecord, type: :model
-  
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
+  config.use_transactional_examples = false
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+    Rails.application.load_seed # loading seeds
+  end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
