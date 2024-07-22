@@ -8,6 +8,10 @@ form {
   margin: 20px 0;
 }
 
+.offsetnavbar{
+    margin-top:80px;
+}
+
 .button-container .button {
   margin-right: 10px;
 }
