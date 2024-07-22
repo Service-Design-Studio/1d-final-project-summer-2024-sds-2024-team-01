@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_chat, only: :show
+  before_action :set_chat, only: [:show, :load_chat]
 
   def index
     @chats = Chat.joins(:messages)
@@ -16,13 +16,15 @@ class ChatsController < ApplicationController
   end
 
   def show
-    @chat = Chat.find(params[:id])
     @messages = @chat.messages.order(:created_at)
-    @chats = Chat.joins(:messages)
-                 .where("applicant_id = ? OR requester_id = ?", current_user.id, current_user.id)
-                 .select('chats.*, MAX(messages.created_at) AS last_message_time')
-                 .group('chats.id')
-                 .order('last_message_time DESC')
+  end
+
+  def load_chat
+    set_chat # Ensure the chat is set
+    @messages = @chat.messages.order(:created_at)
+    respond_to do |format|
+      format.js
+    end
   end
 
   def new
@@ -42,6 +44,9 @@ class ChatsController < ApplicationController
 
   def set_chat
     @chat = Chat.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "Chat not found."
+    redirect_to chats_path
   end
 
   def chat_params

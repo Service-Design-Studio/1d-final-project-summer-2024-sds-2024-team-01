@@ -71,3 +71,5 @@ gem 'faker'
 gem 'shoulda-matchers', '~> 5.0'
 
 #gem 'ruby-vips' #enable image analysis
+
+gem "jsbundling-rails", "~> 1.3.0"

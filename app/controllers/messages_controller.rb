@@ -7,14 +7,11 @@ class MessagesController < ApplicationController
     @message.sender = current_user
     @message.receiver = @chat.applicant == current_user ? @chat.requester : @chat.applicant
 
-    Rails.logger.debug("Message before save: #{@message.inspect}")
-
     if @message.save
-      Rails.logger.debug("Message saved successfully")
-      redirect_to chat_path(@chat)
+      respond_to do |format|
+        format.js
+      end
     else
-      Rails.logger.debug("Message save failed")
-      Rails.logger.debug("Validation errors: #{@message.errors.full_messages.join(", ")}")
       @messages = @chat.messages.order(:created_at)
       render 'chats/show'
     end
