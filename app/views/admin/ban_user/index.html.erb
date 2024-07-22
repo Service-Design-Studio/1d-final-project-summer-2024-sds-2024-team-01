@@ -1,0 +1,28 @@
+<%= stylesheet_link_tag 'banusers', media: 'all' %>
+
+<div class="container content_requests_index ban-user-page">
+  <div class="card custom-card_requests_index">
+    <div class="card-body header-container_requests_index">
+      <h2 class="header-text_requests_index">Ban User</h2>
+      <h5 class="subheader-text_requests_index">Ban User, ensure safe usage in the webapp!</h5>
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs BanUsers-tabs mb-3" id="BanUsersTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="ban-tab" data-bs-toggle="tab" data-bs-target="#ban" type="button" role="tab" aria-controls="ban" aria-selected="true">Ban</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="unban-tab" data-bs-toggle="tab" data-bs-target="#unban" type="button" role="tab" aria-controls="unban" aria-selected="true">Unban</button>
+    </li>
+  </ul>
+
+  <div class="tab-content BanUsers-tab-content" id="BanUsersTabContent">
+    <div class="tab-pane banusers-tab-pane fade show active" id="ban" role="tabpanel" aria-labelledby="ban-tab">
+      <%= render partial: 'ban_cards', locals: { users: @reported_users } %>
+    </div>
+    <div class="tab-pane my-requests-tab-pane fade" id="unban" role="tabpanel" aria-labelledby="unban-tab">
+      <%= render partial: 'unban_cards', locals: { users: @banned_users } %>
+    </div>
+  </div>
+</div>

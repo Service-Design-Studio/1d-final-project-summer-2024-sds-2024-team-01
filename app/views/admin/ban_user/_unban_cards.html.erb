@@ -1,0 +1,18 @@
+<% users.each do |user| %>
+  <div id="user-<%= user.id %>" class="card ban-card">
+    <div class="card-body d-flex">
+      <img src="<%= user.profile_image_url %>" alt="<%= user.name %>">
+      <div class="user-info">
+        <h5><%= user.name %></h5>
+        <p><%= user.company_name %></p>
+        <div class="ban-reason">
+          <p><strong>Reason:</strong> <%= user.ban_reason %></p>
+        </div>
+        <div class="actions">
+          <button class="more">More</button>
+          <button class="unban-button" data-user-id="<%= user.id %>">Unban User</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
