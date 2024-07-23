@@ -27,7 +27,7 @@ class ReviewsController < ApplicationController
       @notification.message = 'Someone left a review on your profile! Click here to view.'
       @notification.url = '/profile'
       @notification.header = 'Someone left you a review'
-      @notification.notification_for = User.find(@review.review_for)
+      @notification.notification_for = User.find(@review.review_for.id)
       @notification.save
 
       redirect_to redir, notice: 'Review was successfully created.'

@@ -70,7 +70,7 @@
                           </div>
                         </div>
                       </a>
-                      <% if application.status == 'Accepted' %>
+                      <% if application.status == 'Accepted' and application.request.status == 'Completed' %>
                         <% if application.reviewed?(current_user) != true %>
                           <a href="/reviews/new?request_application_id=<%= application.id %>"
                             <button class="btn leave-review-btn_mark_completed">
