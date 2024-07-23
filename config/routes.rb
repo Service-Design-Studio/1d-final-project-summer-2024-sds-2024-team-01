@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     get 'register' => 'my_devise/registrations#choose_register_method'
     get 'register/charity' => 'my_devise/registrations#charity'
     get 'register/corporate' => 'my_devise/registrations#corporate'
+    post 'register/corporate' => 'my_devise/registrations#create_corporate'
+    post 'register/charity' => 'my_devise/registrations#create_charity'
   end
 
   get 'up' => 'rails/health#show', as: :rails_health_check

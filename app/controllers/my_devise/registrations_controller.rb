@@ -1,7 +1,6 @@
 # app/controllers/my_devise/registrations_controller.rb
 class MyDevise::RegistrationsController < Devise::RegistrationsController
-  def choose_register_method
-  end
+  def choose_register_method; end
 
   def create
     # add custom create logic here
@@ -25,19 +24,43 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
       set_minimum_password_length
       respond_with resource
     end
-
   end
 
   def corporate
     @resource = Company.new
+    @userresource = User.new
   end
 
   def create_corporate
-    @resource = Company.new(company_params)
-    if @resource.save
-      # Handle successful save
-    else
-      render :new_company
+    @company = Company.new
+    @company.company_name = params[:company_name]
+    @company.status = 'Pending'
+    @company.document_proof = params[:document_proof]
+
+    @corpuser = User.new
+    @corpuser.email = params[:email]
+    @corpuser.name = params[:company_name]
+    @corpuser.role_id = 3
+    @corpuser.number = nil
+    @corpuser.status = 'Inactive'
+    @corpuser.password = 'password'
+    @corpuser.password_confirmation = 'password'
+
+    ActiveRecord::Base.transaction do
+      if @company.save
+        @company.document_proof.attach(params[:document_proof])
+        puts @company.id
+        @corpuser.company_id = @company.id
+        if @corpuser.save
+          redirect_to '/register/companysuccess'
+        else
+          @corpuser.errors.full_messages
+          redirect_to '/register/corporate', notice: 'Failed to register user'
+          raise ActiveRecord::Rollback
+        end
+      else
+        redirect_to '/register/corporate', notice: 'Failed to register'
+      end
     end
   end
 
@@ -45,18 +68,22 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     @resource = Charity.new
   end
 
-  def createcharity
-    @resource = Charity.new(company_params)
+  def create_charity
+    @resource = Charity.new(charity_params)
     if @resource.save
-      # Handle successful save
+      @resource.docoument_proof.attach(params[:document_proof])
     else
-      render :new_company
+      render :charity_success_page
     end
   end
 
   private
 
   def company_params
-    params.require(:company).permit(:name)
+    params.permit(:company_name, :document_proof, :email)
   end
-end 
+
+  def charity_params
+    params.require(:charity).permit(:charity_name, :document_proof)
+  end
+end
