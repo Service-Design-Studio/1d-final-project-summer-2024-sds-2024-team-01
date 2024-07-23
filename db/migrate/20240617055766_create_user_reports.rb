@@ -3,7 +3,8 @@ class CreateUserReports < ActiveRecord::Migration[7.1]
     create_table :user_reports do |t|
       t.text :report_reason, null: false
       t.string :status, null: false
-
+      t.string :status, null: false, default: 'under_review'
+      
       t.bigint :reported_by, null: false
       t.bigint :reported_user, null: false
 

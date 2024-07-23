@@ -1,82 +1,13 @@
-/* Add your custom styles for the ban user page here */
+.nav-tabs .nav-link.active {
+  background-color: #9b59b6; /* Purple color */
+  color: white;
+}
 
-.ban-user-page {
-          background-color: #f8f9fa;
-          padding: 20px;
-        }
-        
-        .header-container_requests_index {
-          background-color: #6a1b9a;
-          color: white;
-          padding: 20px;
-          border-radius: 5px;
-        }
-        
-        .header-text_requests_index {
-          font-size: 24px;
-        }
-        
-        .subheader-text_requests_index {
-          font-size: 18px;
-        }
-        
-        .ban-card {
-          margin-bottom: 20px;
-          border: 1px solid #ddd;
-          padding: 20px;
-          border-radius: 5px;
-          background-color: white;
-        }
-        
-        .ban-card img {
-          max-width: 50px;
-          max-height: 50px;
-          margin-right: 20px;
-        }
-        
-        .user-info {
-          display: flex;
-          flex-direction: column;
-        }
-        
-        .user-info h5 {
-          margin: 0;
-          font-size: 18px;
-        }
-        
-        .user-info p {
-          margin: 5px 0;
-        }
-        
-        .ban-reason {
-          margin-top: 10px;
-          padding: 10px;
-          background-color: #ffebee;
-          border: 1px solid #f44336;
-          border-radius: 5px;
-        }
-        
-        .actions {
-          display: flex;
-          justify-content: flex-end;
-          margin-top: 10px;
-        }
-        
-        .actions button {
-          margin-left: 10px;
-          padding: 10px 20px;
-          background-color: #6a1b9a;
-          color: white;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-        }
-        
-        .actions button.more {
-          background-color: #9c27b0;
-        }
-        
-        .actions button.ban-button {
-          background-color: #e53935;
-        }
-        
+.nav-tabs .nav-link {
+  color: #9b59b6;
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: #d9b3ff;
+  color: white;
+}

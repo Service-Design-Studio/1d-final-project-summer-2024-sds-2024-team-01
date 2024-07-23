@@ -3,4 +3,6 @@ class UserReport < ActiveRecord::Base
   belongs_to :reported_user, class_name: 'User', foreign_key: 'reported_user'
   validates_presence_of :report_reason
   validates_presence_of :status
+
+  enum status: { under_review: 'under_review', ban: 'ban', unban: 'unban' }
 end

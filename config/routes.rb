@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   get 'profile' => 'profile#index'
+  get 'profile/:id' => 'profile#index', as: 'user_profile'
   post 'profile/edit' => 'profile#edit'
 
   post 'requests/apply' => 'requests#apply'
@@ -30,10 +31,6 @@ Rails.application.routes.draw do
   post 'myapplications/withdraw' => 'my_applications#withdraw'
 
   resources :reviews, only: [:edit, :update, :index, :new, :create]
-
-  # get 'reviews/new_temp' => 'reviews#new_temp'
-  # get 'reviews/new' => 'reviews#new'
-  # get 'reviews/edit' => 'reviews#update'
 
   post 'notifications/read' => 'notifications#read'
   post 'notifications/clear' => 'notifications#clear'
@@ -54,13 +51,13 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :ban_user, only: [:index] do
       member do
-        post :ban
-        post :unban
+        post 'ban'
+        post 'unban'
       end
     end
-
-    resources :user_reports, only: [:index, :new, :create]
   end
+
+  resources :user_reports, only: [:index, :new, :create]
 
   get 'admin/login', to: 'admin_sessions#new', as: 'new_admin_session'
   post 'admin/login', to: 'admin_sessions#create', as: 'admin_sessions'
