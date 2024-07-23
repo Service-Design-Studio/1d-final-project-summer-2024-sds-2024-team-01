@@ -54,10 +54,15 @@
                           </form>
                         <% end %>
                       <% end %>
-                      <% if myapplication.status == 'Accepted' && myapplication.request.status == 'Completed' %>
-                        <a href="#" class="btn leave-review-btn">Leave a Review</a>
-                      <% end %>
                       </div>
+                      <% if myapplication.status == 'Accepted' && myapplication.request.status == 'Completed' %>
+                        <a href="#">
+                          <button class="btn leave-review-btn_mark_completed">
+                          <i class="bi bi-star-fill review-icon_mark_completed"></i>
+                          <span class="review-text_mark_completed">Leave a Review</span>
+                          </button>
+                        </a>
+                      <% end %>
                     </div>    
                   </div>
                 </div>
