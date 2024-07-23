@@ -1,16 +1,28 @@
-<div class="chat-header d-flex align-items-center p-3 border-bottom">
-  <% if @chat.request.thumbnail.attached? %>
-    <img src="<%= url_for(@chat.request.thumbnail) %>" alt="<%= @chat.request.title %>" class="request-thumbnail mr-3" style="width: 50px; height: 50px;">
-  <% end %>
-  <div class="request-details">
-    <h5 class="mb-0"><%= @chat.request.title %></h5>
+<div class="chat-header d-flex flex-column p-3 border-bottom">
+  <!-- User Details -->
+  <div class="user-details d-flex align-items-center mb-3">
+    <% if @chat.applicant_id == current_user.id %>
+      <a href="/profile?id=<%= @chat.requester.id %>" class="mini-profile"><h5 class="mb-0"><%= @chat.requester.name %></h5></a>
+    <% else %>
+      <a href="/profile?id=<%= @chat.applicant.id %>" class="mini-profile"><h5 class="mb-0"><%= @chat.applicant.name %></h5></a>
+    <% end %>
+  </div>
+
+  <!-- Thumbnail and Request Details -->
+  <div class="request-details-container d-flex align-items-center">
+    <% if @chat.request.thumbnail.attached? %>
+      <img src="<%= url_for(@chat.request.thumbnail) %>" alt="<%= @chat.request.title %>" class="request-thumbnail mr-3" style="width: 50px; height: 50px;">
+    <% end %>
+    <div class="request-details">
+      <a href="/requests/<%= @chat.request.id %>"><h5 class="mb-0"><%= @chat.request.title %></h5></a>
+    </div>
   </div>
 </div>
 
-<div class="message-area flex-grow-1 d-flex flex-column">
+<div class="message-area flex-grow-1 d-flex flex-column p-3" style="height: 70vh; overflow-y: auto;">
   <% if @messages.any? %>
     <% @messages.each do |message| %>
-      <div class="message <%= message.sender == current_user ? 'sent' : 'received' %>">
+      <div class="message <%= message.sender == current_user ? 'sent' : 'received' %> p-2 my-2 rounded" style="<%= message.sender == current_user ? 'align-self-end bg-primary text-white' : 'align-self-start bg-light text-dark' %>">
         <%= message.message_text %>
       </div>
     <% end %>
