@@ -6,7 +6,7 @@ class MyApplicationsController < ApplicationController
 
     @pendingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Pending')
 
-    @completedapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(request: { status: 'Completed' })
+    @completedapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Accepted').where(request: { status: 'Completed' })
 
     @withdrawnapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Withdrawn').or(RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Rejected'))
 
