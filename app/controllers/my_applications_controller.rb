@@ -1,31 +1,21 @@
 class MyApplicationsController < ApplicationController
   def index
-    # fetch and display a list of applications that belong to the current logged-in user
-    # filtered applications are assigned to '@applications' instance variable
+    @current_tab = params[:tab] || 'upcoming'
+    
     @upcomingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Accepted').where.not(request: { status: 'Completed' })
-
     @pendingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Pending')
-
     @completedapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Accepted').where(request: { status: 'Completed' })
-
     @withdrawnapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Withdrawn').or(RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Rejected'))
-
-    @applications = case params[:tab]
-                    when 'withdrawn'
-                      @withdrawnapplications
-                    when 'completed'
-                      @completedapplications
-                    when 'pending'
-                      @pendingapplications
-                    else
-                      @upcomingapplications
-                    end
-    puts @applications.count
+  
+    @applications = instance_variable_get("@#{@current_tab}applications")
+  
     respond_to do |format|
       format.html
       format.json do
-        render json: { html: render_to_string(partial: 'request_cards', locals: { requests: @applications },
-                                              formats: [:html]) }
+        render json: {
+          html: render_to_string(partial: @applications.empty? ? 'shared/empty_state' : 'request_cards', locals: { requests: @applications }, formats: [:html]),
+          is_empty: @applications.empty?
+        }
       end
     end
   end

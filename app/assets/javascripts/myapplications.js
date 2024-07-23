@@ -31,6 +31,24 @@ function initMyApplications() {
 
     // Dropdown functionality
 }
+
+// function initializeEmptyStates() {
+//     document.querySelectorAll('.my-applications-tab-pane').forEach(tabPane => {
+//       if (!tabPane.querySelector('.request-card_requests_index_my')) {
+//         tabPane.innerHTML = renderEmptyState();
+//       }
+//     });
+//   }
+  
+//   function renderEmptyState() {
+//     return `
+//       <div class="empty-state-container">
+//         <img src="/assets/tumbleweed_transparent.png" alt="Tumbleweed" class="empty-state-image">
+//         <p class="empty-state-message">Empty, clean as it can be~</p>
+//       </div>
+//     `;
+//   }
+  
 function handleDropdowns(){
     const dropdownButtons = document.querySelectorAll(
         ".dropdown-btn_requests_index_my",
@@ -177,30 +195,55 @@ function switchTab(tabButton) {
 
 function updateApplicationCards(tabId) {
     fetch(`/myapplications?tab=${tabId}`, {
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            Accept: "application/json",
-        },
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json'
+      }
     })
-        .then((response) => response.json())
-        .then((data) => {
-            const tabPane = document.querySelector(`#${tabId}`);
-            tabPane.innerHTML = data.html;
-            console.log("retreived")
-            // Dispatch a custom event after content is loaded
-            document.dispatchEvent(
-                new CustomEvent("requestCardsUpdated", { detail: { tabId: tabId } }),
-            );
-        });
-}
-// Listen for the custom event
-document.addEventListener("requestCardsUpdated", function(e) {
-    // Reinitialize any necessary functionality for the new content
-    initMyApplications();
-    updateUIBasedOnStatus();
-    handleDropdowns();
-    initializeDropdowns();
-});
+    .then(response => response.json())
+    .then(data => {
+      const tabPane = document.querySelector(`#${tabId}`);
+      tabPane.innerHTML = data.html;
+      
+      if (!data.is_empty) {
+        initMyApplications();
+        updateUIBasedOnStatus();
+        handleDropdowns();
+        initializeDropdowns();
+      }
+  
+      document.dispatchEvent(new CustomEvent('requestCardsUpdated', { detail: { tabId: tabId, isEmpty: data.is_empty } }));
+    });
+  }
+  
+  function switchTab(tabButton) {
+    const tabId = tabButton.getAttribute("data-bs-target").replace("#", "");
+  
+    // Remove active class from all tabs
+    const tabButtons = document.querySelectorAll("#myApplicationsTabs button");
+    tabButtons.forEach((btn) => {
+      btn.classList.remove("active");
+      btn.setAttribute("aria-selected", "false");
+    });
+  
+    // Add active class to clicked tab
+    tabButton.classList.add("active");
+    tabButton.setAttribute("aria-selected", "true");
+  
+    // Hide all tab panes
+    document.querySelectorAll(".tab-pane").forEach((pane) => {
+      pane.classList.remove("show", "active");
+    });
+  
+    // Show the selected tab pane
+    const selectedPane = document.querySelector(
+      tabButton.getAttribute("data-bs-target")
+    );
+    selectedPane.classList.add("show", "active");
+  
+    updateApplicationCards(tabId);
+  }
+  
 
 function initializeDropdowns() {
     const dropdownButtons = document.querySelectorAll(
