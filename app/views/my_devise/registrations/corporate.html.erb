@@ -6,14 +6,26 @@
 
 <div class="signup-container">
   <img src="<%= 'logo.png' %>" alt="Logo">
-  <h2 class="signup-header">Start your own account!</h2>
+  <h2 class="signup-header">Sign up for your corporation</h2>
 
-  <%= form_for(@resource, url: "/registrations/createcompany") do |f| %>
+  <%= form_with url: "/register/corporate", method: :post do |f| %>
 
-    <div class="field">
+    <div class="field pt-2">
       <%= f.text_field :company_name, placeholder: "Company Name", autofocus: true, class: "form-control"%>
     </div>
 
+    <div class="field pt-2">
+      <%= f.text_field :email, placeholder: "Your Company Email", autofocus: true, class: "form-control"%>
+    </div>
+
+    <div class="field pt-2 ">
+      <label for="document_proof" class="pb-3">Please upload an official PDF document with your company name to validate your identity</label>
+      <%= f.file_field :document_proof, placeholder: "", autofocus: true, class: "form-control"%>
+    </div>
+
+      <div class="actions pt-4">
+        <%= f.submit "Submit", class: "btn btn-primary btn-block" %>
+      </div>
   <% end %>
   <div class="devise-links">
     <%= render "devise/shared/links" %>

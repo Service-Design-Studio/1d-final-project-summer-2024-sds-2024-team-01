@@ -80,6 +80,20 @@ namespace :db do
       5.times do
         create(:test_notification, notification_for: first)
       end
+
+      # Mock data for corporate users
+      4.times do
+        test_company = create(:random_company, status: 'Pending')
+        create(:user, status: 'Inactive', company_id: test_company.id, role_id: 3, number: nil)
+      end
+
+      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
+                    number: nil, email: 'cvm1@test.com')
+      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
+                    number: nil, email: 'cvm2@test.com')
+      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
+                    number: nil, email: 'cvm3@test.com')
+
       print "\r100% Complete                      "
     end
   end

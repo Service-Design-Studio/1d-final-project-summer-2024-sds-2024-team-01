@@ -16,7 +16,7 @@
 
   <body class="<%= "#{controller_name}-#{action_name}" %>">
     <% if controller_name == 'sessions' || controller_name == 'registrations' %>
-      <nav class="navbar fixed-top" style="background-color: transparent !important">
+      <nav class="navbar fixed-top" style="background: transparent !important">
     <% else %>
       <nav class="navbar fixed-top">
     <% end %>
@@ -47,7 +47,7 @@
                   <img src="/default-avatar.png" alt="Profile Picture" width="40" height="40" class="rounded-circle"> <!-- Profile pic -->
                 <% end %>
               </a>
-              <div id="shownotifs" class="text-white notifbell h-100 ms-5 d-flex align-items-center " onclick="togglenotifs()">
+              <div id="shownotifs" class="text-white notifbell h-100 ms-5 d-flex align-items-center ">
               <% if @unreadcount > 0 %>
                 <span class="bg-danger rounded notifalertcount"><%= @unreadcount%></span>
               <% end %>
