@@ -5,7 +5,8 @@ class MyRequestsController < ApplicationController
                        .left_outer_joins(:request_applications)
                        .group('requests.id')
                        .select('requests.*,
-                                COUNT(request_applications.id) as application_count,
+                                COUNT(request_applications.id) as total_application_count,
+                                COUNT(CASE WHEN request_applications.status != \'Withdrawn\' THEN 1 END) as active_application_count,
                                 COUNT(CASE WHEN request_applications.status = \'Accepted\' THEN 1 END) as accepted_application_count,
                                 array_agg(request_applications.applicant_id) as applicant_ids')
 

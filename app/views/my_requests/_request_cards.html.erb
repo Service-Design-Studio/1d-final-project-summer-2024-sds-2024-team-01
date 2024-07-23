@@ -17,8 +17,8 @@
               </a>
               <div class="card-actions_requests_index_my">
                 <div class="application-indicator_requests_index_my">
-                  <% if myrequest.application_count > 0 %>
-                    <p class="application-count_requests_index_my"><%= myrequest.application_count %> Applicants</p>
+                  <% if myrequest.total_application_count > 0 %>
+                    <p class="application-count_requests_index_my"><%= myrequest.active_application_count %> Applicants</p>
                   <% end %>
                   <p class="applicants-status_requests_index_my <%= 'full-capacity' if myrequest.accepted_application_count >= myrequest.number_of_pax %>" data-accepted-count="<%= myrequest.accepted_application_count %>" data-number-of-pax="<%= myrequest.number_of_pax %>">
                     <i class="fas fa-users"></i> <%= myrequest.accepted_application_count %>/<%= myrequest.number_of_pax %> people found
@@ -45,8 +45,8 @@
             </div>
             <% if myrequest.request_applications.any? %>
               <div class="popups-container_my">
-                <% myrequest.request_applications.each_with_index do |application, index| %>
-                  <div class="popup_requests_index_my" style="--index: <%= index %>;">
+                <% myrequest.request_applications.each do |application| %>
+                  <div class="popup_requests_index_my" data-application-id="<%= application.id %>" style="<%= 'display: none;' if application.status == 'Withdrawn' %>">
                     <!-- Content for the popup -->
                     <div class="applicant-info_requests_index_my">
                       <a class="mini-profile" href="/profile?id=<%= application.applicant.id %>">
