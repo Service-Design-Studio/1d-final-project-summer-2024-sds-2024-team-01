@@ -195,6 +195,28 @@ form {
   color: inherit;
 }
 
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  text-align: center;
+}
+
+.empty-state-image {
+  width: 400px;
+  opacity: 40%;
+  height: auto;
+  margin-top: 200px;
+}
+
+.empty-state-message {
+  font-size: 18px;
+  color: #888;
+  font-style: italic;
+}
+
 /* Common asset: custom purple and lilac button*/
 .custom-btn-dark-purple {
   display: flex;

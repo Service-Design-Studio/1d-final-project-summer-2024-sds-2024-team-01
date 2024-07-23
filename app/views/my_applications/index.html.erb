@@ -39,18 +39,19 @@
       </li>
     </ul>
 
-    <div class="tab-content my-requests-tab-content" id="myApplicationsTabContent">
-      <div class="tab-pane my-requests-tab-pane fade show active" id="upcoming" role="tabpanel" aria-labelledby="upcoming-tab">
-        <%= render partial: 'request_cards', locals: { applications: @upcomingapplications } %>
-      </div>
-      <div class="tab-pane my-requests-tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
-        <%= render partial: 'request_cards', locals: { applications: @pendingapplications} %>
-      </div>
-      <div class="tab-pane my-requests-tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
-        <%= render partial: 'request_cards', locals: { applications: @completedapplications} %>
-      </div>
-      <div class="tab-pane my-requests-tab-pane fade" id="withdrawn" role="tabpanel" aria-labelledby="withdrawn-tab">
-        <%= render partial: 'request_cards', locals: { applications: @withdrawnapplications} %>
+    <div class="tab-content my-applications-tab-content" id="myApplicationsTabContent">
+      <% ['upcoming', 'pending', 'completed', 'withdrawn'].each do |tab| %>
+        <div class="tab-pane my-applications-tab-pane fade <%= 'show active' if @current_tab == tab %>" 
+            id="<%= tab %>" role="tabpanel" aria-labelledby="<%= tab %>-tab">
+          <% applications = instance_variable_get("@#{tab}applications") %>
+          <% if applications.empty? %>
+            <%= render 'shared/empty_state' %>
+          <% else %>
+            <%= render partial: 'request_cards', locals: { requests: applications } %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </body>
 <%= javascript_include_tag 'myapplications' %>
