@@ -178,7 +178,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
     t.string "name", null: false
     t.string "email", null: false
     t.string "number", default: ""
-    t.string "description", default: "", null: false
+    t.string "description", default: ""
     t.string "status", default: "active", null: false
     t.bigint "role_id", default: 1
     t.bigint "company_id"

@@ -8,14 +8,18 @@
   <img src="<%= 'logo.png' %>" alt="Logo">
   <h2 class="signup-header">Sign up for your corporation</h2>
 
-  <%= form_for(@resource, url: "/register/corporate") do |f| %>
+  <%= form_with url: "/register/corporate", method: :post do |f| %>
 
-    <div class="field pt-3">
+    <div class="field pt-2">
       <%= f.text_field :company_name, placeholder: "Company Name", autofocus: true, class: "form-control"%>
     </div>
 
-    <div class="field pt-4 ">
-      <label for="document_proof" class="pb-3">Please upload an official PDF document with your company name to validate.</label>
+    <div class="field pt-2">
+      <%= f.text_field :email, placeholder: "Your Company Email", autofocus: true, class: "form-control"%>
+    </div>
+
+    <div class="field pt-2 ">
+      <label for="document_proof" class="pb-3">Please upload an official PDF document with your company name to validate your identity</label>
       <%= f.file_field :document_proof, placeholder: "", autofocus: true, class: "form-control"%>
     </div>
 
