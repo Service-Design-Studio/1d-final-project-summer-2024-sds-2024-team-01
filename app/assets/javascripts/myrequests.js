@@ -26,6 +26,10 @@ function initializeMyRequests() {
 
   // Close dropdown when clicking outside
   document.addEventListener('click', handleOutsideClick);
+
+  document.addEventListener('application:withdrawn', handleWithdrawal);
+
+  hideWithdrawnApplications();
 }
 
 function performSearch() {
@@ -355,6 +359,34 @@ function updateUIBasedOnStatus() {
       if (repostButton) repostButton.classList.add('d-none');
 
       updateApplicantButtons(card);
+    }
+  });
+}
+
+function handleWithdrawal(event) {
+  const requestId = event.detail.requestId;
+  const requestCard = document.querySelector(`.request-card_requests_index_my[data-request-id="${requestId}"]`);
+  if (requestCard) {
+    const applicationCountElement = requestCard.querySelector('.application-count_requests_index_my');
+    if (applicationCountElement) {
+      let activeCount = parseInt(applicationCountElement.dataset.activeCount);
+      activeCount--;
+      applicationCountElement.dataset.activeCount = activeCount;
+      applicationCountElement.textContent = `${activeCount} Applicant${activeCount !== 1 ? 's' : ''}`;
+    }
+
+    // Hide the withdrawn application's popup
+    const withdrawnPopup = requestCard.querySelector(`.popup_requests_index_my[data-application-id="${event.detail.applicationId}"]`);
+    if (withdrawnPopup) {
+      withdrawnPopup.style.display = 'none';
+    }
+  }
+}
+
+function hideWithdrawnApplications() {
+  document.querySelectorAll('.popup_requests_index_my').forEach(popup => {
+    if (popup.querySelector('.status-indicator_my.withdrawn')) {
+      popup.style.display = 'none';
     }
   });
 }
