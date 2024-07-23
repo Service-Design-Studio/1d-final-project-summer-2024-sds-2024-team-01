@@ -28,6 +28,7 @@ class ChatsController < ApplicationController
   #   end
   # end
   def show
+    @chat = Chat.find(params[:id])
     @messages = @chat.messages.includes(:sender).order(:created_at)
     respond_to do |format|
       format.html
