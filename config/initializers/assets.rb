@@ -14,4 +14,5 @@ Rails.application.config.assets.precompile += %w( myrequests.js )
 Rails.application.config.assets.precompile += %w( myapplications.js )
 Rails.application.config.assets.precompile += %w( request_form.js )
 Rails.application.config.assets.precompile += %w( notifs.js )
+Rails.application.config.assets.precompile += %w( application.js )
 
