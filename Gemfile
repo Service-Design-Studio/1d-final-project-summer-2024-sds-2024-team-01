@@ -36,8 +36,6 @@ gem 'devise'
 # for role management and belongs_to
 gem 'rolify'
 
-# for rails ujs 
-gem 'rails-ujs'
 
 group :development do
   gem 'web-console', '~> 4.2.1'
@@ -71,5 +69,3 @@ gem 'faker'
 gem 'shoulda-matchers', '~> 5.0'
 
 #gem 'ruby-vips' #enable image analysis
-
-gem "jsbundling-rails", "~> 1.3.0"

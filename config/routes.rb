@@ -39,7 +39,6 @@ Rails.application.routes.draw do
 
   get 'myapplications/chats' => 'chats#new'
 
-  get 'load_chat/:id', to: 'chats#load_chat', as: 'load_chat'
 
 
   resources :chats, only: [:index, :show, :new, :create] do

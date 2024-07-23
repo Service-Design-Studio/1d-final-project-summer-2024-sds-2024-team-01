@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_chat, only: [:show, :load_chat]
+  before_action :set_chat, only: [:show]
 
   def index
     @chats = Chat.joins(:messages)
@@ -17,13 +17,9 @@ class ChatsController < ApplicationController
 
   def show
     @messages = @chat.messages.order(:created_at)
-  end
-
-  def load_chat
-    set_chat # Ensure the chat is set
-    @messages = @chat.messages.order(:created_at)
     respond_to do |format|
-      format.js
+      format.html # Render the default show.html.erb
+      format.js { render partial: 'chat_content', locals: { chat: @chat, messages: @messages } }
     end
   end
 

@@ -1,13 +1,16 @@
-<!-- app/views/chats/_chat_messages.html.erb -->
 <div class="message-area flex-grow-1 d-flex flex-column">
-  <% messages.each do |message| %>
-    <div class="message <%= message.sender == current_user ? 'sent' : 'received' %>">
-      <%= message.message_text %>
-    </div>
+  <% if @messages.any? %>
+    <% @messages.each do |message| %>
+      <div class="message <%= message.sender == current_user ? 'sent' : 'received' %>">
+        <%= message.message_text %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No messages yet</p>
   <% end %>
 </div>
 <div class="input-area border-top p-3">
-  <form id="message-form" action="<%= chat_messages_path(chat) %>" method="post">
+  <form id="message-form" action="<%= chat_messages_path(@chat) %>" method="post" data-remote="true">
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <div class="input-group">
       <input type="text" name="message[message_text]" class="form-control" placeholder="Type a message...">

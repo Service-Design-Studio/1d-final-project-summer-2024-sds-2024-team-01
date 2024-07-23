@@ -11,7 +11,7 @@
   <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet" />
   <%= stylesheet_link_tag "application.css"%>
   <%= csrf_meta_tags %>
-  <%= javascript_include_tag 'application', defer: true %>
+  
 </head>
 
   <body class="<%= "#{controller_name}-#{action_name}" %>">
@@ -63,6 +63,5 @@
       <% end %>
       <%= yield %>
     </div>
-    <%= javascript_include_tag 'application', defer: true %>
   </body>
 </html>

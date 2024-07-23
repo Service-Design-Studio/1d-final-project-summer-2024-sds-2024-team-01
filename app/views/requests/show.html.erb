@@ -3,7 +3,7 @@
 
 <body onload="initialize()">
 
-  <div class="container content">
+  <div class="container content"> 
     <div class="request-image-container_requests_details">
       <% if @request.thumbnail.attached? %>
         <img src="<%= image_url(@request.thumbnail) %>" alt="Request Image" class="request-image_requests_details">
