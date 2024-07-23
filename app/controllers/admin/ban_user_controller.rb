@@ -3,7 +3,6 @@ module Admin
     before_action :authenticate_user!, :require_admin
 
     def index
-      @user_reports = UserReport.all
       @reported_users = User.where(reported: true)
       @banned_users = User.where(banned: true)
     end
@@ -21,37 +20,6 @@ module Admin
     end
 
     private
-
-    def require_admin
-      redirect_to root_path, alert: 'Access denied!' unless current_user.admin?
-    end
-  end
-
-  class UserReportsController < ApplicationController
-    before_action :authenticate_user!, :require_admin
-
-    def index
-      @user_reports = UserReport.all
-    end
-
-    def new
-      @user_report = UserReport.new
-    end
-
-    def create
-      @user_report = UserReport.new(user_report_params)
-      if @user_report.save
-        redirect_to admin_user_reports_path, notice: 'Report successfully created.'
-      else
-        render :new
-      end
-    end
-
-    private
-
-    def user_report_params
-      params.require(:user_report).permit(:report_reason, :status, :reported_by, :reported_user)
-    end
 
     def require_admin
       redirect_to root_path, alert: 'Access denied!' unless current_user.admin?
