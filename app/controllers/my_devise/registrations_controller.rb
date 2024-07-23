@@ -33,11 +33,11 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   end
 
   def create_corporate
-    @resource = Company.new(company_params)
-    if @resource.save
-      # Handle successful save
-    else
-      render :new_company
+    @company = Company.new(company_params)
+    @company.status = "Pending"
+    if @company.save
+      @company.document_proof.attach(params[:document_proof])
+      redirect_to "/register/companysuccess"
     end
   end
 
@@ -45,18 +45,22 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     @resource = Charity.new
   end
 
-  def createcharity
-    @resource = Charity.new(company_params)
+  def create_charity
+    @resource = Charity.new(charity_params)
     if @resource.save
-      # Handle successful save
+      @resource.docoument_proof.attach(params[:document_proof])
     else
-      render :new_company
+      render :charity_success_page
     end
   end
 
   private
 
   def company_params
-    params.require(:company).permit(:name)
+    params.require(:company).permit(:company_name, :document_proof)
+  end
+
+  def charity_params
+    params.require(:charity).permit(:charity_name, :document_proof)
   end
 end 
