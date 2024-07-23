@@ -1,5 +1,4 @@
 function togglenotifs() {
-    console.log(document.getElementById("notificationpopup").style.display);
     if (document.getElementById("notificationpopup").style.display == "block") {
         document.getElementById("notificationpopup").style.display = "none";
     } else {
@@ -7,32 +6,25 @@ function togglenotifs() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const notificationpopup = document.getElementById('notificationpopup');
-  const showNotificationsButton = document.getElementById('shownotifs');
-  const showNotificationsIcon = document.getElementById('shownotifsicon');
-  
-  document.addEventListener('click', function(event) {
-    // Check if the click is outside the notification popup
-    console.log(event.target)
-    if (!notificationpopup.contains(event.target) && event.target != showNotificationsButton && event.target != showNotificationsIcon) {
-      notificationpopup.style.display = 'none'; // Hide the popup
-    }
-  });
+document.addEventListener("DOMContentLoaded", () => {
+    const notificationpopup = document.getElementById("notificationpopup");
+    const showNotificationsButton = document.getElementById("shownotifs");
+    const showNotificationsIcon = document.getElementById("shownotifsicon");
 
-    showNotificationsButton.addEventListener('click', function() {
-        notificationpopup.style.display = 'block';
-  });
+    document.addEventListener("click", function(event) {
+        if (
+            !notificationpopup.contains(event.target) &&
+            event.target != showNotificationsButton &&
+            event.target != showNotificationsIcon
+        ) {
+            notificationpopup.style.display = "none"; // Hide the popup
+        }
+    });
 
+    showNotificationsButton.addEventListener("click",togglenotifs);
+    showNotificationsIcon.addEventListener("click",togglenotifs);
 });
 
-
-// function removenotif(event, index) {
-//   const notifElement = document.getElementById(`notif-${index}`);
-//   if (notifElement) {
-//     notifElement.remove();
-//   }
-// }
 function removeallnotifs(event) {
     event.preventDefault(); // Prevent the default form submission
 
@@ -48,7 +40,7 @@ function removeallnotifs(event) {
     })
         .then((response) => {
             if (response.ok) {
-                const notifElements = document.querySelectorAll('.notifcolumn');
+                const notifElements = document.querySelectorAll(".notifcolumn");
                 notifElements.forEach((notif) => {
                     notif.remove();
                 });
