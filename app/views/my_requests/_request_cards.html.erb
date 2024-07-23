@@ -35,7 +35,7 @@
                     <span class="complete-text_mark_completed">Mark as Complete</span>
                   </button>
                 </form>
-              <button class="btn review-btn_mark_completed">
+                  <button class="btn review-btn_mark_completed">
                     <i class="fas fa-star star-icon_mark_completed"></i>
                     <span class="review-text_mark_completed">Leave reviews for your applicants</span>
                   </button>
@@ -72,7 +72,7 @@
                       </a>
                       <% if application.status == 'Accepted' and application.request.status == 'Completed' %>
                         <% if application.reviewed?(current_user) != true %>
-                          <a href="/reviews/new?request_application_id=<%= application.id %>"
+                          <a href="/reviews/new?request_application_id=<%= application.id %>">
                             <button class="btn leave-review-btn_mark_completed">
                             <i class="bi bi-star-fill review-icon_mark_completed"></i>
                             <span class="review-text_mark_completed">Leave a Review</span>

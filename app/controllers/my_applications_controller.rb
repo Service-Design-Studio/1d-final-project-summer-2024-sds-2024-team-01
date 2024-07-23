@@ -4,11 +4,11 @@ class MyApplicationsController < ApplicationController
     # filtered applications are assigned to '@applications' instance variable
     @upcomingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Accepted').where.not(request: { status: 'Completed' })
 
-    @pendingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Pending').or(RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Rejected'))
+    @pendingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Pending')
 
     @completedapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(request: { status: 'Completed' })
 
-    @withdrawnapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Withdrawn')
+    @withdrawnapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Withdrawn').or(RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Rejected'))
 
     @applications = case params[:tab]
                     when 'withdrawn'
