@@ -73,7 +73,7 @@
               <% if @is_creator %>
                 <button class="btn custom-btn-dark-purple mb-3 w-100 chat-button">View related Chats</button>
               <% else %>
-                <button class="btn custom-btn-dark-purple mb-3 w-100 chat-button">Chat</button>
+                <%= link_to "Chat", chat_path_with_request_and_user(@request, @request.user.id, false), class: 'btn custom-btn-chat_my' %>
               <% end %>
               <% if @request.status == 'Completed' %>
                 <div class="status-indicator_requests_details mb-3 w-100">Concluded</div>

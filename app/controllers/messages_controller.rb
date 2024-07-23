@@ -9,11 +9,12 @@ class MessagesController < ApplicationController
 
     if @message.save
       respond_to do |format|
-        format.js
+        format.json { render json: @message.to_json(include: :sender), status: :created }
       end
     else
-      @messages = @chat.messages.order(:created_at)
-      render 'chats/show'
+      respond_to do |format|
+        format.json { render json: @message.errors, status: :unprocessable_entity }
+      end
     end
   end
 

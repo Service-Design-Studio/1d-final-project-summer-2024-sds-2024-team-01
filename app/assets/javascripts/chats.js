@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
-  const chatId = document.getElementById('main-chat').dataset.chatId;
+  const currentUserId = document.body.getAttribute('data-current-user-id');
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const chatId = urlParams.get('chat_id');
   if (chatId) {
     loadChat(chatId);
   }
@@ -20,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .then(response => response.text())
     .then(html => {
-      document.getElementById('main-chat').innerHTML = html;
+      document.getElementById('chat-content').innerHTML = html;
       setupMessageForm(chatId);
     })
     .catch(error => console.error('Error loading chat:', error));
@@ -42,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(message => {
           const messagesDiv = document.querySelector('.message-area');
-          messagesDiv.innerHTML += `<div class="message ${message.sender_id == current_user_id ? 'sent' : 'received'}">${message.message_text}</div>`;
+          messagesDiv.innerHTML += `<div class="message ${message.sender_id == currentUserId ? 'sent' : 'received'}">${message.message_text}</div>`;
           this.reset();
         })
         .catch(error => console.error('Error sending message:', error));

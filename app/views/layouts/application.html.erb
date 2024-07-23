@@ -10,11 +10,12 @@
   <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
   <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet" />
   <%= stylesheet_link_tag "application.css"%>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= csrf_meta_tags %>
   
 </head>
 
-  <body class="<%= "#{controller_name}-#{action_name}" %>">
+  <body data-current-user-id="<%= current_user.id %>" class="<%= "#{controller_name}-#{action_name}" %>">
     <% if controller_name == 'sessions' || controller_name == 'registrations'%>
       <nav class="navbar fixed-top" style="background-color: transparent !important">
     <% else %>

@@ -76,7 +76,8 @@
                         </div>
                       </a>
                       <% if myapplication.status != 'Rejected' %>
-                        <a href="<%= chat_path_with_request_and_user(myapplication.request, myapplication.request.user) %>" class="btn custom-btn-chat_my">Chat</a>                        <a href= "#" class="btn withdraw-btn_requests_index_my">Withdraw</a>
+                        <%= link_to "Chat", chat_path_with_request_and_user(myapplication.request, myapplication.request.user, false), class: 'btn custom-btn-chat_my' %>                       
+                        <a href= "#" class="btn withdraw-btn_requests_index_my">Withdraw</a>
                       <% end %>
                       <% if myapplication.status == 'Accepted' && myapplication.request.status == 'Completed' %>
                         <a href="#" class="btn leave-review-btn">Leave a Review</a>
