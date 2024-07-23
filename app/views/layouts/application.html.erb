@@ -10,7 +10,7 @@
   <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
   <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet" />
   <%= stylesheet_link_tag "application.css"%>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "notifs.css"%>
   <%= csrf_meta_tags %>
 </head>
 
@@ -20,7 +20,7 @@
     <% else %>
       <nav class="navbar fixed-top">
     <% end %>
-        <div class="container d-flex justify-content-start align-items-center">
+        <div class="container d-flex justify-content-start align-items-center h-100">
           <a class="navbar-brand d-flex align-items-center" href="<%= root_path %>">
             <img src="/app/assets/images/OIG.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
           </a>
@@ -29,12 +29,12 @@
             <%= link_to "Register", register_path, class: "btn ms-auto" %>
             <%= link_to "Login", new_user_session_path, class: "btn ms-3" %>
           <% else %>
-            <div class="d-flex ms-4">
+            <div class="d-flex ms-4 h-100 align-items-center">
               <a class="nav-link" href="/myapplications">My Applications</a>
               <a class="nav-link" href="/myrequests">My Requests</a>
               <a class="nav-link" href="/about">About</a>
             </div>
-            <div class="d-flex align-items-center ms-auto">
+            <div class="d-flex align-items-center ms-auto h-100 align-items-center">
               <!-- New request button -->
               <a href="<%= new_request_path %>" class="btn custom-btn-dark-purple me-5">
                 <span> New Request </span> <i class="fas fa-plus ms-2 m-auto"></i>
@@ -47,13 +47,22 @@
                   <img src="/default-avatar.png" alt="Profile Picture" width="40" height="40" class="rounded-circle"> <!-- Profile pic -->
                 <% end %>
               </a>
-              <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn ms-5 " %>
+              <div id="shownotifs" class="text-white notifbell h-100 ms-5 d-flex align-items-center " onclick="togglenotifs()">
+              <% if @unreadcount > 0 %>
+                <span class="bg-danger rounded notifalertcount"><%= @unreadcount%></span>
+              <% end %>
+              <i class="fas fa-bell " id="shownotifsicon"></i>
+              </div>
+              <%= render partial:'notifications/index', locals: { notifications: @notifications }  %>
+                <%= button_to destroy_user_session_path, method: :delete, class: "logoutbutton ms-5 text-white btn", id:"logoutbtn" do %>
+                <i class="bi bi-box-arrow-right " style="font-size: 1.5em;" ></i>
+              <% end %>
             </div>
           <% end %>
         </div>
       </nav>
 
-    <div class="container mt-5 pt-5">
+    <div class="container offsetnavbar">
       <!-- Displaying notices and errors to user -->
       <% flash.each do |key, message| %>
         <div class="alert <%= flash_class(key) %> alert-dismissible" role="alert">
@@ -66,6 +75,7 @@
       <% end %>
       <%= yield %>
     </div>
+  <%= javascript_include_tag 'notifs' %>
   </body>
   <%# <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %> 
 </html>

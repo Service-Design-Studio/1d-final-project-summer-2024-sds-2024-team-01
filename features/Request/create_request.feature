@@ -12,54 +12,26 @@ Background:
   Scenario: Create request with valid data
     Given I want to make new requests
 
-    # When I fill in the "Title" with "Test Request"
-    # And I click on "Category","Manual Labour"
-    # And I fill in the "Date" with "01/07/2024"
-    # And I fill in the "Number of volunteers needed" with "5"
-    # And I fill in the "Start time" with "01:10 pm"
-    # And I fill in the "Duration" with "5"
-    # And I fill in the "Location" with "Singapore Zoo"
-    # And I fill in the "Description" with "Looking for someone to help with my backyard garden"
-    # And I fill in the "Incentive provided" with "Money"
-    # And I fill in the "Incentive" with "$30"  
-    # And I press "Create"
-    # Then I should be able to see the request 
-    # Then I should see "Request was successfully created."
-    # Then I should see "Help with Gardening"
-
-#date and description have to be filled in no matter what hence the request is not created
-     Then I fill in the following details:
+     And I fill in the following details:
     | Field                           | Value                                               |
     | Title                           | Test Request                                        |
     | Category                        | Manual Labour                                       |
-    | Date                            | 01-07-2024                                          |
+    | Date                            | 12/12/2024                                          |
     | Number of volunteers needed     | 5                                                   |
-    | Start time                      | 01:10 pm                                            |
+    | Start time                      | 12:00                                            |
     | Duration                        | 5                                                   |
-    | Location                        | Singapore Zoo                                       |
+    | Location                        | POINT(1 1)                                       |
     | Description                     | Looking for someone to help with my backyard garden |
     | Incentive provided              | Money                                               |
     | Incentive                       | $30                                                 |
     When I click on "Create" button
-    # Then I should be able to see the request
-    # #the create is not clicked! 
-    # And I should see message "Request was successfully created."
+    Then I should see "Request was successfully created."
    
 
   # Sad Case
   Scenario: Create request with invalid data
     Given I want to make new requests
-  # When I fill in the "Title" with " "
-  # And I click on "Category","Manual Labour"        
-  #   And I fill in the "Date" with " "
-  #   And I fill in the "Number of volunteers needed" with " "
-  #   And I fill in the "Start time" with " "
-  #   And I fill in the "Duration" with " "
-  #   And I fill in the "Location" with " "
-  #   And I fill in the "Description" with " "
-  #   And I fill in the "Incentive provided" with " "
-  #   And I fill in the "Incentive" with "$30"
-  Then I fill in the following details:
+  And I fill in the following details:
     | Field                           | Value                                               |
     | Title                           |                                                     |
     | Category                        |                                                     |
@@ -71,6 +43,6 @@ Background:
     | Description                     |                                                     |
     | Incentive provided              | Money                                               |
     | Incentive                       |   $30                                               |
-    And I click on "Create" button
+    When I click on "Create" button
     Then I should be returned back to new requests page
    

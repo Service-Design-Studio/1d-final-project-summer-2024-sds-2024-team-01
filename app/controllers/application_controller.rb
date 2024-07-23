@@ -3,6 +3,15 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   #method to ensure that the right parameters are being permitted for sign up and account update.
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_notifications
+
+
+  private
+
+  def set_notifications
+    @notifications = Notification.where(notification_for: current_user, read: false)
+    @unreadcount = @notifications.count
+  end
 
   protected
 

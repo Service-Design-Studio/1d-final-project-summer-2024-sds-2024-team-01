@@ -1,25 +1,24 @@
 Given('Roles are seeded') do
-    role = Role.new({ id: 1, role_name: 'User'})
-    role.save
+  role = Role.new({ id: 1, role_name: 'User' })
+  role.save
 end
 
 Given('I have an account') do
-    visit new_user_registration_path
-    fill_in 'user_name', with: 'Harrison Ford'
-    fill_in 'user_number', with: '96789012'
-    fill_in 'user_email', with: 'harrison@example.com'
-    fill_in 'user_password', with: 'asdfasdf'
-    fill_in 'user_password_confirmation', with: 'asdfasdf'
-    click_button 'Sign up!'
-    expect(page).to have_content('signed up successfully.')
-    click_button 'Logout'
+  visit new_user_registration_path
+  fill_in 'user_name', with: 'Harrison Ford'
+  fill_in 'user_number', with: '96789012'
+  fill_in 'user_email', with: 'harrison@example.com'
+  fill_in 'user_password', with: 'asdfasdf'
+  fill_in 'user_password_confirmation', with: 'asdfasdf'
+  click_button 'Sign up!'
+  expect(page).to have_content('signed up successfully.')
+  click_button(id: 'logoutbtn')
 end
 
 Given('I login as an admin') do
   admin = create(:user, role_id: 2)
   # sign_in
 end
-
 
 And('I login') do
   visit new_user_session_path
@@ -28,7 +27,6 @@ And('I login') do
   click_button 'Login'
   expect(page).to have_content('Signed in successfully.')
 end
-
 
 Given('I am on the {string} page') do |page|
   if page == 'home'

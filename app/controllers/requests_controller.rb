@@ -33,13 +33,12 @@ class RequestsController < ApplicationController
 
     # Fetch the user who created the request
     @requester = User.find(@request.created_by)
-    
+
     # Fetch reviews and calculate average rating
     @reviews_received = @requester.received_reviews
     @average_rating = @reviews_received.average(:rating).to_f.round(1)
     @review_count = @reviews_received.count
   end
-  
 
   # GET /requests/new
   # show a form to create a new request
@@ -58,6 +57,13 @@ class RequestsController < ApplicationController
       @application.created_at = DateTime.now
       @application.updated_at = DateTime.now
       @application.status = 'Pending'
+
+      @notification = Notification.new
+      @notification.message = 'Someone has applied for your request! Click here to view.'
+      @notification.url = '/myrequests'
+      @notification.header = 'New application'
+      @notification.notification_for = User.find(@request.created_by)
+      @notification.save
 
       if @application.save
         redirect_to @request, flash: { success: "You have successfully applied for the request!" }
