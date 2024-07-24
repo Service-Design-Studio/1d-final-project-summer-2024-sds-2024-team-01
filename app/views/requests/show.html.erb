@@ -69,7 +69,8 @@
                 </div>
               </div>
               <% if @is_creator %>
-                <button class="btn custom-btn-dark-purple mb-3 w-100 chat-button">View related Chats</button>
+                <button class="btn custom-btn-dark-purple mb-3 w-100 chat-button" onclick="location.href='<%= chats_path(request_id: @request.id) %>'">View related Chats</button>
+
               <% else %>
                 <%= link_to "Chat", chat_path_with_request_and_user(@request, @request.user, false), class: 'btn custom-btn-chat_my' %>
               <% end %>
