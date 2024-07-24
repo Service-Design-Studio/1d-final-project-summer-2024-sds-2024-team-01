@@ -61,11 +61,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
   create_table "chats", force: :cascade do |t|
     t.bigint "applicant_id", null: false
     t.bigint "requester_id", null: false
-    t.bigint "request_id", null: false
+    t.bigint "application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["applicant_id"], name: "index_chats_on_applicant_id"
-    t.index ["request_id"], name: "index_chats_on_request_id"
+    t.index ["application_id"], name: "index_chats_on_application_id"
     t.index ["requester_id"], name: "index_chats_on_requester_id"
   end
 
@@ -204,8 +204,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+<<<<<<< HEAD
   add_foreign_key "charity_codes", "charities"
   add_foreign_key "chats", "requests"
+=======
+  add_foreign_key "chats", "request_applications", column: "application_id"
+>>>>>>> 5e25664 (some minor changes to include fade out notif effects)
   add_foreign_key "chats", "users", column: "applicant_id"
   add_foreign_key "chats", "users", column: "requester_id"
   add_foreign_key "company_charities", "charities"
