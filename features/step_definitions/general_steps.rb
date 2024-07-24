@@ -40,6 +40,11 @@ When('I click on {string} button') do |button|
   click_button button
 end
 
+When('I click on {string}') do |str|
+  click_on str
+end
+
+
 And('I press {string}') do |button_text|
   click_button button_text
 end

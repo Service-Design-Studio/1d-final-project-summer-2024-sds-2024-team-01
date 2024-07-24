@@ -37,10 +37,6 @@ When('I expand the request') do
   find('.dropdown-btn_requests_index_my').click
 end
 
-When('I click on Apply') do
-  click_on 'Apply'
-end
-
 Given('I have applied for the request') do
   RequestApplication.create(
     status: 'Pending',
@@ -51,19 +47,18 @@ Given('I have applied for the request') do
   )
 end
 
-Then('I should see {string} in the status column of the most recent request') do |_status|
-  # Add the code to check the status of the most recent request
-  pending
-end
-
 When('my application has been accepted') do
-  # Add the code to handle the acceptance of the application
-  pending
+  application = RequestApplication.where(applicant_id: User.where(name: 'Harrison Ford').take.id)
+  application.update(status: 'Accepted')
 end
 
 When('my application has been rejected') do
-  # Add the code to handle the rejection of the application
-  pending
+  application = RequestApplication.where(applicant_id: User.where(name: 'Harrison Ford').take.id)
+  application.update(status: 'Rejected')
+end
+
+Given('I have completed the request') do
+  Request.where(title: 'Test Request to Apply').update(status: 'Completed')
 end
 
 # Then('I should see {string} under the status column of the first request') do |status|
