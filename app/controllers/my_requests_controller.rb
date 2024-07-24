@@ -80,7 +80,7 @@ class MyRequestsController < ApplicationController
 
     @request.status = 'Completed'
     @request.save
-    redirect_to '/myrequests', notice: 'Request marked as completed'
+    redirect_to '/myrequests', flash: { success: "Congratulations! Your request is marked as complete!" } 
   end
 
   def accept

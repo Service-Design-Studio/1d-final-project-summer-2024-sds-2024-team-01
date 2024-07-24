@@ -37,9 +37,9 @@ class MyApplicationsController < ApplicationController
 
     reqtowithdraw.status = 'Withdrawn'
     if reqtowithdraw.save
-      redirect_to '/myapplications', notice: 'Application Withdrawn'
+      redirect_to '/myapplications', flash: { warning: "Withdraw success! Do consider your schedule closely before applying in the future." }
     else
-      redirect_to '/myapplications', notice: 'Error while withdrawing application'
+      redirect_to '/myapplications', flash: { error: "An error occured with the withdrawing. Please try again later." }
     end
   end
 end

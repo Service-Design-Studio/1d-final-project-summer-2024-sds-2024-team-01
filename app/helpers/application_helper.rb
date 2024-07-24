@@ -56,14 +56,23 @@ module ApplicationHelper
     chats_path(chat_id: chat.id)
   end
 
-  def flash_class(level)
-    bootstrap_alert_class = {
-      "success" => "custom-alert-success",
-      "error" => "custom-alert-error",
-      "notice" => "custom-alert-notice",
-      "alert" => "custom-alert-alert",
-      "warn" => "custom-alert-warning"
-    }
-    bootstrap_alert_class[level]
+  def flash_class(key)
+    case key.to_sym
+    when :success then "custom-alert-success"
+    when :error, :alert then "custom-alert-error"
+    when :notice then "custom-alert-notice"
+    when :warning then "custom-alert-warning"
+    else "custom-alert-info"
+    end
+  end
+
+  def flash_icon(key)
+    case key.to_sym
+    when :success then "fas fa-check-circle"
+    when :error, :alert then "fas fa-exclamation-circle"
+    when :notice then "fas fa-info-circle"
+    when :warning then "fas fa-exclamation-triangle"
+    else "fas fa-bell"
+    end
   end
 end

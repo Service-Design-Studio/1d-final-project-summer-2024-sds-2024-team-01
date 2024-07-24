@@ -32,15 +32,16 @@ class ReviewsController < ApplicationController
 
       redirect_to redir, notice: 'Review was successfully created.'
 
+      # redirect_to @request, flash: { success: "Review saved! Thank you for your contributions!" }
     else
       p @review.errors.full_messages
-      render :new, notice: 'Review not saved.'
+      render :new, flash: { error: "There was an error with uploading your review." }
     end
   end
 
   def update
     if @review.update(review_params)
-      redirect_to request_path(@review.request), notice: 'Review was successfully updated.'
+      redirect_to request_path(@review.request), flash: { success: "Your review has been updated successfully!" }
     else
       render :edit
     end
