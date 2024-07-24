@@ -7,7 +7,7 @@
               <div class="clickable-card_requests_index-wrapper_my">
                 <div class="card h-100 d-flex flex-row align-items-center">
                   <a href="<%= request_path(myapplication.request) %>" class="clickable-area_requests_index_my">
-                      <img src="<%= myapplication.request.thumbnail_url %>" class="thumbnail_requests_index_my" alt="<%= myapplication.request.title %>"/>
+                      <img src="<%= request_thumbnail_url(myapplication.request) %>" class="thumbnail_requests_index_my" alt="<%= myapplication.request.title %>"/>
                     <div class="card-content_requests_index_my flex-grow-1">
                       <h5 class="card-title_requests_index_my"><%= myapplication.request.title %></h5>
                       <p class="card-date_requests_index_my"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>

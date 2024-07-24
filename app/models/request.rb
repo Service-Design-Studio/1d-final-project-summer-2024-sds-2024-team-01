@@ -35,7 +35,7 @@ class Request < ActiveRecord::Base
   end
 
   def thumbnail_url
-    if thumbnail.present?
+    if thumbnail.attached?
       url_for thumbnail
     else
       ActionController::Base.helpers.asset_path('freepik-lmao.jpg')
