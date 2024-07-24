@@ -5,7 +5,7 @@
   </head>
 
 <div class="signup-container">
-  <img src="<%= 'logo.png' %>" alt="Logo">
+  <%= image_tag 'icon_v1.png', alt: 'Logo', class: 'd-inline-block align-text-top logo-circle-login-reg' %>
   <h2 class="signup-header">Sign up for your corporation</h2>
 
   <%= form_with url: "/register/corporate", method: :post do |f| %>
