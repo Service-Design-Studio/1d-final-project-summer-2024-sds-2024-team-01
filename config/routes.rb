@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       member do
         post 'ban'
         post 'unban'
+        post 'cancel_ban'
       end
     end
   end
