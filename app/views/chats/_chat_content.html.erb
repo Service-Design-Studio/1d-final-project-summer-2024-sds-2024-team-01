@@ -10,9 +10,7 @@
 
   <!-- Thumbnail and Request Details -->
   <div class="request-details-container d-flex align-items-center">
-    <% if @chat.request.thumbnail.attached? %>
-      <img src="<%= url_for(@chat.request.thumbnail) %>" alt="<%= @chat.request.title %>" class="request-thumbnail mr-3" style="width: 50px; height: 50px;">
-    <% end %>
+    <img src="<%= @chat.request.thumbnail_url %>" alt="<%= @chat.request.title %>" class="request-thumbnail mr-3" style="width: 50px; height: 50px;">
     <div class="request-details">
       <a href="/requests/<%= @chat.request.id %>"><h5 class="mb-0"><%= @chat.request.title %></h5></a>
     </div>

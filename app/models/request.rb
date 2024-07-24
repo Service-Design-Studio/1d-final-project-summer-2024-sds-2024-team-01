@@ -33,4 +33,12 @@ class Request < ActiveRecord::Base
 
     errors.add(:reward, 'Monetary reward cannot be null, select "None" if you do not intend to provide compensation')
   end
+
+  def thumbnail_url
+    if thumbnail.present?
+      url_for thumbnail
+    else
+      ActionController::Base.helpers.asset_path('freepik-lmao.jpg')
+    end
+  end
 end

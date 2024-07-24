@@ -37,6 +37,7 @@
 
 module ApplicationHelper
   def chat_path_with_request_and_user(request, user, current_user_is_requester)
+    return new_user_session_path if current_user.nil?
     if current_user_is_requester
       applicant_id = user.id
       requester_id = current_user.id
