@@ -4,12 +4,6 @@ Given('I am on the Ring of Reciprocity requests page') do
   visit '/requests'
 end
 
-# just check that there is a list of requests in the database
-# Then('I should see a list of requests') do
-#   # Check if the page has a list of requests
-#   expect(page).to have_css('#requestContainer')
-#   end
-
 Given('I can see no requests available') do
   Request.delete_all
 end
@@ -27,35 +21,6 @@ Given('I want to make new requests') do
   visit '/requests/new'
 end
 
-# When('I fill in the {string} with {string}') do |input, value|
-#   case input
-#   when 'Banner Photo'
-#     attach_file('Banner Photo', value, make_visible: true) if value.present?
-#   when 'Title'
-#     fill_in 'Title', with: value
-#   when 'Date'
-#     fill_in 'Date', with: value
-#   # when 'Category'
-#   #   select(value, from: 'request_category')
-#   when 'Number of volunteers needed'
-#     fill_in 'Number of volunteers needed', with: value
-#   when 'Start time'
-#     #find('#request_start_time').find(:xpath, 'option[2]').select_option
-#     fill_in 'request[start_time]', with: value
-#   when 'Duration'
-#     fill_in 'Duration', with: value
-#   when 'Location'
-#     fill_in 'request[location]', with: value
-#   when 'Description'
-#     fill_in 'Description', with: value
-#   when 'Incentive provided'
-#     find('#request_reward_type').find(:xpath, 'option[2]').select_option
-#   when 'Incentive'
-#     fill_in 'request[reward]', with: value
-#   else
-#     raise "Field '#{input}' is not defined in the step definition."
-#   end
-# end
 Then('I fill in the following details:') do |table|
   table.hashes.each do |row|
     input = row['Field']
@@ -69,20 +34,11 @@ Then('I fill in the following details:') do |table|
       find('#request_category').find(:xpath, 'option[2]').select_option
     when 'Date'
       fill_in 'Date', with: value
-      page.execute_script("document.querySelector('input[type=\"date\"]').value = '#{Date.parse(value).strftime('%Y-%m-%d')}';")
     when 'Number of volunteers needed'
       fill_in 'Number of volunteers needed', with: value
     when 'Start time'
       page.find('#start_time').click
-      # driver = Selenium::WebDriver.for :chrome
-      #
-      # driver.manage.timeouts.implicit_wait = 5
-      # element = driver.find_element(xpath: '//*[@id="start_time"]')
-      # # wait = Selenium::WebDriver::Wait.new
-      # # wait.until { revealed.displayed? }
-      #
-      # element.click
-      # element.send_keys '12'
+      page.find('.flatpickr-hour').click
     when 'Duration'
       fill_in 'Duration', with: value
     when 'Location'
