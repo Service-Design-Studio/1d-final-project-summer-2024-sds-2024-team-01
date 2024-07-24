@@ -8,6 +8,7 @@
   <span class="h-divider bg-white"></span>
     <% if @notifications.present? %>
       <% @notifications.each_with_index do | notif, index| %>
+        <a href="<%=notif.url%>" class="text-decoration-none text-white">
         <div id="notif-<%= index %>"class="notifcolumn d-flex">
           <div class="d-flex flex-column flex-grow-1">
           <b>
@@ -23,6 +24,7 @@
             </button>
           </form>
         </div>
+        </a>
       <% end %>
     <% else %>
         <div id="nonotifs" class="notifcolumn d-flex">

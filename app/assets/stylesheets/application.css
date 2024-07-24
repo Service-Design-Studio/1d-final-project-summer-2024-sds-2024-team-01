@@ -8,8 +8,26 @@ form {
   margin: 20px 0;
 }
 
-.offsetnavbar{
+.offsetnavbar {
     margin-top:80px;
+}
+
+.noticefadeout {
+    position: fixed;
+    background: #505050;
+    color: #eee;
+    top: 90px;
+    right: 10px;
+    padding: 20px;
+    z-index: 200;
+    border-radius: 10px;
+    animation: fadeoutnotif 5s forwards;
+}
+
+@keyframes fadeoutnotif {
+0% { opacity: 100%;}
+80% {opacity: 100%;}
+100% { opacity: 0%;}
 }
 
 .button-container .button {
