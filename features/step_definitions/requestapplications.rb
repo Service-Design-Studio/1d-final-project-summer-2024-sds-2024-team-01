@@ -18,13 +18,13 @@ Given('there is a request to be applied for') do
       description: 'Need someone to walk my dog for an hour every afternoon',
       category: 'Pet Care',
       location: 'POINT(34.052235 -118.243683)',
-      date: Date.tomorrow,
+      date: Date.tomorrow + 3,
       number_of_pax: 1,
       duration: 1,
       start_time: '12:00',
       reward: '$20',
       reward_type: 'Cash',
-      status: 'Open',
+      status: 'Available',
       created_by: User.where(name: 'Alice Smith').take.id
     )
 end
@@ -61,10 +61,9 @@ Given('I have completed the request') do
   Request.where(title: 'Test Request to Apply').update(status: 'Completed')
 end
 
-# Then('I should see {string} under the status column of the first request') do |status|
-#   # Add the code to check the status under the first request
-#   pending
-# end
+When('the request becomes full') do
+  create(:random_application, request: Request.where(title: 'Test Request to Apply').take, status: 'Accepted')
+end
 
 Then('I should see the applicants who have applied for each request') do
   page.should have_css('.applicant-info_requests_index_my h6', visible: false, text: 'Alice Smith')
@@ -81,4 +80,7 @@ end
 Then('I should see the applicants profile') do
   expect(page).to have_content('Alice Smith')
   expect(page).to have_selector('.body-container_profile')
+end
+
+When('I click on the request title') do
 end

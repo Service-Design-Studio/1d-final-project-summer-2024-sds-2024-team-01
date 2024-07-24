@@ -56,6 +56,11 @@ class RequestsController < ApplicationController
   # create a new request
   def apply
     @request = Request.find(params[:id])
+
+    if RequestApplication.where(request_id: @request.id).where(status: 'Accepted').count >= @request.number_of_pax
+      redirect_to @request, notice: 'Sorry, this request is unable to accept anymore applicants.'
+      return
+    end
     if RequestApplication.find_by(applicant_id: current_user.id, request_id: @request.id).nil?
       @application = RequestApplication.new
       @application.applicant_id = current_user.id
@@ -100,12 +105,12 @@ class RequestsController < ApplicationController
     if @request.save
       if request_params[:thumbnail].present?
         @request.thumbnail.attach(request_params[:thumbnail])
-      # else
-      #   @request.thumbnail.attach(
-      #     io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
-      #     filename: 'freepik-lmao.jpg',
-      #     content_type: 'image/jpeg'
-      #   )
+        # else
+        #   @request.thumbnail.attach(
+        #     io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
+        #     filename: 'freepik-lmao.jpg',
+        #     content_type: 'image/jpeg'
+        #   )
       end
       redirect_to @request, notice: 'Request was successfully created.'
       # redirect_to @request, flash: { success: 'Request was successfully created.' }
