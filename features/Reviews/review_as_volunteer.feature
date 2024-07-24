@@ -11,8 +11,8 @@ Background:
   And I click on 'Completed'
 
 Scenario: Leave a review for a requester
-  Given I expand the application
-  And I click on 'Leave a review'
+  Given I expand the request
+  And I click on Leave a review
   When I enter review details
-  And I press 'Submit'
-  Then I should see 'Review submitted'
+  And I click on 'Submit'
+  Then I should see 'Review was successfully created'
