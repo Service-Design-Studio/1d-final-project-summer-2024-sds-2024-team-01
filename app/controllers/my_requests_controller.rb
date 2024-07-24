@@ -9,14 +9,16 @@ class MyRequestsController < ApplicationController
                                 COUNT(CASE WHEN request_applications.status != \'Withdrawn\' THEN 1 END) as active_application_count,
                                 COUNT(CASE WHEN request_applications.status = \'Accepted\' THEN 1 END) as accepted_application_count,
                                 array_agg(request_applications.applicant_id) as applicant_ids')
-
+  
     today_start = Date.today.beginning_of_day
-    @in_progress_requests = @requests.where('date > ?', today_start)
-                                     .where.not(status: 'Completed')
+    @in_progress_requests = @requests.where('date > ?', today_start).where.not(status: 'Completed')
     @completed_requests = @requests.where(status: 'Completed')
-    @unfulfilled_requests = @requests.where('date <= ?', today_start)
-                                     .where.not(status: 'Completed')
-
+    @unfulfilled_requests = @requests.where('date <= ?', today_start).where.not(status: 'Completed')
+  
+    @in_progress_requests_empty = @in_progress_requests.empty?
+    @completed_requests_empty = @completed_requests.empty?
+    @unfulfilled_requests_empty = @unfulfilled_requests.empty?
+  
     @requests = case params[:tab]
                 when 'completed'
                   @completed_requests
@@ -25,13 +27,10 @@ class MyRequestsController < ApplicationController
                 else
                   @in_progress_requests
                 end
-
-    # Fetch all unique applicant IDs
+  
     all_applicant_ids = @requests.map(&:applicant_ids).flatten.uniq.compact
-
-    # Fetch all applicants in one query
     @applicants = User.where(id: all_applicant_ids).index_by(&:id)
-
+  
     respond_to do |format|
       format.html
       format.json do
@@ -43,12 +42,19 @@ class MyRequestsController < ApplicationController
                     else
                       @in_progress_requests
                     end
+  
         render json: {
-          html: render_to_string(partial: 'request_cards', locals: { requests: @requests }, formats: [:html])
+          html: render_to_string(partial: 'request_cards', locals: { requests: @requests }, formats: [:html]),
+          empty_state_html: render_to_string(partial: 'shared/empty_state', formats: [:html]),
+          in_progress_requests_empty: @in_progress_requests_empty,
+          completed_requests_empty: @completed_requests_empty,
+          unfulfilled_requests_empty: @unfulfilled_requests_empty
         }
       end
     end
   end
+  
+  
 
   # Redirect directly to let requestcontroller handle
   # GET /requests/1

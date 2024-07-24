@@ -117,9 +117,12 @@ function updateRequestCards(tabId) {
   .then(data => {
     const tabPane = document.querySelector(`#${tabId}`);
     tabPane.innerHTML = data.html;
-    // Update UI based on the new tab content
+
+    if (data[`${tabId}_requests_empty`]) {
+      tabPane.innerHTML = data.empty_state_html;
+    }
+
     updateUIBasedOnStatus();
-    // Dispatch a custom event after content is loaded
     document.dispatchEvent(new CustomEvent('requestCardsUpdated', { detail: { tabId: tabId } }));
   });
 }
