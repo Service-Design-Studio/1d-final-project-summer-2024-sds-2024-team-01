@@ -83,4 +83,5 @@ Then('I should see the applicants profile') do
 end
 
 When('I click on the request title') do
+
 end
