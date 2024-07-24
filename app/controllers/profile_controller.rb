@@ -2,7 +2,6 @@
 # require "net/http"
 
 class ProfileController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[index]
   def index
     if params[:id].nil?
       if current_user.nil?

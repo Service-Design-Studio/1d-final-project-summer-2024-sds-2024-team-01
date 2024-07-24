@@ -1,2 +1,1 @@
-// for like super long js code
-
+// app/javascript/packs/application.js

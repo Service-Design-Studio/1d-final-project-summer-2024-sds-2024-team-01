@@ -1809,6 +1809,125 @@ font-weight: bold;
     border-radius: 5px;
 }
 
+/* Custom style for the inbox dropdown */
+.inbox-dropdown {
+  color: #333333; /* Dark grey color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold;
+  font-size: 1.8rem; /* Make the 'Inbox' text bigger */
+}
+
+.inbox-dropdown:hover,
+.inbox-dropdown:focus {
+  color: #333333; /* Ensure the color stays dark grey on hover and focus */
+  text-decoration: none; /* Ensure no underline on hover and focus */
+}
+
+.inbox-dropdown .fa-chevron-down {
+  font-size: 1rem; /* Adjust the size of the arrow */
+  vertical-align: middle; /* Align the arrow vertically */
+  margin-left: 0.3rem; /* Add space between text and arrow */
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 33%; /* Adjust as needed for desired width */
+}
+
+.sidebar .dropdown {
+  margin-bottom: 20px;
+}
+
+.chat-preview img.request-thumbnail {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.chat-preview .time {
+  font-size: 0.75rem; /* Smaller font for date */
+}
+
+.chat-preview .info h6 {
+  font-size: 0.9rem; /* Smaller font for name */
+}
+
+.chat-preview .info p {
+  font-size: 0.8rem; /* Smaller font for title */
+}
+
+/* Chat content styles */
+.chat-header .user-details h5 {
+  font-size: 1rem; /* Adjust font size for user name */
+}
+
+.chat-header .request-details-container {
+  display: flex;
+  align-items: center;
+}
+
+.chat-header .request-thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.message-area {
+  height: calc(100vh - 200px); /* Adjust based on your header and input area height */
+  overflow-y: auto;
+}
+
+.message.sent {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end;
+}
+
+.message.received {
+  background-color: #f1f1f1;
+  color: black;
+  align-self: flex-start;
+}
+
+.message {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.input-area {
+  background: white;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Style for profile link */
+.mini-profile {
+  color: #333333; /* Dark grey color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold;
+}
+
+.mini-profile:hover,
+.mini-profile:focus {
+  color: #333333; /* Ensure the color stays dark grey on hover and focus */
+  text-decoration: none; /* Ensure no underline on hover and focus */
+}
+
+/* Style for request title link */
+.request-details a {
+  color: #333333; /* Dark grey color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold;
+}
+
+.request-details a:hover,
+.request-details a:focus {
+  color: #333333; /* Ensure the color stays dark grey on hover and focus */
+  text-decoration: none; /* Ensure no underline on hover and focus */
+}
+
 .logoutbutton:hover{
     color: #505050 !important;
 }
