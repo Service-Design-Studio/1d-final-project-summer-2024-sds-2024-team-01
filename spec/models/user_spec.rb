@@ -19,6 +19,18 @@ RSpec.describe User, type: :model do
     expect(subject).to_not be_valid
   end
 
+  it 'is valid without a number for non normal users' do
+    subject.number = nil 
+    subject.role_id = 4
+    expect(subject).to be_valid
+  end
+
+  it 'is not valid with a used number' do
+    expect do
+      create(:random_user, number: subject.number)
+    end.to raise_error(ActiveRecord::RecordNotUnique)
+  end
+
   it 'is not valid without an email' do
     subject.email = nil
     expect(subject).to_not be_valid

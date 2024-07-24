@@ -83,10 +83,17 @@
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="availability-indicator_requests_details flex-grow-1"><%= @slots_remaining %> slots remaining</div>
                     <form action="/myrequests/complete?id=<%= @request.id %>" method="post" class="complete-form ms-2">
+                      <% if @request.status != 'Completed' and @request.date > Date.today.beginning_of_day %>
                       <button type="submit" class="btn complete-btn_mark_completed">
                         <i class="bi bi-check-lg tick-icon_mark_completed"></i>
                         <span class="complete-text_mark_completed">Mark as Complete</span>
                       </button>
+                      <% elsif @request.status != 'Completed' and @request.date <= Date.today.beginning_of_day %>
+                      <button type="submit" class="btn repost-btn_unfulfilled">
+                        <i class="fas fa-sync-alt refresh-icon_unfulfilled"></i>
+                        <span class="repost-text_unfulfilled">Repost your Request!</span>
+                      </button>
+                      <% end %>
                     </form>
                   </div>
                 </div>

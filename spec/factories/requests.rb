@@ -36,7 +36,7 @@ FactoryBot.define do
     association :user, factory: :random_user, strategy: :build
   end
 
-  factory :requestwiththumbnail do
+  factory :requestwiththumbnail, class:'Request' do
     title { "Help with #{Faker::Verb.ing_form} #{Faker::Hacker.noun}" }
     description { Faker::Quote.fortune_cookie }
     category { 'General' }
@@ -63,7 +63,7 @@ FactoryBot.define do
     )}
 
     # after(:build) do |request|
-    #   image_path =       request.thumbnail.attach(
+    #   image_path = request.thumbnail.attach(
     #   )
     # end
   end

@@ -14,12 +14,14 @@ Rails.application.routes.draw do
     get 'register' => 'my_devise/registrations#choose_register_method'
     get 'register/charity' => 'my_devise/registrations#charity'
     get 'register/corporate' => 'my_devise/registrations#corporate'
+    post 'register/corporate' => 'my_devise/registrations#create_corporate'
+    post 'register/charity' => 'my_devise/registrations#create_charity'
   end
 
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   get 'profile' => 'profile#index'
-  get 'profile/edit' => 'profile#edit'
+  post 'profile/edit' => 'profile#edit'
 
   post 'requests/apply' => 'requests#apply'
   get 'myrequests' => 'my_requests#index'
@@ -28,12 +30,16 @@ Rails.application.routes.draw do
   post 'myrequests/reject' => 'my_requests#reject'
 
   get 'myapplications' => 'my_applications#index'
+  post 'myapplications/withdraw' => 'my_applications#withdraw'
 
-  # resources :reviews, only: [:edit, :update, :index, :new, :create]
+  resources :reviews, only: [:edit, :update, :index, :new, :create]
 
   # get 'reviews/new_temp' => 'reviews#new_temp'
-  get 'myrequests/reviews' => 'reviews#new'
-  get 'reviews/edit' => 'reviews#update'
+  # get 'reviews/new' => 'reviews#new'
+  # get 'reviews/edit' => 'reviews#update'
+
+  post 'notifications/read' => 'notifications#read'
+  post 'notifications/clear' => 'notifications#clear'
 
   # get 'myrequests/chats' => 'chats#new'
 
@@ -53,7 +59,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :myrequests do
+  resources :request_application, path: 'applications' do
     resources :reviews, only: %i[new create edit update]
   end
 
