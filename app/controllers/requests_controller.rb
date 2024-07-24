@@ -32,7 +32,11 @@ class RequestsController < ApplicationController
   # GET /requests/1
   # show a single request
   def show
-    @request = Request.find(params[:id])
+    if @request.nil?
+      redirect_to '/', notice: 'This request does not exist'
+      return
+    end
+
     @is_creator = current_user && @request.created_by == current_user.id
     @accepted_application_count = @request.request_applications.where(status: 'Accepted').count
     @slots_remaining = @request.number_of_pax - @accepted_application_count
@@ -133,7 +137,7 @@ class RequestsController < ApplicationController
 
   # # Use callbacks to share common setup or constraints between actions.
   def set_request
-    @request = Request.find(params[:id])
+    @request = Request.find_by(id: params[:id])
   end
 
   # Only allow a list of trusted parameters through.
