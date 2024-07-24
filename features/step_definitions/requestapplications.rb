@@ -72,16 +72,15 @@ end
 # end
 
 Then('I should see the applicants who have applied for each request') do
-  page.should have_css('.applicant-info_requests_index_my > p', visible: false, text: 'Alice Smith')
+  page.should have_css('.applicant-info_requests_index_my h6', visible: false, text: 'Alice Smith')
 end
 
 Then('I should see the name of each applicant') do
-  page.should have_css('.applicant-info_requests_index_my > p', visible: false, text: 'Alice Smith')
+  page.should have_css('.applicant-info_requests_index_my h6', visible: false, text: 'Alice Smith')
 end
 
 When('I click on the profile section of the first applicant') do
-  find('.dropdown-btn_requests_index_my').click
-  visit find('.applicant-profile_my')[:href]
+  visit find('.mini-profile')[:href]
 end
 
 Then('I should see the applicants profile') do

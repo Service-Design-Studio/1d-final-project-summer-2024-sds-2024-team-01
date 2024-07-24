@@ -12,10 +12,12 @@ Background:
 
 Scenario:
     Given I am on the 'myrequests' page
+    When I expand the request
     Then I should see the applicants who have applied for each request
     And I should see the name of each applicant
 
 Scenario:
     Given I am on the 'myrequests' page
-    When I click on the profile section of the first applicant
+    When I expand the request
+    And I click on the profile section of the first applicant
     Then I should see the applicants profile
