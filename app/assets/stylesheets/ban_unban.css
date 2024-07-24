@@ -11,3 +11,22 @@
   background-color: #d9b3ff;
   color: white;
 }
+
+
+/* ban_unban.css */
+
+.btn-primary {
+  background-color: blue;
+}
+
+.btn-danger {
+  background-color: black;
+}
+
+.btn-warning {
+  background-color: yellow;
+}
+
+.btn-success {
+  background-color: green;
+}
