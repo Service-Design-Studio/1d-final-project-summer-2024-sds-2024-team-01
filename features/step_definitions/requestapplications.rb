@@ -9,7 +9,7 @@ Then('I should not be able to accept any applicants') do
 end
 
 Then('the application should be {string}') do |status|
-  expect(find('.status-indicator_my').text).to eq(status)
+  expect(find('.status-indicator_my', visible: false).text).to eq(status)
 end
 
 Given('there is a request to be applied for') do

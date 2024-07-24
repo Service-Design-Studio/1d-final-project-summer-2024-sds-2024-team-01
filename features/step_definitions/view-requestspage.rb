@@ -69,11 +69,11 @@ Then('I fill in the following details:') do |table|
       find('#request_category').find(:xpath, 'option[2]').select_option
     when 'Date'
       fill_in 'Date', with: value
-      page.execute_script("document.querySelector('input[type=\"date\"]').value = '#{Date.parse(value).strftime('%Y-%m-%d')}';")
     when 'Number of volunteers needed'
       fill_in 'Number of volunteers needed', with: value
     when 'Start time'
       page.find('#start_time').click
+      page.find('.flatpickr-hour').click
       # driver = Selenium::WebDriver.for :chrome
       #
       # driver.manage.timeouts.implicit_wait = 5

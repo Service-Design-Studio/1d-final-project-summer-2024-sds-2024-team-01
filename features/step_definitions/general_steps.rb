@@ -62,13 +62,13 @@ And('I have a request') do
     description: 'Need someone to walk my dog for an hour every afternoon',
     category: 'Pet Care',
     location: 'POINT(34.052235 -118.243683)',
-    date: Date.tomorrow,
+    date: Date.tomorrow + 1,
     number_of_pax: 1,
     duration: 1,
     start_time: '12:00',
     reward: '$20',
     reward_type: 'Cash',
-    status: 'Open',
+    status: 'Available',
     created_by: User.where(name: 'Harrison Ford').take.id
   )
 end
