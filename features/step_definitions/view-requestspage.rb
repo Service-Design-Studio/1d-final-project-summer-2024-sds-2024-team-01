@@ -154,3 +154,31 @@ Then('I should see the requests that contain the keyword {string}') do |keyword|
   # Ensure there is at least one matching card
   expect(matching_cards).not_to be_empty, "expected to find text '#{keyword}' in the requests, but did not"
 end
+
+############################
+# Feature 7: Show More Details
+
+When('I click on a request') do
+  FactoryBot.create_list(:random_request, 10)
+  first('.request-card_requests_index .clickable-card_requests_index').click
+end
+
+Then('I should see the request details') do
+  expect(page).to have_content('Request Title')
+  expect(page).to have_content('Request Description')
+  expect(page).to have_content('Category')
+  expect(page).to have_content('Location')
+  expect(page).to have_content('Date')
+  expect(page).to have_content('Start Time')
+  expect(page).to have_content('Duration')
+  expect(page).to have_content('Reward')
+  expect(page).to have_content('Status')
+end
+
+When('the request is deleted') do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then ('I should see "This request does not exist"') do
+  pending # Write code here that turns the phrase above into concrete actions
+end

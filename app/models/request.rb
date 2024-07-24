@@ -25,6 +25,7 @@ class Request < ActiveRecord::Base
   end
 
   def validate_monetary
+    
     return if reward_type != 'Money'
 
     errors.add(:reward, 'Monetary reward value has to be a number') unless reward.is_a? Numeric

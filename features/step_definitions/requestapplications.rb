@@ -12,22 +12,6 @@ Then('the application should be {string}') do |status|
   expect(find('.status-indicator_my').text).to eq(status)
 end
 
-Given('there is a request to be applied for') do
-  Request.create(
-      title: 'Test Request to Apply',
-      description: 'Need someone to walk my dog for an hour every afternoon',
-      category: 'Pet Care',
-      location: 'POINT(34.052235 -118.243683)',
-      date: Date.tomorrow,
-      number_of_pax: 1,
-      duration: 1,
-      start_time: '12:00',
-      reward: '$20',
-      reward_type: 'Cash',
-      status: 'Open',
-      created_by: User.where(name: 'Alice Smith').take.id
-    )
-end
 
 When('I click on the request') do
   find('.clickable-card_requests_index').click
