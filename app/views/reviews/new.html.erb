@@ -1,14 +1,11 @@
 <!-- app/views/my_requests/reviews/new.html.erb -->
 
 <div class="container content review-container">
-  <div class="breadcrumb">
-    <a href="/myrequests">My Requests</a> /
+  <h1 class="">
     Leave a Review
-  </div>
+  </h1>
   
-  <h1 class="review-header">Review</h1>
-  
-  <%= form_with(model: [@request, @review],url: myrequest_reviews_path(@request), local: true) do |form| %>
+  <%= form_with(model: [@application, @review],url: request_application_reviews_path(@application), local: true) do |form| %>
     <div class="rating-container">
       <span class="rating-label">Rate the overall experience:</span>
       <div class="rating-stars">
@@ -19,7 +16,11 @@
         <i class="fas fa-star" data-rating="5"></i>
         <span class="rating-text">(0)</span>
       </div>
-      <span class="dynamic-text">Leaving a review for <%= @request.user.name %></span>
+      <% if current_user == @application.request.user %>
+      <span class="dynamic-text">Leaving a review for <%= User.find(@application.applicant_id).name %></span>
+    <% else %>
+      <span class="dynamic-text">Leaving a review for <%= User.find(@application.request.created_by).name %></span>
+    <% end %>
     </div>
     
     <%= form.hidden_field :rating, id: "review_rating" %> <!-- Hidden field to store the rating -->

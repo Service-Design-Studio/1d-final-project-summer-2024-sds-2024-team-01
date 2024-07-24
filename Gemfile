@@ -29,6 +29,7 @@ gem 'google-cloud-storage', '~> 1.47', require: false
 # for geospatial queries from the database to query for locations
 gem 'rgeo', '~> 3.0.1'
 gem 'activerecord-postgis-adapter', '~> 9.0.2'
+gem 'active_storage_validations'
 
 # for authentication; to make user accounts
 gem 'devise'

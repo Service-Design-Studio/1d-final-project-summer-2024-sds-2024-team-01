@@ -19,5 +19,17 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
   validates :email, presence: true
-  validates :number, presence: true, format: { with: /[89]\d{7}/, message: 'Please enter a valid SG number' }
+
+  validates_uniqueness_of :email
+  validate :normal_users_must_have_number
+
+  def normal_users_must_have_number
+    return unless role.id == 1
+
+    if number.blank?
+      errors.add(:number, "Phone number can't be blank")
+    elsif !number.match?(/[89]\d{7}/)
+      errors.add(:number, 'Please enter a valid SG number')
+    end
+  end
 end

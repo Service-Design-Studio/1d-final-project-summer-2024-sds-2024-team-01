@@ -4,7 +4,7 @@ FactoryBot.define do
     review_content { Faker::Quote.famous_last_words }
     association :review_for, factory: :random_user, strategy: :build
     association :review_by, factory: :random_user, strategy: :build
-    association :request, factory: :test_request, created_by: :review_for
+    association :request, factory: :requestwiththumbnail, created_by: :review_for
     created_at { DateTime.now }
     updated_at { DateTime.now }
   end
@@ -14,7 +14,7 @@ FactoryBot.define do
     review_content { Faker::Quote.famous_last_words }
     association :review_for, factory: :random_user, strategy: :build
     association :review_by, factory: :random_user, strategy: :build
-    association :request, factory: :test_request, created_by: :review_by
+    association :request, factory: :requestwiththumbnail, created_by: :review_by
     created_at { DateTime.now }
     updated_at { DateTime.now }
   end

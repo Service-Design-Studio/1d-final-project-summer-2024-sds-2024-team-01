@@ -55,6 +55,15 @@ function handleRequestContainerClick(event) {
     event.preventDefault();
     handleAcceptRejectForm(event.target.closest('.accept-form, .reject-form'));
   }
+
+  // Handle "Repost" button click
+  if (event.target.closest('.repost-btn_unfulfilled')) {
+    event.preventDefault();
+    const repostButton = event.target.closest('.repost-btn_unfulfilled');
+    const requestId = repostButton.dataset.requestId;
+    window.location.href = `/requests/${requestId}/edit`;
+  }
+
 }
 
 function initializeTabs() {
@@ -113,12 +122,20 @@ function handleCompleteForm(form) {
   const requestCard = form.closest('.request-card_requests_index_my');
   const applicationIndicator = requestCard.querySelector('.application-indicator_requests_index_my');
   const reviewButton = requestCard.querySelector('.review-btn_mark_completed');
+  const repostButton = requestCard.querySelector('.repost-btn_unfulfilled');
 
   // Update UI immediately
   applicationIndicator.style.display = 'none';
   form.style.display = 'none';
-  reviewButton.classList.remove('d-none');
 
+  // Check if the request is unfulfilled (you may need to add a check here based on your criteria)
+  const isUnfulfilled = checkIfUnfulfilled(requestCard);
+
+  if (isUnfulfilled) {
+    repostButton.classList.remove('d-none');
+  } else {
+    reviewButton.classList.remove('d-none');
+  }
   // Update buttons for all applicants
   const applicantPopups = requestCard.querySelectorAll('.popup_requests_index_my');
   applicantPopups.forEach(popup => {
@@ -181,6 +198,21 @@ function handleCompleteForm(form) {
   });
 }
 
+function checkIfUnfulfilled(requestCard) {
+  const status = requestCard.dataset.status;
+  const requestDate = new Date(requestCard.dataset.date);
+  const requestTime = requestCard.dataset.time;
+  const [hours, minutes] = requestTime.split(':').map(Number);
+  requestDate.setHours(hours, minutes);
+
+  const now = new Date();
+
+  // A request is unfulfilled if:
+  // 1. It's not marked as 'Completed'
+  // 2. Its date and time have passed
+  return status !== 'Completed' && requestDate < now;
+}
+
 function handleDropdownClick(button) {
   const wrapper = button.closest('.clickable-card_requests_index-wrapper_my');
   const popupsContainer = wrapper.querySelector('.popups-container_my');
@@ -202,7 +234,7 @@ function handleDropdownClick(button) {
   // Adjust card body height immediately
   if (cardBody) cardBody.style.height = cardBody.scrollHeight + 'px';
 }
-
+  
 function openPopup(container) {
   container.classList.add('active');
   container.style.maxHeight = container.scrollHeight + 'px';
@@ -292,60 +324,82 @@ function handleAcceptRejectForm(form) {
 
 function updateUIBasedOnStatus() {
   document.querySelectorAll('.request-card_requests_index_my').forEach(card => {
-    const status = card.dataset.status;
     const applicationIndicator = card.querySelector('.application-indicator_requests_index_my');
     const completeForm = card.querySelector('.complete-form');
     const reviewButton = card.querySelector('.review-btn_mark_completed');
+    const repostButton = card.querySelector('.repost-btn_unfulfilled');
 
-    if (status === 'Completed') {
+    const isCompleted = card.dataset.status === 'Completed';
+    const isUnfulfilled = checkIfUnfulfilled(card);
+
+    if (isCompleted) {
       // Hide elements for completed requests
       if (applicationIndicator) applicationIndicator.style.display = 'none';
       if (completeForm) completeForm.style.display = 'none';
+      if (repostButton) repostButton.classList.add('d-none');
       if (reviewButton) reviewButton.classList.remove('d-none');
 
       // Update buttons for all applicants
-      const applicantPopups = card.querySelectorAll('.popup_requests_index_my');
-      applicantPopups.forEach(popup => {
-        const chatButton = popup.querySelector('.custom-btn-chat_my');
-        const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
-        const applicationStatus = popup.dataset.applicationStatus;
+      updateApplicantButtonsForCompleted(card);
+    } else if (isUnfulfilled) {
+      // For unfulfilled requests
+      if (applicationIndicator) applicationIndicator.style.display = 'none';
+      if (completeForm) completeForm.style.display = 'none';
+      if (reviewButton) reviewButton.classList.add('d-none');
+      if (repostButton) repostButton.classList.remove('d-none');
 
-        // Remove chat button
-        if (chatButton) chatButton.remove();
-
-        // Add review button if the applicant was accepted
-        if (applicationStatus === 'Accepted' && applicantInfo && !applicantInfo.querySelector('.leave-review-btn')) {
-          const reviewButton = document.createElement('button');
-          reviewButton.classList.add('btn', 'leave-review-btn');
-          reviewButton.textContent = 'Leave a Review';
-          applicantInfo.appendChild(reviewButton);
-        }
-      });
+      // Update buttons for all applicants
+      updateApplicantButtons(card);
     } else {
-      // For non-completed requests, ensure original state
+      // For in-progress requests
       if (applicationIndicator) applicationIndicator.style.display = '';
       if (completeForm) completeForm.style.display = '';
       if (reviewButton) reviewButton.classList.add('d-none');
+      if (repostButton) repostButton.classList.add('d-none');
 
-      // Ensure chat buttons are present for all applicants in non-completed requests
-      const applicantPopups = card.querySelectorAll('.popup_requests_index_my');
-      applicantPopups.forEach(popup => {
-        const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
-        let chatButton = popup.querySelector('.custom-btn-chat_my');
-        const reviewButton = applicantInfo.querySelector('.leave-review-btn');
-
-        // Add chat button if it doesn't exist
-        if (!chatButton) {
-          chatButton = document.createElement('button');
-          chatButton.classList.add('btn', 'custom-btn-chat_my');
-          chatButton.textContent = 'Chat';
-          applicantInfo.appendChild(chatButton);
-        }
-
-        // Remove review button if it exists
-        if (reviewButton) reviewButton.remove();
-      });
+      // Update buttons for all applicants
+      updateApplicantButtons(card);
     }
+  });
+}
+
+function updateApplicantButtonsForCompleted(card) {
+  const applicantPopups = card.querySelectorAll('.popup_requests_index_my');
+  applicantPopups.forEach(popup => {
+    const chatButton = popup.querySelector('.custom-btn-chat_my');
+    const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
+    const applicationStatus = popup.dataset.applicationStatus;
+
+    // Remove chat button
+    if (chatButton) chatButton.remove();
+
+    // Add review button if the applicant was accepted
+    if (applicationStatus === 'Accepted' && applicantInfo && !applicantInfo.querySelector('.leave-review-btn')) {
+      const reviewButton = document.createElement('button');
+      reviewButton.classList.add('btn', 'leave-review-btn');
+      reviewButton.textContent = 'Leave a Review';
+      applicantInfo.appendChild(reviewButton);
+    }
+  });
+}
+
+function updateApplicantButtons(card) {
+  const applicantPopups = card.querySelectorAll('.popup_requests_index_my');
+  applicantPopups.forEach(popup => {
+    const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
+    let chatButton = popup.querySelector('.custom-btn-chat_my');
+    const reviewButton = applicantInfo.querySelector('.leave-review-btn');
+
+    // Add chat button if it doesn't exist
+    if (!chatButton) {
+      chatButton = document.createElement('button');
+      chatButton.classList.add('btn', 'custom-btn-chat_my');
+      chatButton.textContent = 'Chat';
+      applicantInfo.appendChild(chatButton);
+    }
+
+    // Remove review button if it exists
+    if (reviewButton) reviewButton.remove();
   });
 }
 
