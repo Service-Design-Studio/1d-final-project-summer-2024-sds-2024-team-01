@@ -18,7 +18,11 @@
 </head>
 
 
+<% if !user_signed_in? %>
+  <body class="<%= "#{controller_name}-#{action_name}" %>">
+<% else %>
   <body data-current-user-id="<%= current_user.id %>" class="<%= "#{controller_name}-#{action_name}" %>">
+  <% end %>
     <% if controller_name == 'sessions' || controller_name == 'registrations'%>
       <nav class="navbar fixed-top" style="background: transparent !important">
 

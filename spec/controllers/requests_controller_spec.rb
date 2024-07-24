@@ -10,6 +10,15 @@ RSpec.describe RequestsController, type: :controller do
   let(:valid_attributes_no_thumb) { attributes_for(:request, created_by: user.id) }
   let(:invalid_attributes) { attributes_for(:request, title: nil, created_by: user.id) }
 
+  context 'unauthenticated user' do
+    describe 'GET #index' do
+      it 'assigns @requests with requests to user ' do
+        create(:request)
+        get :index
+        expect(assigns(:requests_active).length).to eq(1)
+      end
+    end
+  end
   context 'corporate user' do
     before do
       sign_in corp

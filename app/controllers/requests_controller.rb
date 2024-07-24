@@ -8,16 +8,16 @@ class RequestsController < ApplicationController
   # list all requests
   def index
     # @requests = Request.includes(:user).all
-    if current_user.role_id != 4 then
-    @requests_active = Request.where('date > ? OR (date = ? AND start_time > ?)', Date.today, Date.today, Time.now)
-                              .where.not(status: 'Completed')
-                              .order(created_at: :desc)
-    else
-    @requests_active = Request.where('date > ? OR (date = ? AND start_time > ?)', Date.today, Date.today, Time.now)
-                              .where.not(status: 'Completed')
-                              .where(reward: 'None')
-                              .order(created_at: :desc)
-    end
+    @requests_active = if current_user.nil? || current_user.role_id != 4
+                         Request.where('date > ? OR (date = ? AND start_time > ?)', Date.today, Date.today, Time.now)
+                                .where.not(status: 'Completed')
+                                .order(created_at: :desc)
+                       else
+                         Request.where('date > ? OR (date = ? AND start_time > ?)', Date.today, Date.today, Time.now)
+                                .where.not(status: 'Completed')
+                                .where(reward: 'None')
+                                .order(created_at: :desc)
+                       end
   end
 
   # GET /requests/1
@@ -120,7 +120,8 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:title, :description, :category, :location, :date, :start_time, :number_of_pax, :duration, :reward_type, :reward, :thumbnail)
+    params.require(:request).permit(:title, :description, :category, :location, :date, :start_time, :number_of_pax,
+                                    :duration, :reward_type, :reward, :thumbnail)
     # params.fetch(:request, {}).permit(:thumbnail)
   end
 end
