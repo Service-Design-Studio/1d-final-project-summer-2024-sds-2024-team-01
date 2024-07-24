@@ -46,9 +46,5 @@
 .notifcolumn{
     padding-top:10px;
     padding-bottom:10px;
-    transition: color 0.3s;
 }
 
-.notifcolumn:hover{
-    color: #aaa;
-}

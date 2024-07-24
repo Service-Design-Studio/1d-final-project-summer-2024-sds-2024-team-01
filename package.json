@@ -1,12 +1,5 @@
 {
   "dependencies": {
     "bulma": "^1.0.1"
-  },
-  "devDependencies": {
-    "@prettier/plugin-ruby": "^4.0.4",
-    "prettier": "^3.3.3"
-  },
-  "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets"
   }
 }

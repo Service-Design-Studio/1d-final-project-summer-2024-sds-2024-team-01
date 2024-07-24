@@ -37,7 +37,6 @@ gem 'devise'
 # for role management and belongs_to
 gem 'rolify'
 
-
 group :development do
   gem 'web-console', '~> 4.2.1'
 end

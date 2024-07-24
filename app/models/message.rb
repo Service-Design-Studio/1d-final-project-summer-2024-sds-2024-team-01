@@ -1,19 +1,12 @@
-class Message < ApplicationRecord
+class Message < ActiveRecord::Base
   belongs_to :chat
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
-
-  validates :message_text, presence: true
-  validates :chat_id, presence: true
-  validates :sender_id, presence: true
-  validates :receiver_id, presence: true
-  validates :read, inclusion: { in: [true, false] }
-
-  after_initialize :set_defaults, unless: :persisted?
-
-  private
-
-  def set_defaults
-    self.read = false if read.nil?
-  end
+  validates_inclusion_of :read, in: [true, false]
+  validates_presence_of :message_text
+  validates_presence_of :chat_id
+  validates_presence_of :sender_id
+  validates_presence_of :receiver_id
+  validates_presence_of :created_at
+  validates_presence_of :updated_at
 end

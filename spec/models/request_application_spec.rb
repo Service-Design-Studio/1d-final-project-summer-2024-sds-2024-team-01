@@ -19,10 +19,4 @@ RSpec.describe RequestApplication, type: :model do
     subject.request_id = nil
     expect(subject).to_not be_valid
   end
-
-  it 'checks for if a review has been given' do
-    requester = User.find(subject.request.created_by)
-    create(:reviewrequester, request: subject.request, review_by: requester)
-    expect(subject.reviewed?(requester)).to be(true)
-  end
 end

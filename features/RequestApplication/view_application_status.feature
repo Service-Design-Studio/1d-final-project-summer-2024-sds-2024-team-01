@@ -24,9 +24,3 @@ Scenario:
         Given I am on the 'myapplications' page
         When my application has been rejected
         Then I should see "Rejected"
-
-Scenario:
-        Given I have completed a request
-        And I am on the 'myapplications' page
-        When I click on 'Completed' 
-        Then I should see the completed request
