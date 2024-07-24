@@ -8,9 +8,17 @@ Background:
 
 # /GET
 Scenario: send a GET request to the API
+  Given 5 requests exist
   When I send a 'GET' request
   Then I should see a 200 response
-  And I should see the requests in json format
+  And I should see "all the requests" in json format
+
+# /GET specific
+Scenario: send a GET request to the API for a specific request
+  Given the request "Test Request" exists
+  When I send a 'GET' request
+  Then I should see a 200 response
+  And I should see "Test Request" in json format
 
 # /POST
 Scenario: send a POST request to the API

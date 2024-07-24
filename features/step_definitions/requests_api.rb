@@ -8,7 +8,12 @@ When ('I send a {string} request') do |method|
   headers = {'Content-Type' => 'application/json'}
   case method
   when 'GET'
-    @response = HTTParty.send(method.downcase, uri)
+    if @existing_request
+      get_uri = "#{uri}/#{@existing_request.id}"
+    else
+      get_uri = uri
+    end
+    @response = HTTParty.get(get_uri, body: @request_body.to_json, headers: headers)
   when 'POST'
     # puts "Sending POST request with body: #{@request_data.to_json}"
     @response = HTTParty.post(uri, body: @request_body.to_json, headers: headers)
@@ -38,8 +43,33 @@ end
 
 #Specific steps for API
 
-And ('I should see the requests in json format') do
-  expect { JSON.parse(@response.body) }.not_to raise_error
+Given ('{int} requests exist') do |request_count|
+  request_count.times {FactoryBot.create(:request)}
+end
+
+And ('I should see {string} in json format') do |request_title|
+  begin
+    json_response = JSON.parse(@response.body)
+
+    case request_title.downcase
+    when 'all the requests'
+      expect(json_response).to be_an(Array), "Expected an array of requests, but got: #{json_response.class}"
+      expect(json_response).not_to be_empty, "Expected non-empty array of requests"
+    else
+      # Assume request_type is a specific request title
+      if json_response.is_a?(Array)
+        matching_request = json_response.find { |request| request['title'] == request_title }
+        expect(matching_request).to be_present, "Could not find request with title '#{request_title}' in the response"
+      elsif json_response.is_a?(Hash)
+        expect(json_response['title']).to eq(request_title), "Expected request title '#{request_title}', but got '#{json_response['title']}'"
+      else
+        fail "Unexpected JSON structure. Response: #{json_response}"
+      end
+    end
+
+  rescue JSON::ParserError => e
+    fail "Failed to parse JSON response: #{e.message}. Raw response body: #{@response.body}"
+  end
 end
 
 Given ('the request {string} exists') do |request_title|
