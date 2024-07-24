@@ -185,7 +185,7 @@ RSpec.describe RequestsController, type: :controller do
 
       it 'redirects to the requests list' do
         delete :destroy, params: { id: request.id }
-        expect(response).to redirect_to(requests_url)
+        expect(response).to redirect_to('/requests')
         expect(flash[:notice]).to eq('Request was successfully destroyed.')
       end
     end
