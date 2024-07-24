@@ -5,8 +5,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const urlParams = new URLSearchParams(window.location.search);
   const chatId = urlParams.get('chat_id');
+  const requestId = urlParams.get('request_id');
   if (chatId) {
     loadChat(chatId);
+  }
+  if (requestId) {
+    filterChats('request', requestId);
   }
 
   function addEventListeners() {
@@ -83,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  function filterChats(filterType) {
+  function filterChats(filterType, requestId = null) {
     console.log(`Filtering chats for type: ${filterType}`); // Debugging statement
     const chatList = document.getElementById('chat-list');
     
@@ -92,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
     allChats.forEach(function(element) {
       const applicantId = element.dataset.applicantId;
       const requesterId = element.dataset.requesterId;
+      const elementRequestId = element.dataset.requestId;
       console.log(`Chat applicant: ${applicantId}, Chat requester: ${requesterId}, Current user ID: ${currentUserId}`); // Debugging statement
 
       let showElement = false;
@@ -104,6 +109,9 @@ document.addEventListener("DOMContentLoaded", function() {
       } else if (filterType === 'applications' && requesterId !== currentUserId) {
         console.log(`Showing chat for application ID: ${element.dataset.chatId}`); // Debugging statement
         showElement = true; // Show chat previews for applications where current user is not the requester
+      } else if (filterType === 'request' && requestId && elementRequestId == requestId) {
+        console.log(`Showing chat for request ID: ${requestId}`); // Debugging statement
+        showElement = true; // Show chat previews for the specified request
       } else {
         console.log(`Hiding chat for ID: ${element.dataset.chatId}`); // Debugging statement
         showElement = false; // Hide other chat previews

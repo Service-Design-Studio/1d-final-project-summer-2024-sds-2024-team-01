@@ -1696,3 +1696,16 @@ font-weight: bold;
   color: #333333; /* Ensure the color stays dark grey on hover and focus */
   text-decoration: none; /* Ensure no underline on hover and focus */
 }
+
+/* Pretty scrollbar */
+.message-area::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.message-area::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
