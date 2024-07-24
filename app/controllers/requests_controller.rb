@@ -8,11 +8,12 @@ class RequestsController < ApplicationController
   # list only active requests
  
   def index
+    today_start = Date.today.beginning_of_day
 
-    @requests_active = Request.where('date > ? OR (date = ? AND start_time > ?)', Date.today, Date.today, Time.now)
-                              .where.not(status: 'Completed')
-                              .order(created_at: :desc)
-
+    @in_progress_requests = Request.includes(:user, :request_applications)
+                                   .where("date > ?", today_start)
+                                   .where.not(status: 'Completed')
+                                   .order(date: :asc, start_time: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @in_progress_requests }
