@@ -16,6 +16,11 @@ Scenario:
         And I press "Accept"
         Then the application should be "Accepted"
 
+# Scenario:
+#         Given I am on the 'myrequests' page
+#         And the first request is fully filled
+#         Then I should see "Unable to accept more applicants"
+
 Scenario:
         Given I am on the 'myrequests' page
         When I expand the request

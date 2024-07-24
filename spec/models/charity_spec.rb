@@ -10,6 +10,11 @@ RSpec.describe Charity, type: :model do
     expect(subject).to_not be_valid
   end
 
+  it 'is not valid without a code' do
+    subject.charity_code = nil
+    expect(subject).to_not be_valid
+  end
+
   it 'is not valid without a status' do
     subject.status = nil
     expect(subject).to_not be_valid

@@ -3,12 +3,6 @@ require 'rails_helper'
 RSpec.describe ReviewsController, type: :controller do
   let(:user) { create(:user) }
   let(:request) { create(:request) }
-  let(:other_request) { create(:request) }
-  let(:user_created_request) { create(:request, user: user, status: 'Completed') }
-  let(:application) { create(:random_application, status: 'Completed') }
-  let(:application_from_someone_else) do
-    create(:random_application, status: 'Completed', request: user_created_request)
-  end
   let(:review) { create(:reviewrequester, review_by: user, request:) }
 
   before do
@@ -17,48 +11,30 @@ RSpec.describe ReviewsController, type: :controller do
 
   describe 'GET #new' do
     it 'returns a success response' do
-      get :new, params: { request_application_id: application.id }
+      get :new, params: { myrequest_id: request.id }
       expect(response).to be_successful
     end
   end
 
   describe 'POST #create' do
-    let(:valid_attributes_as_applicant) do
-      { rating: 4, review_content: 'Test hehe',
-        review_for: application.request.created_by,
-        review_by: user.id }
-    end
-    let(:valid_attributes_as_requester) do
-      { rating: 4, review_content: 'Test hehe',
-        review_for: application_from_someone_else.applicant_id,
-        review_by: user.id }
-    end
+    let(:valid_attributes) { attributes_for(:reviewrequester, review_by: user) }
 
-    context 'as requester reviewing volunteer with valid params' do
+    context 'with valid params' do
       it 'creates a new Review' do
-        expect do
-          post :create, params: { request_application_id: application.id, review: valid_attributes_as_requester }
-        end.to change(Review, :count).by(1)
+        expect {
+          post :create, params: { myrequest_id: request.id, review: valid_attributes }
+        }.to change(Review, :count).by(1)
       end
-    end
 
-    context 'as volunteer reviewing requester with valid params' do
-      it 'creates a new Review' do
-        expect do
-          post :create, params: { request_application_id: application_from_someone_else.id, review: valid_attributes_as_applicant }
-        end.to change(Review, :count).by(1)
+      it 'redirects to the created request' do
+        post :create, params: { myrequest_id: request.id, review: valid_attributes }
+        expect(response).to redirect_to(request)
       end
-    end
-
-    it 'creates a notification' do
-      expect do
-        post :create, params: { request_application_id: application.id, review: valid_attributes_as_requester }
-      end.to change(Notification, :count).by(1)
     end
 
     context 'with invalid params' do
       it 'returns a success response (i.e. to display the "new" template)' do
-        post :create, params: { request_application_id: application.id, review: { rating: nil } }
+        post :create, params: { myrequest_id: request.id, review: { rating: nil } }
         expect(response).to be_successful
       end
     end
@@ -95,3 +71,4 @@ RSpec.describe ReviewsController, type: :controller do
     end
   end
 end
+

@@ -8,18 +8,20 @@ class RequestsController < ApplicationController
   # list only active requests
  
   def index
-    # @requests = Request.includes(:user).all
-    @requests_active = if current_user.nil? || current_user.role_id != 4
-                         Request.where('date > ? OR (date = ? AND start_time > ?)', Date.today, Date.today, Time.now)
-                                .where.not(status: 'Completed')
-                                .order(created_at: :desc)
-                       else
-                         Request.where('date > ? OR (date = ? AND start_time > ?)', Date.today, Date.today, Time.now)
-                                .where.not(status: 'Completed')
-                                .where(reward: 'None')
-                                .order(created_at: :desc)
-                       end
+    today_start = Date.today.beginning_of_day
+
+    @in_progress_requests = Request.includes(:user, :request_applications)
+                                   .where("date > ?", today_start)
+                                   .where.not(status: 'Completed')
+                                   .order(date: :asc, start_time: :asc)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @in_progress_requests }
+    end
   end
+
+  
 
   # GET /requests/1
   # show a single request
@@ -121,8 +123,8 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:title, :description, :category, :location, :date, :start_time, :number_of_pax,
-                                    :duration, :reward_type, :reward, :thumbnail)
+    params.require(:request).permit(:title, :description, :category, :location, :date, :start_time, :number_of_pax, :duration,
+                                    :reward_type, :reward, :thumbnail)
     # params.fetch(:request, {}).permit(:thumbnail)
   end
 end

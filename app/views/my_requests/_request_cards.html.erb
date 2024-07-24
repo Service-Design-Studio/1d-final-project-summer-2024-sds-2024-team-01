@@ -92,7 +92,7 @@
                             </button>
                           <% end %>
                       <% elsif application.status == 'Pending' %>
-                        <%= link_to "Chat", chat_path_with_request_and_user(myrequest, application.applicant, true), class: 'btn custom-btn-chat_my' %>
+                        <button class="btn custom-btn-chat_my">Chat</button>
                       <% end %>
                     </div>
                     <!-- Split button or status indicator -->

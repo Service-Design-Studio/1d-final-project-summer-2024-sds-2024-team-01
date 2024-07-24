@@ -38,6 +38,3 @@
 
 # Ignore bootsnap cache files
 /backend/tmp/cache/bootsnap/compile-cache-iseq/
-
-/app/assets/builds/*
-!/app/assets/builds/.keep
