@@ -1,0 +1,30 @@
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-2">
+      <% if user.avatar.attached? %>
+        <img src="<%= url_for(user.avatar) %>" class="card-img" alt="<%= user.name %>'s avatar">
+      <% else %>
+        <img src="<%= asset_path('default-avatar.png') %>" class="card-img" alt="Default User Image">
+      <% end %>
+    </div>
+    <div class="col-md-10">
+      <div class="card-body">
+        <h5 class="card-title"><%= user.name %> (Reported by: <%= user.user_reports.first.reported_by.name %>)</h5>
+        <p class="card-text"><%= user.role.role_name %></p>
+        <p class="card-text"><small class="text-muted">Reason</small></p>
+        <% user.user_reports.where(status: 'ban').each do |report| %>
+          <p class="card-text"><%= report.report_reason %></p>
+        <% end %>
+        <%= link_to 'More', user_profile_path(user), class: 'btn btn-primary' %>
+      <%= form_with url: unban_admin_ban_user_path(user), method: :post, class: 'unban-form me-3', local: true do %>
+  <button type="submit" class="btn btn-success">
+    <i class="bi bi-check-lg"></i>
+    <span>Unban User</span>
+  </button>
+<% end %>
+
+
+      </div>
+    </div>
+  </div>
+</div>
