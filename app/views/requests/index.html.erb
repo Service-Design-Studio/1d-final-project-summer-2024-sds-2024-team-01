@@ -38,9 +38,7 @@
                   <% end %> 
                   <div class="requests-homepage-card-body">
                     <div class="profile-info_requests_index">
-                      <% if request.user.avatar.attached? %>
-                        <img src="<%= image_url(request.user.avatar) %>" alt="<%= request.user.name %>" width="30" height="30"/>
-                      <% end %>
+                      <img src="<%= request.user.avatar_url %>" alt="<%= request.user.name %>" width="30" height="30"/>
                       <span>
                         <%= request.user.name %>
                         <% if request.user.role_id == 4 %>

@@ -51,9 +51,7 @@
                     <div class="applicant-info_requests_index_my">
                       <a class="mini-profile" href="/profile?id=<%= application.applicant.id %>">
                         <div class="profile-info_requests_details mb-3">
-                          <% if application.applicant.avatar.attached? %>
-                            <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" width="50" height="50">
-                          <% end %>
+                          <img src="<%= application.applicant.avatar_url %>" alt="<%= application.applicant.name %>" width="50" height="50">
                           <div class="profile-text">
                             <h6 class="mb-1"><%= application.applicant.name %>
                               <% if application.applicant.role_id == 4 %>

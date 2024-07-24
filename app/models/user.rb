@@ -32,4 +32,12 @@ class User < ActiveRecord::Base
       errors.add(:number, 'Please enter a valid SG number')
     end
   end
+
+  def avatar_url
+    if avatar.present?
+      url_for avatar
+    else
+      ActionController::Base.helpers.asset_path('default-avatar.png')
+    end
+  end
 end
