@@ -182,67 +182,67 @@ class MyRequestsController < ApplicationController
     request.update(accepted_application_count: accepted_count)
   end
 
-  def handle_pending_applications
-    current_time = Time.current
-    pending_applications = RequestApplication.includes(:request, :applicant)
-                                             .where(status: 'Pending')
-
-    pending_applications.each do |application|
-      request_time = application.request.date.to_time + application.request.start_time.seconds_since_midnight.seconds
-      time_until_request = request_time - current_time
-
-      case
-      when time_until_request <= 12.hours
-        auto_reject_application(application)
-      when time_until_request <= 18.hours
-        send_warning_notifications(application, '18 hours')
-      when time_until_request <= 24.hours
-        send_warning_notifications(application, '24 hours')
-      end
-    end
-  end
-
-  def auto_reject_application(application)
-    application.update(status: 'Rejected')
-    
-    create_notification(
-      application.applicant,
-      'Your application has been automatically rejected as the request date is approaching.',
-      '/myapplications',
-      'Application Auto-Rejected'
-    )
-
-    create_notification(
-      application.request.user,
-      "An application for your request '#{application.request.title}' has been automatically rejected.",
-      "/requests/#{application.request.id}",
-      'Application Auto-Rejected'
-    )
-  end
-
-  def send_warning_notifications(application, time_left)
-    create_notification(
-      application.request.user,
-      "You have a pending application for your request '#{application.request.title}'. It will be auto-rejected in #{time_left}.",
-      "/requests/#{application.request.id}",
-      'Application Auto-Rejection Warning'
-    )
-
-    create_notification(
-      application.applicant,
-      "Your application for '#{application.request.title}' is still pending. It may be auto-rejected in #{time_left}.",
-      '/myapplications',
-      'Application Status Warning'
-    )
-  end
-
-  def create_notification(user, message, url, header)
-    Notification.create(
-      notification_for: user,
-      message: message,
-      url: url,
-      header: header,
-      read: false
-    )
-  end
+  # def handle_pending_applications
+  #   current_time = Time.current
+  #   pending_applications = RequestApplication.includes(:request, :applicant)
+  #                                            .where(status: 'Pending')
+  #
+  #   pending_applications.each do |application|
+  #     request_time = application.request.date.to_time + application.request.start_time.seconds_since_midnight.seconds
+  #     time_until_request = request_time - current_time
+  #
+  #     case
+  #     when time_until_request <= 12.hours
+  #       auto_reject_application(application)
+  #     when time_until_request <= 18.hours
+  #       send_warning_notifications(application, '18 hours')
+  #     when time_until_request <= 24.hours
+  #       send_warning_notifications(application, '24 hours')
+  #     end
+  #   end
+  # end
+  #
+  # def auto_reject_application(application)
+  #   application.update(status: 'Rejected')
+  #   
+  #   create_notification(
+  #     application.applicant,
+  #     'Your application has been automatically rejected as the request date is approaching.',
+  #     '/myapplications',
+  #     'Application Auto-Rejected'
+  #   )
+  #
+  #   create_notification(
+  #     application.request.user,
+  #     "An application for your request '#{application.request.title}' has been automatically rejected.",
+  #     "/requests/#{application.request.id}",
+  #     'Application Auto-Rejected'
+  #   )
+  # end
+  #
+  # def send_warning_notifications(application, time_left)
+  #   create_notification(
+  #     application.request.user,
+  #     "You have a pending application for your request '#{application.request.title}'. It will be auto-rejected in #{time_left}.",
+  #     "/requests/#{application.request.id}",
+  #     'Application Auto-Rejection Warning'
+  #   )
+  #
+  #   create_notification(
+  #     application.applicant,
+  #     "Your application for '#{application.request.title}' is still pending. It may be auto-rejected in #{time_left}.",
+  #     '/myapplications',
+  #     'Application Status Warning'
+  #   )
+  # end
+  #
+  # def create_notification(user, message, url, header)
+  #   Notification.create(
+  #     notification_for: user,
+  #     message: message,
+  #     url: url,
+  #     header: header,
+  #     read: false
+  #   )
+  # end
 end

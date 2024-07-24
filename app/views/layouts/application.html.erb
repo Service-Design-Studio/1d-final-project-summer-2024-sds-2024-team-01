@@ -51,7 +51,7 @@
               </a>
               <!-- Profile on the right of Navbar -->
               <a href="<%= profile_path %>" class="text-decoration-none text-neutral-dark">
-                <img src="<%= current_user.avatar_url %>" alt="Profile Picture" width="40" height="40" class="rounded-circle m-auto"> <!-- Profile pic -->
+                <img src="<%= avatar_url(current_user) %>" alt="Profile Picture" width="40" height="40" class="rounded-circle m-auto"> <!-- Profile pic -->
               </a>
               <div id="shownotifs" class="text-white notifbell h-100 ms-5 d-flex align-items-center ">
               <% if @unreadcount > 0 %>

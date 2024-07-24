@@ -7,7 +7,7 @@
               <div class="clickable-card_requests_index-wrapper_my">
                 <div class="card h-100 d-flex flex-row align-items-center">
                   <a href="<%= request_path(myapplication.request) %>" class="clickable-area_requests_index_my">
-                      <img src="<%= myapplication.request.thumbnail_url %>" class="thumbnail_requests_index_my" alt="<%= myapplication.request.title %>"/>
+                      <img src="<%= request_thumbnail_url(myapplication.request) %>" class="thumbnail_requests_index_my" alt="<%= myapplication.request.title %>"/>
                     <div class="card-content_requests_index_my flex-grow-1">
                       <h5 class="card-title_requests_index_my"><%= myapplication.request.title %></h5>
                       <p class="card-date_requests_index_my"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>
@@ -28,7 +28,7 @@
                     <div class="applicant-info_requests_index_my">
                       <a class="mini-profile" href="/profile?id=<%= myapplication.request.user.id %>">
                         <div class="profile-info_requests_details mb-3">
-                          <%= image_tag myapplication.request.user.avatar_url, alt: myapplication.request.user.name, class: "mini-profile-img", width: 50, height: 50 %>
+                          <%= image_tag avatar_url(myapplication.request.user), alt: myapplication.request.user.name, class: "mini-profile-img", width: 50, height: 50 %>
                           <div class="profile-text">
                             <h6 class="mb-1"><%= myapplication.request.user.name %>
                               <% if myapplication.request.user.role_id == 4 %>

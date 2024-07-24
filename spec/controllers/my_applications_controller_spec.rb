@@ -18,7 +18,8 @@ RSpec.describe MyApplicationsController, type: :controller do
       end
 
       it 'assigns @applications with completed applications belonging to current_user' do
-        application = create(:random_application, applicant_id: user.id, status: 'Completed')
+        application = create(:random_application, request: create(:request, status: 'Completed'),
+                                                  applicant_id: user.id, status: 'Accepted')
         get :index, params: { tab: 'completed' }
         expect(assigns(:applications)).to match_array([application])
       end

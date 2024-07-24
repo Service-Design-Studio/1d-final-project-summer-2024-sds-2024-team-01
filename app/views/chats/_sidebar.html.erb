@@ -1,4 +1,4 @@
-<div class="sidebar col-4 border-right p-0" style="height: 100vh; overflow-y: auto;">
+<div class="sidebar col-4 border-right p-0" style="height: 100vh; overflow-y: auto; margin-right: 5%; ">
   <div class="dropdown p-3">
     <a class="inbox-dropdown dropdown-toggle" href="#" role="button" id="inboxFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
       Inbox 
@@ -27,7 +27,7 @@
                 No messages yet
               <% end %>
             </div>
-            <img src="<%= chat.request.thumbnail %>" alt="Request Image" class="request-thumbnail">
+            <img src="<%= request_thumbnail_url(chat.request) %>" alt="Request Image" class="request-thumbnail">
           </div>
         </a>
       <% end %>

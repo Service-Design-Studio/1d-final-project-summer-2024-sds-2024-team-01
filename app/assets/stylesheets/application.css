@@ -2048,13 +2048,32 @@ font-weight: bold;
   border-radius: 50%;
 }
 
+.send-btn-square {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
+  border-radius: 5px; /* Make it a circle, remove this if you want a square */
+  background-color: #656DAD; /* Your preferred color */
+  border: none;
+  color: white;
+  font-size: 20px; /* Adjust the icon size as needed */
+  cursor: pointer;
+}
+
+.send-btn-square:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
+}
+
+
 .message-area {
   height: calc(100vh - 200px); /* Adjust based on your header and input area height */
   overflow-y: auto;
 }
 
 .message.sent {
-  background-color: #007bff;
+  background-color: #656DAD;
   color: white;
   align-self: flex-end;
 }
