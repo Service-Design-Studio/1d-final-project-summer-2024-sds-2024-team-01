@@ -41,6 +41,15 @@ Rails.application.routes.draw do
   post 'notifications/read' => 'notifications#read'
   post 'notifications/clear' => 'notifications#clear'
 
+  # get 'myrequests/chats' => 'chats#new'
+
+  # get 'myapplications/chats' => 'chats#new'
+
+  resources :chats, only: [:index, :show, :new, :create] do
+    resources :messages, only: [:create]
+  end
+  
+
   namespace :api do
     namespace :v1 do
       resources :requests
@@ -53,4 +62,5 @@ Rails.application.routes.draw do
   resources :request_application, path: 'applications' do
     resources :reviews, only: %i[new create edit update]
   end
+
 end

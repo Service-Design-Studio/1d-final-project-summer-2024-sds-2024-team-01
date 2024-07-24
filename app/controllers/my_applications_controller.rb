@@ -8,7 +8,8 @@ class MyApplicationsController < ApplicationController
     @withdrawnapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Withdrawn').or(RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Rejected'))
   
     @applications = instance_variable_get("@#{@current_tab}applications")
-  
+
+
     respond_to do |format|
       format.html
       format.json do

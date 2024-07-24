@@ -7,9 +7,7 @@
           <div class="clickable-card_requests_index-wrapper_my">
             <div class="card h-100 d-flex flex-row align-items-center">
               <a href="<%= request_path(myrequest) %>" class="clickable-area_requests_index_my">
-                <% if myrequest.thumbnail.attached? %>
-                  <img src="<%= image_url(myrequest.thumbnail) %>" class="thumbnail_requests_index_my" alt="<%= myrequest.title %>"/>
-                <% end %>
+                <img src="<%= myrequest.thumbnail_url %>" class="thumbnail_requests_index_my" alt="<%= myrequest.title %>"/>
                 <div class="card-content_requests_index_my flex-grow-1">
                   <h5 class="card-title_requests_index_my"><%= myrequest.title %></h5>
                   <p class="card-date_requests_index_my"><%= myrequest.date.strftime('%d %B %Y') %> , <%= myrequest.start_time.strftime('%H:%M') %></p>
@@ -51,9 +49,7 @@
                     <div class="applicant-info_requests_index_my">
                       <a class="mini-profile" href="/profile?id=<%= application.applicant.id %>">
                         <div class="profile-info_requests_details mb-3">
-                          <% if application.applicant.avatar.attached? %>
-                            <img src="<%= image_url(application.applicant.avatar) %>" alt="<%= application.applicant.name %>" width="50" height="50">
-                          <% end %>
+                          <img src="<%= application.applicant.avatar_url %>" alt="<%= application.applicant.name %>" width="50" height="50">
                           <div class="profile-text">
                             <h6 class="mb-1"><%= application.applicant.name %>
                               <% if application.applicant.role_id == 4 %>
@@ -92,7 +88,7 @@
                             </button>
                           <% end %>
                       <% elsif application.status == 'Pending' %>
-                        <button class="btn custom-btn-chat_my">Chat</button>
+                        <%= link_to "Chat", chat_path_with_request_and_user(myrequest, application.applicant, true), class: 'btn custom-btn-chat_my' %>
                       <% end %>
                     </div>
                     <!-- Split button or status indicator -->

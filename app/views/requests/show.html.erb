@@ -3,11 +3,9 @@
 
 <body onload="initialize()">
 
-  <div class="container content">
+  <div class="container content"> 
     <div class="request-image-container_requests_details">
-      <% if @request.thumbnail.attached? %>
-        <img src="<%= image_url(@request.thumbnail) %>" alt="Request Image" class="request-image_requests_details">
-      <% end %>
+      <img src="<%= @request.thumbnail_url %>" alt="Request Image" class="request-image_requests_details">
       <div class="btn-report_requests_details">
         <a href="/requests" class="btn btn-back_to_requests">
           <i class="bi bi-arrow-left"></i> Back to requests
@@ -73,7 +71,7 @@
               <% if @is_creator %>
                 <button class="btn custom-btn-dark-purple mb-3 w-100 chat-button">View related Chats</button>
               <% else %>
-                <button class="btn custom-btn-dark-purple mb-3 w-100 chat-button">Chat</button>
+                <%= link_to "Chat", chat_path_with_request_and_user(@request, @request.user, false), class: 'btn custom-btn-chat_my' %>
               <% end %>
               <% if @request.status == 'Completed' %>
                 <div class="status-indicator_requests_details mb-3 w-100">Concluded</div>

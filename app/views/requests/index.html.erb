@@ -33,14 +33,10 @@
             <div class="col-md-6 mb-4 request-card_requests_index">
               <a href="<%= request_path(request) %>" class="clickable-card_requests_index">
                 <div class="card h-100 w-100">
-                  <% if request.thumbnail.attached? %> 
-                    <img src="<%= image_url(request.thumbnail) %>" class="card-img-top" alt="<%= request.title %>"/> 
-                  <% end %> 
+                  <img src="<%= request.thumbnail_url %>" class="card-img-top" alt="<%= request.title %>"/> 
                   <div class="requests-homepage-card-body">
                     <div class="profile-info_requests_index">
-                      <% if request.user.avatar.attached? %>
-                        <img src="<%= image_url(request.user.avatar) %>" alt="<%= request.user.name %>" width="30" height="30"/>
-                      <% end %>
+                      <img src="<%= request.user.avatar_url %>" alt="<%= request.user.name %>" width="30" height="30"/>
                       <span>
                         <%= request.user.name %>
                         <% if request.user.role_id == 4 %>

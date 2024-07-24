@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
   console.log("DOM fully loaded");
 
@@ -31,3 +30,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
