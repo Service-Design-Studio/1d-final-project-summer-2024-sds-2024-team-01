@@ -61,11 +61,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
   create_table "chats", force: :cascade do |t|
     t.bigint "applicant_id", null: false
     t.bigint "requester_id", null: false
-    t.bigint "request_id", null: false
+    t.bigint "application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["applicant_id"], name: "index_chats_on_applicant_id"
-    t.index ["request_id"], name: "index_chats_on_request_id"
+    t.index ["application_id"], name: "index_chats_on_application_id"
     t.index ["requester_id"], name: "index_chats_on_requester_id"
   end
 
