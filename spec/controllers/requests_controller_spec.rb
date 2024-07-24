@@ -16,9 +16,10 @@ RSpec.describe RequestsController, type: :controller do
     end
     describe 'GET #index' do
       it 'assigns @requests with requests to user ' do
-        request = create(:request)
+        create(:request)
+        create(:request, reward_type: 'Cash', reward: '$50')
         get :index
-        expect(assigns(:requests)).to be_present
+        expect(assigns(:requests_active).length).to eq(1)
       end
     end
   end
@@ -28,9 +29,10 @@ RSpec.describe RequestsController, type: :controller do
     end
     describe 'GET #index' do
       it 'assigns @requests with requests to user ' do
-        request = create(:test_request, created_by: user.id)
+        create(:request)
+        create(:request, reward_type: 'Cash', reward: '$50')
         get :index
-        expect(assigns(:requests)).to be_present
+        expect(assigns(:requests_active).length).to eq(2)
       end
     end
 

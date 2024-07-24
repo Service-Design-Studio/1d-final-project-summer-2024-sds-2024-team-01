@@ -8,9 +8,16 @@ class RequestsController < ApplicationController
   # list all requests
   def index
     # @requests = Request.includes(:user).all
+    if current_user.role_id != 4 then
     @requests_active = Request.where('date > ? OR (date = ? AND start_time > ?)', Date.today, Date.today, Time.now)
                               .where.not(status: 'Completed')
                               .order(created_at: :desc)
+    else
+    @requests_active = Request.where('date > ? OR (date = ? AND start_time > ?)', Date.today, Date.today, Time.now)
+                              .where.not(status: 'Completed')
+                              .where(reward: 'None')
+                              .order(created_at: :desc)
+    end
   end
 
   # GET /requests/1
