@@ -35,8 +35,8 @@ class Request < ActiveRecord::Base
   end
 
   def thumbnail_url
-    if thumbnail.present?
-      url_for thumbnail
+    if thumbnail.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(thumbnail, only_path: true)
     else
       ActionController::Base.helpers.asset_path('freepik-lmao.jpg')
     end
