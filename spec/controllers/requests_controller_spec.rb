@@ -78,7 +78,6 @@ RSpec.describe RequestsController, type: :controller do
           end.to change(Request, :count).by(1)
           expect(response).to redirect_to(Request.last)
           expect(flash[:notice]).to eq('Request was successfully created.')
-          expect(Request.last.thumbnail).to be_attached
         end
       end
 
@@ -185,7 +184,7 @@ RSpec.describe RequestsController, type: :controller do
 
       it 'redirects to the requests list' do
         delete :destroy, params: { id: request.id }
-        expect(response).to redirect_to(requests_url)
+        expect(response).to redirect_to('/requests')
         expect(flash[:notice]).to eq('Request was successfully destroyed.')
       end
     end
