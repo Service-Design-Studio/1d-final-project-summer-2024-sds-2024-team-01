@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <%= stylesheet_link_tag "application.css"%>
-  </head>
-  <%# Got issue with background %>
-  <body class="sessions-new">
-    <div class="login-container">
-      <%= image_tag 'icon_v1.png', alt: 'Logo', class: 'd-inline-block align-text-top logo-circle-login-reg' %>
-      <h2>Forgot your password?</h2>
-      <p>Enter your email to reset your password</p>
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-        <%= render "devise/shared/error_messages", resource: resource %>
-        <div class="field">
-          <%= f.email_field :email, placeholder: "Email", autofocus: true, autocomplete: "email", class: "form-control" %>
-        </div>
-        <div class="actions">
-          <%= f.submit "Send me password reset instructions!", class: "btn btn-primary btn-block" %>
-        </div>
-      <% end %>
-      <div class="text-center mt-3">
-        <%= render "devise/shared/links" %>
+
+<%# Got issue with background %>
+<body class="sessions-new">
+  <div class="login-container">
+    <img src="/path/to/logo.png" alt="Logo" class="logo">
+    <h2>Forgot your password?</h2>
+    <p>Enter your email to reset your password</p>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="field">
+        <%= f.email_field :email, placeholder: "Email", autofocus: true, autocomplete: "email", class: "form-control" %>
       </div>
+      <div class="actions">
+        <%= f.submit "Send me password reset instructions!", class: "btn btn-primary btn-block" %>
+      </div>
+    <% end %>
+    <div class="text-center mt-3">
+      <%= render "devise/shared/links" %>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
-
-
 

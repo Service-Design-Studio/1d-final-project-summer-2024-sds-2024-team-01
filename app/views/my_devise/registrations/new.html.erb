@@ -5,7 +5,7 @@
   </head>
 
 <div class="signup-container">
-  <%= image_tag 'icon_v1.png', alt: 'Logo', class: 'd-inline-block align-text-top logo-circle-login-reg' %>
+  <img src="<%= 'logo.png' %>" alt="Logo">
   <h2 class="signup-header">Start your own account!</h2>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
