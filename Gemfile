@@ -53,6 +53,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'guard-cucumber'
   gem 'guard'
+  gem 'httparty'
 end
 
 group :production do

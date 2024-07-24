@@ -34,7 +34,7 @@ Given('I am on the signup page') do
   visit '/register/user'
 end
 
-When('I fill in the follwing:') do |table|
+When('I fill in the following:') do |table|
   table.hashes.each do |row|
     case row['field']
     when 'Full name'

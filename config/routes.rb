@@ -43,6 +43,9 @@ Rails.application.routes.draw do
     namespace :v2 do
       resources :reviews, :requests
     end
+    namespace :v3 do
+      resources :reviews, :requests
+    end
   end
 
   resources :request_application, path: 'applications' do

@@ -12,7 +12,7 @@ Given('I have an account') do
     fill_in 'user_password_confirmation', with: 'asdfasdf'
     click_button 'Sign up!'
     expect(page).to have_content('signed up successfully.')
-    click_button 'Logout'
+    # click_button 'logout'
 end
 
 Given('I login as an admin') do
@@ -21,7 +21,7 @@ Given('I login as an admin') do
 end
 
 
-And('I login') do
+When('I login') do
   visit new_user_session_path
   fill_in 'user_number', with: '96789012'
   fill_in 'user_password', with: 'asdfasdf'
@@ -55,7 +55,15 @@ Then('I should see {string}') do |message|
 end
 
 Then('I should see a message {string}') do |string|
-  expect(page).to have_content(string)
+  if @response
+    if @response.headers['Content-Type']&.include?('application/json')
+      expect(JSON.parse(@response.body)['message']).to eq (string)
+    else
+      expect(@response.body).to include(string) 
+    end
+  else
+    expect(page).to have_content(string)
+  end
 end
 
 And('I have a request') do

@@ -1,5 +1,6 @@
 class Api::V2::RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy ]
+  skip_before_action :authenticate_user!
 
   # GET /api/v2/requests
   def index
