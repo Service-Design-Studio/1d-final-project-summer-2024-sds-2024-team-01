@@ -51,8 +51,6 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'factory_bot_rails'
   gem 'database_cleaner'
-  gem 'guard-cucumber'
-  gem 'guard'
   gem 'httparty'
 end
 
