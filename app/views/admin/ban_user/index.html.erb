@@ -1,90 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
+<div class="container content_requests_index">
   <div class="container content_requests_index">
     <div class="card custom-card_requests_index">
       <div class="card-body header-container_requests_index">
-        <h2 class="header-text_requests_index">Ban/ UnBan User</h2>
+        <h2 class="header-text_requests_index">Ban/Unban User</h2>
         <h5 class="subheader-text_requests_index">Check your reported users here!</h5>
       </div>
     </div>
+
     <!-- Tabs for Ban and Unban -->
     <ul class="nav nav-tabs" id="banUserTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" id="ban-tab" data-toggle="tab" href="#ban" role="tab" aria-controls="ban" aria-selected="true">Ban</a>
+        <a class="nav-link active" id="ban-tab" data-bs-toggle="tab" data-bs-target="#ban" type= "button" role="tab" aria-controls="ban" aria-selected="true">Ban</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="unban-tab" data-toggle="tab" href="#unban" role="tab" aria-controls="unban" aria-selected="false">Unban User</a>
+        <a class="nav-link" id="unban-tab" data-bs-toggle="tab"  data-bs-target="#unban" type="button" role="tab" aria-controls="unban" aria-selected="false">Unban User</a>
       </li>
     </ul>
 
     <div class="tab-content" id="banUserTabContent">
       <!-- Ban Users Tab -->
       <div class="tab-pane fade show active" id="ban" role="tabpanel" aria-labelledby="ban-tab">
-        <% if @reported_users.any? %>
-          <% @reported_users.each do |user| %>
-            <div class="card mb-3">
-              <div class="row no-gutters">
-                <div class="col-md-2">
-                  <% if user.avatar.attached? %>
-                    <img src="<%= url_for(user.avatar) %>" class="card-img" alt="<%= user.name %>'s avatar">
-                  <% else %>
-                    <img src="<%= asset_path('default-avatar.png') %>" class="card-img" alt="Default User Image">
-                  <% end %>
-                </div>
-                <div class="col-md-10">
-                  <div class="card-body">
-                    <h5 class="card-title"><%= user.name %> (Reported by: <%= user.user_reports.first.reported_user.name %>)</h5>
-                    <p class="card-text"><%= user.role.role_name %></p>
-                    <p class="card-text"><small class="text-muted">Reason</small></p>
-                    <% user.user_reports.where(status: 'under_review').each do |report| %>
-                      <p class="card-text"><%= report.report_reason %></p>
-                    <% end %>
-                    <%= link_to 'More', user_profile_path(user), class: 'btn btn-primary' %>
-                    <%= link_to 'Ban User', ban_admin_ban_user_path(user), method: :post, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        <% else %>
-          <p>No reported users.</p>
-        <% end %>
+        <%= render partial: 'ban_user', locals: { users: @reported_users } %>
       </div>
 
       <!-- Unban Users Tab -->
       <div class="tab-pane fade" id="unban" role="tabpanel" aria-labelledby="unban-tab">
-        <% if @banned_users.any? %>
-          <% @banned_users.each do |user| %>
-            <div class="card mb-3">
-              <div class="row no-gutters">
-                <div class="col-md-2">
-                  <% if user.avatar.attached? %>
-                    <img src="<%= url_for(user.avatar) %>" class="card-img" alt="<%= user.name %>'s avatar">
-                  <% else %>
-                    <img src="<%= asset_path('default-avatar.png') %>" class="card-img" alt="Default User Image">
-                  <% end %>
-                </div>
-                <div class="col-md-10">
-                  <div class="card-body">
-                    <h5 class="card-title"><%= user.name %> (Reported by: <%= user.user_reports.first.reported_user.name %>)</h5>
-                    <p class="card-text"><%= user.role.role_name %></p>
-                    <p class="card-text"><small class="text-muted">Reason</small></p>
-                    <% user.user_reports.where(status: 'ban').each do |report| %>
-                      <p class="card-text"><%= report.report_reason %></p>
-                    <% end %>
-                    <%= link_to 'More', user_profile_path(user), class: 'btn btn-primary' %>
-                    <%= link_to 'Unban User', unban_admin_ban_user_path(user), method: :post, class: 'btn btn-success' %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        <% else %>
-          <p>No banned users.</p>
-        <% end %>
+        <%= render partial: 'ban_user', locals: { users: @banned_users } %>
       </div>
     </div>
   </div>
 </body>
+<%= javascript_include_tag 'ban' %>
 </html>
+
+
