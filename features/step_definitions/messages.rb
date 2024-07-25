@@ -1,12 +1,3 @@
-And("I have chats with other users") do
-  @user = User.find_by(email: 'harrison@example.com')
-  @chat = create(:random_chat, applicant: @user)
-end
-
-And("I click on a chat") do
-  find('.chat-preview').click
-end
-
 And("I send a message to another user") do
     fill_in "message[message_text]", with: "Hello, this is a test message."
     click_button "Send"

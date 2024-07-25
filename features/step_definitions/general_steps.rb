@@ -33,7 +33,6 @@ Given('I am on the {string} page') do |page|
     visit '/'
   else
     visit page
-    sleep 20
   end
 end
 

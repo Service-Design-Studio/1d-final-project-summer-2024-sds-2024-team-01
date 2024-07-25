@@ -9,4 +9,24 @@ end
 
 And("I choose {string}") do |button_text|
     find('a.btn.custom-btn-chat_my', text: button_text).click
-  end
+end
+
+#navbar
+Given("I have a chat with another user") do
+    Chat.create(
+        applicant_id: User.where(name: 'Harrison Ford').take.id,
+        requester_id: User.where(name: "Alice Smith").take.id,
+        request_id: Request.where(title: 'Test Request to Apply').take.id
+    )
+    Message.create(
+        message_text: 'Hello, this is a test message.',
+        chat_id: Chat.where(applicant_id: User.where(name: 'Harrison Ford').take.id).take.id,
+        sender_id: User.where(name: 'Harrison Ford').take.id,
+        receiver_id: User.where(name: 'Alice Smith').take.id,
+        read: false
+    )
+end
+
+Then('I should be redirected to the chats page') do
+    expect(page).to have_current_path(chats_path)
+end
