@@ -27,6 +27,26 @@ Given('I want to make new requests') do
   visit '/requests/new'
 end
 
+And('I fill in the following details:') do |table|
+  details = table.rows_hash
+  fill_in 'Title', with: details['Title']
+  select details['Category'], from: 'Category'
+
+  page.execute_script("document.querySelector('input[name=\"request[date]\"]').value = '#{details['Date']}';")  
+  
+  fill_in 'Number of volunteers needed', with: details['Number of volunteers needed']
+  
+  page.execute_script("document.querySelector('input[name=\"request[start_time]\"]').value = '#{details['Start time']}';")
+  fill_in 'Time of the event', with: details['Start time']
+
+  sleep 15
+  fill_in 'How many hours?', with: details['Duration']
+  fill_in 'Enter the address', with: details['Location']
+  fill_in 'Describe your request!', with: details['Description']
+  select details['Incentive provided'], from: 'Incentive provided'
+  fill_in 'Incentive', with: details['Incentive'] if details['Incentive provided'] != 'None'
+end
+
 # When('I fill in the {string} with {string}') do |input, value|
 #   case input
 #   when 'Banner Photo'
@@ -56,48 +76,49 @@ end
 #     raise "Field '#{input}' is not defined in the step definition."
 #   end
 # end
-Then('I fill in the following details:') do |table|
-  table.hashes.each do |row|
-    input = row['Field']
-    value = row['Value']
-    case input
-    when 'Banner Photo'
-      attach_file('Banner Photo', value, make_visible: true) if value.present?
-    when 'Title'
-      fill_in 'Title', with: value
-    when 'Category'
-      find('#request_category').find(:xpath, 'option[2]').select_option
-    when 'Date'
-      fill_in 'Date', with: value
-      page.execute_script("document.querySelector('input[type=\"date\"]').value = '#{Date.parse(value).strftime('%Y-%m-%d')}';")
-    when 'Number of volunteers needed'
-      fill_in 'Number of volunteers needed', with: value
-    when 'Start time'
-      page.find('#start_time').click
-      # driver = Selenium::WebDriver.for :chrome
-      #
-      # driver.manage.timeouts.implicit_wait = 5
-      # element = driver.find_element(xpath: '//*[@id="start_time"]')
-      # # wait = Selenium::WebDriver::Wait.new
-      # # wait.until { revealed.displayed? }
-      #
-      # element.click
-      # element.send_keys '12'
-    when 'Duration'
-      fill_in 'Duration', with: value
-    when 'Location'
-      fill_in 'request[location]', with: value
-    when 'Description'
-      fill_in 'Description', with: value
-    when 'Incentive provided'
-      find('#request_reward_type').find(:xpath, 'option[2]').select_option
-    when 'Incentive'
-      fill_in 'request[reward]', with: value
-    else
-      raise "Field '#{input}' is not defined in the step definition."
-    end
-  end
-end
+
+# Then('I fill in the following details:') do |table|
+#   table.hashes.each do |row|
+#     input = row['Field']
+#     value = row['Value']
+#     case input
+#     when 'Banner Photo'
+#       attach_file('Banner Photo', value, make_visible: true) if value.present?
+#     when 'Title'
+#       fill_in 'Title', with: value
+#     when 'Category'
+#       find('#request_category').find(:xpath, 'option[2]').select_option
+#     when 'Date'
+#       fill_in 'Date', with: value
+#       page.execute_script("document.querySelector('input[type=\"date\"]').value = '#{Date.parse(value).strftime('%Y-%m-%d')}';")
+#     when 'Number of volunteers needed'
+#       fill_in 'Number of volunteers needed', with: value
+#     when 'Start time'
+#       page.find('#start_time').click
+#       # driver = Selenium::WebDriver.for :chrome
+#       #
+#       # driver.manage.timeouts.implicit_wait = 5
+#       # element = driver.find_element(xpath: '//*[@id="start_time"]')
+#       # # wait = Selenium::WebDriver::Wait.new
+#       # # wait.until { revealed.displayed? }
+#       #
+#       # element.click
+#       # element.send_keys '12'
+#     when 'Duration'
+#       fill_in 'Duration', with: value
+#     when 'Location'
+#       fill_in 'request[location]', with: value
+#     when 'Description'
+#       fill_in 'Description', with: value
+#     when 'Incentive provided'
+#       find('#request_reward_type').find(:xpath, 'option[2]').select_option
+#     when 'Incentive'
+#       fill_in 'request[reward]', with: value
+#     else
+#       raise "Field '#{input}' is not defined in the step definition."
+#     end
+#   end
+#end
 
 When('I click on {string},{string}') do |_label, _option|
   find('#request_category').find(:xpath, 'option[2]').select_option
@@ -159,8 +180,7 @@ end
 # Feature 7: Show More Details
 
 When('I click on a request') do
-  FactoryBot.create_list(:random_request, 10)
-  first('.request-card_requests_index .clickable-card_requests_index').click
+  first('.clickable-card_requests_index').click
 end
 
 Then('I should see the request details') do
