@@ -28,46 +28,19 @@ if Role.count == 0
   p "Created Roles"
 end
 
-# Create an initial admin user if it doesn't exist
-admin_role = Role.find_by(role_name: 'Admin')
-User.find_or_create_by!(email: 'admin@example.com') do |user|
-  user.name = 'Admin User'
-  user.number = '90000000'
-  user.password = 'password'
-  user.password_confirmation = 'password'
-  user.role = admin_role
-end
 
-# Create reporters
-reporter1 = User.find_or_create_by!(name: 'Reporter 1', email: 'reporter1@example.com', number: '90000005') do |user|
-  user.password = 'password'
-  user.password_confirmation = 'password'
-  user.role = Role.find_by(role_name: 'User')
-end
+# Create some roles
+admin_role = Role.find_or_create_by!(role_name: 'Admin')
+user_role = Role.find_or_create_by!(role_name: 'User')
 
-reporter2 = User.find_or_create_by!(name: 'Reporter 2', email: 'reporter2@example.com', number: '90000006') do |user|
-  user.password = 'password'
-  user.password_confirmation = 'password'
-  user.role = Role.find_by(role_name: 'User')
-end
+# Create some users
+user1 = User.create!(name: 'John Doe', email: 'john@example.com', password: 'password', number: '90000001', role: user_role, status: 'under_review')
+user2 = User.create!(name: 'Jane Smith', email: 'jane@example.com', password: 'password', number: '90000002', role: user_role, status: 'ban')
+admin = User.create!(name: 'Admin User', email: 'admin@example.com', password: 'password', number: '90000000', role: admin_role)
 
-# Create test users with unique numbers and add user reports
-users_data = [
-  { name: 'Reported User 1', email: 'reported1@example.com', number: '90000001', status: 'under_review', report_reason: 'Violation 1', reporter: reporter1 },
-  { name: 'Reported User 2', email: 'reported2@example.com', number: '90000002', status: 'under_review', report_reason: 'Violation 2', reporter: reporter2 },
-  { name: 'Banned User 1', email: 'banned1@example.com', number: '90000003', status: 'ban', report_reason: 'Ban reason 1', reporter: reporter1 },
-  { name: 'Banned User 2', email: 'banned2@example.com', number: '90000004', status: 'ban', report_reason: 'Ban reason 2', reporter: reporter2 }
-]
+# Create some user reports
+UserReport.create!(reporter: admin, reported_user: user1, report_reason: 'Spamming', status: 'under_review')
 
-users_data.each do |user_data|
-  user = User.find_or_create_by!(name: user_data[:name], email: user_data[:email], number: user_data[:number]) do |u|
-    u.password = 'password'
-    u.password_confirmation = 'password'
-    u.role = Role.find_by(role_name: 'User')
-  end
-
-  UserReport.find_or_create_by!(reported_by: user_data[:reporter], reported_user: user, report_reason: user_data[:report_reason], status: user_data[:status])
-end
 # users = [
 #   {
 #     name: "Alice Smith",

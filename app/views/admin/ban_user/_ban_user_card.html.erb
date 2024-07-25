@@ -1,0 +1,12 @@
+<div class="user-card" data-status="under_review">
+  <h5><%= user.name %></h5>
+  <p><%= user.email %></p>
+  <%= form_with url: ban_admin_ban_user_path(user), method: :post, local: true, class: 'ban-form' do %>
+    <button type="submit" class="btn btn-danger">Ban User</button>
+  <% end %>
+  <%= form_with url: cancel_ban_admin_ban_user_path(user), method: :post, local: true, class: 'cancel-form' do %>
+    <button type="submit" class="btn btn-warning">Cancel</button>
+  <% end %>
+  <button class="btn btn-primary more-btn" data-user-id="<%= user.id %>">More</button>
+</div>
+  
