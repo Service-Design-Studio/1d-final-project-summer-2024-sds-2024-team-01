@@ -65,6 +65,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function setupMessageForm(chatId) {
     const messageForm = document.getElementById('message-form');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
     if (messageForm) {
       messageForm.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -73,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
           method: 'POST',
           body: formData,
           headers: {
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            'X-CSRF-Token': csrfToken
           }
         })
         .then(response => response.json())
