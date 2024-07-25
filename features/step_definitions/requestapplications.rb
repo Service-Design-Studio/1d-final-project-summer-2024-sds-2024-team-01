@@ -23,7 +23,7 @@ Given('there is a request to be applied for') do
       duration: 1,
       start_time: '12:00',
       reward: '$20',
-      reward_type: 'Cash',
+      reward_type: 'Money',
       status: 'Available',
       created_by: User.where(name: 'Alice Smith').take.id
     )

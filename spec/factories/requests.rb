@@ -30,7 +30,7 @@ FactoryBot.define do
     number_of_pax { 1 }
     duration { 1 }
     start_time { '12:00' }
-    reward { 20 }
+    reward { '$20' }
     reward_type { 'Money' }
     status { 'Open' }
     association :user, factory: :random_user, strategy: :build

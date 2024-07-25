@@ -21,26 +21,6 @@ Given('I want to make new requests') do
   visit '/requests/new'
 end
 
-And('I fill in the following details:') do |table|
-  details = table.rows_hash
-  fill_in 'Title', with: details['Title']
-  select details['Category'], from: 'Category'
-
-  page.execute_script("document.querySelector('input[name=\"request[date]\"]').value = '#{details['Date']}';")  
-  
-  fill_in 'Number of volunteers needed', with: details['Number of volunteers needed']
-  
-  page.execute_script("document.querySelector('input[name=\"request[start_time]\"]').value = '#{details['Start time']}';")
-  fill_in 'Time of the event', with: details['Start time']
-
-  sleep 15
-  fill_in 'How many hours?', with: details['Duration']
-  fill_in 'Enter the address', with: details['Location']
-  fill_in 'Describe your request!', with: details['Description']
-  select details['Incentive provided'], from: 'Incentive provided'
-  fill_in 'Incentive', with: details['Incentive'] if details['Incentive provided'] != 'None'
-end
-
 Then('I fill in the following details:') do |table|
   table.hashes.each do |row|
     input = row['Field']
@@ -148,12 +128,4 @@ Then('I should see the request details') do
   expect(page).to have_content('Duration')
   expect(page).to have_content('Reward')
   expect(page).to have_content('Status')
-end
-
-When('the request is deleted') do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then ('I should see "This request does not exist"') do
-  pending # Write code here that turns the phrase above into concrete actions
 end

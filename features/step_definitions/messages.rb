@@ -1,17 +1,3 @@
-And("I send a message to another user") do
-    fill_in "message[message_text]", with: "Hello, this is a test message."
-    click_button "Send"
-    sleep 15
-end
-
-Then("the message should appear in the chat") do
-    expect(page).to have_content("Hello, this is a test message.")
-end
-
-
-
-
-
 Given("I am in a chat with another user") do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:random_user)
