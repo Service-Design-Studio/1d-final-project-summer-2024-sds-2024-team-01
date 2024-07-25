@@ -18,5 +18,5 @@ Background:
 Scenario: The request is deleted as I navigate to it
     Given I am on the "home" page
     When the request is deleted
-    And I click on the request
+    And I click on a request
     Then I should see "This request does not exist"

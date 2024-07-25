@@ -131,3 +131,15 @@ end
 # # And('I should see "Updated review!"') do
 # #   p "Updated review!"
 # # end
+
+Given('I have completed a request') do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Given('I expand the application') do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When('I enter review details') do
+  pending # Write code here that turns the phrase above into concrete actions
+end

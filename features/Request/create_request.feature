@@ -17,12 +17,12 @@ Background:
     | Category                        | Manual Labour                                       |
     | Date                            | 2024-12-12                                          |
     | Number of volunteers needed     | 5                                                   |
-    | Start time                      | 12:00                                            |
+    | Start Time                      | 12:25                                            |
     | Duration                        | 5                                                   |
     | Location                        | POINT(1 1)                                       |
     | Description                     | Looking for someone to help with my backyard garden |
-    | Incentive provided              | Money                                               |
-    | Incentive                       | $30                                                 |
+    | Incentive provided              | None                                               |
+    | Incentive                       | None                                                 |
     When I click on "Create" button
     Then I should see "Request was successfully created."
    

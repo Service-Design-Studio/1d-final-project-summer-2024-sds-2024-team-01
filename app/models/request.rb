@@ -25,6 +25,7 @@ class Request < ActiveRecord::Base
   end
 
   def validate_monetary
+    
     return if reward_type != 'Money'
 
     if reward.nil?
