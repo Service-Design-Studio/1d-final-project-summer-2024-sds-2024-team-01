@@ -10,11 +10,17 @@
       <img src="<%= @chat.request.thumbnail_url %>" alt="<%= @chat.request.title %>" class="request-thumbnail mr-3" style="width: 50px; height: 50px;">
       <div class="request-details">
         <% if @chat.applicant_id == current_user.id %>
-          <a href="/profile?id=<%= @chat.requester.id %>" class="mini-profile" style="margin-left: 5%; "><h5 class="mb-0" style="font-size: 1.2em;"><%= @chat.requester.name %></h5></a>
+          <a href="/profile?id=<%= @chat.requester.id %>" class="mini-profile chat_profile-requester">
+            <h5 class="mb-0 chat_profile-name"><%= @chat.requester.name %></h5>
+          </a>
         <% else %>
-          <a href="/profile?id=<%= @chat.applicant.id %>" class="mini-profile" style="margin-left: 5%; margin-bottom: 10%; font-size: 0.5em;"><h5 class="mb-0"><%= @chat.applicant.name %></h5></a>
+          <a href="/profile?id=<%= @chat.applicant.id %>" class="mini-profile chat_profile-applicant">
+            <h5 class="mb-0 chat_profile-name-small"><%= @chat.applicant.name %></h5>
+          </a>
         <% end %>
-        <a href="/requests/<%= @chat.request.id %>"><h5 class="mb-0" style="margin-left: 5%; font-size: 1em; white-space: nowrap;"><%= @chat.request.title %></h5></a>
+        <a href="/requests/<%= @chat.request.id %>">
+          <h5 class="mb-0 chat_profile-request-title"><%= @chat.request.title %></h5>
+        </a>
       </div>
     </div>
   </div>
@@ -25,13 +31,12 @@
         <% is_sender = message.sender == current_user %>
         <% prev_message = index > 0 ? @messages[index - 1] : nil %>
         <% spacing_class = prev_message && prev_message.sender != message.sender ? 'mt-4' : 'mt-1' %>
-        
         <div class="message <%= is_sender ? 'sent' : 'received' %> <%= spacing_class %>">
           <%= message.message_text %>
         </div>
       <% end %>
     <% else %>
-      <p>No messages yet</p>
+      <%= render partial: 'shared/chat_init_state' %>
     <% end %>
   </div>
 

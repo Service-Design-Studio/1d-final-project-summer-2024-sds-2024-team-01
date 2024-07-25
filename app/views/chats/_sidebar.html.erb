@@ -1,4 +1,4 @@
-<div class="sidebar col-4 border-right p-0" style="height: 100vh; overflow-y: auto; margin-right: 3%; ">
+<div class="sidebar col-4 border-right p-0">
   <div class="dropdown p-3">
     <a class="inbox-dropdown dropdown-toggle" href="#" role="button" id="inboxFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
       Inbox 
@@ -9,6 +9,9 @@
       <li><a class="dropdown-item filter-option" href="#" data-filter="applications">Applications</a></li>
     </ul>
   </div>
+
+  <hr class="my-4">
+  
   <div id="chat-list" class="list-group <%= 'empty-chat-list' unless @chats.present? %>">
     <% if @chats.present? %>
       <% @chats.each do |chat| %>
@@ -24,7 +27,7 @@
               <% if chat.messages.any? %>
                 <%= chat.messages.order(created_at: :desc).first.created_at.strftime("%d/%m") %>
               <% else %>
-                No messages yet
+                Start a conversation here!
               <% end %>
             </div>
             <img src="<%= request_thumbnail_url(chat.request) %>" alt="Request Image" class="request-thumbnail">

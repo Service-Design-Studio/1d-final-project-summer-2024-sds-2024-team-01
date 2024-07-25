@@ -2007,14 +2007,52 @@ font-weight: bold;
   margin-left: 0.3rem; /* Add space between text and arrow */
 }
 
+hr.my-4 {
+  border: 0;
+  height: 1px;
+  background-color: #ccc; /* Adjust the color as needed */
+  margin: 1rem 0; /* Adjust the margin for spacing */
+}
+
 /* Sidebar styles */
 .sidebar {
   width: 33%; /* Adjust as needed for desired width */
+  height: 100vh;
+  overflow-y: auto;
+  margin-right: 3%;
 }
 
 .sidebar .dropdown {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
+
+.inbox-dropdown {
+  position: relative;
+  left: -7%;
+  font-size: 1.5rem; /* Adjust the font size as needed */
+  color: black; /* Adjust the text color */
+  text-decoration: none; /* Remove underline */
+  padding: 0.5rem 1rem; /* Add padding for spacing */
+  background-color: transparent; /* Transparent background */
+  border: 1px solid transparent; /* Transparent border */
+  border-radius: 0.25rem; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+}
+
+.inbox-dropdown:hover,
+.inbox-dropdown:focus {
+  background-color: #e9ecef; /* Light grey background on hover */
+  color: #656dad; /* Darker text color on hover */
+  text-decoration: none; /* Ensure no underline on hover */
+}
+
+.inbox-dropdown.dropdown-toggle::after {
+  margin-left: 0.5rem; /* Add space between text and caret */
+  border-top: 0.4em solid; /* Adjust the caret size */
+  border-right: 0.4em solid transparent;
+  border-left: 0.4em solid transparent;
+}
+
 
 .chat-list {
   height: 70vh;
@@ -2068,7 +2106,35 @@ font-weight: bold;
 .chat-header .request-details-container {
   display: flex;
   align-items: center;
+  padding: 0.65%;
 }
+
+/*chat header*/
+.chat_profile-requester {
+  margin-left: 5%;
+  margin-bottom: 5%;
+}
+
+.chat_profile-applicant {
+  margin-left: 5%;
+  margin-bottom: 5%;
+  font-size: 0.5em;
+}
+
+.chat_profile-name {
+  font-size: 1.2em;
+}
+
+.chat_profile-name-small {
+  font-size: 0.5em;
+}
+
+.chat_profile-request-title {
+  margin-left: 5%;
+  font-size: 1em;
+  white-space: nowrap;
+}
+
 
 .chat-header .request-thumbnail {
   width: 50px;
