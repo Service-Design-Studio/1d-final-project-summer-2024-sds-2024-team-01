@@ -21,8 +21,8 @@ Given("I am in a chat with another user") do
   end
   
   When("I send a message to the user") do
-    fill_in "message_text", with: "Hello, this is a test message."
-    click_button "Send"
+    fill_in "message[message_text]", with: "Hello, this is a test message."
+    find('.send-btn-square').click
   end
   
   Then("the message should appear in the chat") do
@@ -42,3 +42,6 @@ Given("I am in a chat with another user") do
     expect(page).to have_selector('#notification', text: '1')
   end
   
+When('I click on the chat button') do
+  find('.custom-btn-chat_my').click
+end

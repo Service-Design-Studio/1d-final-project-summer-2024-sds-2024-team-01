@@ -12,6 +12,6 @@ Background:
 Scenario: User sends a message but it does not show on the screen
     Given I am on the 'home' page
     When I click on the request
-    And I choose "Chat"
-    And I send a message to another user
+    And I click on the chat button
+    And I send a message to the user
     Then the message should appear in the chat
