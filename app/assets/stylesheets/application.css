@@ -282,6 +282,7 @@ form {
 
 .mini-profile img {
   margin-right: 10px;
+  border-radius: 50%;
 }
 
 .mini-profile .profile-text {
@@ -2035,11 +2036,12 @@ font-weight: bold;
 
 /* Chat content styles */
 .chats-index {
-  overflow: hidden; /* Prevent scrolling */
+  overflow: hidden;
 }
 
 .chat-header {
   width: 80%;
+  flex-shrink: 0; 
 }
 
 .chat-header .user-details h5 {
@@ -2058,9 +2060,11 @@ font-weight: bold;
 }
 
 .message-area {
-  height: calc(100vh - 200px);
+  flex-grow: 1;
   overflow-y: auto;
   width: 85%;
+  margin: 0 auto; /* Center the message area */
+  padding: 10px;
 }
 
 .send-btn-square {
@@ -2083,7 +2087,7 @@ font-weight: bold;
 
 
 .message-area {
-  height: calc(100vh - 200px); /* Adjust based on your header and input area height */
+  height: calc(100vh - 280px); /* Adjust based on your header and input area height */
   overflow-y: auto;
 }
 
@@ -2100,16 +2104,23 @@ font-weight: bold;
 }
 
 .message {
-  max-width: 70%;
+  max-width: 85%;
   padding: 10px;
   border-radius: 10px;
+  word-wrap: break-word;
+}
+
+#message-form {
+  width: 85%;
+  margin: 0 auto;
 }
 
 .input-area {
   background: white;
-  position: sticky;
-  bottom: 0;
   width: 100%;
+  flex-shrink: 0; /* Prevent shrinking */
+  padding: 10px;
+  border-top: 1px solid #e0e0e0;
 }
 
 /* Style for profile link */

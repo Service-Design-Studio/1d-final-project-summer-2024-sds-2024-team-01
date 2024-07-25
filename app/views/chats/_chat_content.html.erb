@@ -1,45 +1,47 @@
-<div class="chat-header d-flex flex-column p-3 border-bottom">
-  <!-- User Details -->
-  <%# <div class="user-details d-flex align-items-center mb-3"> %>
-    
-  <%# </div> %>
+<div class="chats-index"> 
+  <div class="chat-header d-flex flex-column p-3 border-bottom">
+    <!-- User Details -->
+    <%# <div class="user-details d-flex align-items-center mb-3"> %>
+      
+    <%# </div> %>
 
-  <!-- Thumbnail and Request Details -->
-  <div class="request-details-container d-flex align-items-center">
-    <img src="<%= @chat.request.thumbnail_url %>" alt="<%= @chat.request.title %>" class="request-thumbnail mr-3" style="width: 50px; height: 50px;">
-    <div class="request-details">
-      <% if @chat.applicant_id == current_user.id %>
-        <a href="/profile?id=<%= @chat.requester.id %>" class="mini-profile" style="margin-left: 5%; "><h5 class="mb-0" style="font-size: 1.2em;"><%= @chat.requester.name %></h5></a>
-      <% else %>
-        <a href="/profile?id=<%= @chat.applicant.id %>" class="mini-profile" style="margin-left: 5%; margin-bottom: 10%; font-size: 0.5em;"><h5 class="mb-0"><%= @chat.applicant.name %></h5></a>
-      <% end %>
-      <a href="/requests/<%= @chat.request.id %>"><h5 class="mb-0" style="margin-left: 5%; font-size: 1em; white-space: nowrap;"><%= @chat.request.title %></h5></a>
+    <!-- Thumbnail and Request Details -->
+    <div class="request-details-container d-flex align-items-center">
+      <img src="<%= @chat.request.thumbnail_url %>" alt="<%= @chat.request.title %>" class="request-thumbnail mr-3" style="width: 50px; height: 50px;">
+      <div class="request-details">
+        <% if @chat.applicant_id == current_user.id %>
+          <a href="/profile?id=<%= @chat.requester.id %>" class="mini-profile" style="margin-left: 5%; "><h5 class="mb-0" style="font-size: 1.2em;"><%= @chat.requester.name %></h5></a>
+        <% else %>
+          <a href="/profile?id=<%= @chat.applicant.id %>" class="mini-profile" style="margin-left: 5%; margin-bottom: 10%; font-size: 0.5em;"><h5 class="mb-0"><%= @chat.applicant.name %></h5></a>
+        <% end %>
+        <a href="/requests/<%= @chat.request.id %>"><h5 class="mb-0" style="margin-left: 5%; font-size: 1em; white-space: nowrap;"><%= @chat.request.title %></h5></a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="message-area flex-grow-1 d-flex flex-column p-3">
-  <% if @messages.any? %>
-    <% @messages.each do |message| %>
-      <div class="message <%= message.sender == current_user ? 'sent' : 'received' %> p-2 my-2 rounded" style="<%= message.sender == current_user ? 'align-self-end bg-primary text-white' : 'align-self-start bg-light text-dark' %>">
-        <%= message.message_text %>
-      </div>
+  <div class="message-area flex-grow-1 d-flex flex-column p-3">
+    <% if @messages.any? %>
+      <% @messages.each do |message| %>
+        <div class="message <%= message.sender == current_user ? 'sent' : 'received' %> p-2 my-2 rounded" style="<%= message.sender == current_user ? 'align-self-end bg-primary text-white' : 'align-self-start bg-light text-dark' %>">
+          <%= message.message_text %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No messages yet</p>
     <% end %>
-  <% else %>
-    <p>No messages yet</p>
-  <% end %>
-</div>
+  </div>
 
-<div class="input-area border-top p-3">
-  <form id="message-form" style="width: 85%;" action="<%= chat_messages_path(@chat) %>" method="post" data-remote="true">
-    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <div class="input-group">
-      <input type="text" name="message[message_text]" class="form-control" placeholder="Type a message...">
-      <div class="input-group-append">
-        <button class="btn send-btn-square" type="submit">
-          <i class="fas fa-paper-plane"></i>
-        </button>
+  <div class="input-area border-top p-3">
+    <form id="message-form" style="width: 85%;" action="<%= chat_messages_path(@chat) %>" method="post" data-remote="true">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <div class="input-group">
+        <input type="text" name="message[message_text]" class="form-control" placeholder="Type a message...">
+        <div class="input-group-append">
+          <button class="btn send-btn-square" type="submit">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
