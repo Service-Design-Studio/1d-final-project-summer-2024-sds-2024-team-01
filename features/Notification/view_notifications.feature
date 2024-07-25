@@ -5,10 +5,10 @@ Background:
     And I login 
     And there is a registered user on the app
     And I have a request
-    And someone has applied for my request
+    And there is a notification for me
 
 Scenario: Someone applied for my request
-    Given I am at the "home" page
+    Given I am on the "home" page
     When I click on the notification icon
-    Then I should see "Someone has applied for your request!"
+    Then I should see "Hello there this is a test notification"
 

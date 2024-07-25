@@ -18,6 +18,13 @@ RSpec.describe RequestsController, type: :controller do
         expect(assigns(:in_progress_requests).length).to eq(1)
       end
     end
+
+    describe 'GET #show on a non existent request' do
+      it 'assigns @requests with requests to user ' do
+        get :show, params: { id: 'hehe' }
+        expect(flash[:notice]).to eq('This request does not exist')
+      end
+    end
   end
   context 'corporate user' do
     before do
@@ -126,7 +133,7 @@ RSpec.describe RequestsController, type: :controller do
     # end
 
     describe 'POST #apply' do
-      let(:request) { create(:request) }
+      let(:request) { create(:request, number_of_pax: 1) }
 
       context 'when all the params are not fulfilled somehow' do
         it 'fails to save the application' do
@@ -169,6 +176,17 @@ RSpec.describe RequestsController, type: :controller do
           post :apply, params: { id: request.id }
           expect(response).to redirect_to(request)
           expect(flash[:notice]).to eq('You have already applied for this request.')
+        end
+      end
+
+      context 'when the request is already full' do
+        before do
+          create(:random_application, status: 'Accepted', request_id: request.id)
+        end
+
+        it 'does not create a new RequestApplication' do
+          post :apply, params: { id: request.id }
+          expect(flash[:notice]).to eq('Sorry, this request is unable to accept anymore applicants.')
         end
       end
     end

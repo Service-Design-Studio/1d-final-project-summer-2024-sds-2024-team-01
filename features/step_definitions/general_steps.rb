@@ -40,6 +40,11 @@ When('I click on {string} button') do |button|
   click_button button
 end
 
+When('I click on {string}') do |str|
+  click_on str
+end
+
+
 And('I press {string}') do |button_text|
   click_button button_text
 end
@@ -62,13 +67,13 @@ And('I have a request') do
     description: 'Need someone to walk my dog for an hour every afternoon',
     category: 'Pet Care',
     location: 'POINT(34.052235 -118.243683)',
-    date: Date.tomorrow,
+    date: Date.tomorrow + 3,
     number_of_pax: 1,
     duration: 1,
     start_time: '12:00',
     reward: '$20',
     reward_type: 'Cash',
-    status: 'Open',
+    status: 'Available',
     created_by: User.where(name: 'Harrison Ford').take.id
   )
 end
@@ -105,19 +110,16 @@ Then('I should see a list of requests') do
   FactoryBot.create_list(:random_request, 10)
 end
 
-Given('there is a request to be applied for') do
-  Request.create(
-      title: 'Test Request to Apply',
-      description: 'Need someone to walk my dog for an hour every afternoon',
-      category: 'Pet Care',
-      location: 'POINT(34.052235 -118.243683)',
-      date: Date.tomorrow,
-      number_of_pax: 1,
-      duration: 1,
-      start_time: '12:00',
-      reward: 'None',
-      reward_type: 'None',
-      status: 'Open',
-      created_by: User.where(name: 'Harrison Ford').take.id
-    )
+Given('there is a notification for me') do
+  Notification.create(
+    notification_for: User.where(name: 'Harrison Ford').take,
+    message: 'Hello there this is a test notification',
+    url: '/',
+    header: 'hello',
+    read: false
+  )
+end
+
+When('I click on the notification icon') do
+  find('#shownotifs').click
 end

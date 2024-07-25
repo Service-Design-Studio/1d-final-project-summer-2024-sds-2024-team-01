@@ -28,10 +28,10 @@ class Request < ActiveRecord::Base
     
     return if reward_type != 'Money'
 
-    errors.add(:reward, 'Monetary reward value has to be a number') unless reward[1..].to_i.to_s == reward[1..]
-
-    return unless reward.nil?
-
-    errors.add(:reward, 'Monetary reward cannot be null, select "None" if you do not intend to provide compensation')
+    if reward.nil?
+      errors.add(:reward, 'Monetary reward cannot be null, select "None" if you do not intend to provide compensation')
+    else
+      errors.add(:reward, 'Monetary reward value has to be a number') unless reward[1..].to_i.to_s == reward[1..]
+    end
   end
 end

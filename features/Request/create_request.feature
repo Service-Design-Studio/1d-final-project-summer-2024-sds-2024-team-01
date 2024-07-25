@@ -14,8 +14,8 @@ Background:
      And I fill in the following details:
     | Field                           | Value                                               |
     | Title                           | Test Request                                        |
-    | Category                        | Teaching                                       |
-    | Date                            | 12/12/2024                                          |
+    | Category                        | Manual Labour                                       |
+    | Date                            | 2024-12-12                                          |
     | Number of volunteers needed     | 5                                                   |
     | Start Time                      | 12:25                                            |
     | Duration                        | 5                                                   |
@@ -34,7 +34,7 @@ Background:
     | Field                           | Value                                               |
     | Title                           |                                                     |
     | Category                        |                                                     |
-    | Date                            |             01-07-2024                              |
+    | Date                            |             2024-01-07                              |
     | Number of volunteers needed     | 5                                                   |
     | Start time                      | 01:10 pm                                            |
     | Duration                        | 5                                                   |

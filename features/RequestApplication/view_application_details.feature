@@ -8,6 +8,7 @@ Background:
     And I have applied for the request
 
 Scenario: 
-        Given I am on the 'myapplications' page
-        When I click the request title
-        Then I should see the request details
+    Given I am on the 'myapplications' page
+    When I click on 'Pending'
+    When I click on 'Test Request to Apply'
+    Then I should see 'Need someone to walk my dog for an hour every afternoon'

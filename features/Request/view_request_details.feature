@@ -5,15 +5,14 @@ Feature: Show More Details
 
 
 Background:
-    Given I have an account
-    And I login
-    Given there is a request to be applied for
+    Given there is a registered user on the app
+    And there is a request to be applied for
           
 #Happy Case
   Scenario: View details of a specific request
     Given I am on the "home" page
-    When I click on a request 
-    Then I should see the request details
+    When I click on the request
+    Then I should see 'Need someone to walk my dog for an hour every afternoon'
 
 #Sad Case
 Scenario: The request is deleted as I navigate to it
