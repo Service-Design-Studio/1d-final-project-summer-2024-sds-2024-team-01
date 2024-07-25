@@ -265,7 +265,7 @@ form {
   display: flex;
   align-items: center;
   margin-top: 10px;
-  margin-left: -25%;
+  margin-left: -10%;
 }
 
 .mini-profile {
@@ -1634,6 +1634,7 @@ font-weight: bold;
   width: 150px;
   height: 40px;
   margin-left: 20px; /* Add some space between name and button */
+  margin-top: 10%;
   cursor: pointer;
   justify-content: center; /* Center the text horizontally */
   border-radius: 5px; /* Optional: Add rounded corners */
@@ -1912,7 +1913,7 @@ font-weight: bold;
 /* tmp withdraw button */
 .withdraw-button_requests_index_my {
   position: relative;
-  top: -30px;
+  top: -45px;
   display: flex;
   justify-content: flex-end; /* Align the button to the right */
   align-items: center;
@@ -1921,7 +1922,7 @@ font-weight: bold;
 
 .withdraw-btn_requests_index_my {
   position: absolute;
-  left: 450%;
+  left: 420%;
   top: -60%;
   background-color: #dc3545;
   color: white;
@@ -2033,6 +2034,14 @@ font-weight: bold;
 }
 
 /* Chat content styles */
+.chats-index {
+  overflow: hidden; /* Prevent scrolling */
+}
+
+.chat-header {
+  width: 80%;
+}
+
 .chat-header .user-details h5 {
   font-size: 1rem; /* Adjust font size for user name */
 }
@@ -2046,6 +2055,12 @@ font-weight: bold;
   width: 50px;
   height: 50px;
   border-radius: 50%;
+}
+
+.message-area {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+  width: 85%;
 }
 
 .send-btn-square {
