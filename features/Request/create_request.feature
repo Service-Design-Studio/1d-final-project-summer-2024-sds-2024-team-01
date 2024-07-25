@@ -1,4 +1,3 @@
-
 Feature: Create Requests
   As a user
   So that I can ask for something
@@ -16,14 +15,14 @@ Background:
     | Field                           | Value                                               |
     | Title                           | Test Request                                        |
     | Category                        | Manual Labour                                       |
-    | Date                            | 12/12/2024                                          |
+    | Date                            | 2024-12-12                                          |
     | Number of volunteers needed     | 5                                                   |
     | Start time                      | 12:00                                            |
     | Duration                        | 5                                                   |
     | Location                        | POINT(1 1)                                       |
     | Description                     | Looking for someone to help with my backyard garden |
     | Incentive provided              | Money                                               |
-    | Incentive                       | $30                                                 |
+    | Incentive                       | $400                                                 |
     When I click on "Create" button
     Then I should see "Request was successfully created."
    
@@ -35,7 +34,7 @@ Background:
     | Field                           | Value                                               |
     | Title                           |                                                     |
     | Category                        |                                                     |
-    | Date                            |             01-07-2024                              |
+    | Date                            |             2024-01-07                              |
     | Number of volunteers needed     | 5                                                   |
     | Start time                      | 01:10 pm                                            |
     | Duration                        | 5                                                   |

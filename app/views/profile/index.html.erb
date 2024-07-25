@@ -17,6 +17,7 @@
             <% end %>
             (<%= @reviews_received.count %>)
           </p>
+          <p>Trusted user</p>
         </div>
       </div>
     </div>
@@ -47,9 +48,7 @@
                     <div class="request-content">
                       <a href="<%= request_path(request) %>">
                         <div class="request-square">
-                          <% if request.thumbnail.attached? %> 
-                          <img src="<%= image_url(request.thumbnail) %>" class="card-img-top" alt="<%= request.title %>"/> 
-                          <% end %> 
+                          <img src="<%= request_thumbnail_url(request) %>" class="card-img-top" alt="<%= request.title %>"/>
                           <div class="request-popup">
                             <p> Number of slots available (TBI) </p>
                           </div>

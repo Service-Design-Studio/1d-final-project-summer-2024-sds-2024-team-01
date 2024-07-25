@@ -8,8 +8,26 @@ form {
   margin: 20px 0;
 }
 
-.offsetnavbar{
+.offsetnavbar {
     margin-top:80px;
+}
+
+.noticefadeout {
+    position: fixed;
+    background: #505050;
+    color: #eee;
+    top: 90px;
+    right: 10px;
+    padding: 20px;
+    z-index: 200;
+    border-radius: 10px;
+    animation: fadeoutnotif 5s forwards;
+}
+
+@keyframes fadeoutnotif {
+0% { opacity: 100%;}
+80% {opacity: 100%;}
+100% { opacity: 0%;}
 }
 
 .button-container .button {
@@ -53,9 +71,167 @@ form {
   margin-right: 40px; /* Adjust this value to increase spacing */
 }
 
+.logo-circle-navbar {
+  width: 2.8em; /* Adjust the size as needed */
+  height: 2.8em; /* Adjust the size as needed */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image covers the container without distortion */
+}
+
+.logo-circle-login-reg {
+  position: relative;
+  left: 21%;
+  margin-bottom: 5%;
+  width: 12em; /* Adjust the size as needed */
+  height: 12em; /* Adjust the size as needed */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image covers the container without distortion */
+  align-items: center;
+}
 
 .text-neutral-dark{
     color: #505050
+}
+
+/* Flash notifications styling */
+.alert {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem;
+}
+
+.alert i {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.alert-message {
+  flex-grow: 1;
+}
+
+.alert-dismissible .close {
+  margin-left: auto;
+}
+
+/* Icon colors */
+.custom-alert-success i { color: #155724; }
+.custom-alert-error i, .custom-alert-alert i { color: #721c24; }
+.custom-alert-notice i { color: #0c5460; }
+.custom-alert-warning i { color: #856404; }
+
+.alert-dismissible {
+  padding-right: 4rem;
+}
+
+.alert-dismissible .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.75rem 1.25rem;
+  color: inherit;
+  background-color: transparent;
+  border: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  opacity: .5;
+  cursor: pointer;
+}
+
+.alert-dismissible .close:hover {
+  opacity: 1;
+}
+
+.custom-alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.custom-alert-error, .custom-alert-alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.custom-alert-notice {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.custom-alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.alert-dismissible {
+  padding-right: 35px;
+}
+
+.alert-dismissible .close {
+  position: relative;
+  top: -2px;
+  right: -73%;
+  color: inherit;
+}
+
+.custom-alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.custom-alert-error, .custom-alert-alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.custom-alert-notice {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.custom-alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.alert-dismissible {
+  padding-right: 35px;
+}
+
+.alert-dismissible .close {
+  position: relative;
+  top: -2px;
+  right: -73%;
+  color: inherit;
+}
+
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  text-align: center;
+}
+
+.empty-state-image {
+  width: 400px;
+  opacity: 40%;
+  height: auto;
+  margin-top: 200px;
+}
+
+.empty-state-message {
+  font-size: 18px;
+  color: #888;
+  font-style: italic;
 }
 
 /* Common asset: custom purple and lilac button*/
@@ -1809,6 +1985,144 @@ font-weight: bold;
     border-radius: 5px;
 }
 
+/* Custom style for the inbox dropdown */
+.inbox-dropdown {
+  color: #333333; /* Dark grey color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold;
+  font-size: 1.8rem; /* Make the 'Inbox' text bigger */
+}
+
+.inbox-dropdown:hover,
+.inbox-dropdown:focus {
+  color: #333333; /* Ensure the color stays dark grey on hover and focus */
+  text-decoration: none; /* Ensure no underline on hover and focus */
+}
+
+.inbox-dropdown .fa-chevron-down {
+  font-size: 1rem; /* Adjust the size of the arrow */
+  vertical-align: middle; /* Align the arrow vertically */
+  margin-left: 0.3rem; /* Add space between text and arrow */
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 33%; /* Adjust as needed for desired width */
+}
+
+.sidebar .dropdown {
+  margin-bottom: 20px;
+}
+
+.chat-preview img.request-thumbnail {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.chat-preview .time {
+  font-size: 0.75rem; /* Smaller font for date */
+}
+
+.chat-preview .info h6 {
+  font-size: 0.9rem; /* Smaller font for name */
+}
+
+.chat-preview .info p {
+  font-size: 0.8rem; /* Smaller font for title */
+}
+
+/* Chat content styles */
+.chat-header .user-details h5 {
+  font-size: 1rem; /* Adjust font size for user name */
+}
+
+.chat-header .request-details-container {
+  display: flex;
+  align-items: center;
+}
+
+.chat-header .request-thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.send-btn-square {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
+  border-radius: 5px; /* Make it a circle, remove this if you want a square */
+  background-color: #656DAD; /* Your preferred color */
+  border: none;
+  color: white;
+  font-size: 20px; /* Adjust the icon size as needed */
+  cursor: pointer;
+}
+
+.send-btn-square:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
+}
+
+
+.message-area {
+  height: calc(100vh - 200px); /* Adjust based on your header and input area height */
+  overflow-y: auto;
+}
+
+.message.sent {
+  background-color: #656DAD;
+  color: white;
+  align-self: flex-end;
+}
+
+.message.received {
+  background-color: #f1f1f1;
+  color: black;
+  align-self: flex-start;
+}
+
+.message {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.input-area {
+  background: white;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Style for profile link */
+.mini-profile {
+  color: #333333; /* Dark grey color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold;
+}
+
+.mini-profile:hover,
+.mini-profile:focus {
+  color: #333333; /* Ensure the color stays dark grey on hover and focus */
+  text-decoration: none; /* Ensure no underline on hover and focus */
+}
+
+/* Style for request title link */
+.request-details a {
+  color: #333333; /* Dark grey color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold;
+}
+
+.request-details a:hover,
+.request-details a:focus {
+  color: #333333; /* Ensure the color stays dark grey on hover and focus */
+  text-decoration: none; /* Ensure no underline on hover and focus */
+}
+
 .logoutbutton:hover{
     color: #505050 !important;
 }
@@ -1827,3 +2141,17 @@ font-weight: bold;
     width: 100%;
     height: 2px;
 }
+
+
+/* Pretty scrollbar */
+.message-area::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.message-area::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+

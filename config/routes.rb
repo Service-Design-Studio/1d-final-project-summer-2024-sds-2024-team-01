@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     get 'register' => 'my_devise/registrations#choose_register_method'
     get 'register/charity' => 'my_devise/registrations#charity'
     get 'register/corporate' => 'my_devise/registrations#corporate'
+    post 'register/corporate' => 'my_devise/registrations#create_corporate'
+    post 'register/charity' => 'my_devise/registrations#create_charity'
   end
 
   resources :requests
@@ -34,6 +36,15 @@ Rails.application.routes.draw do
 
   post 'notifications/read' => 'notifications#read'
   post 'notifications/clear' => 'notifications#clear'
+
+  # get 'myrequests/chats' => 'chats#new'
+
+  # get 'myapplications/chats' => 'chats#new'
+
+  resources :chats, only: [:index, :show, :new, :create] do
+    resources :messages, only: [:create]
+  end
+  
 
   namespace :api do
     namespace :v1 do

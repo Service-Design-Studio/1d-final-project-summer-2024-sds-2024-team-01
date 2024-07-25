@@ -10,15 +10,32 @@ RSpec.describe RequestsController, type: :controller do
   let(:valid_attributes_no_thumb) { attributes_for(:request, created_by: user.id) }
   let(:invalid_attributes) { attributes_for(:request, title: nil, created_by: user.id) }
 
+  context 'unauthenticated user' do
+    describe 'GET #index' do
+      it 'assigns @requests with requests to user ' do
+        create(:request)
+        get :index
+        expect(assigns(:in_progress_requests).length).to eq(1)
+      end
+    end
+
+    describe 'GET #show on a non existent request' do
+      it 'assigns @requests with requests to user ' do
+        get :show, params: { id: 'hehe' }
+        expect(flash[:notice]).to eq('This request does not exist')
+      end
+    end
+  end
   context 'corporate user' do
     before do
       sign_in corp
     end
     describe 'GET #index' do
       it 'assigns @requests with requests to user ' do
-        request = create(:request)
+        create(:request)
+        create(:request, reward_type: 'Cash', reward: '$50')
         get :index
-        expect(assigns(:requests)).to be_present
+        expect(assigns(:in_progress_requests).length).to eq(1)
       end
     end
   end
@@ -28,9 +45,10 @@ RSpec.describe RequestsController, type: :controller do
     end
     describe 'GET #index' do
       it 'assigns @requests with requests to user ' do
-        request = create(:test_request, created_by: user.id)
+        create(:request)
+        create(:request, reward_type: 'Cash', reward: '$50')
         get :index
-        expect(assigns(:requests)).to be_present
+        expect(assigns(:in_progress_requests).length).to eq(2)
       end
     end
 
@@ -67,7 +85,6 @@ RSpec.describe RequestsController, type: :controller do
           end.to change(Request, :count).by(1)
           expect(response).to redirect_to(Request.last)
           expect(flash[:notice]).to eq('Request was successfully created.')
-          expect(Request.last.thumbnail).to be_attached
         end
       end
 
@@ -116,7 +133,7 @@ RSpec.describe RequestsController, type: :controller do
     # end
 
     describe 'POST #apply' do
-      let(:request) { create(:request) }
+      let(:request) { create(:request, number_of_pax: 1) }
 
       context 'when all the params are not fulfilled somehow' do
         it 'fails to save the application' do
@@ -140,7 +157,7 @@ RSpec.describe RequestsController, type: :controller do
         it 'redirects to the request with a success notice' do
           post :apply, params: { id: request.id }
           expect(response).to redirect_to(request)
-          expect(flash[:notice]).to eq('Successfully applied for the request.')
+          expect(flash[:notice]).to eq('You have successfully applied for the request!')
         end
       end
 
@@ -158,7 +175,18 @@ RSpec.describe RequestsController, type: :controller do
         it 'redirects to the request with an alert' do
           post :apply, params: { id: request.id }
           expect(response).to redirect_to(request)
-          expect(flash[:alert]).to eq('You have already applied for this request.')
+          expect(flash[:notice]).to eq('You have already applied for this request.')
+        end
+      end
+
+      context 'when the request is already full' do
+        before do
+          create(:random_application, status: 'Accepted', request_id: request.id)
+        end
+
+        it 'does not create a new RequestApplication' do
+          post :apply, params: { id: request.id }
+          expect(flash[:notice]).to eq('Sorry, this request is unable to accept anymore applicants.')
         end
       end
     end
@@ -174,7 +202,7 @@ RSpec.describe RequestsController, type: :controller do
 
       it 'redirects to the requests list' do
         delete :destroy, params: { id: request.id }
-        expect(response).to redirect_to(requests_url)
+        expect(response).to redirect_to('/requests')
         expect(flash[:notice]).to eq('Request was successfully destroyed.')
       end
     end

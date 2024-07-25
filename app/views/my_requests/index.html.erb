@@ -37,17 +37,28 @@
 
     <div class="tab-content my-requests-tab-content" id="myRequestsTabContent">
       <div class="tab-pane my-requests-tab-pane fade show active" id="in-progress" role="tabpanel" aria-labelledby="in-progress-tab">
-        <%= render partial: 'request_cards', locals: { requests: @in_progress_requests } %>
+        <% if @in_progress_requests_empty %>
+          <%= render partial: 'shared/empty_state' %>
+        <% else %>
+          <%= render partial: 'request_cards', locals: { requests: @in_progress_requests } %>
+        <% end %>
       </div>
       <div class="tab-pane my-requests-tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
-        <%= render partial: 'request_cards', locals: { requests: @completed_requests } %>
+        <% if @completed_requests_empty %>
+          <%= render partial: 'shared/empty_state' %>
+        <% else %>
+          <%= render partial: 'request_cards', locals: { requests: @completed_requests } %>
+        <% end %>
       </div>
       <div class="tab-pane my-requests-tab-pane fade" id="unfulfilled" role="tabpanel" aria-labelledby="unfulfilled-tab">
-        <%= render partial: 'request_cards', locals: { requests: @unfulfilled_requests } %>
+        <% if @unfulfilled_requests_empty %>
+          <%= render partial: 'shared/empty_state' %>
+        <% else %>
+          <%= render partial: 'request_cards', locals: { requests: @unfulfilled_requests } %>
+        <% end %>
       </div>
     </div>
   </div>
 </body>
 <%= javascript_include_tag 'myrequests' %>
 </html>
-
