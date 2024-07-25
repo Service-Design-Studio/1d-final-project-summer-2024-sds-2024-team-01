@@ -27,20 +27,20 @@ class ReviewsController < ApplicationController
       @notification.message = 'Someone left a review on your profile! Click here to view.'
       @notification.url = '/profile'
       @notification.header = 'Someone left you a review'
-      @notification.notification_for = User.find(@review.review_for)
+      @notification.notification_for = @review.review_for
       @notification.save
 
       redirect_to redir, notice: 'Review was successfully created.'
 
     else
       p @review.errors.full_messages
-      render :new, notice: 'Review not saved.'
+      render :new, flash: { error: "There was an error with uploading your review." }
     end
   end
 
   def update
     if @review.update(review_params)
-      redirect_to request_path(@review.request), notice: 'Review was successfully updated.'
+      redirect_to request_path(@review.request), flash: { success: "Your review has been updated successfully!" }
     else
       render :edit
     end
