@@ -1,8 +1,0 @@
-<% @user_reports.each do |report| %>
-  <div class="ban-card">
-    <h5>Reported By: <%= report.reported_by.name %></h5>
-    <h5>Reported User: <%= report.reported_user.name %></h5>
-    <p>Reason: <%= report.report_reason %></p>
-    <p>Status: <%= report.status %></p>
-  </div>
-<% end %>
