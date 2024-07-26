@@ -6,28 +6,37 @@ class RequestsController < ApplicationController
 
   # GET /requests
   # list only active requests
- 
+
   def index
     today_start = Date.today.beginning_of_day
 
-    @in_progress_requests = Request.includes(:user, :request_applications)
-                                   .where("date > ?", today_start)
-                                   .where.not(status: 'Completed')
-                                   .order(date: :asc, start_time: :asc)
+    @in_progress_requests = if !current_user.nil? && current_user.role_id == 4
+                              Request.includes(:user, :request_applications)
+                                     .where('date > ?', today_start)
+                                     .where(reward_type: 'None')
+                                     .where.not(status: 'Completed')
+                                     .order(date: :asc, start_time: :asc)
+                            else
+                              Request.includes(:user, :request_applications)
+                                     .where('date > ?', today_start)
+                                     .where.not(status: 'Completed')
+                                     .order(date: :asc, start_time: :asc)
+                            end
 
     respond_to do |format|
       format.html
       format.json { render json: @in_progress_requests }
     end
-
   end
-
-  
 
   # GET /requests/1
   # show a single request
   def show
-    @request = Request.find(params[:id])
+    if @request.nil?
+      redirect_to '/', notice: 'This request does not exist'
+      return
+    end
+
     @is_creator = current_user && @request.created_by == current_user.id
     @accepted_application_count = @request.request_applications.where(status: 'Accepted').count
     @slots_remaining = @request.number_of_pax - @accepted_application_count
@@ -51,6 +60,11 @@ class RequestsController < ApplicationController
   # create a new request
   def apply
     @request = Request.find(params[:id])
+
+    if RequestApplication.where(request_id: @request.id).where(status: 'Accepted').count >= @request.number_of_pax
+      redirect_to @request, notice: 'Sorry, this request is unable to accept anymore applicants.'
+      return
+    end
     if RequestApplication.find_by(applicant_id: current_user.id, request_id: @request.id).nil?
       @application = RequestApplication.new
       @application.applicant_id = current_user.id
@@ -67,12 +81,15 @@ class RequestsController < ApplicationController
       @notification.save
 
       if @application.save
-        redirect_to @request, flash: { success: "You have successfully applied for the request!" }
+        # redirect_to @request, flash: { success: 'You have successfully applied for the request!' }
+        redirect_to @request, notice: 'You have successfully applied for the request!'
       else
-        redirect_to @request, flash: { error: "Sorry, you have failed to apply for this request." }
+        # redirect_to @request, flash: { error: 'Sorry, you have failed to apply for this request.' }
+        redirect_to @request, notice: 'Sorry, you have failed to apply for this request.'
       end
     else
-      redirect_to @request, flash: { warning: "You have already applied for this request." }
+      # redirect_to @request, flash: { warning: 'You have already applied for this request.' }
+      redirect_to @request, notice: 'You have already applied for this request.'
     end
   end
 
@@ -92,14 +109,15 @@ class RequestsController < ApplicationController
     if @request.save
       if request_params[:thumbnail].present?
         @request.thumbnail.attach(request_params[:thumbnail])
-      else
-        @request.thumbnail.attach(
-          io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
-          filename: 'freepik-lmao.jpg',
-          content_type: 'image/jpeg'
-        )
+        # else
+        #   @request.thumbnail.attach(
+        #     io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
+        #     filename: 'freepik-lmao.jpg',
+        #     content_type: 'image/jpeg'
+        #   )
       end
-      redirect_to @request, flash: { success: 'Request was successfully created.' }
+      redirect_to @request, notice: 'Request was successfully created.'
+      # redirect_to @request, flash: { success: 'Request was successfully created.' }
     else
       puts @request.errors.full_messages
       render :new, status: :unprocessable_entity
@@ -119,7 +137,7 @@ class RequestsController < ApplicationController
 
   # # Use callbacks to share common setup or constraints between actions.
   def set_request
-    @request = Request.find(params[:id])
+    @request = Request.find_by(id: params[:id])
   end
 
   # Only allow a list of trusted parameters through.

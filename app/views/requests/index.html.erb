@@ -36,7 +36,7 @@
                   <img src="<%= request_thumbnail_url(request) %>" class="card-img-top" alt="<%= request.title %>"/>
                   <div class="requests-homepage-card-body">
                     <div class="profile-info_requests_index">
-                      <img src="<%= request.user.avatar_url %>" alt="<%= request.user.name %>" width="30" height="30"/>
+                      <img src="<%= avatar_url(request.user) %>" alt="<%= request.user.name %>" width="30" height="30"/>
                       <span>
                         <%= request.user.name %>
                         <% if request.user.role_id == 4 %>

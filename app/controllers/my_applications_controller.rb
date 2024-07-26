@@ -31,10 +31,10 @@ class MyApplicationsController < ApplicationController
       create_withdrawal_notification(reqtowithdraw)
       respond_to do |format|
         format.html { redirect_to '/myapplications', flash: { warning: "Withdraw success! Do consider your schedule carefully before applying in the future." } }
-        format.js {
-          render js: "document.dispatchEvent(new CustomEvent('application:withdrawn', 
-            { detail: { requestId: #{reqtowithdraw.request_id}, applicationId: #{reqtowithdraw.id} } }));"
-        }
+        # format.js {
+        #   render js: "document.dispatchEvent(new CustomEvent('application:withdrawn', 
+        #     { detail: { requestId: #{reqtowithdraw.request_id}, applicationId: #{reqtowithdraw.id} } }));"
+        # }
       end
     else
       redirect_to '/myapplications', flash: { error: "An error occurred with the withdrawing. Please try again later." }
@@ -43,10 +43,10 @@ class MyApplicationsController < ApplicationController
 
   private
 
-  def update_request_count(request)
-    new_count = request.request_applications.where.not(status: 'Withdrawn').count
-    request.update(application_count: new_count)
-  end
+  # def update_request_count(request)
+  #   new_count = request.request_applications.where.not(status: 'Withdrawn').count
+  #   request.update(application_count: new_count)
+  # end
 
   def create_withdrawal_notification(application)
     Notification.create(

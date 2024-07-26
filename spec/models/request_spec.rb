@@ -43,17 +43,23 @@ RSpec.describe Request, type: :model do
     subject.date = Date.yesterday
     expect(subject).to_not be_valid
   end
+  context 'when reward_type is Money' do
+    context 'and reward is not a number' do
+      it 'adds an error for reward' do
+        subject.reward_type = 'Money'
+        subject.reward = 'invalid'
+        subject.validate_monetary
+        expect(subject.errors[:reward]).to include('Monetary reward value has to be a number')
+      end
+    end
 
-  it 'has a thumbnail attached' do
-    # Save the subject to ensure it has an ID
-    subject.save!
-
-    image_path = Rails.root.join('app', 'assets', 'images', 'default-avatar.png')
-    image_file = File.open(image_path)
-    subject.thumbnail.attach(io: image_file, filename: 'foo.png')
-
-    image_file.close
-
-    expect(subject.thumbnail.attached?).to be(true)
+    context 'and reward is nil' do
+      it 'adds an error for reward being null' do
+        subject.reward_type = 'Money'
+        subject.reward = nil
+        subject.validate_monetary
+        expect(subject.errors[:reward]).to include('Monetary reward cannot be null, select "None" if you do not intend to provide compensation')
+      end
+    end
   end
 end

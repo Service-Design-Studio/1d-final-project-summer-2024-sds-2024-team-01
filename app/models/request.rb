@@ -25,20 +25,13 @@ class Request < ActiveRecord::Base
   end
 
   def validate_monetary
+    
     return if reward_type != 'Money'
 
-    errors.add(:reward, 'Monetary reward value has to be a number') unless reward.is_a? Numeric
-
-    return unless reward.nil?
-
-    errors.add(:reward, 'Monetary reward cannot be null, select "None" if you do not intend to provide compensation')
-  end
-
-  def thumbnail_url
-    if thumbnail.attached?
-      url_for thumbnail
+    if reward.nil?
+      errors.add(:reward, 'Monetary reward cannot be null, select "None" if you do not intend to provide compensation')
     else
-      ActionController::Base.helpers.asset_path('freepik-lmao.jpg')
+      errors.add(:reward, 'Monetary reward value has to be a number') unless reward[1..].to_i.to_s == reward[1..]
     end
   end
 end

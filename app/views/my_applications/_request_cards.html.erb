@@ -28,7 +28,7 @@
                     <div class="applicant-info_requests_index_my">
                       <a class="mini-profile" href="/profile?id=<%= myapplication.request.user.id %>">
                         <div class="profile-info_requests_details mb-3">
-                          <%= image_tag myapplication.request.user.avatar_url, alt: myapplication.request.user.name, class: "mini-profile-img", width: 50, height: 50 %>
+                          <%= image_tag avatar_url(myapplication.request.user), alt: myapplication.request.user.name, class: "mini-profile-img", width: 50, height: 50 %>
                           <div class="profile-text">
                             <h6 class="mb-1"><%= myapplication.request.user.name %>
                               <% if myapplication.request.user.role_id == 4 %>
@@ -56,12 +56,12 @@
                       <% end %>
                       </div>
                       <% if myapplication.status == 'Accepted' && myapplication.request.status == 'Completed' %>
-                        <a href="#">
-                          <button class="btn leave-review-btn_mark_completed">
-                          <i class="bi bi-star-fill review-icon_mark_completed"></i>
-                          <span class="review-text_mark_completed">Leave a Review</span>
-                          </button>
-                        </a>
+                          <a class="ms-3" href="/reviews/new?request_application_id=<%= myapplication.id %>">
+                            <button class="btn leave-review-btn_mark_completed">
+                            <i class="bi bi-star-fill review-icon_mark_completed"></i>
+                            <span class="review-text_mark_completed">Leave a Review</span>
+                            </button>
+                          </a>
                       <% end %>
                     </div>    
                   </div>
