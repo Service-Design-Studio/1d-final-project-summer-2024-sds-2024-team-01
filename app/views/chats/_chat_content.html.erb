@@ -9,9 +9,9 @@
     <div class="request-details-container d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center">
         <% if @chat.applicant_id == current_user.id %>
-          <img src="<%= @chat.requester.avatar_url %>" alt="<%= @chat.request.title %>" class="request-thumbnail">
+          <img src="<%= user_avatar_url(@chat.requester) %>" alt="<%= @chat.request.title %>" class="request-thumbnail">
         <% else %>
-          <img src="<%= @chat.applicant.avatar_url %>" alt="<%= @chat.request.title %>" class="request-thumbnail">
+          <img src="<%= user_avatar_url(@chat.applicant) %>" alt="<%= @chat.request.title %>" class="request-thumbnail">
         <% end %>
         <div class="request-details ml-3">
           <% if @chat.applicant_id == current_user.id %>
@@ -39,7 +39,7 @@
             </div>
           </div>
           <div class="mini-request-thumbnail-card">
-            <img src="<%= @chat.request.thumbnail_url %>" alt="<%= @chat.request.title %>" class="mini-request-thumbnail">
+            <img src="<%= request_thumbnail_url(@chat.request) %>" alt="<%= @chat.request.title %>" class="mini-request-thumbnail">
           </div>
         </a>
         <div class="mini-request-white-cover"></div>
