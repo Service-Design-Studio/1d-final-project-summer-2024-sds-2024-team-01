@@ -12,10 +12,11 @@ class User < ActiveRecord::Base
   has_many :received_reviews, class_name: 'Review', foreign_key: 'review_for'
   has_many :chats, foreign_key: :applicant_id
   has_many :messages, foreign_key: :sender_id
-  has_many :summaryreports, foreign_key: :requested_by
-  has_many :user_reports, class_name: 'UserReport', foreign_key: :reported_user
+  has_many :summary_reports, foreign_key: :requested_by
+  has_many :user_reports_as_reported_user, class_name: 'UserReport', foreign_key: 'reported_user' # Corrected here
+  has_many :user_reports_as_reported_by, class_name: 'UserReport', foreign_key: 'reported_by' # Added for completeness
   has_many :requests, foreign_key: :created_by
-  has_many :requestapplications, foreign_key: :applicant_id
+  has_many :request_applications, foreign_key: :applicant_id
 
   validates :name, presence: true
   validates :email, presence: true
@@ -32,8 +33,9 @@ class User < ActiveRecord::Base
       errors.add(:number, 'Please enter a valid SG number')
     end
   end
-    # Method to check if the user is an admin
-    def admin?
-      role.role_name == 'Admin'
-    end
+
+  # Method to check if the user is an admin
+  def admin?
+    role.role_name == 'Admin'
+  end
 end

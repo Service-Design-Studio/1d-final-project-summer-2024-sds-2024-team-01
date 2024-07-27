@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_25_160730) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -167,11 +167,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
 
   create_table "user_reports", force: :cascade do |t|
     t.text "report_reason", null: false
-    t.string "status", null: false
-    t.bigint "reported_by", null: false
-    t.bigint "reported_user", null: false
+    t.string "status", default: "under_review", null: false
+    t.bigint "reported_by_id", null: false
+    t.bigint "reported_user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["reported_by_id"], name: "index_user_reports_on_reported_by_id"
+    t.index ["reported_user_id"], name: "index_user_reports_on_reported_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -193,8 +195,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_number"
-    t.boolean "reported", default: false
-    t.boolean "banned", default: false, null: false
     t.index ["charity_id"], name: "index_users_on_charity_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
@@ -224,8 +224,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
   add_foreign_key "reviews", "users", column: "review_by"
   add_foreign_key "reviews", "users", column: "review_for"
   add_foreign_key "summary_reports", "users", column: "requested_by"
-  add_foreign_key "user_reports", "users", column: "reported_by"
-  add_foreign_key "user_reports", "users", column: "reported_user"
+  add_foreign_key "user_reports", "users", column: "reported_by_id"
+  add_foreign_key "user_reports", "users", column: "reported_user_id"
   add_foreign_key "users", "charities"
   add_foreign_key "users", "companies"
   add_foreign_key "users", "roles"

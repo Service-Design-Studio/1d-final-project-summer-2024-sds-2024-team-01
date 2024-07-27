@@ -13,14 +13,10 @@
         <p class="card-text"><small class="text-muted">Reported by: <%= user_report.reported_by.name %></small></p>
         <p class="card-text"><strong>Reason:</strong> <%= user_report.report_reason %></p>
         <div class="d-flex justify-content-between">
-          <form method="post" action="<%= cancel_ban_admin_ban_user_path(user_report.reported_user) %>" class="btn btn-secondary">
+          <form method="post" action="<%= unban_admin_ban_user_path(user_report.reported_user) %>" class="btn btn-success">
             <input type="hidden" name="_method" value="patch">
             <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-            <button type="submit" class="btn btn-secondary">Cancel</button>
-          </form>
-          <form method="post" action="<%= ban_admin_ban_user_path(user_report.reported_user) %>" class="btn btn-primary">
-            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-            <button type="submit" class="btn btn-primary">Ban</button>
+            <button type="submit" class="btn btn-success">Unban</button>
           </form>
         </div>
       </div>

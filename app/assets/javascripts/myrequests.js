@@ -32,6 +32,7 @@ function initializeMyRequests() {
   hideWithdrawnApplications();
 }
 
+//this is to search 
 function performSearch() {
   const searchTerm = this.value.toLowerCase().trim();
   document.querySelectorAll('.request-card_requests_index_my').forEach(card => {

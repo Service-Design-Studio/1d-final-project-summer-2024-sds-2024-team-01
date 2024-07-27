@@ -27,19 +27,34 @@ if Role.count == 0
   end
   p "Created Roles"
 end
+######################################################################################
+# Clear existing data
+UserReport.destroy_all
+User.destroy_all
+Role.destroy_all
+Company.destroy_all
 
+# Create Roles
+admin_role = FactoryBot.create(:role, :admin)
+employee_role = FactoryBot.create(:role, :employee)
 
-# Create some roles
-admin_role = Role.find_or_create_by!(role_name: 'Admin')
-user_role = Role.find_or_create_by!(role_name: 'User')
+# Create Companies
+company1 = FactoryBot.create(:company, company_name: 'Example Corp')
+company2 = FactoryBot.create(:company, company_name: 'Tech Solutions')
 
-# Create some users
-user1 = User.create!(name: 'John Doe', email: 'john@example.com', password: 'password', number: '90000001', role: user_role, status: 'under_review')
-user2 = User.create!(name: 'Jane Smith', email: 'jane@example.com', password: 'password', number: '90000002', role: user_role, status: 'ban')
-admin = User.create!(name: 'Admin User', email: 'admin@example.com', password: 'password', number: '90000000', role: admin_role)
+# Create Admin User
+admin_user = FactoryBot.create(:user, :admin, email: 'admin@example.com', role: admin_role)
 
-# Create some user reports
-UserReport.create!(reporter: admin, reported_user: user1, report_reason: 'Spamming', status: 'under_review')
+# Create Corporate Employee Users
+user1 = FactoryBot.create(:user, email: 'jane.smith@example.com', company: company1, role: employee_role)
+user2 = FactoryBot.create(:user, email: 'michael.johnson@example.com', company: company2, role: employee_role)
+user3 = FactoryBot.create(:user, email: 'alice.smith@example.com', company: company1, role: employee_role)
+
+# Create User Reports
+FactoryBot.create(:user_report, reported_by: admin_user, reported_user: user1, status: 'under_review')
+FactoryBot.create(:user_report, reported_by: admin_user, reported_user: user2, status: 'ban')
+FactoryBot.create(:user_report, reported_by: admin_user, reported_user: user3, status: 'under_review')
+
 
 # users = [
 #   {

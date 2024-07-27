@@ -68,4 +68,13 @@ FactoryBot.define do
     password { 'password' }
     password_confirmation { 'password' }
   end
-end
+  factory :dummy_user_four, class: 'Admin' do
+    name { 'Timothy Lee' }
+    number { '90000000' }
+    email { 'timothy.lee@example.com' }
+    status { 'Active' }
+    role_id { 2 }
+    password { 'password' }
+    password_confirmation { 'password' }
+    end
+  end

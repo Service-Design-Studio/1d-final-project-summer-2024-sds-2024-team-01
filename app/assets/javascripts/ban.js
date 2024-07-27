@@ -22,16 +22,19 @@ function initializeBanUser() {
 }
 
 function handleBanUserContainerClick(event) {
+  // handle "Ban" button click
   if (event.target.closest('.ban-form')) {
     event.preventDefault();
     handleStatusChange(event.target.closest('.ban-form'), 'ban');
   }
 
+  //handle cancel button
   if (event.target.closest('.cancel-form')) {
     event.preventDefault();
     handleStatusChange(event.target.closest('.cancel-form'), 'normal');
   }
 
+  //handle more button
   if (event.target.closest('.more-btn')) {
     event.preventDefault();
     const moreButton = event.target.closest('.more-btn');
@@ -40,6 +43,7 @@ function handleBanUserContainerClick(event) {
   }
 }
 
+//handle unban button
 function handleUnbanUserContainerClick(event) {
   if (event.target.closest('.unban-form')) {
     event.preventDefault();
@@ -76,14 +80,17 @@ function handleStatusChange(form, status) {
   });
 }
 
+//that means that it is not changed
 function updateUserStatus(userCard, status) {
+  const userId = userCard.querySelector('.more-btn').dataset.userId;
+
   if (status === 'ban') {
     // Move the user card to the Unban tab
     const unbanUserContainer = document.getElementById('unbanUserContainer');
     userCard.setAttribute('data-status', 'ban');
     unbanUserContainer.appendChild(userCard);
     // Switch to the Unban tab
-    switchTab(document.querySelector('#unban-tab'));
+    switchTab(document.querySelector('[href="#unban"]'));
   } else if (status === 'normal') {
     // Remove the user card from the current view
     userCard.remove();
