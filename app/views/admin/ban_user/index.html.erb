@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <title>Ban/Unban User</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+</head>
 <body>
   <div class="container content_requests_index">
     <div class="card custom-card_requests_index">
@@ -35,5 +42,6 @@
       </div>
     </div>
   </div>
+  <%= javascript_include_tag 'ban_user' %>
 </body>
 </html>

@@ -1,12 +1,14 @@
 <% user.user_reports_as_reported_user.each do |user_report| %>
-  <div class="card mb-3" style="max-width: 100%;">
+  <div class="card mb-3 user-card" style="max-width: 100%;" data-user-id="<%= user.id %>">
     <div class="row g-0">
       <div class="col-md-4">
-        <img src="<%= user.avatar_url %>" alt="Profile Picture" class="img-fluid rounded-start">
+        <a href="<%= user_profile_path(user) %>">
+          <img src="<%= user.avatar_url %>" alt="Profile Picture" class="img-fluid rounded-start">
+        </a>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-8 user-info-padding">
         <div class="card-body">
-          <h5 class="card-title"><%= user.name %></h5>
+          <h5 class="card-title"><span class="user-name"><%= user.name %></span></h5>
           <p class="card-text"><small class="text-muted"><%= user.role.role_name %></small></p>
           <% if user.role.role_name == "Corporate Employee" && user.company %>
             <p class="card-text"><small class="text-muted">Company: <%= user.company.name %></small></p>
@@ -14,10 +16,9 @@
           <p class="card-text"><small class="text-muted">Reported by: <%= user_report.reported_by.name %></small></p>
           <p class="card-text"><strong>Reason:</strong> <%= user_report.report_reason %></p>
           <div class="d-flex justify-content-between">
-            <form method="post" action="<%= unban_admin_ban_user_path(user_report.reported_user) %>" class="btn btn-success">
-              <input type="hidden" name="_method" value="patch">
+            <form method="post" action="<%= unban_admin_ban_user_path(user_report.reported_user) %>" class="unban-form">
               <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-              <button type="submit" class="btn btn-success">Unban</button>
+              <button type="submit" class="btn custom-btn-banuser-purple ban-button">Unban</button>
             </form>
           </div>
         </div>
