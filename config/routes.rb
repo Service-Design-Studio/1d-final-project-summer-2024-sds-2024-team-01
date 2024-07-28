@@ -12,8 +12,29 @@ Rails.application.routes.draw do
     post 'register/charity' => 'my_devise/registrations#create_charity'
   end
 
+  namespace :admin do
+    resources :companies, only: [:index, :show] do
+      member do
+        post 'approve'
+        post 'reject'
+      end
+    end
+
+    resources :ban_user, only: [:index] do
+      member do
+        patch 'ban'
+        patch 'unban'
+        patch 'cancel_ban'
+      end
+    end
+  end
+
+  # Regular company routes
+  resources :companies, only: [:index, :show]
+
   resources :requests
-  resources :devise
+  post 'requests/apply' => 'requests#apply'
+
   root 'requests#index'
 
   get 'up' => 'rails/health#show', as: :rails_health_check
@@ -21,8 +42,6 @@ Rails.application.routes.draw do
   get 'profile' => 'profile#index'
   get 'profile/:id' => 'profile#index', as: 'user_profile'
   post 'profile/edit' => 'profile#edit'
-
-  post 'requests/apply' => 'requests#apply'
 
   get 'myrequests' => 'my_requests#index'
   post 'myrequests/complete' => 'my_requests#complete'
@@ -37,14 +56,9 @@ Rails.application.routes.draw do
   post 'notifications/read' => 'notifications#read'
   post 'notifications/clear' => 'notifications#clear'
 
-  # get 'myrequests/chats' => 'chats#new'
-
-  # get 'myapplications/chats' => 'chats#new'
-
   resources :chats, only: [:index, :show, :new, :create] do
     resources :messages, only: [:create]
   end
-  
 
   namespace :api do
     namespace :v1 do
@@ -57,16 +71,6 @@ Rails.application.routes.draw do
 
   resources :request_application, path: 'applications' do
     resources :reviews, only: %i[new create edit update]
-  end
-
-  namespace :admin do
-    resources :ban_user, only: [:index] do
-      member do
-        patch 'ban'
-        patch 'unban'
-        patch 'cancel_ban'
-      end
-    end
   end
 
   resources :user_reports, only: [:index, :new, :create]
