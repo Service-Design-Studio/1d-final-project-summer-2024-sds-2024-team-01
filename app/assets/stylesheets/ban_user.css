@@ -1,0 +1,44 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  background-color: #9B59B6; /* Purple color */
+  color: white;
+  border: none;
+}
+
+.nav-tabs .nav-link {
+  color: #9B59B6; /* Purple color for inactive tabs */
+  border: 1px solid #9B59B6;
+  border-radius: 5px 5px 0 0;
+  margin-right: 5px;
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: #8E44AD;
+  color: white;
+}
+
+/* Add margin to the Ban button to move it further from the card */
+.ban-button {
+  margin-left: 20px; /* Adjust the value as needed */
+}
+
+/* Additional padding for user info */
+.user-info-padding {
+  padding: 10px;
+}
+
+/* Align Ban button with Reason text */
+.ban-button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px; /* Adjust if needed */
+}
+
+.ban-button-container .btn {
+  margin-left: 0; /* Reset margin if needed */
+}
