@@ -172,8 +172,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_25_160730) do
     t.bigint "reported_user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["reported_by_id"], name: "index_user_reports_on_reported_by_id"
-    t.index ["reported_user_id"], name: "index_user_reports_on_reported_user_id"
   end
 
   create_table "users", force: :cascade do |t|

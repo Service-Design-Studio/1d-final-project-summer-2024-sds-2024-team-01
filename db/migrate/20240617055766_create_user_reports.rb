@@ -3,11 +3,13 @@ class CreateUserReports < ActiveRecord::Migration[7.1]
     create_table :user_reports do |t|
       t.text :report_reason, null: false
       t.string :status, null: false, default: 'under_review'
-      
-      t.references :reported_by, null: false, foreign_key: { to_table: :users }
-      t.references :reported_user, null: false, foreign_key: { to_table: :users }
+
+      t.bigint :reported_by_id, null: false
+      t.bigint :reported_user_id, null: false
 
       t.timestamps
     end
+    add_foreign_key :user_reports, :users, column: :reported_by_id
+    add_foreign_key :user_reports, :users, column: :reported_user_id
   end
 end
