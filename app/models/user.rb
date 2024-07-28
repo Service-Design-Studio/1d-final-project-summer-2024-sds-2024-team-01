@@ -1,4 +1,6 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -13,15 +15,14 @@ class User < ActiveRecord::Base
   has_many :chats, foreign_key: :applicant_id
   has_many :messages, foreign_key: :sender_id
   has_many :summary_reports, foreign_key: :requested_by
-  has_many :user_reports_as_reported_user, class_name: 'UserReport', foreign_key: 'reported_user' # Corrected here
-  has_many :user_reports_as_reported_by, class_name: 'UserReport', foreign_key: 'reported_by' # Added for completeness
+  has_many :user_reports_as_reported_user, class_name: 'UserReport', foreign_key: 'reported_user_id'
+  has_many :user_reports_as_reported_by, class_name: 'UserReport', foreign_key: 'reported_by_id'
   has_many :requests, foreign_key: :created_by
   has_many :request_applications, foreign_key: :applicant_id
 
   validates :name, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
 
-  validates_uniqueness_of :email
   validate :normal_users_must_have_number
 
   def normal_users_must_have_number
@@ -34,8 +35,15 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Method to check if the user is an admin
   def admin?
     role.role_name == 'Admin'
+  end
+
+  def avatar_url
+    if avatar.attached?
+      rails_blob_url(avatar, only_path: true)
+    else
+      ActionController::Base.helpers.asset_path('default-avatar.png')
+    end
   end
 end

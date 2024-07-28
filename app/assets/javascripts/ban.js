@@ -80,7 +80,6 @@ function handleStatusChange(form, status) {
   });
 }
 
-//that means that it is not changed
 function updateUserStatus(userCard, status) {
   const userId = userCard.querySelector('.more-btn').dataset.userId;
 

@@ -1,38 +1,53 @@
-# spec/controllers/admin/ban_user_controller_spec.rb
-
 require 'rails_helper'
 
 RSpec.describe Admin::BanUserController, type: :controller do
-  let(:admin) { create(:user, role: create(:role, role_name: 'Admin')) }
+  let(:admin) { create(:user, :admin) }
   let(:user) { create(:user) }
-  let!(:under_review_report) { create(:user_report, reported_user: user, status: 'under_review') }
-  let!(:ban_report) { create(:user_report, reported_user: user, status: 'ban') }
+  let(:under_review_report) { create(:user_report, reported_user: user, status: 'under_review') }
+  let(:banned_report) { create(:user_report, reported_user: user, status: 'ban') }
 
   before do
     sign_in admin
   end
 
   describe 'GET #index' do
-    it 'assigns reported and banned users' do
+    it 'returns http success' do
       get :index
-      expect(assigns(:reported_users)).to include(user)
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'assigns under review users and banned users' do
+      under_review_report
+      banned_report
+      get :index
+      expect(assigns(:under_review_users)).to include(user)
       expect(assigns(:banned_users)).to include(user)
     end
   end
 
-  describe 'POST #ban' do
-    it 'changes user report status to ban' do
-      post :ban, params: { id: user.id }
-      expect(user.user_reports.where(status: 'ban').count).to eq 1
-      expect(response).to redirect_to(admin_ban_user_index_path)
+  describe 'PATCH #ban' do
+    it 'bans the user' do
+      patch :ban, params: { id: user.id }
+      user.reload
+      expect(user.status).to eq('banned')
     end
   end
 
-  describe 'POST #unban' do
-    it 'changes user report status to normal' do
-      post :unban, params: { id: user.id }
-      expect(user.user_reports.where(status: 'normal').count).to eq 1
-      expect(response).to redirect_to(admin_ban_user_index_path)
+  describe 'PATCH #unban' do
+    it 'unbans the user' do
+      user.update(status: 'banned')
+      patch :unban, params: { id: user.id }
+      user.reload
+      expect(user.status).to eq('normal')
+    end
+  end
+
+  describe 'PATCH #cancel_ban' do
+    it 'cancels the ban' do
+      user.update(status: 'banned')
+      patch :cancel_ban, params: { id: user.id }
+      user.reload
+      expect(user.status).to eq('normal')
     end
   end
 end
