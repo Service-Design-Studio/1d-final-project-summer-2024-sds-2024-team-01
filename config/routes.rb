@@ -62,9 +62,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :ban_user, only: [:index] do
       member do
-        post 'ban'
-        post 'unban'
-        post 'cancel_ban'
+        patch 'ban'
+        patch 'unban'
+        patch 'cancel_ban'
       end
     end
   end
