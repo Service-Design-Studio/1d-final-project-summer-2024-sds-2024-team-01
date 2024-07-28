@@ -2,4 +2,4 @@
 //= link_directory ../stylesheets .css
 //= link_tree ../builds
 //= link application.js
-//= link ban.js
+//= link ban_user.js

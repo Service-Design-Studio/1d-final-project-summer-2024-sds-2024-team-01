@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   initializeBanUser();
+  initializeTabs();
 });
 
 function initializeBanUser() {
@@ -17,6 +18,17 @@ function initializeBanUser() {
     unbanUserContainer.addEventListener('click', handleUnbanUserContainerClick);
   }
 
+  // Event listener for card click
+  document.querySelectorAll('.user-card').forEach(card => {
+    card.addEventListener('click', function(event) {
+      // Prevent form button clicks from triggering card click
+      if (event.target.tagName.toLowerCase() !== 'button' && event.target.tagName.toLowerCase() !== 'form') {
+        const userId = card.dataset.userId;
+        window.location.href = `/profile/${userId}`;
+      }
+    });
+  });
+
   // Update UI when the page loads
   updateUIBasedOnStatus();
 }
@@ -28,33 +40,17 @@ function handleBanUserContainerClick(event) {
     handleStatusChange(event.target.closest('.ban-form'), 'ban');
   }
 
-  //handle cancel button
+  // handle cancel button
   if (event.target.closest('.cancel-form')) {
     event.preventDefault();
     handleStatusChange(event.target.closest('.cancel-form'), 'normal');
   }
-
-  //handle more button
-  if (event.target.closest('.more-btn')) {
-    event.preventDefault();
-    const moreButton = event.target.closest('.more-btn');
-    const userId = moreButton.dataset.userId;
-    window.location.href = `/users/${userId}`;
-  }
 }
 
-//handle unban button
 function handleUnbanUserContainerClick(event) {
   if (event.target.closest('.unban-form')) {
     event.preventDefault();
     handleStatusChange(event.target.closest('.unban-form'), 'normal');
-  }
-
-  if (event.target.closest('.more-btn')) {
-    event.preventDefault();
-    const moreButton = event.target.closest('.more-btn');
-    const userId = moreButton.dataset.userId;
-    window.location.href = `/users/${userId}`;
   }
 }
 
@@ -81,17 +77,14 @@ function handleStatusChange(form, status) {
 }
 
 function updateUserStatus(userCard, status) {
-  const userId = userCard.querySelector('.more-btn').dataset.userId;
+  const userId = userCard.dataset.userId;
 
   if (status === 'ban') {
-    // Move the user card to the Unban tab
     const unbanUserContainer = document.getElementById('unbanUserContainer');
     userCard.setAttribute('data-status', 'ban');
     unbanUserContainer.appendChild(userCard);
-    // Switch to the Unban tab
     switchTab(document.querySelector('[href="#unban"]'));
   } else if (status === 'normal') {
-    // Remove the user card from the current view
     userCard.remove();
   }
 
@@ -111,23 +104,19 @@ function initializeTabs() {
 function switchTab(tabButton) {
   const tabId = tabButton.getAttribute('href').replace('#', '');
 
-  // Remove active class from all tabs
   const tabButtons = document.querySelectorAll('#banUserTab a');
   tabButtons.forEach(btn => {
     btn.classList.remove('active');
     btn.setAttribute('aria-selected', 'false');
   });
 
-  // Add active class to clicked tab
   tabButton.classList.add('active');
   tabButton.setAttribute('aria-selected', 'true');
 
-  // Hide all tab panes
   document.querySelectorAll('.tab-pane').forEach(pane => {
     pane.classList.remove('show', 'active');
   });
 
-  // Show the selected tab pane
   const selectedPane = document.querySelector(tabButton.getAttribute('href'));
   selectedPane.classList.add('show', 'active');
 }
