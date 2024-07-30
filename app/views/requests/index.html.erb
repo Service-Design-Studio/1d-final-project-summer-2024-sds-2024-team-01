@@ -53,7 +53,7 @@
                     <div class="card-details_requests_index">
                       <div class="row">
                         <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-map-marker-alt"></i> <span id="address-<%= request.id %>">Loading address...</span></p>
+                          <p class="card-text_requests_index"><i class="fas fa-map-marker-alt"></i><%= request.stringlocation.presence || 'Address not available' %></p>
                         </div>
                         <div class="col-6">
                           <p class="card-text_requests_index"><i class="fas fa-users"></i><span class="icon-text_requests_index"><%= request.number_of_pax %></span></p>

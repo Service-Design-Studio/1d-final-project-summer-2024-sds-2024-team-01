@@ -39,7 +39,7 @@
               </div>
               <div class="details-item_requests_details">
                 <i class="fas fa-map-marker-alt"></i>
-                <span id="address">Loading address...</span>
+                <%= @request.stringlocation.presence || 'Address not available' %>
               </div>
               <div class="details-item_requests_details">
                 <i class="fas fa-money-bill-wave"></i>

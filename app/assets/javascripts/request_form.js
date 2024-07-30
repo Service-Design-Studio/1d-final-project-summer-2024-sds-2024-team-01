@@ -144,22 +144,23 @@ document.addEventListener('DOMContentLoaded', function() {
   function initAutocomplete() {
     const input = document.getElementById('location');
     const autocomplete = new google.maps.places.Autocomplete(input);
-
+  
     let place;
-
+  
     autocomplete.addListener('place_changed', function() {
       place = autocomplete.getPlace();
       if (!place.geometry) {
-        // User entered the name of a Place that was not suggested and pressed the Enter key,
-        // or the Place Details request failed.
         return;
       }
-
+  
+      // Store the formatted address in the hidden field
+      document.getElementById('stringlocation').value = place.formatted_address;
+  
       // Temporarily store the place details
       document.getElementById('location').dataset.latitude = place.geometry.location.lat();
       document.getElementById('location').dataset.longitude = place.geometry.location.lng();
     });
-
+  
     // On form submission, convert address to geocode
     const form = document.getElementById('request-form');
     form.addEventListener('submit', function(event) {
@@ -167,13 +168,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const latitude = place.geometry.location.lat();
         const longitude = place.geometry.location.lng();
         const pointFormat = `POINT(${longitude} ${latitude})`;
-
+  
         // Set the hidden fields for latitude and longitude
         document.getElementById('latitude').value = latitude;
         document.getElementById('longitude').value = longitude;
-
+  
         // Set the formatted point in the location field for submission
         document.getElementById('location').value = pointFormat;
+  
+        // Ensure the stringlocation is set (in case it wasn't set by the place_changed event)
+        if (!document.getElementById('stringlocation').value) {
+          document.getElementById('stringlocation').value = input.value;
+        }
       }
     });
   }
