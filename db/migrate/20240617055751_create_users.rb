@@ -6,6 +6,8 @@ class CreateUsers < ActiveRecord::Migration[7.1]
       t.string :number, default: ""
       t.string :description, default: ""
       t.string :status, null: false, default: "active"
+      t.integer :total_hours
+      t.integer :weekly_hours
       t.references :role, foreign_key: true, default: "1"
       t.references :company, foreign_key: true, null: true
       t.references :charity, foreign_key: true, null: true
