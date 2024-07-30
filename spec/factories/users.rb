@@ -68,13 +68,35 @@ FactoryBot.define do
     password { 'password' }
     password_confirmation { 'password' }
   end
-  factory :dummy_user_four, class: 'Admin' do
-    name { 'Timothy Lee' }
-    number { '90000000' }
-    email { 'timothy.lee@example.com' }
+  factory :admin_user, class: 'User' do
+    name { Faker::Name.name }
+    email { Faker::Internet.email }
+    number { "90000001" }
     status { 'Active' }
-    role_id { 2 }
+    role_id { Role.find_or_create_by!(role_name: 'Admin').id }
     password { 'password' }
     password_confirmation { 'password' }
+  end
+  FactoryBot.define do
+  factory :user do
+    name { Faker::Name.name }
+    email { Faker::Internet.email }
+    number { "9#{Faker::Number.number(digits: 7)}" }
+    password { 'password' }
+    password_confirmation { 'password' }
+    status { 'Active' }
+    association :role, factory: :user_role
+    association :company
+
+    factory :admin_user do
+      association :role, factory: :admin_role
+    end
+
+    factory :banned_user do
+      status { 'banned' }
+    end
+
+    factory :normal_user do
+      status { 'normal' }
     end
   end

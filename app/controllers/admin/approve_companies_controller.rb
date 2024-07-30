@@ -1,6 +1,5 @@
-module Admin
-  class CompaniesController < ApplicationController
-    before_action :authenticate_user!
+class Admin::ApproveCompaniesController < ApplicationController
+  before_action :authenticate_user!
     before_action :check_admin
     before_action :set_company, only: [:show, :approve, :reject]
 
@@ -9,6 +8,7 @@ module Admin
     end
 
     def show
+      @companies = Company.find(params[:id])
     end
 
     def approve
@@ -42,5 +42,4 @@ module Admin
     def generate_unique_code
       SecureRandom.hex(10)
     end
-  end
 end

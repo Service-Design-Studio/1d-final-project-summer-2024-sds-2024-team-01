@@ -13,13 +13,13 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :companies, only: [:index, :show] do
+    resources :approve_companies, only: [:index, :show] do
       member do
         post 'approve'
         post 'reject'
       end
     end
-
+    
     resources :ban_user, only: [:index] do
       member do
         patch 'ban'

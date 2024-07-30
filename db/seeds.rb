@@ -29,48 +29,38 @@ if Role.count == 0
 end
 
 #####################################################
-# Check if roles exist before creating them
-admin_role = Role.find_or_create_by!(role_name: 'Admin')
-user_role = Role.find_or_create_by!(role_name: 'User')
+# # Check if roles exist before creating them
+# user_role = Role.find_or_create_by!(role_name: 'User')
 
-# Check if users exist before creating them
-admin = User.find_or_create_by!(email: 'admin@example.com') do |user|
-  user.name = 'Admin User'
-  user.number = '90000001'
-  user.password = 'password'
-  user.password_confirmation = 'password'
-  user.role = admin_role
-  user.status = 'normal'
-end
 
-user1 = User.find_or_create_by!(email: 'user1@example.com') do |user|
-  user.name = 'User One'
-  user.number = '90000002'
-  user.password = 'password'
-  user.password_confirmation = 'password'
-  user.role = user_role
-  user.status = 'normal'
-end
+# user1 = User.find_or_create_by!(email: 'user1@example.com') do |user|
+#   user.name = 'User One'
+#   user.number = '90000002'
+#   user.password = 'password'
+#   user.password_confirmation = 'password'
+#   user.role = user_role
+#   user.status = 'normal'
+# end
 
-user2 = User.find_or_create_by!(email: 'user2@example.com') do |user|
-  user.name = 'User Two'
-  user.number = '90000003'
-  user.password = 'password'
-  user.password_confirmation = 'password'
-  user.role = user_role
-  user.status = 'banned'
-end
+# user2 = User.find_or_create_by!(email: 'user2@example.com') do |user|
+#   user.name = 'User Two'
+#   user.number = '90000003'
+#   user.password = 'password'
+#   user.password_confirmation = 'password'
+#   user.role = user_role
+#   user.status = 'banned'
+# end
 
-# Check if user reports exist before creating them
-UserReport.find_or_create_by!(reported_user_id: user1.id, reported_by_id: admin.id) do |report|
-  report.report_reason = 'Suspicious activity'
-  report.status = 'under_review'
-end
+# # Check if user reports exist before creating them
+# UserReport.find_or_create_by!(reported_user_id: user1.id, reported_by_id: admin.id) do |report|
+#   report.report_reason = 'Suspicious activity'
+#   report.status = 'under_review'
+# end
 
-UserReport.find_or_create_by!(reported_user_id: user2.id, reported_by_id: admin.id) do |report|
-  report.report_reason = 'Violation of terms'
-  report.status = 'ban'
-end
+# UserReport.find_or_create_by!(reported_user_id: user2.id, reported_by_id: admin.id) do |report|
+#   report.report_reason = 'Violation of terms'
+#   report.status = 'ban'
+# end
 
 
 
