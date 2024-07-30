@@ -1,7 +1,7 @@
 class Cvm::EmployeesController < ApplicationController
   # Display all employees
   def index
-    @allemployees = User.where(company_id: current_user.company_id)
+    @allemployees = User.where(company_id: current_user.company_id).order(:total_hours)
     puts @allemployees
   end
 

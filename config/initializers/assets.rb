@@ -16,5 +16,6 @@ Rails.application.config.assets.precompile += %w( chats.js )
 Rails.application.config.assets.precompile += %w( request_form.js )
 Rails.application.config.assets.precompile += %w( notifs.js )
 Rails.application.config.assets.precompile += %w( cvm.js )
+Rails.application.config.assets.precompile += %w( cvmcharities.js )
 Rails.application.config.assets.precompile += %w( application.js )
 
