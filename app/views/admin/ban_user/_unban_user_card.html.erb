@@ -1,5 +1,6 @@
-<% user.user_reports_as_reported_user.each do |user_report| %>
-  <div class="card mb-3 user-card" style="max-width: 100%;" data-user-id="<%= user.id %>">
+
+<% @banned_users.each do |user| %>
+  <div class="card mb-3 user-card" style="max-width: 100%;" data-user-id="<%= user.id %>" data-status="banned">
     <div class="row g-0">
       <div class="col-md-4">
         <a href="<%= user_profile_path(user) %>">
@@ -13,10 +14,12 @@
           <% if user.role.role_name == "Corporate Employee" && user.company %>
             <p class="card-text"><small class="text-muted">Company: <%= user.company.name %></small></p>
           <% end %>
-          <p class="card-text"><small class="text-muted">Reported by: <%= user_report.reported_by.name %></small></p>
-          <p class="card-text"><strong>Reason:</strong> <%= user_report.report_reason %></p>
+          <% user.user_reports_as_reported_user.each do |user_report| %>
+            <p class="card-text"><small class="text-muted">Reported by: <%= user_report.reported_by.name %></small></p>
+            <p class="card-text"><strong>Reason:</strong> <%= user_report.report_reason %></p>
+          <% end %>
           <div class="d-flex justify-content-between">
-            <form method="post" action="<%= unban_admin_ban_user_path(user_report.reported_user) %>" class="unban-form">
+            <form method="post" action="<%= unban_admin_ban_user_path(user) %>" class="unban-form">
               <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
               <button type="submit" class="btn custom-btn-banuser-purple ban-button">Unban</button>
             </form>
