@@ -37,7 +37,6 @@ gem 'devise'
 # for role management and belongs_to
 gem 'rolify'
 
-gem 'gemini-ai', '~> 4.2.0'
 
 group :development do
   gem 'web-console', '~> 4.2.1'
