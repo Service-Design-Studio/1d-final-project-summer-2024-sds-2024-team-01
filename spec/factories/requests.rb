@@ -9,6 +9,7 @@ FactoryBot.define do
                                        from: 1.30, to: 1.40
                                      ).round(3)})"
     end
+    stringlocation { Faker::Address.full_address }
     date { Faker::Date.forward(from: Date.tomorrow, days: 90) }
     start_time { '10:00 AM' }
     number_of_pax { Faker::Number.between(from: 1, to: 10) }
@@ -26,6 +27,7 @@ FactoryBot.define do
     description { 'Need someone to walk my dog for an hour every afternoon' }
     category { 'Pet Care' }
     location { 'POINT(34.052235 -118.243683)' }
+    stringlocation { Faker::Address.full_address }
     date { Date.tomorrow }
     number_of_pax { 1 }
     duration { 1 }
@@ -46,6 +48,7 @@ FactoryBot.define do
                                        from: 1.30, to: 1.40
                                      ).round(3)})"
     end
+    stringlocation { Faker::Address.full_address }
     date { Faker::Date.forward(from: Date.tomorrow, days: 90) }
     start_time { '10:00 AM' }
     number_of_pax { Faker::Number.between(from: 1, to: 10) }
