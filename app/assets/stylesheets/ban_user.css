@@ -23,16 +23,16 @@ body {
 
 /* Add margin to the Ban button to move it further from the card */
 .ban-button {
-  margin-left: 20px; /* Adjust the value as needed */
+  margin-left: 50px; /* Adjust the value as needed */
 }
 
 /* Additional padding for user info */
 .user-info-padding {
-  padding: 10px;
+  padding: 20px;
 }
 
 /* Align Ban button with Reason text */
-.ban-button-container {
+.cancel-button-container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -41,4 +41,24 @@ body {
 
 .ban-button-container .btn {
   margin-left: 0; /* Reset margin if needed */
+}
+
+
+.user-details {
+  text-align: left;
+  width: 100%; /* Ensures the text spans the full width */
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-start; /* Aligns buttons to the left */
+  width: 100%; /* Ensures the container spans the full width of the card */
+}
+
+button {
+
+  border: none;
+  color: white;
+  background-color: #8a2be2; /* Purple color */
+  cursor: pointer;
 }
