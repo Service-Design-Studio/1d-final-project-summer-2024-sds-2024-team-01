@@ -3,9 +3,10 @@ class Cvm::CvmController < ApplicationController
   # Display dashboard
   def index
     @numemployees = User.where(company_id: current_user.company_id).count
-    @weeklyhours = 23
+    @weeklyhours = User.where(company_id: current_user.company_id).sum(:weekly_hours)
     @charitylist = CompanyCharity.where(company_id: current_user.company_id)
-    @topvolunteers = User.where(name: "Alice Smith")
+    @topvolunteers = User.where(company_id: current_user.company_id).order(:weekly_hours).last(3)
+    @companycode = CompanyCode.where(company_id: current_user.company_id).where(status: 'Active').last
   end
 
   # /GET CVM/charities
@@ -19,5 +20,8 @@ class Cvm::CvmController < ApplicationController
   # params = start date and end date?
   # /GET CVM/summaryreport
   def generate_report
+  end
+
+  def generate_new_code
   end
 end
