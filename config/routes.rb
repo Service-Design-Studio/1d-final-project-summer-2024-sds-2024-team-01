@@ -30,8 +30,8 @@ Rails.application.routes.draw do
       get 'charities', to: 'cvm#manage_charities', as: 'charities'
       patch 'charities/update' => 'cvm#update_charities'
       get 'employees' => 'employees#index'
-      get 'employees/add' => 'employees#add'
-      get 'employees/delete' => 'employees#delete'
+      patch 'employees/deactivate' => 'employees#deactivate'
+      patch 'employees/activate' => 'employees#activate'
       get 'summaryreport' => 'cvm#generate_report'
     end
   end
