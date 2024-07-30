@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       patch 'employees/deactivate' => 'employees#deactivate'
       patch 'employees/activate' => 'employees#activate'
       get 'summaryreport' => 'cvm#generate_report'
+      post 'generatenew' => 'cvm#generate_new_code'
     end
   end
 

@@ -51,6 +51,12 @@ class Cvm::CvmController < ApplicationController
   end
 
   def generate_new_code
-    CompanyCode.create(company_id: current_user.company_id, status: 'Active', code: "COMP" + rand.to_s[2..11])
+    activecodes = CompanyCode.where(company_id: current_user.company_id).where(status: 'Active')
+    activecodes.each do |code|
+      code.status = 'Inactive'
+      code.save
+    end
+    CompanyCode.create(company_id: current_user.company_id, status: 'Active', code: 'COMP' + rand.to_s[2..11])
+    redirect_to '/cvm', notice: 'New code generated'
   end
 end
