@@ -21,7 +21,8 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   get 'profile' => 'profile#index'
-  post 'profile/edit' => 'profile#edit'
+  get 'profile/edit' => 'profile#edit', as: :edit_profile
+  patch 'profile' => 'profile#update'
 
   post 'requests/apply' => 'requests#apply'
   get 'myrequests' => 'my_requests#index'
