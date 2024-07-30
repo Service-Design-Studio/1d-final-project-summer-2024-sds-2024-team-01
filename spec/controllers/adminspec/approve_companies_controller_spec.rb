@@ -3,7 +3,7 @@ include ActiveJob::TestHelper
 
 RSpec.describe Admin::ApproveCompaniesController, type: :controller do
   let(:admin) { create(:admin_user) }
-  let(:random_company) { create(:company, status: 'Pending') }
+  let(:random_company) { create(:random_company, status: 'Pending') }
 
   before do
     sign_in admin
@@ -34,7 +34,7 @@ RSpec.describe Admin::ApproveCompaniesController, type: :controller do
       }.to change { random_company.reload.status }.from('Pending').to('Approved')
 
       expect(ActionMailer::Base.deliveries.count).to eq(1)
-      expect(ActionMailer::Base.deliveries.last.to).to include(random_company.users.find_by(role_id: 3).email)
+      expect(ActionMailer::Base.deliveries.last.to).to include(random_company.users.find_by(role: Role.find_by(role_name: 'Admin')).email)
     end
 
     it 'handles approval failure' do
