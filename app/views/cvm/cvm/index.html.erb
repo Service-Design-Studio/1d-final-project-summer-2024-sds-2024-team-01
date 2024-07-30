@@ -1,0 +1,53 @@
+<%= link_to 'Manage Employees', '/cvm/employees' %>
+<div>
+  <%= @numemployees %>
+  Employees
+  , <%= @numdeactivated%> deactivated
+</div>
+
+<br/>
+<br/>
+<div>
+  <%= @weeklyhours%>
+  Hours this week
+</div>
+
+<br/>
+<br/>
+
+<div>
+  <p>
+  Company Code
+  </p>
+  <div id="companycode">
+  <%= @companycode%>
+  </div>
+  <%= form_with url: cvm_generatenew_path, method: :post do %>
+    <button type="submit"> Regenerate </button>
+  <% end %>
+  <a class="icon-link btn" onclick="clipboard()">Copy to clipboard</a>
+</div>
+<br/>
+<br/>
+<%= link_to 'Manage Charities', '/cvm/charities' %>
+<% if @charitylist.count > 0 %>
+<% @charitylist.each do |charity| %>
+  <%= charity.charity_name %>
+<% end %>
+<% else %>
+  No charities added yet.
+<% end %>
+
+<br/>
+<br/>
+Top 3 volunteers this week
+<br/>
+<br/>
+<% @topvolunteers.each do |volunteer| %>
+  <div>
+  <%= volunteer.name %>
+  <%= volunteer.weekly_hours %>
+  </div>
+<% end %>
+
+<%= javascript_include_tag 'cvm' %>
