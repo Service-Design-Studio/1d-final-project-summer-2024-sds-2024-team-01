@@ -155,6 +155,9 @@ GEM
     docile (1.4.0)
     drb (2.2.1)
     erubi (1.13.0)
+    ethon (0.16.0)
+      ffi (>= 1.15.0)
+    event_stream_parser (1.0.0)
     execjs (2.9.1)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
@@ -168,9 +171,18 @@ GEM
       logger
     faraday-net_http (3.1.0)
       net-http
+    faraday-typhoeus (1.1.0)
+      faraday (~> 2.0)
+      typhoeus (~> 1.4)
     ffi (1.17.0-x64-mingw-ucrt)
     ffi (1.17.0-x86_64-linux-gnu)
     formatador (1.1.0)
+    gemini-ai (4.2.0)
+      event_stream_parser (~> 1.0)
+      faraday (~> 2.10)
+      faraday-typhoeus (~> 1.1)
+      googleauth (~> 1.8)
+      typhoeus (~> 1.4, >= 1.4.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-apis-core (0.15.0)
@@ -425,6 +437,8 @@ GEM
     tilt (2.4.0)
     timeout (0.4.1)
     trailblazer-option (0.1.2)
+    typhoeus (1.4.1)
+      ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2024.1)
@@ -465,6 +479,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker
+  gemini-ai (~> 4.2.0)
   google-cloud-storage (~> 1.47)
   guard
   guard-cucumber

@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[7.1]
       t.string :email, null: false
       t.string :number, default: ""
       t.string :description, default: ""
+      t.string :bio, default: ""
       t.string :status, null: false, default: "active"
       t.integer :total_hours
       t.integer :weekly_hours
