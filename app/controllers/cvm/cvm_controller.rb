@@ -51,5 +51,6 @@ class Cvm::CvmController < ApplicationController
   end
 
   def generate_new_code
+    CompanyCode.create(company_id: current_user.company_id, status: 'Active', code: "COMP" + rand.to_s[2..11])
   end
 end
