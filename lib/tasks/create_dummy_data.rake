@@ -82,16 +82,18 @@ namespace :db do
       end
 
       # Mock data for corporate users
+      # these are the mock companies that havent been approved yet
+      # I changed the status ACTIVE AND INACTIVE
       4.times do
         test_company = create(:random_company, status: 'Pending')
-        create(:user, status: 'Inactive', company_id: test_company.id, role_id: 3, number: nil)
+        create(:user, status: 'normal', company_id: test_company.id, role_id: 3, number: nil)
       end
 
-      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
+      create(:user, status: 'normal', company_id: create(:random_company, status: 'Active').id, role_id: 3,
                     number: nil, email: 'cvm1@test.com')
-      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
+      create(:user, status: 'normal', company_id: create(:random_company, status: 'Active').id, role_id: 3,
                     number: nil, email: 'cvm2@test.com')
-      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
+      create(:user, status: 'normal', company_id: create(:random_company, status: 'Active').id, role_id: 3,
                     number: nil, email: 'cvm3@test.com')
 
       print "\r100% Complete                      "
