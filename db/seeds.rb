@@ -69,7 +69,7 @@ end
 
 UserReport.find_or_create_by!(reported_user_id: user2.id, reported_by_id: admin.id) do |report|
   report.report_reason = 'Violation of terms'
-  report.status = 'ban'
+  report.status = 'banned'
 end
 
 
