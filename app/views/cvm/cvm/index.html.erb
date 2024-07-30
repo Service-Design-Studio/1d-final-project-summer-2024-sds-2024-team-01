@@ -1,17 +1,47 @@
+<%= link_to 'Manage Employees', '/cvm/employees' %>
 <div>
   <%= @numemployees %>
   Employees
 </div>
 
+<br/>
+<br/>
 <div>
   <%= @weeklyhours%>
   Hours this week
 </div>
 
+<br/>
+<br/>
+
+<div>
+  <p>
+  Company Code
+  </p>
+  <%= @companycode%>
+  Regenerate
+  Copy to clipboard
+</div>
+<br/>
+<br/>
+<%= link_to 'Manage Charities', '/cvm/charities' %>
+<% if @charitylist.count > 0 %>
 <% @charitylist.each do |charity| %>
-  <%= charity.name %>
+  <%= charity.charity_name %>
+<% end %>
+<% else %>
+  No charities added yet.
 <% end %>
 
+<br/>
+
+<br/>
+Top 3 volunteers this week
+<br/>
+<br/>
 <% @topvolunteers.each do |volunteer| %>
+  <div>
   <%= volunteer.name %>
+  <%= volunteer.weekly_hours %>
+  </div>
 <% end %>

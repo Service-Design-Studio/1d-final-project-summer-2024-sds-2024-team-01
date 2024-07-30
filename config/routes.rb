@@ -27,8 +27,8 @@ Rails.application.routes.draw do
   authenticated :user, lambda { |u| u.role_id == 3 } do
     namespace :cvm do
       root 'cvm#index', as: :cvm_root
-      get 'charities/manage' => 'cvm#manage_charities'
-      get 'charities/update' => 'cvm#update_charities'
+      get 'charities', to: 'cvm#manage_charities', as: 'charities'
+      patch 'charities/update' => 'cvm#update_charities'
       get 'employees' => 'employees#index'
       get 'employees/add' => 'employees#add'
       get 'employees/delete' => 'employees#delete'

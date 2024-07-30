@@ -1,1 +1,33 @@
-cvm/manage_charities
+<%= form_with url: cvm_charities_update_path, method: :patch, id: 'charity-form', local: true do |form|%>
+  <input type="hidden" name="charity_ids[]" id="charity-ids">
+  <button type="submit">Save</button>
+<% end %>
+
+<div class="d-flex">
+<div class="d-flex flex-column">
+<p>
+Charities Added
+</p>
+<ul class="list-group" id="added-charities">
+<% @addedcharities.each do |added| %>
+  <li class="list-group-item" data-id="<%= added.id %>">
+    <%= added.charity_name %>
+  </li>
+<% end %>
+</ul>
+</div>
+
+<div>
+<p>
+Available Charities
+</p>
+<ul class="list-group" id="available-charities">
+<% @notaddedcharities.each do |notadded| %>
+  <li class="list-group-item" data-id="<%= notadded.id %>">
+    <%= notadded.charity_name %>
+  </li>
+<% end %>
+</ul>
+</div>
+</div>
+<%= javascript_include_tag 'cvm' %>
