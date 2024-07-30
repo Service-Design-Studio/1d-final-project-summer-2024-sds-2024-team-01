@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
   initializeBanUser();
-  initializeTabs();
 });
 
 function initializeBanUser() {
@@ -21,7 +20,6 @@ function initializeBanUser() {
   // Event listener for card click
   document.querySelectorAll('.user-card').forEach(card => {
     card.addEventListener('click', function(event) {
-      // Prevent form button clicks from triggering card click
       if (event.target.tagName.toLowerCase() !== 'button' && event.target.tagName.toLowerCase() !== 'form') {
         const userId = card.dataset.userId;
         window.location.href = `/profile/${userId}`;
@@ -34,13 +32,11 @@ function initializeBanUser() {
 }
 
 function handleBanUserContainerClick(event) {
-  // handle "Ban" button click
   if (event.target.closest('.ban-form')) {
     event.preventDefault();
-    handleStatusChange(event.target.closest('.ban-form'), 'ban');
+    handleStatusChange(event.target.closest('.ban-form'), 'banned');
   }
 
-  // handle cancel button
   if (event.target.closest('.cancel-form')) {
     event.preventDefault();
     handleStatusChange(event.target.closest('.cancel-form'), 'normal');
@@ -63,31 +59,40 @@ function handleStatusChange(form, status) {
       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
     }
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) throw new Error('Network response was not ok');
+    return response.json();
+  })
   .then(data => {
     if (data.success) {
       updateUserStatus(form.closest('.user-card'), status);
+      displayNotification(data.message);
     } else {
-      alert('Failed to update user status.');
+      displayNotification(data.message, true);
     }
   })
   .catch(error => {
     console.error('Error:', error);
+    displayNotification('An error occurred while updating user status.', true);
   });
 }
 
-function updateUserStatus(userCard, status) {
-  const userId = userCard.dataset.userId;
+function displayNotification(message, isError = false) {
+  const notificationArea = document.getElementById('notification-area');
+  notificationArea.textContent = message;
+  notificationArea.style.color = isError ? 'red' : 'green';
+  setTimeout(() => notificationArea.textContent = '', 3000);
+}
 
-  if (status === 'ban') {
-    const unbanUserContainer = document.getElementById('unbanUserContainer');
-    userCard.setAttribute('data-status', 'ban');
+function updateUserStatus(userCard, status) {
+  const unbanUserContainer = document.getElementById('unbanUserContainer');
+  if (status === 'banned' && unbanUserContainer) {
+    userCard.setAttribute('data-status', 'banned');
     unbanUserContainer.appendChild(userCard);
     switchTab(document.querySelector('[href="#unban"]'));
   } else if (status === 'normal') {
     userCard.remove();
   }
-
   updateUIBasedOnStatus();
 }
 
@@ -129,7 +134,7 @@ function updateUIBasedOnStatus() {
       card.querySelector('.ban-form').style.display = 'block';
       card.querySelector('.cancel-form').style.display = 'block';
       card.querySelector('.unban-form').style.display = 'none';
-    } else if (userStatus === 'ban') {
+    } else if (userStatus === 'banned') {
       card.querySelector('.ban-form').style.display = 'none';
       card.querySelector('.cancel-form').style.display = 'none';
       card.querySelector('.unban-form').style.display = 'block';
