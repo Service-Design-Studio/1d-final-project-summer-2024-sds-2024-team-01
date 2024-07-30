@@ -18,6 +18,30 @@ Rails.application.routes.draw do
     post 'register/charity' => 'my_devise/registrations#create_charity'
   end
 
+  authenticated :user, lambda { |u| u.role_id == 2 } do
+    namespace :admin do
+      root 'admin#index', as: :admin_root
+    end
+  end
+
+  authenticated :user, lambda { |u| u.role_id == 3 } do
+    namespace :cvm do
+      root 'cvm#index', as: :cvm_root
+      get 'charities/manage' => 'cvm#manage_charities'
+      get 'charities/update' => 'cvm#update_charities'
+      get 'employees' => 'employees#index'
+      get 'employees/add' => 'employees#add'
+      get 'employees/delete' => 'employees#delete'
+      get 'summaryreport' => 'cvm#generate_report'
+    end
+  end
+
+  authenticated :user, lambda { |u| u.role_id == 5 } do
+    namespace :charity do
+      root 'charity#index', as: :charity_root
+    end
+  end
+
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   get 'profile' => 'profile#index'

@@ -1,0 +1,17 @@
+<div>
+  <%= @numemployees %>
+  Employees
+</div>
+
+<div>
+  <%= @weeklyhours%>
+  Hours this week
+</div>
+
+<% @charitylist.each do |charity| %>
+  <%= charity.name %>
+<% end %>
+
+<% @topvolunteers.each do |volunteer| %>
+  <%= volunteer.name %>
+<% end %>
