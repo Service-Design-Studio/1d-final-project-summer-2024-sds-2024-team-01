@@ -46,4 +46,6 @@ class User < ApplicationRecord
       ActionController::Base.helpers.asset_path('default-avatar.png')
     end
   end
+
+  enum status: { normal: 0, banned: 1, under_review: 2 }
 end
