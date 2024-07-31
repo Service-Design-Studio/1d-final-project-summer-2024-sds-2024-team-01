@@ -84,11 +84,35 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   end
 
   def create_charity
-    @resource = Charity.new(charity_params)
-    if @resource.save
-      @resource.docoument_proof.attach(params[:document_proof])
-    else
-      render :charity_success_page
+    @charity = Charity.new
+    @charity.charity_name = params[:charity_name]
+    @charity.status = 'Pending'
+    @charity.document_proof = params[:document_proof]
+
+    @charityuser= User.new
+    @charityuser.email = params[:email]
+    @charityuser.name = params[:charity_name]
+    @charityuser.role_id = 5
+    @charityuser.number = nil
+    @charityuser.status = 'Inactive'
+    @charityuser.password = 'password'
+    @charityuser.password_confirmation = 'password'
+
+    ActiveRecord::Base.transaction do
+      if @charity.save
+        @charity.document_proof.attach(params[:document_proof])
+        puts @charity.id
+        @charityuser.charity_id = @charity.id
+        if @charityuser.save
+          redirect_to '/register/charitysuccess'
+        else
+          @charityuser.errors.full_messages
+          redirect_to '/register/charity', notice: 'Failed to register user'
+          raise ActiveRecord::Rollback
+        end
+      else
+        redirect_to '/register/charity', notice: 'Failed to register'
+      end
     end
   end
 
@@ -99,7 +123,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   end
 
   def charity_params
-    params.require(:charity).permit(:charity_name, :document_proof)
+    params.permit(:charity_name, :document_proof, :email)
   end
 
   def sign_up_params
