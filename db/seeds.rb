@@ -40,7 +40,6 @@ admin = User.find_or_create_by!(email: 'admin@example.com') do |user|
   user.password = 'password'
   user.password_confirmation = 'password'
   user.role = admin_role
-  user.status = 'normal'
 end
 
 user1 = User.find_or_create_by!(email: 'user1@example.com') do |user|
@@ -49,7 +48,6 @@ user1 = User.find_or_create_by!(email: 'user1@example.com') do |user|
   user.password = 'password'
   user.password_confirmation = 'password'
   user.role = user_role
-  user.status = 'normal'
 end
 
 user2 = User.find_or_create_by!(email: 'user2@example.com') do |user|
@@ -58,19 +56,19 @@ user2 = User.find_or_create_by!(email: 'user2@example.com') do |user|
   user.password = 'password'
   user.password_confirmation = 'password'
   user.role = user_role
-  user.status = 'banned'
 end
 
 # Check if user reports exist before creating them
-UserReport.find_or_create_by!(reported_user_id: user1.id, reported_by_id: admin.id) do |report|
+UserReport.find_or_create_by!(reported_user: user1, reported_by: admin) do |report|
   report.report_reason = 'Suspicious activity'
   report.status = 'under_review'
 end
 
-UserReport.find_or_create_by!(reported_user_id: user2.id, reported_by_id: admin.id) do |report|
+UserReport.find_or_create_by!(reported_user: user2, reported_by: admin) do |report|
   report.report_reason = 'Violation of terms'
   report.status = 'ban'
 end
+
 
 
 
