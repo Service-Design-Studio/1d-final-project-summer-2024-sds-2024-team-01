@@ -3,7 +3,7 @@
     <div class="row g-0">
       <div class="col-md-4">
         <a href="<%= user_profile_path(user) %>">
-          <img src="<%= user.avatar_url %>" alt="Profile Picture" class="img-fluid rounded-start">
+          <%= image_tag avatar_url(user), alt: "Profile Picture", class: "img-fluid rounded-start" %>
         </a>
       </div>
       <div class="col-md-8 user-info-padding">
