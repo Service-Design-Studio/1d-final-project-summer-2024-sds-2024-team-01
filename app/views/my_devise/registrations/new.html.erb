@@ -8,7 +8,7 @@
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <div class="d-flex m-0 p-0">
       <div class="signup-container" id="step-1">
-        <a href="/register" class="fa-arrow-left fas text-decoration-none text-black"></a>
+          <a href="/register" class="position-absolute fa-arrow-left fas text-decoration-none text-black"></a>
       <div class="d-flex justify-content-center">
         <%= image_tag 'icon_v1.png', width:'20%', alt: 'Logo', class: 'd-inline-block align-text-top rounded-circle'%>
       </div>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="signup-container" id="step-2">
-        <i class="fa-arrow-left fas" onclick="secondtofirst()"></i>
+        <i class="position-absolute fa-arrow-left fas" onclick="secondtofirst()"></i>
       <div class="d-flex justify-content-center">
         <%= image_tag 'icon_v1.png', width:'20%', alt: 'Logo', class: 'd-inline-block align-text-top'%>
       </div>
@@ -60,7 +60,7 @@
     </div>
 
     <div class="signup-container" id="step-3">
-        <i class="fa-arrow-left fas" onclick="thirdtosecond()"></i>
+        <i class="position-absolute fa-arrow-left fas" onclick="thirdtosecond()"></i>
       <div class="d-flex justify-content-center">
         <%= image_tag 'icon_v1.png', width:'20%', alt: 'Logo', class: 'd-inline-block align-text-top'%>
       </div>
