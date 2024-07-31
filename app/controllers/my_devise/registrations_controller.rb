@@ -67,7 +67,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
         puts @company.id
         @corpuser.company_id = @company.id
         if @corpuser.save
-          redirect_to '/register/companysuccess'
+          redirect_to '/register/corporatesuccess'
         else
           @corpuser.errors.full_messages
           redirect_to '/register/corporate', notice: 'Failed to register user'
@@ -114,6 +114,12 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
         redirect_to '/register/charity', notice: 'Failed to register'
       end
     end
+  end
+
+  def corporatesuccess
+  end
+
+  def charitysuccess
   end
 
   private
