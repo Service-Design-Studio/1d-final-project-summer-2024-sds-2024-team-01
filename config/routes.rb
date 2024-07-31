@@ -27,11 +27,15 @@ Rails.application.routes.draw do
         patch 'cancel_ban'
       end
     end
+    
+    resources :delete_requests, only: [:index, :destroy] do
+      member do
+        get 'confirm' # This will create a route for GET /admin/delete_requests/:id/confirm
+      end
+    end
   end
 
-  # Regular company routes
   resources :companies, only: [:index, :show]
-
   resources :requests
   post 'requests/apply' => 'requests#apply'
 
