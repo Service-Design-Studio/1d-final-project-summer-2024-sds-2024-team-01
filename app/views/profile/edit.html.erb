@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= f.label :charity_id %>
-    <%= f.collection_select :charity_id, Charity.all, :id, :name, include_blank: true %>
+    <%= f.collection_select :charity_id, Charity.all, :id, :charity_name, include_blank: true %>
   </div>
 
   <div class="field">
