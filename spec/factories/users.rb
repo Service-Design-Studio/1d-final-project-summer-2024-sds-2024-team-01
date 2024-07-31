@@ -1,17 +1,22 @@
+FactoryBot.define do
   factory :user do
     name { Faker::Name.name }
     email { Faker::Internet.email }
     number { "9#{Faker::Number.number(digits: 7)}" }
-    status { 'normal' }
+    status { 'Active' }
     password { 'password' }
     password_confirmation { 'password' }
     association :role, factory: :random_role
+
+    trait :admin do
+      role_id { 2 } # Assuming 2 is the role ID for admin
+    end
 
     factory :random_user do
       name { Faker::Name.name }
       email { Faker::Internet.email }
       number { "9#{Faker::Number.number(digits: 7)}" }
-      status { 'normal' }
+      status { 'Active' }
       role_id { 1 }
       password { 'password' }
       password_confirmation { 'password' }
@@ -21,7 +26,7 @@
       name { 'Harrison Ford' }
       number { "9#{Faker::Number.number(digits: 7)}" }
       email { 'harrison@example.com' }
-      status { 'normal' }
+      status { 'Active' }
       role_id { 1 }
       password { 'password' }
       password_confirmation { 'password' }
@@ -31,7 +36,7 @@
       name { 'Alice Smith' }
       number { "9#{Faker::Number.number(digits: 7)}" }
       email { 'alice.smith@example.com' }
-      status { 'normal' }
+      status { 'Active' }
       role_id { 1 }
       password { 'password' }
       password_confirmation { 'password' }
@@ -41,7 +46,7 @@
       name { 'Alice Smith' }
       number { '91234567' }
       email { 'alice.smith@example.com' }
-      status { 'normal' }
+      status { 'Active' }
       role_id { 1 }
       password { 'password' }
       password_confirmation { 'password' }
@@ -51,7 +56,7 @@
       name { 'Jane Doe' }
       number { '81234567' }
       email { 'jane.doe@example.com' }
-      status { 'normal' }
+      status { 'Active' }
       role_id { 1 }
       password { 'password' }
       password_confirmation { 'password' }
@@ -61,7 +66,7 @@
       name { 'Bob Dylan' }
       number { '98765432' }
       email { 'bob.dylan@example.com' }
-      status { 'normal' }
+      status { 'Active' }
       role_id { 1 }
       password { 'password' }
       password_confirmation { 'password' }
@@ -71,18 +76,10 @@
       name { Faker::Name.name }
       email { Faker::Internet.email }
       number { "90000001" }
-      status { 'normal' }
+      status { 'Active' }
       role_id { 2 }
       password { 'password' }
       password_confirmation { 'password' }
-    end
-
-    factory :banned_user do
-      status { 'banned' }
-    end
-
-    factory :normal_user do
-      status { 'normal' }
     end
   end
 end
