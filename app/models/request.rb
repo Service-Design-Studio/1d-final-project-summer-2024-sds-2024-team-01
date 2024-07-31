@@ -6,6 +6,7 @@ class Request < ActiveRecord::Base
   validates_presence_of :title, message: 'Please enter a title'
   validates_presence_of :category, message: 'Please select a category'
   validates_presence_of :location, message: 'Please enter a location'
+  validates_presence_of :stringlocation, message: 'Please enter a valid address'
   validates_presence_of :date, message: 'Please enter a date'
   validates_numericality_of :number_of_pax, message: 'Please enter the number of people required'
   validates_numericality_of :duration, message: 'Please enter a duration'

@@ -92,6 +92,10 @@
         </div>
 
         <div class="col-md-12 mb-3">
+          <%= f.hidden_field :stringlocation, id: "stringlocation" %>
+        </div>
+
+        <div class="col-md-12 mb-3">
           <%= f.label :description, class: "form-label" %>
           <%= f.text_area :description, class: "form-control", rows: 6, placeholder: "Describe your request!", required: true %>
         </div>
