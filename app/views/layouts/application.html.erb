@@ -82,7 +82,13 @@
       <!-- Displaying notices and errors to user -->
       <% flash.each do |type, msg| %>
         <div class="noticefadeout">
+        <% if msg.is_a?(Array) %>
+          <% msg.each do |msg| %>
+            <p><%= msg %></p>
+          <% end %>
+        <% else %>
           <%= msg %>
+        <% end %>
         </div>
       <% end %>
       <%= yield %>

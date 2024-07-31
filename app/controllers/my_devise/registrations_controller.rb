@@ -7,6 +7,19 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
     puts sign_up_params
 
+    specialcode = params[:code]
+
+    company_code = CompanyCode.where(code: specialcode).where(status: 'Active').take
+    if !company_code.nil?
+      resource.company_id = CompanyCode.where(code: specialcode).where(status: 'Active').take.company_id
+      resource.role_id = 4
+    else
+      charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take
+      if charity_id.nil?
+      resource.charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take.charity_id
+      resource.role_id = 5
+    end
+
     resource.save
     yield resource if block_given?
     if resource.persisted?
@@ -22,7 +35,8 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     else
       clean_up_passwords resource
       set_minimum_password_length
-      respond_with resource
+      flash[:notice] = resource.errors.full_messages
+      redirect_to '/register/user'
     end
   end
 
@@ -85,5 +99,10 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
 
   def charity_params
     params.require(:charity).permit(:charity_name, :document_proof)
+  end
+
+  def sign_up_params
+    params.require(:user).permit(:name, :number, :email, :password, :password_confirmation, :avatar, :description,
+                                 :code)
   end
 end
