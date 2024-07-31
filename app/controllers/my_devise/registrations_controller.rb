@@ -22,7 +22,8 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     else
       clean_up_passwords resource
       set_minimum_password_length
-      respond_with resource
+      flash[:notice] = resource.errors.full_messages
+      redirect_to "/register/user"
     end
   end
 
