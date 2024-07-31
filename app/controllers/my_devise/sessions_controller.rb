@@ -16,7 +16,21 @@ class MyDevise::SessionsController < DeviseController
   # POST /resource/sign_in
   def create
     self.resource = warden.authenticate!(auth_options)
+    # if params[:number_email] =~ /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+    #   resource.login = params[:number_email]
+    # else
+    #   resource.login = params[:number_email]
+    # end
     set_flash_message!(:notice, :signed_in)
+
+    puts "hasdlfasdlj"
+    puts "hasdlfasdlj"
+    puts "hasdlfasdlj"
+    puts "hasdlfasdlj"
+    puts resource
+    puts resource
+    puts resource
+    puts resource
     sign_in(resource_name, resource)
     yield resource if block_given?
     respond_with resource, location: after_sign_in_path_for(resource)
