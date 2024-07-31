@@ -17,14 +17,20 @@
             <% end %>
             (<%= @reviews_received.count %>)
           </p>
-          <p>Trusted user</p>
+          <%# <p>Trusted user</p> %>
         </div>
       </div>
     </div>
     <div class="card mb-0 custom-card_profile body-card_profile">
       <div class="card-body body-container_profile">
         <div class="follow-btn-profile">
-            <%= link_to 'Edit profile', edit_profile_path, class: 'btn follow-btn-profile' %>
+            <%= button_tag 'Edit profile', type: 'button', id: 'edit-profile-btn', class: 'btn follow-btn-profile' %>
+        </div>
+        <div id="edit_profile_pop-up" class="edit_profile_pop-up">
+          <div class="edit_profile_pop-up-content">
+            <span class="close">&times;</span>
+            <%= render 'edit' %>
+          </div>
         </div>
         <div class="options-icon-follow">
           <i class="fas fa-ellipsis-h"></i>
@@ -116,9 +122,9 @@
           </div>
         </div>
         <!--Profile user description container-->
-        # <div class="card mb-0 profile-user_description_container">
-        #   <p>This holds the user written description.</p>
-        # </div>
+        <%# <div class="card mb-0 profile-user_description_container">
+          <p>This holds the user written description.</p>
+        </div> %>
         <div class="card mb-0 profile-user_description_container">
           <p><%= @profile.description.presence || 'This user has not provided a description.' %></p>
         </div>
@@ -127,5 +133,6 @@
   </div>
 </body>
 
+<%= javascript_include_tag 'profile' %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -1239,6 +1239,112 @@ font-weight: bold;
   background-color: #9852a6; /* Slightly darker shade for hover effect */
   color: white; /* White text color on hover */
 }
+/*edit profile pop-up*/
+.edit_profile_pop-up {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 100;
+}
+
+.edit_profile_pop-up-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  z-index: 100;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.profile-picture-upload {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-picture-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.current-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.empty-avatar {
+  font-size: 50px;
+  color: #999;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+#crop-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+#crop-image {
+  display: block;
+  max-width: none;
+  max-height: none;
+}
+
+#crop-button {
+  display: none;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #656dad;
+  color: white;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+/* Ensure the cropper UI is circular */
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50%;
+}
 
 .options-icon-follow {
   margin-top: 12px; /* Space between name and options icon */
