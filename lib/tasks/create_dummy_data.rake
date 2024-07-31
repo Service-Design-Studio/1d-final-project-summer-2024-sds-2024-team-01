@@ -90,7 +90,7 @@ namespace :db do
 
       abc_company = create(:random_company, status: 'Active')
       create(:user, status: 'Active', company_id: abc_company.id, role_id: 3,
-                    number: 99999999, email: 'cvm1@test.com')
+                    number: nil, email: 'cvm1@test.com')
       create(:random_company_code, company: abc_company)
       10.times do
         create(:user, status: 'Active', company_id: abc_company.id, role_id: 4, number: nil)
