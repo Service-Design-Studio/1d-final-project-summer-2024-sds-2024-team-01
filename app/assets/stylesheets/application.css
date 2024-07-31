@@ -301,9 +301,9 @@ form {
 
 
 /* Register page CSS functions*/
-body.registrations-new, .registrations-create{
-    overflow:hidden;
-}
+/* body.registrations-new, .registrations-create{ */
+/*     overflow:hidden; */
+/* } */
 
 body.registrations-new, .registrations-create, .registrations-charity, .registrations-corporate, .registrations-choose_register_method, body.sessions-new {
   background: linear-gradient(180deg, #AC88C6 0%, #666DAD 100%);
@@ -312,6 +312,7 @@ body.registrations-new, .registrations-create, .registrations-charity, .registra
   justify-content: center;
   align-items: center;
   margin: 0;
+    overflow:hidden;
 }
 
 .signup-container {
