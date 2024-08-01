@@ -1,11 +1,14 @@
 <body class="sessions-new">
   <div class="login-container">
-    <%= image_tag 'icon_v1.png', alt: 'Logo', class: 'd-inline-block align-text-top logo-circle-login-reg' %>
+    <div class="d-flex justify-content-center">
+      <%= image_tag 'icon_v1.png', width:'20%', alt: 'Logo', class: 'd-inline-block align-text-top rounded-circle'%>
+    </div>
+
     <h2 class="text-center">Ready to help!</h2>
     <p class="text-center">Enter your credentials to login</p>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="field">
-        <%= f.telephone_field :number, placeholder: "Phone number", autofocus: true, autocomplete: "phone-number", class: "form-control" %>
+        <%= f.text_field :login, placeholder: "Phone number or email", autofocus: true, class: "form-control" %>
       </div>
 
       <div class="field">

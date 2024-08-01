@@ -1,15 +1,52 @@
 document.addEventListener('DOMContentLoaded', function() {
   initializeMyRequests();
+  initializeDropdowns();
+  console.log('DOMContentLoaded event fired');
 });
 
+function waitForContent() {
+  return new Promise((resolve) => {
+    const requestContainer = document.getElementById('requestContainer');
+    
+    if (isContentReady()) {
+      resolve();
+    } else {
+      const observer = new MutationObserver((mutations, obs) => {
+        if (isContentReady()) {
+          obs.disconnect();
+          resolve();
+        }
+      });
+      
+      observer.observe(requestContainer, {
+        childList: true,
+        subtree: true
+      });
+    }
+  });
+}
+
+function isContentReady() {
+  // Implement your check here. For example:
+  const requestCards = document.querySelectorAll('.request-card_requests_index_my');
+  return requestCards.length > 0;
+}
+
 function initializeMyRequests() {
+  console.log('initializeMyRequests called');
+
   const requestContainer = document.getElementById('requestContainer');
   const searchInput = document.getElementById('searchInput');
   const cardBody = document.querySelector('.card-body');
 
+  console.log('requestContainer:', requestContainer);
+  console.log('searchInput:', searchInput);
+  console.log('cardBody:', cardBody);
+
   // Search functionality
   if (searchInput) {
     searchInput.addEventListener('input', performSearch);
+    console.log('Search input listener added');
   }
 
   // Use event delegation for dynamically loaded content
@@ -21,8 +58,16 @@ function initializeMyRequests() {
   initializeTabs();
 
   // Call this function when the page loads
-  updateUIBasedOnStatus();
-  hideEmptyDropdowns();
+  // console.log('Calling updateUIBasedOnStatus');
+  // updateUIBasedOnStatus();
+  // console.log('Calling hideEmptyDropdowns');
+  // hideEmptyDropdowns();
+
+  waitForContent().then(() => {
+    console.log('Content ready, updating UI');
+    updateUIBasedOnStatus();
+    hideEmptyDropdowns();
+  });
 
   // Close dropdown when clicking outside
   document.addEventListener('click', handleOutsideClick);
@@ -30,6 +75,8 @@ function initializeMyRequests() {
   document.addEventListener('application:withdrawn', handleWithdrawal);
 
   hideWithdrawnApplications();
+
+  console.log('initializeMyRequests completed');
 }
 
 //this is to search 
@@ -104,10 +151,12 @@ function switchTab(tabButton) {
   const selectedPane = document.querySelector(tabButton.getAttribute('data-bs-target'));
   selectedPane.classList.add('show', 'active');
 
+  // Update the content of the selected tab
   updateRequestCards(tabId);
 }
 
 function updateRequestCards(tabId) {
+  console.log(`Updating request cards for tab: ${tabId}`);
   fetch(`/myrequests?tab=${tabId}`, {
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
@@ -116,15 +165,25 @@ function updateRequestCards(tabId) {
   })
   .then(response => response.json())
   .then(data => {
+    console.log(`Received data for ${tabId}:`, data);
     const tabPane = document.querySelector(`#${tabId}`);
-    tabPane.innerHTML = data.html;
-
+    
     if (data[`${tabId}_requests_empty`]) {
+      console.log(`Tab ${tabId} is empty, rendering empty state`);
       tabPane.innerHTML = data.empty_state_html;
+    } else {
+      console.log(`Tab ${tabId} has content, rendering regular HTML`);
+      tabPane.innerHTML = data.html;
     }
 
-    updateUIBasedOnStatus();
+    console.log(`Tab ${tabId} content after update:`, tabPane.innerHTML);
+
+    // hideEmptyDropdowns();
+    // initializeDropdowns();
     document.dispatchEvent(new CustomEvent('requestCardsUpdated', { detail: { tabId: tabId } }));
+  })
+  .catch(error => {
+    console.error('Error updating request cards:', error);
   });
 }
 
@@ -208,18 +267,18 @@ function handleCompleteForm(form) {
   });
 }
 
-// function checkIfUnfulfilled(requestCard) {
-//   const status = requestCard.dataset.status;
-//   const requestDate = new Date(requestCard.dataset.date);
-//   const requestTime = requestCard.dataset.time;
-//   const [hours, minutes] = requestTime.split(':').map(Number);
-//   requestDate.setHours(hours, minutes);
+function checkIfUnfulfilled(requestCard) {
+  const status = requestCard.dataset.status;
+  const requestDate = new Date(requestCard.dataset.date);
+  const requestTime = requestCard.dataset.time;
+  const [hours, minutes] = requestTime.split(':').map(Number);
+  requestDate.setHours(hours, minutes);
 
-//   const now = new Date();
+  const now = new Date();
 
   
-//   return status !== 'Completed' && requestDate < now;
-// }
+  return status !== 'Completed' && requestDate < now;
+}
 
 function handleDropdownClick(button) {
   const wrapper = button.closest('.clickable-card_requests_index-wrapper_my');
@@ -271,12 +330,17 @@ function handleOutsideClick(event) {
 }
 
 function hideEmptyDropdowns() {
+  console.log('hideEmptyDropdowns called');
   document.querySelectorAll('.request-card_requests_index_my').forEach(card => {
     const applicantPopups = card.querySelectorAll('.popup_requests_index_my');
-    const totalApplicants = applicantPopups.length;
+    const visibleApplicants = Array.from(applicantPopups).filter(popup => {
+      // Check if the popup is visible and not withdrawn
+      return popup.style.display !== 'none' && !popup.querySelector('.status-indicator_my.withdrawn');
+    });
+    const totalVisibleApplicants = visibleApplicants.length;
     const dropdownButton = card.querySelector('.dropdown-btn_requests_index_my');
     
-    if (totalApplicants === 0 && dropdownButton) {
+    if (totalVisibleApplicants === 0 && dropdownButton) {
       dropdownButton.style.display = 'none';
     } else if (dropdownButton) {
       dropdownButton.style.display = 'block';
@@ -331,6 +395,7 @@ function handleAcceptRejectForm(form) {
 }
 
 function updateUIBasedOnStatus() {
+  console.log('updateUIBasedOnStatus called');
   document.querySelectorAll('.request-card_requests_index_my').forEach(card => {
     const applicationIndicator = card.querySelector('.application-indicator_requests_index_my');
     const completeForm = card.querySelector('.complete-form');
@@ -384,6 +449,8 @@ function handleWithdrawal(event) {
     if (withdrawnPopup) {
       withdrawnPopup.style.display = 'none';
     }
+
+    hideEmptyDropdowns();
   }
 }
 
