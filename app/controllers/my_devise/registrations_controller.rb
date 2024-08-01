@@ -15,7 +15,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
       resource.role_id = 4
     else
       charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take
-      if charity_id.nil?
+      if !charity_id.nil?
         resource.charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take.charity_id
         resource.role_id = 5
       end
