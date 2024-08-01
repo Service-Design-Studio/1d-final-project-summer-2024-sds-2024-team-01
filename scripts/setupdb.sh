@@ -16,6 +16,8 @@ bundle exec rails db:migrate
 echo "Seeding database..."
 bundle exec rails db:seed
 
+bundle exec rake db:prepare
+
 # Thanks random homie from stackoverflow
 # https://stackoverflow.com/questions/77287655/how-to-solve-docker-container-exec-format-error-for-running-entrypoint
 exec "$@"
