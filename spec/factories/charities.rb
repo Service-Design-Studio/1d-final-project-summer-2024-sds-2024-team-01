@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :random_charity, class: 'Charity' do
-    charity_name { Faker::Adjective.positive + ' Charity' }
+    charity_name { Faker::Adjective.positive + ' charity' }
     status { 'Active' }
     document_proof do
       ActiveStorage::Blob.create_and_upload!(
