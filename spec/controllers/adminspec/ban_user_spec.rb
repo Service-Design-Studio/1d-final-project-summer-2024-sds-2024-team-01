@@ -55,7 +55,7 @@ RSpec.describe Admin::BanUserController, type: :controller do
 
         post :unban, params: { id: user.id }
         banned_report.reload
-        expect(banned_report.status).to eq('normal')
+        expect(banned_report.status).to eq('Active')
         expect(response).to have_http_status(:success)
         expect(flash[:notice]).to eq("#{user.name} has been unbanned.")
       end
@@ -74,10 +74,10 @@ RSpec.describe Admin::BanUserController, type: :controller do
     context "when the user is under review" do
       before { under_review_report }
 
-      it "cancels the ban and updates the status to normal" do
+      it "cancels the ban and updates the status to Active" do
         post :cancel_ban, params: { id: user.id }
         under_review_report.reload
-        expect(under_review_report.status).to eq('normal')
+        expect(under_review_report.status).to eq('Active')
         expect(response).to have_http_status(:success)
         expect(flash[:notice]).to eq("No ban placed on #{user.name}.")
       end

@@ -43,14 +43,14 @@ function handleBanUserContainerClick(event) {
   // handle cancel button
   if (event.target.closest('.cancel-form')) {
     event.preventDefault();
-    handleStatusChange(event.target.closest('.cancel-form'), 'normal');
+    handleStatusChange(event.target.closest('.cancel-form'), 'Active');
   }
 }
 
 function handleUnbanUserContainerClick(event) {
   if (event.target.closest('.unban-form')) {
     event.preventDefault();
-    handleStatusChange(event.target.closest('.unban-form'), 'normal');
+    handleStatusChange(event.target.closest('.unban-form'), 'Active');
   }
 }
 
@@ -84,7 +84,7 @@ function updateUserStatus(userCard, status) {
     userCard.setAttribute('data-status', 'ban');
     unbanUserContainer.appendChild(userCard);
     switchTab(document.querySelector('[href="#unban"]'));
-  } else if (status === 'normal') {
+  } else if (status === 'Active') {
     userCard.remove();
   }
 
