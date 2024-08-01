@@ -2,7 +2,6 @@ class Admin::BanUserController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_admin!
   
-
   def index
     @under_review_users = User.joins(:user_reports_as_reported_user).where(user_reports: { status: 'under_review' }).distinct
     @banned_users = User.joins(:user_reports_as_reported_user).where(user_reports: { status: 'ban' }).distinct

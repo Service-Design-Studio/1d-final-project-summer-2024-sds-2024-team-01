@@ -98,11 +98,12 @@ Rails.application.routes.draw do
       end
     end
     
+   
     resources :ban_user, only: [:index] do
       member do
-        patch 'ban'
-        patch 'unban'
-        patch 'cancel_ban'
+        post :ban
+        post :unban
+        post :cancel_ban
       end
     end
     
