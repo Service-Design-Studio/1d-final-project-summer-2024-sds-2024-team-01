@@ -5,6 +5,7 @@ Feature: Calling the Requests API
 
 Background:
   Given I have an account
+  And I login
 
 # /GET
 Scenario: send a GET request to the API

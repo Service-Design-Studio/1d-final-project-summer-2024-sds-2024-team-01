@@ -12,7 +12,8 @@ Given('I have an account') do
     fill_in 'user_password_confirmation', with: 'asdfasdf'
     click_button 'Sign up!'
     expect(page).to have_content('signed up successfully.')
-    # click_button 'logout'
+    # click_button(id: 'logoutbtn')
+    # click_button 'Logout'
 end
 
 Given('I login as an admin') do
