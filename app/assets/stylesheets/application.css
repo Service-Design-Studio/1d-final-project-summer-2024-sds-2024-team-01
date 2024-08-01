@@ -265,7 +265,7 @@ form {
   display: flex;
   align-items: center;
   margin-top: 10px;
-  margin-left: -10%;
+  margin-left: -25%;
 }
 
 .mini-profile {
@@ -282,7 +282,6 @@ form {
 
 .mini-profile img {
   margin-right: 10px;
-  border-radius: 50%;
 }
 
 .mini-profile .profile-text {
@@ -301,55 +300,28 @@ form {
 
 
 /* Register page CSS functions*/
-/* body.registrations-new, .registrations-create{ */
-/*     overflow:hidden; */
-/* } */
 
-body.registrations-new, .registrations-create, .registrations-charity, .registrations-corporate, .registrations-choose_register_method, body.sessions-new, .registrations-corporatesuccess, .registrations-charitysuccess {
+body.registrations-new, .registrations-charity, .registrations-corporate, .registrations-choose_register_method, body.sessions-new {
   background: linear-gradient(180deg, #AC88C6 0%, #666DAD 100%);
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
-  overflow:hidden;
 }
 
 .signup-container {
-  position: absolute;
-  left: 0;
-  right:0;
-  top: 20vh;
   max-width: 400px;
-  max-height: 520px;
-  margin: auto;
+  margin: 0 auto;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.5s;
-}
-
-.signup-container .fa-arrow-left{
-    cursor:pointer;
-}
-
-.signup-container#step-2{
-    translate: 300%;
-}
-
-.signup-container#step-3{
-    translate: 300%;
-}
-
-.signup-container textarea{
-    max-height: 200px;
 }
 
 .signup-container h2 {
   text-align: center;
   margin-bottom: 20px;
-  margin-top: 20px;
 }
 
 .signup-header {
@@ -1638,7 +1610,7 @@ font-weight: bold;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px 10px;
+  padding: 5px 10px;
   margin-left: 10px;
 }
 
@@ -1662,7 +1634,6 @@ font-weight: bold;
   width: 150px;
   height: 40px;
   margin-left: 20px; /* Add some space between name and button */
-  margin-top: 10%;
   cursor: pointer;
   justify-content: center; /* Center the text horizontally */
   border-radius: 5px; /* Optional: Add rounded corners */
@@ -1941,7 +1912,7 @@ font-weight: bold;
 /* tmp withdraw button */
 .withdraw-button_requests_index_my {
   position: relative;
-  top: -45px;
+  top: -30px;
   display: flex;
   justify-content: flex-end; /* Align the button to the right */
   align-items: center;
@@ -1950,7 +1921,7 @@ font-weight: bold;
 
 .withdraw-btn_requests_index_my {
   position: absolute;
-  left: 420%;
+  left: 450%;
   top: -60%;
   background-color: #dc3545;
   color: white;
@@ -2034,69 +2005,14 @@ font-weight: bold;
   margin-left: 0.3rem; /* Add space between text and arrow */
 }
 
-hr.my-4 {
-  border: 0;
-  height: 1px;
-  background-color: #ccc; /* Adjust the color as needed */
-  margin: 1rem 0; /* Adjust the margin for spacing */
-}
-
 /* Sidebar styles */
 .sidebar {
   width: 33%; /* Adjust as needed for desired width */
-  height: 100vh;
-  overflow-y: auto;
-  margin-right: 3%;
 }
 
 .sidebar .dropdown {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 }
-
-.inbox-dropdown {
-  position: relative;
-  left: -7%;
-  font-size: 1.5rem; /* Adjust the font size as needed */
-  color: black; /* Adjust the text color */
-  text-decoration: none; /* Remove underline */
-  padding: 0.5rem 1rem; /* Add padding for spacing */
-  background-color: transparent; /* Transparent background */
-  border: 1px solid transparent; /* Transparent border */
-  border-radius: 0.25rem; /* Rounded corners */
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
-}
-
-.inbox-dropdown:hover,
-.inbox-dropdown:focus {
-  background-color: #e9ecef; /* Light grey background on hover */
-  color: #656dad; /* Darker text color on hover */
-  text-decoration: none; /* Ensure no underline on hover */
-}
-
-.inbox-dropdown.dropdown-toggle::after {
-  margin-left: 0.5rem; /* Add space between text and caret */
-  border-top: 0.4em solid; /* Adjust the caret size */
-  border-right: 0.4em solid transparent;
-  border-left: 0.4em solid transparent;
-}
-
-
-.chat-list {
-  height: 70vh;
-  margin-left: 10%;
-}
-
-/* .empty-chat-list {
-  border: 2px dashed #ddd; 
-  padding: 1rem;
-  height: 70vh;
-  margin-left: 5%;
-} */
-/*chat preview styles*/
-/* .chat-list-group {
-  width: auto;
-  height: 80vh;
-} */
 
 .chat-preview img.request-thumbnail {
   width: 40px;
@@ -2117,15 +2033,6 @@ hr.my-4 {
 }
 
 /* Chat content styles */
-.chats-index {
-  overflow: hidden;
-}
-
-.chat-header {
-  width: 80%;
-  flex-shrink: 0; 
-}
-
 .chat-header .user-details h5 {
   font-size: 1rem; /* Adjust font size for user name */
 }
@@ -2133,173 +2040,12 @@ hr.my-4 {
 .chat-header .request-details-container {
   display: flex;
   align-items: center;
-  padding: 0.65%;
 }
-
-/*chat header*/
-.chat_profile-requester {
-  margin-left: 5%;
-  margin-bottom: 5%;
-}
-
-.chat_profile-applicant {
-  margin-left: 5%;
-  margin-bottom: 5%;
-  font-size: 0.5em;
-}
-
-.request-details {
-  display: flex;
-  align-items: center;
-}
-
-.chat-mini-profile {
-  text-decoration: none;
-  color: inherit;
-}
-
-.chat_profile-name-container {
-  width: 150px; /* Adjust this width based on your layout needs */
-  height: 20px; /* Adjust this height based on your layout needs */
-  display: flex;
-  align-items: center;
-}
-
-.chat_profile-name {
-  font-size: 1em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1; /* Reduces line height to move text upwards */
-  margin-top: -10px; /* Negative margin to shift upwards, adjust as needed */
-}
-
-/* .chat_userstatus {
-  position: relative;
-  right: 73.2%;
-  padding-top: 15%;
-  font-size: 0.8em;
-} */
-
-.chat_profile-name-small {
-  font-size: 0.5em;
-}
-
-.chat_profile-request-title {
-  margin-left: 5%;
-  font-size: 1em;
-  white-space: nowrap;
-}
-
 
 .chat-header .request-thumbnail {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-}
-
-.mini-request-card-container {
-  position: relative;
-  width: 96px;
-  height: 54px;
-  overflow: visible;
-}
-
-.mini-request-clickable-card {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.mini-request-thumbnail-card {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 96px;
-  height: 54px;
-  z-index: 2;
-  border: 1px solid #ddd;
-  border-radius: 0 3px 3px 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.mini-request-thumbnail {
-  width: 100%;
-  height: 100%;
-  border-radius: 0 3px 3px 0;
-  object-fit: cover;
-}
-
-.mini-request-chevron-indicator {
-  position: absolute;
-  left: -15px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px;
-  color: #333;
-  z-index: 3;
-}
-
-.mini-request-details-card {
-  position: absolute;
-  top: 0;
-  right: 96px;
-  width: 200px;
-  height: 54px;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-right: none;
-  border-radius: 3px 0 0 3px;
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.mini-request-white-cover {
-  position: absolute;
-  top: 0;
-  left: 96px;  /* Positioned to the right of the thumbnail */
-  width: 200px;
-  height: 54px;
-  background-color: white;
-  z-index: 100;
-  pointer-events: none;
-}
-
-.mini-request-card-container:hover .mini-request-details-card {
-  transform: translateX(0);
-}
-
-
-.mini-request-details {
-  padding: 5px 10px;
-  height: 100%;
-  overflow: hidden;
-}
-
-.mini-request-title {
-  font-size: 0.9rem;
-  margin-bottom: 0.25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.mini-request-time {
-  font-size: 0.8rem;
-  color: #6c757d;
-}
-
-.message-area {
-  flex-grow: 1;
-  overflow-y: auto;
-  width: 85%;
-  margin: 0 auto; /* Center the message area */
-  padding: 10px;
 }
 
 .send-btn-square {
@@ -2322,14 +2068,8 @@ hr.my-4 {
 
 
 .message-area {
-  position: relative;
-  left: -7%;
-  height: calc(100vh - 280px); /* Adjust based on your header and input area height */
+  height: calc(100vh - 200px); /* Adjust based on your header and input area height */
   overflow-y: auto;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
 }
 
 .message.sent {
@@ -2342,38 +2082,30 @@ hr.my-4 {
   background-color: #f1f1f1;
   color: black;
   align-self: flex-start;
-  margin-left: 0%;
 }
 
 .message {
-  max-width: 85%;
+  max-width: 70%;
   padding: 10px;
   border-radius: 10px;
-  word-wrap: break-word;
-}
-
-#message-form {
-  width: 85%;
-  margin: 0 auto;
 }
 
 .input-area {
   background: white;
+  position: sticky;
+  bottom: 0;
   width: 100%;
-  flex-shrink: 0; /* Prevent shrinking */
-  padding-right: -10%;
-  border-top: 1px solid #e0e0e0;
 }
 
 /* Style for profile link */
-.chat-mini-profile {
+.mini-profile {
   color: #333333; /* Dark grey color */
   text-decoration: none; /* Remove underline */
   font-weight: bold;
 }
 
-.chat-mini-profile:hover,
-.chat-mini-profile:focus {
+.mini-profile:hover,
+.mini-profile:focus {
   color: #333333; /* Ensure the color stays dark grey on hover and focus */
   text-decoration: none; /* Ensure no underline on hover and focus */
 }

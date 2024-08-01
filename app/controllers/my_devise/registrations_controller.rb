@@ -7,20 +7,6 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
     puts sign_up_params
 
-    specialcode = params[:code]
-
-    company_code = CompanyCode.where(code: specialcode).where(status: 'Active').take
-    if !company_code.nil?
-      resource.company_id = CompanyCode.where(code: specialcode).where(status: 'Active').take.company_id
-      resource.role_id = 4
-    else
-      charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take
-      if charity_id.nil?
-        resource.charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take.charity_id
-        resource.role_id = 5
-      end
-    end
-
     resource.save
     yield resource if block_given?
     if resource.persisted?
@@ -36,8 +22,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     else
       clean_up_passwords resource
       set_minimum_password_length
-      flash[:notice] = resource.errors.full_messages
-      redirect_to '/register/user'
+      respond_with resource
     end
   end
 
@@ -67,7 +52,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
         puts @company.id
         @corpuser.company_id = @company.id
         if @corpuser.save
-          redirect_to '/register/corporatesuccess'
+          redirect_to '/register/companysuccess'
         else
           @corpuser.errors.full_messages
           redirect_to '/register/corporate', notice: 'Failed to register user'
@@ -84,42 +69,12 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   end
 
   def create_charity
-    @charity = Charity.new
-    @charity.charity_name = params[:charity_name]
-    @charity.status = 'Pending'
-    @charity.document_proof = params[:document_proof]
-
-    @charityuser= User.new
-    @charityuser.email = params[:email]
-    @charityuser.name = params[:charity_name]
-    @charityuser.role_id = 5
-    @charityuser.number = nil
-    @charityuser.status = 'Inactive'
-    @charityuser.password = 'password'
-    @charityuser.password_confirmation = 'password'
-
-    ActiveRecord::Base.transaction do
-      if @charity.save
-        @charity.document_proof.attach(params[:document_proof])
-        puts @charity.id
-        @charityuser.charity_id = @charity.id
-        if @charityuser.save
-          redirect_to '/register/charitysuccess'
-        else
-          @charityuser.errors.full_messages
-          redirect_to '/register/charity', notice: 'Failed to register user'
-          raise ActiveRecord::Rollback
-        end
-      else
-        redirect_to '/register/charity', notice: 'Failed to register'
-      end
+    @resource = Charity.new(charity_params)
+    if @resource.save
+      @resource.docoument_proof.attach(params[:document_proof])
+    else
+      render :charity_success_page
     end
-  end
-
-  def corporatesuccess
-  end
-
-  def charitysuccess
   end
 
   private
@@ -129,11 +84,6 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   end
 
   def charity_params
-    params.permit(:charity_name, :document_proof, :email)
-  end
-
-  def sign_up_params
-    params.require(:user).permit(:name, :number, :email, :password, :password_confirmation, :avatar, :description,
-                                 :code)
+    params.require(:charity).permit(:charity_name, :document_proof)
   end
 end

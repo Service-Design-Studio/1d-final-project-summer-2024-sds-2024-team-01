@@ -5,7 +5,6 @@ class CreateRequests < ActiveRecord::Migration[7.1]
       t.text :description, null: true
       t.string :category, null: false
       t.st_point :location, null: false, geographic: true
-      t.string :stringlocation, null: false
       t.date :date, null: false
       t.time :start_time, null: false
       t.integer :number_of_pax, null: false

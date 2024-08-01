@@ -131,7 +131,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
     t.text "description"
     t.string "category", null: false
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
-    t.string "stringlocation", null: false
     t.date "date", null: false
     t.time "start_time", null: false
     t.integer "number_of_pax", null: false
@@ -180,10 +179,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
     t.string "email", null: false
     t.string "number", default: ""
     t.string "description", default: ""
-    t.string "bio", default: ""
     t.string "status", default: "active", null: false
-    t.integer "total_hours", default: 0
-    t.integer "weekly_hours", default: 0
     t.bigint "role_id", default: 1
     t.bigint "company_id"
     t.bigint "charity_id"

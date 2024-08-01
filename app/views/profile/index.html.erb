@@ -24,7 +24,7 @@
     <div class="card mb-0 custom-card_profile body-card_profile">
       <div class="card-body body-container_profile">
         <div class="follow-btn-profile">
-            <%= link_to 'Edit profile', edit_profile_path, class: 'btn follow-btn-profile' %>
+          <button type="submit" class="btn follow-btn-profile">Edit profile</button>
         </div>
         <div class="options-icon-follow">
           <i class="fas fa-ellipsis-h"></i>
@@ -116,11 +116,8 @@
           </div>
         </div>
         <!--Profile user description container-->
-        # <div class="card mb-0 profile-user_description_container">
-        #   <p>This holds the user written description.</p>
-        # </div>
         <div class="card mb-0 profile-user_description_container">
-          <p><%= @profile.description.presence || 'This user has not provided a description.' %></p>
+          <p>This holds the user written description.</p>
         </div>
       </div>
     </div>

@@ -5,7 +5,9 @@
 
   <div class="container content"> 
     <div class="request-image-container_requests_details">
+      <% if @request.respond_to?(:thumbnail_url) %>
         <img src="<%= request_thumbnail_url(@request) %>" alt="Request Image" class="request-image_requests_details">
+      <% end %>
       <div class="btn-report_requests_details">
         <a href="/requests" class="btn btn-back_to_requests">
           <i class="bi bi-arrow-left"></i> Back to requests
@@ -37,7 +39,7 @@
               </div>
               <div class="details-item_requests_details">
                 <i class="fas fa-map-marker-alt"></i>
-                <%= @request.stringlocation.presence || 'Address not available' %>
+                <span id="address">Loading address...</span>
               </div>
               <div class="details-item_requests_details">
                 <i class="fas fa-money-bill-wave"></i>
@@ -115,5 +117,50 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmJgdI9NNTfvR-syec5qEbIBnSVoqKe6I&libraries=places"></script>
+  <script>
+    function initialize() {
+      var geocoder = new google.maps.Geocoder();
+
+      // Extract latitude and longitude from @request.location in POINT(lat lng) format
+      var geocode = "<%= @request.location %>";
+      var latLngString = geocode.replace('POINT', '').replace('(', '').replace(')', '').trim();
+      var latLngArray = latLngString.split(/\s+/); // Split by one or more spaces
+
+      if (latLngArray.length !== 2) {
+        console.error('Invalid geocode format:', geocode);
+        document.getElementById('address').textContent = 'Invalid geocode format';
+        return;
+      }
+
+      var latLng = { lat: parseFloat(latLngArray[1]), lng: parseFloat(latLngArray[0]) };
+
+      // Log the latitude and longitude values
+      console.log('Latitude:', latLng.lat);
+      console.log('Longitude:', latLng.lng);
+
+      if (isNaN(latLng.lat) || isNaN(latLng.lng)) {
+        console.error('Invalid latitude or longitude:', latLng);
+        document.getElementById('address').textContent = 'Invalid latitude or longitude';
+        return;
+      }
+
+      geocoder.geocode({ 'location': latLng }, function(results, status) {
+        if (status === 'OK') {
+          if (results[0]) {
+            document.getElementById('address').textContent = results[0].formatted_address;
+          } else {
+            document.getElementById('address').textContent = 'No results found';
+          }
+        } else {
+          console.error('Geocoder failed due to:', status);
+          document.getElementById('address').textContent = 'Geocoder failed due to: ' + status;
+        }
+      });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+
 </body>
 </html>

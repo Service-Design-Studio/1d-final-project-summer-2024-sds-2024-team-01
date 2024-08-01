@@ -5,32 +5,16 @@
   </head>
 
 <div class="signup-container">
-          <a href="/register" class="position-absolute fa-arrow-left fas text-decoration-none text-black"></a>
-      <div class="d-flex justify-content-center">
-        <%= image_tag 'icon_v1.png', width:'20%', alt: 'Logo', class: 'rounded-circle d-inline-block align-text-top'%>
-      </div>
-  <h2 class="signup-header">Join us as a registered IPC</h2>
+  <%= image_tag 'icon_v1.png', alt: 'Logo', class: 'd-inline-block align-text-top logo-circle-login-reg' %>
+  <h2 class="signup-header">Start your own account!</h2>
 
-   <%= form_with url: "/register/charity", method: :post do |f| %>
+  <%= form_for(@resource, url: "/registrations/createcompany") do |f| %>
 
-    <div class="field pt-2">
-      <%= f.text_field :charity_name, placeholder: "Charity name", autofocus: true, class: "form-control"%>
+    <div class="field">
+      <%= f.text_field :charity_name, placeholder: "Charity Name", autofocus: true, class: "form-control"%>
     </div>
 
-    <div class="field pt-2">
-      <%= f.text_field :email, placeholder: "Your corporate email", autofocus: true, class: "form-control"%>
-    </div>
-
-    <div class="field pt-2 ">
-      <label for="document_proof" class="pb-3">Please upload an official PDF document with your charity name to validate your identity</label>
-      <%= f.file_field :document_proof, placeholder: "", autofocus: true, class: "form-control"%>
-    </div>
-
-      <div class="actions pt-4">
-        <%= f.submit "Submit", class: "btn btn-primary btn-block" %>
-      </div>
   <% end %>
-
   <div class="devise-links">
     <%= render "devise/shared/links" %>
   </div>
