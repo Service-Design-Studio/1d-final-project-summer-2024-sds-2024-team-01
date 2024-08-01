@@ -2,6 +2,7 @@ class Request < ActiveRecord::Base
   has_one_attached :thumbnail
   has_many :reviews
   has_many :request_applications, dependent: :destroy
+  has_many :chats, dependent: :destroy
   belongs_to :user, class_name: 'User', foreign_key: 'created_by'
   validates_presence_of :title, message: 'Please enter a title'
   validates_presence_of :category, message: 'Please select a category'

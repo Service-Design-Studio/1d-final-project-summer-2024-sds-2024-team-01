@@ -91,11 +91,24 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :approve_companies, only: [:index, :show] do
+      member do
+        post 'approve'
+        post 'reject'
+      end
+    end
+    
     resources :ban_user, only: [:index] do
       member do
-        post 'ban'
-        post 'unban'
-        post 'cancel_ban'
+        patch 'ban'
+        patch 'unban'
+        patch 'cancel_ban'
+      end
+    end
+    
+    resources :delete_requests, only: [:index, :destroy] do
+      member do
+        get 'confirm' # This will create a route for GET /admin/delete_requests/:id/confirm
       end
     end
   end

@@ -3,3 +3,4 @@
 //= link_tree ../builds
 //= link application.js
 //= link ban_user.js
+//= link approve_companies.js

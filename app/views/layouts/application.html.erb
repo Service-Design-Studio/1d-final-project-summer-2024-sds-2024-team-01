@@ -43,7 +43,6 @@
           <div class="d-flex ms-4 h-100 align-items-center">
             <% if current_user.admin? %> <!-- Admin-specific links -->
             <a class="nav-link" href="/admin/ban_user">Ban User</a>
-            <a class="nav-link" href="/admin/delete_requests">Delete Requests</a>
             <a class="nav-link" href="/admin/approve_companies">Approve Companies</a>
           <% else %>
             <a class="nav-link" href="/myapplications">My Applications</a>
