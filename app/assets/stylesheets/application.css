@@ -2423,3 +2423,13 @@ hr.my-4 {
   border-radius: 4px;
 }
 
+
+.profile-buttons {
+  display: flex;
+  gap: 10px; /* Adjust the gap as needed */
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+.profile-buttons .btn {
+  margin: 0; /* Remove any existing margins */
+}

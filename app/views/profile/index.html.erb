@@ -25,6 +25,8 @@
       <div class="card-body body-container_profile">
         <div class="follow-btn-profile">
             <%= link_to 'Edit profile', profile_edit_path, class: 'btn follow-btn-profile' %>
+            <!-- Report button -->
+            <%= link_to 'Report', new_user_report_path(user_id: @profile.id), class: 'btn btn-danger' %>
         </div>
         <div class="options-icon-follow">
           <i class="fas fa-ellipsis-h"></i>
