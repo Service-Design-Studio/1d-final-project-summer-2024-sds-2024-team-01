@@ -1,0 +1,96 @@
+#cvmdashboard{
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 80px);
+    overflow:hidden;
+}
+
+#dashboardcontent, #topemployees, #topemployees .dashboardcard, #charitylist > a{
+    flex-grow: 1;
+    min-height: 100px;
+}
+
+#topemployeenames {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 490px);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 20px;
+  border: transparent;
+}
+
+#reportlabel{
+    font-size: 12px;
+}
+
+#downloadreport{
+    font-size: 14px;
+    box-shadow: none;
+    border: solid 2px transparent;
+}
+
+#copycompanycode, #downloadreport{
+    z-index: 999;
+    border-radius: 0 10px 10px 0;
+    background: #505050;
+}
+
+#reportdate{
+    border: none !important;
+    box-shadow: none !important;
+    outline: none;
+}
+
+#charitynames{
+    overflow-y: auto;
+    height: calc(100vh - 335px);
+}
+
+.dashboardcard{
+    border-radius: 10px;
+    border: solid 1px rgba(66, 66, 66, 0.3);
+    padding: 20px;
+}
+
+
+.dashboardcard.stats{
+    box-shadow: 1px 1px 2px rgba(66, 66, 66, 0.3);
+}
+
+.dashboardcard.stats, #charitylist > a{
+    transition: background 0.3s;
+}
+
+.dashboardcard.stats:hover, #charitylist > a:hover{
+    background: #eee;
+}
+
+.dashboardcard .text-secondary{
+    font-size: 12px;
+}
+
+.dashboardcard > i.fa-calendar{
+    color: #505050
+}
+
+#copycompanycode:hover{
+    background:#888 !important
+}
+
+#refreshcode{
+    display: inline-block; 
+    transition: transform 0.3s ease-in-out;
+}
+
+#refreshcode:hover{
+    transform: rotate(180deg);
+}

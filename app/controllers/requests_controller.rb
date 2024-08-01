@@ -105,16 +105,17 @@ class RequestsController < ApplicationController
     @request.created_by = current_user.id
     @request.created_at = DateTime.now
     @request.updated_at = DateTime.now
+    @request.stringlocation = params[:request][:stringlocation] if params[:request][:stringlocation].present?
 
     if @request.save
       if request_params[:thumbnail].present?
         @request.thumbnail.attach(request_params[:thumbnail])
-        # else
-        #   @request.thumbnail.attach(
-        #     io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
-        #     filename: 'freepik-lmao.jpg',
-        #     content_type: 'image/jpeg'
-        #   )
+      #   else
+      #     @request.thumbnail.attach(
+      #       io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
+      #       filename: 'freepik-lmao.jpg',
+      #       content_type: 'image/jpeg'
+      #     )
       end
       redirect_to @request, notice: 'Request was successfully created.'
       # redirect_to @request, flash: { success: 'Request was successfully created.' }
