@@ -1,4 +1,6 @@
 require 'date'
+require_relative '../gemini/gemini_api'
+include Gemini_Helper
 
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[show edit destroy]
@@ -48,6 +50,24 @@ class RequestsController < ApplicationController
     @reviews_received = @requester.received_reviews
     @average_rating = @reviews_received.average(:rating).to_f.round(1)
     @review_count = @reviews_received.count
+
+    # Prepare user and request profiles for the match calculation
+    user_profile = {
+      name: @requester.name,
+      description: @requester.description
+    }
+
+    request_profile = {
+      name: @request.title,
+      description: @request.description,
+      date: @request.date,
+      number_of_volunteers: @request.number_of_pax,
+      location: @request.location,
+      rewards: @request.reward
+    }
+
+    # Fetch the percentage compatibility of request with user
+    @match_percentage = generate_match_percentage(user_profile, request_profile)
   end
 
   # GET /requests/new
