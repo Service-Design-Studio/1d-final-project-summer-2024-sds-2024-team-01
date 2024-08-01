@@ -31,6 +31,8 @@ end
 #####################################################
 # # Check if roles exist before creating them
 # user_role = Role.find_or_create_by!(role_name: 'User')
+admin_role = Role.find_or_create_by!(role_name: 'Admin')
+user_role = Role.find_or_create_by!(role_name: 'User')
 
 # Check if users exist before creating them
 admin = User.find_or_create_by!(email: 'admin@example.com') do |user|
