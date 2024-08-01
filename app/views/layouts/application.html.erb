@@ -12,6 +12,7 @@
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload" %>
   <%= stylesheet_link_tag "application.css"%>
   <%= stylesheet_link_tag "notifs.css"%>
+  <%= stylesheet_link_tag "cvmdashboard.css"%>
   <%= csrf_meta_tags %>
   <%= javascript_include_tag "application", "data-turbolinks-track": "reload" %>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -38,18 +39,28 @@
             <%= link_to "Register", register_path, class: "btn ms-auto" %>
             <%= link_to "Login", new_user_session_path, class: "btn ms-3" %>
           <% else %>
-            <div class="d-flex ms-4 h-100 align-items-center">
-              <a class="nav-link" href="/myapplications">My Applications</a>
-              <a class="nav-link" href="/myrequests">My Requests</a>
-              <a class="nav-link" href="/about">About</a>
-              <a class="nav-link" href="/chats">Chat</a>
-            </div>
+            <% if current_user.role_id == 3 %>
+              <div class="d-flex ms-4 h-100 align-items-center">
+                <a class="nav-link" href="/cvm">Dashboard</a>
+                <a class="nav-link" href="/cvm/employees">Manage Employees</a>
+                <a class="nav-link" href="/cvm/charities">Manage Charities</a>
+              </div>
+              <% else %>
+              <div class="d-flex ms-4 h-100 align-items-center">
+                <a class="nav-link" href="/myapplications">My Applications</a>
+                <a class="nav-link" href="/myrequests">My Requests</a>
+                <a class="nav-link" href="/about">About</a>
+                <a class="nav-link" href="/chats">Chat</a>
+              </div>
+            <% end %>
             <div class="d-flex align-items-center ms-auto h-100 align-items-center">
               <!-- New request button -->
+            <%if !current_user.nil? && (current_user.role_id == 1  || current_user.role_id == 4) %>
               <a href="<%= new_request_path %>" class="btn custom-btn-dark-purple me-5">
                 <span> New Request </span> <i class="fas fa-plus ms-2 m-auto"></i>
               </a>
               <!-- Profile on the right of Navbar -->
+            <% end %>
               <a href="<%= profile_path %>" class="text-decoration-none text-neutral-dark">
                 <img src="<%= avatar_url(current_user) %>" alt="Profile Picture" width="40" height="40" class="rounded-circle m-auto"> <!-- Profile pic -->
               </a>
@@ -72,7 +83,13 @@
       <!-- Displaying notices and errors to user -->
       <% flash.each do |type, msg| %>
         <div class="noticefadeout">
+        <% if msg.is_a?(Array) %>
+          <% msg.each do |msg| %>
+            <p><%= msg %></p>
+          <% end %>
+        <% else %>
           <%= msg %>
+        <% end %>
         </div>
       <% end %>
       <%= yield %>
