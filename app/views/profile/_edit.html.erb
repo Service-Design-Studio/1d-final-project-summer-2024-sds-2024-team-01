@@ -19,13 +19,13 @@
       <button id="clear-upload" type="button" class="btn btn-secondary mt-3">Clear</button>
     </div>
   
-    <div class="form-group mt-3">
-      <%= f.label :description, class: "form-label" %>
-      <%= f.text_area :description, class: "form-control", rows: 5 %>
+    <div class="styled-input-container">
+      <span class="styled-input-label">Bio</span>
+      <%= f.text_area :description, class: "styled-input-content textarea", placeholder: "Tell others more about yourself!", style: "height: 300px; resize: none;" %>
     </div>
 
-    <div class="actions">
-      <%= f.submit 'Update Profile', id: 'update-profile-btn' %>
+    <div class="actions" style="text-align: center; margin-top: 20px;">
+      <%= f.submit 'Update Profile', id: 'update-profile-btn', class: 'btn btn-primary custom-btn-lilac' %>
     </div>
   <% end %>
 

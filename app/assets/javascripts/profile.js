@@ -4,17 +4,23 @@ document.addEventListener('DOMContentLoaded', function() {
   var btn = document.getElementById('edit-profile-btn');
   var span = document.getElementsByClassName('close')[0];
 
-  btn.onclick = function() {
+  function openModal() {
     modal.style.display = 'block';
+    document.body.classList.add('popup-open');
   }
 
-  span.onclick = function() {
+  function closeModal() {
     modal.style.display = 'none';
+    document.body.classList.remove('popup-open');
   }
+
+  btn.onclick = openModal;
+
+  span.onclick = closeModal;
 
   window.onclick = function(event) {
     if (event.target == modal) {
-      modal.style.display = 'none';
+      closeModal();
     }
   }
 
@@ -96,6 +102,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  // Handle the Update Profile button
+  const updateProfileBtn = document.getElementById('update-profile-btn');
+  const form = document.getElementById('edit-profile-form');
+
+  if (updateProfileBtn && form) {
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(form);
+      
+      // If there's a cropped image, add it to the formData
+      if (fileInput.files.length > 0) {
+        formData.set('profile[avatar]', fileInput.files[0]);
+      }
+
+      submitForm(formData);
+    });
+  }
+
   function submitForm(formData) {
     fetch(form.action, {
       method: 'PATCH',
@@ -108,8 +133,14 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        modal.style.display = 'none';
+        closeModal();
         // Optionally update the main page profile picture here
+        if (data.avatar_url) {
+          const mainProfilePic = document.querySelector('.main-profile-picture');
+          if (mainProfilePic) {
+            mainProfilePic.src = data.avatar_url;
+          }
+        }
       } else {
         console.error('Failed to update profile');
       }
@@ -119,3 +150,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+// Handle page changes (if using Turbolinks/Turbo)
+document.addEventListener('turbolinks:before-render', function() {
+  document.body.classList.remove('popup-open');
+});
+
+// If not using Turbolinks/Turbo, use this instead:
+// window.addEventListener('popstate', function() {
+//   document.body.classList.remove('popup-open');
+// });

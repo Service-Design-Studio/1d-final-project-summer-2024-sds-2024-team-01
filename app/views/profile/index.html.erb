@@ -4,7 +4,9 @@
       <div class="card-body header-container_profile">
         <!-- Profile picture container -->
         <div class="profile-picture-container">
-          <div class="profile-picture"></div>
+          <div class="profile-picture">
+            <%= image_tag avatar_url(@profile), class: "current-avatar" %>
+          </div>
         </div>
         <!-- Profile info container -->
         <div class="profile-info-container">
@@ -23,18 +25,20 @@
     </div>
     <div class="card mb-0 custom-card_profile body-card_profile">
       <div class="card-body body-container_profile">
-        <div class="follow-btn-profile">
+        <% if user_signed_in? && current_user == @profile %>
+          <div class="follow-btn-profile">
             <%= button_tag 'Edit profile', type: 'button', id: 'edit-profile-btn', class: 'btn follow-btn-profile' %>
-        </div>
+          </div>
+        <% end %>
         <div id="edit_profile_pop-up" class="edit_profile_pop-up">
           <div class="edit_profile_pop-up-content">
             <span class="close">&times;</span>
             <%= render 'edit' %>
           </div>
         </div>
-        <div class="options-icon-follow">
+        <%# <div class="options-icon-follow">
           <i class="fas fa-ellipsis-h"></i>
-        </div>
+        </div> %>
         <!-- Tabs container -->
         <div class="tabs-container">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -121,14 +125,13 @@
             </div>
           </div>
         </div>
-        <!--Profile user description container-->
-        <%# <div class="card mb-0 profile-user_description_container">
-          <p>This holds the user written description.</p>
-        </div> %>
-        <div class="card mb-0 profile-user_description_container">
-          <p><%= @profile.description.presence || 'This user has not provided a description.' %></p>
-        </div>
       </div>
+    </div>
+  </div>
+  <div class="profile-user_description_container">
+    <span class="bio-label">Bio</span>
+    <div class="bio-content">
+      <%= @profile.description.presence || 'This user has not provided a description.' %>
     </div>
   </div>
 </body>
