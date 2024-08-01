@@ -4,6 +4,10 @@ Rails.application.routes.draw do
              path: '',
              path_names: { sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register/user', sign_out: 'logout' }
 
+  resources :requests
+  resources :devise
+  root 'requests#index'
+
   devise_scope :user do
     get 'register' => 'my_devise/registrations#choose_register_method'
     get 'register/charity' => 'my_devise/registrations#charity'
@@ -41,9 +45,13 @@ Rails.application.routes.draw do
 
   get 'up' => 'rails/health#show', as: :rails_health_check
 
-  get 'profile' => 'profile#index'
-  get 'profile/edit' => 'profile#edit', as: :edit_profile
-  patch 'profile' => 'profile#update'
+  get 'profile/:id', to: 'profile#index', as: 'user_profile'
+
+  # Keep the existing profile routes
+  get 'profile', to: 'profile#index'
+  get 'profile/edit', to: 'profile#edit'
+  patch 'profile', to: 'profile#update'
+
 
   post 'requests/apply' => 'requests#apply'
 
