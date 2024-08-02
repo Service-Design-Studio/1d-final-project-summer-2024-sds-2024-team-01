@@ -2,45 +2,36 @@ module Gemini_Helper
   require 'gemini-ai'
 
   def generate_match_percentage(user, request)
+
+    return 'User did not provide a bio' if user[:bio] == ''
+    return 'Request does not have a description' if request[:description] == ''
+
     client = Gemini.new(
       credentials: {
         service: 'generative-language-api',
-        api_key: ENV['GOOGLE_API_KEY']
+        api_key: Rails.application.credentials.google.gemini_api_key
       },
       options: { model: 'gemini-pro', server_sent_events: true }
     )
       prompt = <<-PROMPT
-      Only provide the numerical match percentage based on the compatibility of the two descriptions.
-      Compare the following two profiles and provide a numerical match percentage based on their compatibility:
+      Only provide the numerical match percentage based on the compatibility of the two descriptions according in this format: xx%.
+      Compare the following post for a request for assistance and the profile of the user and provide a numerical match percentage based on their compatibility
 
-      Volunteer Profile:
-      Name: #{user[:name]}
-      Bio: #{user[:bio]}
+      Volunteer Name: #{user[:name]}
+      Volunteer Bio: #{user[:bio]}
 
-      Request Profile:
-      Name: #{request[:name]}
-      Description: #{request[:description]}
-      Date: #{request[:date]}
-      Time: #{request[:time]}
-      Number of Volunteers: #{request[:number_of_volunteers]}
-      Location: #{request[:location]}
-      Rewards: #{request[:rewards]}
+      Request Title: #{request[:title]}
+      Request Description: #{request[:description]}
+      Request Location: #{request[:location]}
+      Request Rewards: #{request[:rewards]}
       PROMPT
 
       response_text = client.generate_content({
         contents: { role: 'user', parts: { text: prompt } }
       })
 
-      value = response_text["candidates"][0]["content"]["parts"][0]["text"]
+      response_text["candidates"][0]["content"]["parts"][0]["text"]
 
-      match = value.match(/\d+%/)
-
-      # Extract and print the match percentage from the response
-      if match
-        return match
-      else
-        return "No match percentage found in the response."
-      end
     end
   end
 

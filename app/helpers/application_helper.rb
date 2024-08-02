@@ -18,6 +18,25 @@ module ApplicationHelper
   #   else "fas fa-bell"
   #   end
   # end
+  def percentage_indicator(api_endpoint: nil, unique_id: SecureRandom.hex(5), test_value: nil, show_condition: true)
+    return unless show_condition
+
+    content_tag :div, class: 'percentage-indicator-container' do
+      indicator = content_tag :div, id: "percentage-indicator-#{unique_id}", 
+                  class: 'percentage-indicator', 
+                  data: { api_endpoint: api_endpoint, test_value: test_value } do
+        content_tag :svg, viewBox: "0 0 36 36", class: 'circular-chart' do
+          content_tag(:path, nil, class: 'circle-bg', d: "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831") +
+          content_tag(:path, nil, class: 'circle', stroke_dasharray: "0, 100", d: "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831") +
+          content_tag(:text, "0%", x: 18, y: 20.35, class: 'percentage')
+        end
+      end
+      popup = content_tag :div, class: 'percentage-popup' do
+        content_tag(:p, '', class: 'popup-content')
+      end
+      indicator + popup
+    end
+  end
 
   def chat_path_with_request_and_user(request, user, current_user_is_requester)
     return new_user_session_path if current_user.nil?
