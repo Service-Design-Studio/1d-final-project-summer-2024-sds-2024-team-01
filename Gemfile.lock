@@ -119,7 +119,7 @@ GEM
       multi_test (~> 1.1)
       sys-uname (~> 1.2)
     cucumber-ci-environment (10.0.1)
-    cucumber-core (13.0.2)
+    cucumber-core (13.0.3)
       cucumber-gherkin (>= 27, < 28)
       cucumber-messages (>= 20, < 23)
       cucumber-tag-expressions (> 5, < 7)
@@ -152,7 +152,7 @@ GEM
     diff-lcs (1.5.1)
     digest-crc (0.6.5)
       rake (>= 12.0.0, < 14.0.0)
-    docile (1.4.0)
+    docile (1.4.1)
     drb (2.2.1)
     erubi (1.13.0)
     ethon (0.16.0)
@@ -169,7 +169,7 @@ GEM
     faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
       logger
-    faraday-net_http (3.1.0)
+    faraday-net_http (3.1.1)
       net-http
     faraday-typhoeus (1.1.0)
       faraday (~> 2.0)
@@ -185,17 +185,17 @@ GEM
       typhoeus (~> 1.4, >= 1.4.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-apis-core (0.15.0)
+    google-apis-core (0.15.1)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 1.9)
-      httpclient (>= 2.8.1, < 3.a)
+      httpclient (>= 2.8.3, < 3.a)
       mini_mime (~> 1.0)
+      mutex_m
       representable (~> 3.0)
       retriable (>= 2.0, < 4.a)
-      rexml
     google-apis-iamcredentials_v1 (0.21.0)
       google-apis-core (>= 0.15.0, < 2.a)
-    google-apis-storage_v1 (0.40.0)
+    google-apis-storage_v1 (0.41.0)
       google-apis-core (>= 0.15.0, < 2.a)
     google-cloud-core (1.7.0)
       google-cloud-env (>= 1.0, < 3.a)
@@ -280,26 +280,26 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.3)
-    nokogiri (1.16.6-x64-mingw-ucrt)
+    nokogiri (1.16.7-x64-mingw-ucrt)
       racc (~> 1.4)
-    nokogiri (1.16.6-x86_64-linux)
+    nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
     os (1.1.4)
-    pg (1.5.6)
-    pg (1.5.6-x64-mingw-ucrt)
+    pg (1.5.7)
+    pg (1.5.7-x64-mingw-ucrt)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
     psych (5.1.2)
       stringio
-    public_suffix (6.0.0)
+    public_suffix (6.0.1)
     puma (6.4.2)
       nio4r (~> 2.0)
-    racc (1.8.0)
+    racc (1.8.1)
     rack (3.1.7)
     rack-session (2.0.0)
       rack (>= 3.0.0)
@@ -461,7 +461,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.16)
+    zeitwerk (2.6.17)
 
 PLATFORMS
   x64-mingw-ucrt
@@ -505,4 +505,4 @@ RUBY VERSION
    ruby 3.2.4p170
 
 BUNDLED WITH
-   2.5.14
+   2.5.15

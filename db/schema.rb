@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_30_060836) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -131,6 +131,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_060836) do
     t.text "description"
     t.string "category", null: false
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
+    t.string "stringlocation", null: false
     t.date "date", null: false
     t.time "start_time", null: false
     t.integer "number_of_pax", null: false
@@ -179,7 +180,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_060836) do
     t.string "email", null: false
     t.string "number", default: ""
     t.string "description", default: ""
+    t.string "bio", default: ""
     t.string "status", default: "active", null: false
+    t.integer "total_hours", default: 0
+    t.integer "weekly_hours", default: 0
     t.bigint "role_id", default: 1
     t.bigint "company_id"
     t.bigint "charity_id"
@@ -193,7 +197,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_060836) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_number"
-    t.text "bio"
     t.index ["charity_id"], name: "index_users_on_charity_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
