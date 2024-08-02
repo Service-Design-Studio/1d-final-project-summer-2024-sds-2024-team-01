@@ -2,27 +2,28 @@ module Gemini_Helper
   require 'gemini-ai'
 
   def generate_match_percentage(user, request)
+
+    return 'User did not provide a bio' if user[:bio] == ''
+    return 'Request does not have a description' if request[:description] == ''
+
     client = Gemini.new(
       credentials: {
         service: 'generative-language-api',
-        api_key: ENV['GOOGLE_API_KEY']
+        api_key: Rails.application.credentials.google.gemini_api_key
       },
       options: { model: 'gemini-pro', server_sent_events: true }
     )
       prompt = <<-PROMPT
-      Only provide the numerical match percentage based on the compatibility of the two descriptions.
-      Compare the following two profiles and provide a numerical match percentage based on their compatibility:
+      Only provide the numerical match percentage based on the compatibility of the two descriptions according in this format: xx%.
+      Compare the following post for a request for assistance and the profile of the user and provide a numerical match percentage based on their compatibility
 
       Volunteer Profile:
       Name: #{user[:name]}
       Bio: #{user[:bio]}
 
-      Request Profile:
-      Name: #{request[:name]}
+      Request:
+      Name: #{request[:title]}
       Description: #{request[:description]}
-      Date: #{request[:date]}
-      Time: #{request[:time]}
-      Number of Volunteers: #{request[:number_of_volunteers]}
       Location: #{request[:location]}
       Rewards: #{request[:rewards]}
       PROMPT
