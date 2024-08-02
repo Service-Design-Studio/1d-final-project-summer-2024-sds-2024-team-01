@@ -1,7 +1,16 @@
 <div>
-  <% @allemplyees.each do |employee| %>
-    <div>
-      <%= employee.name %>
-    </div>
-  <% end %>
+  <table>
+    <thead></thead>
+    <tbody> 
+      <% @allemplyees.each do |employee| %>
+        <td>
+          <%= employee.name %>
+        </td>
+        <td>
+          <%= employee.name %>
+        </td>
+
+      <% end %>
+    </tbody>
+  </table>
 </div>
