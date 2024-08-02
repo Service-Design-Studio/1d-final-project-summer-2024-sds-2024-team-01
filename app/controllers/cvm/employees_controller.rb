@@ -1,8 +1,7 @@
 class Cvm::EmployeesController < ApplicationController
   # Display all employees
   def index
-    @allemployees = User.where(company_id: current_user.company_id).order(:total_hours)
-    puts @allemployees
+    @allemployees = User.where(company_id: current_user.company_id).where(role_id: 4).order(:total_hours)
   end
 
   # /PATCH cvm/employees/deactivate

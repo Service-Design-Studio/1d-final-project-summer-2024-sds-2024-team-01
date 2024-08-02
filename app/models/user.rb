@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  attr_writer :login
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -22,6 +24,19 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :email
   validate :normal_users_must_have_number
+
+  def login
+    @login || number || email
+  end
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if (login = conditions.delete(:login))
+      where(conditions.to_h).where(['number = :value OR lower(email) = :value', { value: login.downcase }]).first
+    elsif conditions.has_key?(:number) || conditions.has_key?(:email)
+      where(conditions.to_h).first
+    end
+  end
 
   def normal_users_must_have_number
     return unless role.id == 1

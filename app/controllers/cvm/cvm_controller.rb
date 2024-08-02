@@ -9,8 +9,11 @@ class Cvm::CvmController < ApplicationController
 
     @charitylist = Charity.where(id: addedids)
 
-    @topvolunteers = User.where(status: 'Active').where(company_id: current_user.company_id).order(:weekly_hours).last(3)
+    @topvolunteers = User.where(status: 'Active').where(company_id: current_user.company_id).order(:weekly_hours).last(10)
+
     @companycode = CompanyCode.where(company_id: current_user.company_id).where(status: 'Active').last.code
+
+    @companyname = Company.find(current_user.company_id).company_name
   end
 
   # /GET CVM/charities
@@ -45,7 +48,12 @@ class Cvm::CvmController < ApplicationController
 
   # params = start date and end date?
   # /GET CVM/summaryreport
-  def generate_report; end
+  def generate_report
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    SummaryReport.create(requested_by: current_user.id)
+    redirect_to "/cvm", notice: "Report generated"
+  end
 
   def generate_new_code
     activecodes = CompanyCode.where(company_id: current_user.company_id).where(status: 'Active')

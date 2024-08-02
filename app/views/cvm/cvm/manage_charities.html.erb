@@ -1,33 +1,50 @@
+<div class="d-flex justify-content-between">
+<h2 class="py-3 mt-3">
+  <b>
+Manage Charities
+  </b>
+</h2>
+
 <%= form_with url: cvm_charities_update_path, method: :patch, id: 'charity-form', local: true do |form|%>
   <input type="hidden" name="charity_ids[]" id="charity-ids">
-  <button type="submit">Save</button>
+  <button id="savecharities" class='mt-2 btn btn-primary' type="submit">Save Configuration</button>
 <% end %>
+</div>
 
-<div class="d-flex">
-<div class="d-flex flex-column">
-<p>
+<div class="d-flex pt-3">
+  <div class="flex-grow-1 me-5">
+  <h4 class="py-3">
+  <b>
 Charities Added
-</p>
+  </b>
+</h4>
+<div class="d-flex flex-column dashboardcard p-0">
 <ul class="list-group" id="added-charities">
 <% @addedcharities.each do |added| %>
-  <li class="list-group-item" data-id="<%= added.id %>">
+  <li class="list-group-item border-0 border-bottom p-3" data-id="<%= added.id %>">
     <%= added.charity_name %>
   </li>
 <% end %>
 </ul>
 </div>
+</div>
 
-<div>
-<p>
+
+<div class="flex-grow-1">
+<h4 class="py-3">
+  <b>
 Available Charities
-</p>
+  </b>
+</h4>
+<div class="d-flex flex-column dashboardcard p-0">
 <ul class="list-group" id="available-charities">
 <% @notaddedcharities.each do |notadded| %>
-  <li class="list-group-item" data-id="<%= notadded.id %>">
+  <li class="list-group-item border-0 border-bottom p-3" data-id="<%= notadded.id %>">
     <%= notadded.charity_name %>
   </li>
 <% end %>
 </ul>
+</div>
 </div>
 </div>
 <%= javascript_include_tag 'cvmcharities' %>
