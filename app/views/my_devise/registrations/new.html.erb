@@ -4,39 +4,83 @@
     <%= stylesheet_link_tag "application.css"%>
   </head>
 
-<div class="signup-container">
-  <%= image_tag 'icon_v1.png', alt: 'Logo', class: 'd-inline-block align-text-top logo-circle-login-reg' %>
-  <h2 class="signup-header">Start your own account!</h2>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
+    <div class="d-flex m-0 p-0">
+      <div class="signup-container" id="step-1">
+          <a href="/register" class="position-absolute fa-arrow-left fas text-decoration-none text-black"></a>
+      <div class="d-flex justify-content-center">
+        <%= image_tag 'icon_v1.png', width:'20%', alt: 'Logo', class: 'd-inline-block align-text-top rounded-circle'%>
+      </div>
+      <h2 class="signup-header">Start your own account!</h2>
 
-    <div class="field">
-      <%= f.search_field :name, placeholder: "Full name", autofocus: true, autocomplete: "full-name", class: "form-control" %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="d-flex flex-column justify-space-between">
+      <div class="field">
+        <%= f.search_field :name, placeholder: "Full name", autofocus: true, autocomplete: "full-name", class: "form-control" %>
+      </div>
+
+      <div class="field">
+        <%= f.telephone_field :number, placeholder: "Phone number", autocomplete: "number", class: "form-control" %>
+      </div>
+
+      <div class="field">
+        <%= f.email_field :email, placeholder: "Email address", autocomplete: "email", class: "form-control" %>
+      </div>
+
+      <div class="field">
+        <%= text_field_tag :code, nil, placeholder: "Have a special code?", class: "form-control" %>
+      </div>
+      </div>
+      <div class="btn btn-primary" onclick="firsttosecond()"> Continue </div>
+      <div class="devise-links">
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
 
-    <div class="field">
-      <%= f.telephone_field :number, placeholder: "Phone number", autocomplete: "number", class: "form-control" %>
+    <div class="signup-container" id="step-2">
+        <i class="position-absolute fa-arrow-left fas" onclick="secondtofirst()"></i>
+      <div class="d-flex justify-content-center">
+        <%= image_tag 'icon_v1.png', width:'20%', alt: 'Logo', class: 'd-inline-block align-text-top'%>
+      </div>
+      <h2 class="signup-header">Enter a secure password</h2>
+        <div class="field">
+          <%= f.password_field :password, placeholder: "Password", autocomplete: "new-password", class: "form-control" %>
+        </div>
+
+        <div class="field">
+          <%= f.password_field :password_confirmation, placeholder: "Confirm password", autocomplete: "new-password", class: "form-control" %>
+        </div>
+
+      <div class="btn btn-primary" onclick="secondtothird()"> Continue </div>
+      <div class="devise-links">
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
 
-    <div class="field">
-      <%= f.email_field :email, placeholder: "Email address", autocomplete: "email", class: "form-control" %>
-    </div>
+    <div class="signup-container" id="step-3">
+        <i class="position-absolute fa-arrow-left fas" onclick="thirdtosecond()"></i>
+      <div class="d-flex justify-content-center">
+        <%= image_tag 'icon_v1.png', width:'20%', alt: 'Logo', class: 'd-inline-block align-text-top'%>
+      </div>
+      <h2 class="signup-header">Tell us about yourself</h2>
+        <div class="field">
+          <%= f.file_field :avatar, class: "form-control" %>
+        </div>
 
-    <div class="field">
-      <%= f.password_field :password, placeholder: "Password", autocomplete: "new-password", class: "form-control" %>
-    </div>
+        <div class="field">
+          <%= f.text_area :description, placeholder: "Tell us about yourself, and any past volunteer experiences", class: "form-control" %>
+        </div>
 
-    <div class="field">
-      <%= f.password_field :password_confirmation, placeholder: "Confirm password", autocomplete: "new-password", class: "form-control" %>
-    </div>
-
-    <div class="actions">
-      <%= f.submit "Sign up!", class: "btn btn-primary btn-block" %>
+        <div class="actions">
+          <%= f.submit "Sign up!", class: "btn btn-primary btn-block" %>
+        </div>
+      <div class="devise-links">
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
   <% end %>
-  <div class="devise-links">
-    <%= render "devise/shared/links" %>
-  </div>
 </div>
+<%= javascript_include_tag 'registration' %>
 </html>

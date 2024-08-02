@@ -1,0 +1,9 @@
+.step-1{
+
+}
+
+.step-2{
+    width:360px !important;
+    position: absolute;
+    translate: 300% -400%;
+}
