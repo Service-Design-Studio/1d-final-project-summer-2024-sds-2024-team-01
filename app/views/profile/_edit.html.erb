@@ -1,0 +1,36 @@
+<body>
+  <%= form_for(@profile, url: profile_path(@profile), html: { method: :patch, remote: true, id: 'profile-form' }) do |f| %>
+    <div class="profile-picture-upload">
+      <div class="profile-picture-circle" id="profile-picture-circle">
+        <% if @profile.avatar.attached? %>
+          <%= image_tag @profile.avatar, class: 'current-avatar' %>
+        <% else %>
+          <div class="empty-avatar">
+            <i class="fas fa-plus"></i>
+          </div>
+        <% end %>
+      </div>
+      <%= f.file_field :avatar, accept: 'image/*', class: 'hidden-file-input', id: 'avatar-input' %>
+    </div>
+
+    <div id="cropper-container" style="display: none;">
+      <img id="image-to-crop" src="#" alt="Image for cropping" style="max-width: 100%; height: auto;" />
+      <button id="crop-and-upload" type="button" class="btn btn-primary mt-3">Crop and Upload</button>
+      <button id="clear-upload" type="button" class="btn btn-secondary mt-3">Clear</button>
+    </div>
+  
+    <div class="styled-input-container">
+      <span class="styled-input-label">Bio</span>
+      <%= f.text_area :description, class: "styled-input-content textarea", placeholder: "Tell others more about yourself!", style: "height: 300px; resize: none;" %>
+    </div>
+
+    <div class="actions" style="text-align: center; margin-top: 20px;">
+      <%= f.submit 'Update Profile', id: 'update-profile-btn', class: 'btn btn-primary custom-btn-lilac' %>
+    </div>
+  <% end %>
+
+  <!-- Move the crop button outside the form -->
+</body>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
