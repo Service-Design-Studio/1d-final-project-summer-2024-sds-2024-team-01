@@ -1,21 +1,50 @@
-<div>
+<div class="pt-5">
+  <h3 class="pb-4">
+    <b>
+    Manage Employees
+    </b>
+  </h3>
+<table class="table">
+  <thead>
+    <th>Name</th>
+    <th>Email</th>
+    <th class="text-center">Weekly Hours</th>
+    <th class="text-center">Total Hours</th>
+    <th class="text-center">Actions</th>
+  </thead>
+  <tbody>
   <% @allemployees.each do |employee| %>
-    <div>
-      <a href="/profile?id=<%=employee.id%>">
-      <%= employee.name %> 
+    <tr class="align-middle">
+      <td>
+        <a href="/profile?id=<%=employee.id%>">
+        <%= employee.name %> 
+        </a>
+      </td>
+      <td>
       <%= employee.email %> 
-      </a>
+      </td>
+      <td class="text-center">
+      <%= employee.weekly_hours %> 
+      </td>
+      <td class="text-center">
+      <%= employee.total_hours %> 
+      </td>
+      <td>
+
       <% if employee.status != 'Active' %>
-        <%= form_with url: cvm_employees_activate_path, method: :patch do %>
+        <%= form_with url: cvm_employees_activate_path, method: :patch, class: "my-2 d-flex justify-content-center" do %>
           <%= hidden_field_tag :employee_id, employee.id %>
-          <button type="submit"> Activate </button>
+          <button type="submit" class="m-0 btn btn-success"> Activate </button>
         <% end %>
       <% else %>
-        <%= form_with url: cvm_employees_deactivate_path, method: :patch do %>
+        <%= form_with url: cvm_employees_deactivate_path, method: :patch, class: "my-2 d-flex justify-content-center" do %>
           <%= hidden_field_tag :employee_id, employee.id %>
-          <button type="submit"> Deactivate </button>
+          <button type="submit" class="m-0 btn btn-danger"> Deactivate </button>
         <% end %>
       <% end %>
-    </div>
+      </td>
+    </tr>
   <% end %>
+  </tbody>
+</table>
 </div>
