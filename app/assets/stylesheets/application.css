@@ -426,7 +426,7 @@ form {
 
 .filter-btn {
   width: auto;
-  padding: 0.375rem 0.75rem;
+  padding: 0.40rem 0.40rem;
 }
 
 .filter-container_requests_index {
@@ -745,7 +745,7 @@ font-weight: bold;
   background-color: #f8f9fa; /* Light background color for search bar */
   border: 1px solid #ced4da; /* Gray border */
   border-radius: 4px;
-  padding: 8px 16px;
+  /* padding: 8px 16px; */
   display: flex; /* Use flexbox to align items */
   align-items: center; /* Center items vertically */
 }

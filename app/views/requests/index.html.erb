@@ -37,34 +37,52 @@
     </div>
 
     <div id="filterCollapse" class="filter-container_requests_index">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="durationFilter">How long?</label>
+      <div class="row mb-3">
+        <div class="col-md-3">
+          <label for="startDateFilter">Dates ranging from</label>
+          <input type="date" class="form-control" id="startDateFilter">
+        </div>
+        <div class="col-md-3">
+          <label for="startTimeFilter">Anytime from</label>
+          <select class="form-select" id="startTimeFilter"></select>
+        </div>
+        <div class="col-md-3">
+          <label for="durationFilter">Duration</label>
           <select class="form-select" id="durationFilter">
-            <option value="">Duration (Any)</option>
+            <option value="">Any</option>
             <option value="0-2">0-2 hours</option>
             <option value="2-4">2-4 hours</option>
             <option value="4-6">4-6 hours</option>
             <option value="6+">6+ hours</option>
           </select>
         </div>
-        <div class="col-md-4">
-          <label>Date Range</label>
-          <div class="d-flex">
-            <div class="me-2 flex-grow-1">
-              <input type="date" class="form-control" id="startDateFilter" placeholder="From">
-            </div>
-            <div class="flex-grow-1">
-              <input type="date" class="form-control" id="endDateFilter" placeholder="To">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="rewardFilter">Rewards?</label>
           <select class="form-select" id="rewardFilter">
-            <option value="">Reward (Any)</option>
+            <option value="">Any</option>
             <option value="with">With Reward</option>
             <option value="without">Without Reward</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label for="endDateFilter">To</label>
+          <input type="date" class="form-control" id="endDateFilter">
+        </div>
+        <div class="col-md-3">
+          <label for="endTimeFilter">To</label>
+          <select class="form-select" id="endTimeFilter"></select>
+        </div>
+        <div class="col-md-3">
+          <label for="locationFilter">Location</label>
+          <input type="text" class="form-control" id="locationFilter" placeholder="Any location">
+        </div>
+        <div class="col-md-3">
+          <label for="categoryFilter">Category</label>
+          <select class="form-select" id="categoryFilter">
+            <option value="">All</option>
+            <option value="General">General</option>
           </select>
         </div>
       </div>
@@ -108,7 +126,7 @@
                           <p class="card-text_requests_index"><i class="fas fa-clock"></i><span class="icon-text_requests_index"><%= request.duration %> hours</span></p>
                         </div>
                         <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-calendar-alt"></i><span class="icon-text_requests_index"><%= request.date.strftime('%d %B %Y') %>, <%= request.start_time.strftime('%H:%M') %></span></p>
+                          <p class="card-text_requests_index"><i class="fas fa-calendar-alt"></i><span class="icon-text_requests_index"><%= request.date.strftime('%d %B %Y') %>, <%= request.start_time.strftime('%I:%M %p') %></span></p>
                         </div>
                       </div>
                     </div>
