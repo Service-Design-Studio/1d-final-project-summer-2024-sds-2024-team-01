@@ -38,6 +38,7 @@ gem 'devise'
 gem 'rolify'
 
 gem 'gemini-ai', '~> 4.2.0'
+gem 'factory_bot_rails'
 
 group :development do
   gem 'web-console', '~> 4.2.1'
@@ -52,7 +53,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.1.2'
   gem 'guard-rspec', '~> 4.7.3'
   gem 'simplecov', require: false
-  gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'guard-cucumber'
   gem 'guard'
