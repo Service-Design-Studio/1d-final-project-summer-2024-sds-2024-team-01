@@ -51,23 +51,25 @@ class RequestsController < ApplicationController
     @average_rating = @reviews_received.average(:rating).to_f.round(1)
     @review_count = @reviews_received.count
 
-    # Prepare user and request profiles for the match calculation
-    user_profile = {
-      name: @requester.name,
-      description: @requester.description
-    }
+    if !current_user.nil?
+      # Prepare user and request profiles for the match calculation
+      user_profile = {
+        name: current_user.name,
+        bio: current_user.description
+      }
 
-    request_profile = {
-      name: @request.title,
-      description: @request.description,
-      date: @request.date,
-      number_of_volunteers: @request.number_of_pax,
-      location: @request.location,
-      rewards: @request.reward
-    }
+      request_profile = {
+        title: @request.title,
+        description: @request.description,
+        location: @request.location,
+        rewards: @request.reward
+      }
 
-    # Fetch the percentage compatibility of request with user
-    @match_percentage = generate_match_percentage(user_profile, request_profile)
+      # Fetch the percentage compatibility of request with user
+      @match_percentage = generate_match_percentage(user_profile, request_profile)
+    else
+      @match_percentage = "User is not signed in"
+    end
   end
 
   # GET /requests/new

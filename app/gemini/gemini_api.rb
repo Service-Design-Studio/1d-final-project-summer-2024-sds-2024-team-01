@@ -17,31 +17,21 @@ module Gemini_Helper
       Only provide the numerical match percentage based on the compatibility of the two descriptions according in this format: xx%.
       Compare the following post for a request for assistance and the profile of the user and provide a numerical match percentage based on their compatibility
 
-      Volunteer Profile:
-      Name: #{user[:name]}
-      Bio: #{user[:bio]}
+      Volunteer Name: #{user[:name]}
+      Volunteer Bio: #{user[:bio]}
 
-      Request:
-      Name: #{request[:title]}
-      Description: #{request[:description]}
-      Location: #{request[:location]}
-      Rewards: #{request[:rewards]}
+      Request Title: #{request[:title]}
+      Request Description: #{request[:description]}
+      Request Location: #{request[:location]}
+      Request Rewards: #{request[:rewards]}
       PROMPT
 
       response_text = client.generate_content({
         contents: { role: 'user', parts: { text: prompt } }
       })
 
-      value = response_text["candidates"][0]["content"]["parts"][0]["text"]
+      response_text["candidates"][0]["content"]["parts"][0]["text"]
 
-      match = value.match(/\d+%/)
-
-      # Extract and print the match percentage from the response
-      if match
-        return match
-      else
-        return "No match percentage found in the response."
-      end
     end
   end
 
