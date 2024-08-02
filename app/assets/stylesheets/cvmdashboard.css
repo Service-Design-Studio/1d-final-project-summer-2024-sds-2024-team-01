@@ -1,4 +1,5 @@
-.cvm-index{
+.cvm-index, .cvm-manage_charities{
+    height: calc(100vh - 80px);
     background: linear-gradient(16deg, #ffefff, #fff);
 }
 
@@ -100,6 +101,21 @@
     color: #505050
 }
 
+.dashboardcard > .list-group{
+    height: calc(100vh - 340px);
+    overflow-y: scroll;
+}
+
+.dashboardcard .list-group-item{
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.3s;
+}
+
+.dashboardcard .list-group-item:hover{
+    background: linear-gradient(90deg, #AD88C6, transparent);
+}
+
 #copycompanycode:hover{
     background:#656DAD !important
 }
@@ -111,4 +127,10 @@
 
 #refreshcode:hover{
     transform: rotate(180deg);
+}
+
+#savecharities{
+    background: #AD88C6;
+    border:0;
+    padding: 10px 25px;
 }
