@@ -68,16 +68,34 @@ class MyRequestsController < ApplicationController
     return if current_user.id != (@request.created_by)
 
     @applications = RequestApplication.where(request_id: params[:id])
-    @pendingapplications = @applications.where.not(status: 'Accepted').where.not(status: 'Rejected')
+    @pendingapplications = @applications.where.not(status: 'Accepted').where.not(status: 'Rejected').where.not(status: 'Completed')
     @acceptedapplications = @applications.where(status: 'Accepted')
 
     @acceptedapplications.each do |accepted|
+      user_that_completed = User.find(accepted.applicant_id)
+
+      accepted.status = 'Completed'
+      accepted.save
+
+      start_of_week = Time.zone.now.beginning_of_week
+      end_of_week = Time.zone.now.end_of_week
+
+
       @notification = Notification.new
       @notification.message = 'Congratulations! You\'ve helped to complete a request! Click here to view.'
       @notification.url = '/myapplications'
       @notification.header = 'Request Completed'
-      @notification.notification_for = User.find(accepted.applicant_id)
+      @notification.notification_for = user_that_completed
       @notification.save
+
+      user_that_completed.total_hours += @request.duration
+      user_that_completed.weekly_hours = RequestApplication.joins(:request).where(
+        updated_at: start_of_week..end_of_week,
+        applicant_id: user_that_completed.id,
+        status: 'Completed'
+      ).sum('requests.duration')
+
+      user_that_completed.save
     end
 
     @pendingapplications.each do |pending|
@@ -87,7 +105,7 @@ class MyRequestsController < ApplicationController
 
     @request.status = 'Completed'
     @request.save
-    redirect_to '/myrequests', flash: { success: "Congratulations! Your request is marked as complete!" } 
+    redirect_to '/myrequests', flash: { success: "Congratulations! Your request is marked as complete!" }
   end
 
   def accept
