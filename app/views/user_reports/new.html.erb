@@ -6,7 +6,7 @@
     <%= form.text_area :report_reason, class: "form-control" %>
   </div>
   
-  <%= form.hidden_field :reported_user_id, value: @reported_user.id %>
+  <%= form.hidden_field :reported_user, value: @reported_user.id %>
   
   <div class="form-group">
     <%= form.submit "Submit Report", class: "btn btn-danger" %>
