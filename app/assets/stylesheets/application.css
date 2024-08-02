@@ -397,6 +397,74 @@ form {
   top: 1%;
 }
 
+/* filtering system CSS*/
+
+.search-filter-container {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-form_requests_index {
+  position: relative;
+}
+
+.search-input_requests_index {
+  padding-right: 40px;
+}
+
+.search-btn_requests_index {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: none;
+  border: none;
+  color: #007bff;
+}
+
+.filter-btn {
+  width: auto;
+  padding: 0.375rem 0.75rem;
+}
+
+.filter-container_requests_index {
+  background-color: transparent;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.filter-container_requests_index select,
+.filter-container_requests_index input {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.filter-container_requests_index label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#filterCollapse {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden; /* Make it non-interactive */
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+#filterCollapse.active {
+  max-height: 500px; /* Adjust this value based on your content's height */
+  opacity: 1; /* Make it visible */
+  visibility: visible; /* Make it interactive */
+  transition: max-height 0.5s ease-in, opacity 0.5s ease-in, visibility 0.5s ease-in;
+}
+
+
 /* Register page CSS functions*/
 
 body.registrations-new, .registrations-charity, .registrations-corporate, .registrations-choose_register_method, body.sessions-new {
