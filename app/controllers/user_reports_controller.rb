@@ -10,8 +10,9 @@ class UserReportsController < ApplicationController
     Rails.logger.debug "user_report_params: #{user_report_params.inspect}"
     Rails.logger.debug "params[:user_report][:reported_user]: #{params[:user_report][:reported_user].inspect}"
 
+    # Build the user report without the reported_user field initially
     @user_report = current_user.user_reports_as_reporter.build(user_report_params.except(:reported_user))
-
+    
     # Convert reported_user to a User object and assign it
     reported_user_id = params[:user_report][:reported_user].to_i
     @user_report.reported_user = User.find(reported_user_id)
@@ -34,3 +35,4 @@ class UserReportsController < ApplicationController
     params.require(:user_report).permit(:report_reason, :reported_user)
   end
 end
+Í
