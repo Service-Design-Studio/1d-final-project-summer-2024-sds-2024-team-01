@@ -13,21 +13,49 @@ form {
 }
 
 .noticefadeout {
-    position: fixed;
-    background: #505050;
-    color: #eee;
-    top: 90px;
-    right: 10px;
-    padding: 20px;
-    z-index: 200;
-    border-radius: 10px;
-    animation: fadeoutnotif 5s forwards;
+  position: fixed;
+  background: rgba(80, 80, 80, 0.7);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  top: 90px;
+  right: 10px;
+  padding: 20px;
+  z-index: 200;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  animation: fadeoutnotif 5s forwards;
+  transition: all 0.3s ease;
+}
+
+.noticefadeout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  pointer-events: none;
 }
 
 @keyframes fadeoutnotif {
-0% { opacity: 100%;}
-80% {opacity: 100%;}
-100% { opacity: 0%;}
+  0% {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  10% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+  90% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+  100% {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
 }
 
 .button-container .button {
@@ -75,6 +103,17 @@ form {
   color: lightgray;
 }
 
+/*navbar profile picture*/
+.nav-profile-picture {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for both transformations */
+  cursor: pointer; /* Change cursor to pointer to indicate interactivity */
+}
+
+.nav-profile-picture:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow effect */
+}
+
+
 .logo-circle-navbar {
   width: 2.8em; /* Adjust the size as needed */
   height: 2.8em; /* Adjust the size as needed */
@@ -98,7 +137,7 @@ form {
 }
 
 /* Flash notifications styling */
-.alert {
+/* .alert {
   display: flex;
   align-items: center;
   padding: 1rem 1.25rem;
@@ -115,10 +154,10 @@ form {
 
 .alert-dismissible .close {
   margin-left: auto;
-}
+} */
 
 /* Icon colors */
-.custom-alert-success i { color: #155724; }
+/* .custom-alert-success i { color: #155724; }
 .custom-alert-error i, .custom-alert-alert i { color: #721c24; }
 .custom-alert-notice i { color: #0c5460; }
 .custom-alert-warning i { color: #856404; }
@@ -214,7 +253,7 @@ form {
   top: -2px;
   right: -73%;
   color: inherit;
-}
+} */
 
 .empty-state-container {
   display: flex;
@@ -407,7 +446,7 @@ form {
 
 .search-filter-container {
   background-color: #f8f9fa;
-  padding: 15px;
+  padding: 0px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -658,33 +697,57 @@ font-weight: bold;
 
 /* Requests home page CSS functions */
 .custom-card_requests_index {
-  margin-top: 30px;
+  margin-top: 100px;
   margin-bottom: 30px; 
-  background-color: white; /* Background color for the header container */
-  color: black; /* Text color for the header container */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
-  height: 120px;
-  border: 1px solid transparent; /* Make border transparent */
+  position: relative;
+  overflow: hidden; /* Ensures the image stays within the bounds of the container */
   border-radius: 5px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+  height: 300px; /* Adjust the height as needed */
+}
+
+.background-image_requests_index {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Fill the container, cropping if necessary */
+  object-position: center; /* Center the image within the container */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1; /* Ensures the image is below the overlay and text */
+}
+
+.overlay_requests_index {
+  background-color: rgba(0, 0, 0, 0.5); /* Translucent black overlay */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Ensures the overlay is above the image */
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-left: 40px; /* Adjust this for text alignment */
 }
 
 .header-text-group_requests_index {
+  position: relative;
+  z-index: 3; /* Ensures the text is above both the image and the overlay */
+  color: white; /* Text color */
   display: flex;
   flex-direction: column;
-  justify-content: left;
-  padding-left: 40px; /* Adjust this value to set the left margin for both heading and subheading */
 }
 
 .header-text_requests_index {
-  position: relative;
-  margin: 20px 0 10px 20px; /* Add some bottom margin to separate from subheader */
+  margin: 20px 0 10px 0; /* Adjust margins as needed */
 }
 
 .subheader-text_requests_index {
-  position: relative;
-  margin: 0 0 0 20px;
+  margin: 0;
   font-weight: normal;
 }
+
 
 /* Clickable card CSS for all requests display pages, e.g my applications, my requests, requests page*/
 
@@ -1632,10 +1695,10 @@ body.popup-open {
 }
 
 /* Ensure the cropper UI is circular */
-.cropper-view-box,
+/* .cropper-view-box,
 .cropper-face {
   border-radius: 50%;
-}
+} */
 
 .options-icon-follow {
   margin-top: 12px; /* Space between name and options icon */
