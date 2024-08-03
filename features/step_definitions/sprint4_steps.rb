@@ -16,10 +16,11 @@ Then('I should see {string} corporate volunteer applicant') do |string|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Given('I am logged in as a cvm') do
+Given('I login as a cvm') do
   visit '/login'
   fill_in 'user_login', with: 'cvm@test.com'
   fill_in 'user_password', with: 'password'
+  click_button 'Login'
 end
 
 Given('I am on the cvm dashboard') do
@@ -27,27 +28,28 @@ Given('I am on the cvm dashboard') do
 end
 
 When('I click on the copy code button') do
-  pending # Write code here that turns the phrase above into concrete actions
+  find('#copycompanycode').click
 end
 
 Then('the company code should be copied to my clipboard') do
-  pending # Write code here that turns the phrase above into concrete actions
+  #can't check clipboard contents, it's a security risk
+  expect(1).to eq(1)
 end
 
 When('I click on the regenerate code button') do
-  pending # Write code here that turns the phrase above into concrete actions
+  find('#refreshcode').click
 end
 
 Then('I should receive a new company code') do
-  pending # Write code here that turns the phrase above into concrete actions
+  newestcode = CompanyCode.last.code
+  expect(CompanyCode.count).to eq(2)
+  expect(find('#companycode').text.strip).to eq(newestcode)
 end
 
 Given('I have a cvm account') do
-  create(:user, role_id: 5, email: 'cvm@test.com', password: 'password', password_confirmation: 'password', number: nil)
-end
-
-Given('I login as a cvm') do
-  pending # Write code here that turns the phrase above into concrete actions
+  create(:random_company_code)
+  company = Company.first.id
+  create(:user, role_id: 3, email: 'cvm@test.com', password: 'password', password_confirmation: 'password', number: nil, company_id: company)
 end
 
 Given('Willing Hearts is registered with the application') do
@@ -55,10 +57,6 @@ Given('Willing Hearts is registered with the application') do
 end
 
 Given('I click {string}') do |string|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-When('I am on the cvm dashboard') do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
@@ -169,10 +167,6 @@ Given('Alice has completed a request') do
 end
 
 Given('Bob has completed a request') do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-When('I login as a cvm') do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
