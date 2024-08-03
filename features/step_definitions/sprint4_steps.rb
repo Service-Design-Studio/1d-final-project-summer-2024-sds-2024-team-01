@@ -53,15 +53,17 @@ Given('I have a cvm account') do
 end
 
 Given('Willing Hearts is registered with the application') do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Given('I click {string}') do |string|
-  pending # Write code here that turns the phrase above into concrete actions
+  create(:random_charity, charity_name: 'Willing Hearts')
 end
 
 Given('Willing Hearts is registered with my company') do
-  pending # Write code here that turns the phrase above into concrete actions
+  company = Company.first.id
+  charity = Charity.first.id
+  create(:random_company_charity, company_id: company, charity_id: charity)
+end
+
+Given('I click on Willing Hearts') do
+  find('li', text: 'Willing Hearts').click
 end
 
 Given('Jason\'s account is deactivated') do
