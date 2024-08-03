@@ -46,16 +46,17 @@
           <label for="startTimeFilter">Anytime from</label>
           <select class="form-select" id="startTimeFilter"></select>
         </div>
-        <div class="col-md-3">
+        <%# <div class="col-md-3">
           <label for="durationFilter">Duration</label>
           <select class="form-select" id="durationFilter">
             <option value="">Any</option>
-            <option value="0-2">0-2 hours</option>
-            <option value="2-4">2-4 hours</option>
+            <option value="0-3">0-3 hours</option>
             <option value="4-6">4-6 hours</option>
-            <option value="6+">6+ hours</option>
+            <option value="7-9">7-9 hours</option>
+            <option value="9-12">9-12 hours</option>
+            <option value="12+">12+ hours</option>
           </select>
-        </div>
+        </div> %>
         <div class="col-md-3">
           <label for="rewardFilter">Rewards?</label>
           <select class="form-select" id="rewardFilter">
@@ -75,14 +76,23 @@
           <select class="form-select" id="endTimeFilter"></select>
         </div>
         <div class="col-md-3">
-          <label for="locationFilter">Location</label>
-          <input type="text" class="form-control" id="locationFilter" placeholder="Any location">
+          <label for="regionFilter">Region</label>
+          <select class="form-select" id="regionFilter">
+            <option value="">All Regions</option>
+            <option value="North">North</option>
+            <option value="South">South</option>
+            <option value="East">East</option>
+            <option value="West">West</option>
+            <option value="Central">Central</option>
+          </select>
         </div>
         <div class="col-md-3">
           <label for="categoryFilter">Category</label>
           <select class="form-select" id="categoryFilter">
             <option value="">All</option>
             <option value="General">General</option>
+            <option value="Manual labour">Manual labour</option>
+            <option value="Teaching">Teaching</option>
           </select>
         </div>
       </div>
@@ -92,7 +102,7 @@
       <div class="card-body">
         <div class="row">
           <% @in_progress_requests.each do |request| %>
-            <div class="col-md-6 mb-4 request-card_requests_index">
+            <div class="col-md-6 mb-4 request-card_requests_index" data-latitude="<%= request.location.latitude %>" data-longitude="<%= request.location.longitude %>">
               <a href="<%= request_path(request) %>" class="clickable-card_requests_index">
                 <div class="card h-100 w-100">
                   <img src="<%= request_thumbnail_url(request) %>" class="card-img-top" alt="<%= request.title %>"/>
