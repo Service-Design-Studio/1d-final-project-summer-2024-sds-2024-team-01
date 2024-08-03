@@ -4,7 +4,7 @@ class Admin::ApproveCompaniesController < ApplicationController
   before_action :set_company, only: [:show, :approve, :reject]
 
   def index
-    @companies = Company.where(status: 'Pending')
+    @companies = Company.where(status: 'Inactive')
   end
 
   def show
@@ -13,7 +13,7 @@ class Admin::ApproveCompaniesController < ApplicationController
 
   def approve
     Company.transaction do
-      @company.update!(status: 'Approved')
+      @company.update!(status: 'Active')
       unique_code = generate_unique_code
       CompanyCode.create!(company: @company, status: 'Approved', code: unique_code)
       CompanyMailer.with(company: @company, code: unique_code).approval_email.deliver_later
@@ -24,7 +24,7 @@ class Admin::ApproveCompaniesController < ApplicationController
   end
 
   def reject
-    @company.update(status: 'Rejected')
+    @company.update(status: 'Inactive')
     redirect_to admin_approve_companies_path, notice: 'Company has been rejected and email sent.'
   end
 
