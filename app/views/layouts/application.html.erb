@@ -52,8 +52,8 @@
               <div class="d-flex ms-4 h-100 align-items-center">
                 <a class="nav-link" href="/myapplications">My Applications</a>
                 <a class="nav-link" href="/myrequests">My Requests</a>
-                <a class="nav-link" href="/about">About</a>
                 <a class="nav-link" href="/chats">Chat</a>
+                <a class="nav-link" href="https://www.gebirah.org" target="_blank" rel="noopener noreferrer">About</a>
               </div>
             <% end %>
             <div class="d-flex align-items-center ms-auto h-100 align-items-center">
@@ -65,7 +65,7 @@
               <!-- Profile on the right of Navbar -->
             <% end %>
               <a href="<%= profile_path %>" class="text-decoration-none text-neutral-dark">
-                <img src="<%= avatar_url(current_user) %>" alt="Profile Picture" width="40" height="40" class="rounded-circle m-auto"> <!-- Profile pic -->
+                <img src="<%= avatar_url(current_user) %>" alt="Profile Picture" width="40" height="40" class="nav-profile-picture rounded-circle m-auto"> <!-- Profile pic -->
               </a>
               <div id="shownotifs" class="text-white notifbell h-100 ms-5 d-flex align-items-center ">
               <% if @unreadcount > 0 %>
