@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
   has_many :chats, foreign_key: :applicant_id
   has_many :messages, foreign_key: :sender_id
   has_many :summaryreports, foreign_key: :requested_by
-  has_many :userreports, foreign_key: :created_by
+  has_many :user_reports_as_reporter, class_name: 'UserReport', foreign_key: 'reported_by'
+  has_many :user_reports_as_reported_user, class_name: 'UserReport', foreign_key: 'reported_user'
   has_many :requests, foreign_key: :created_by
   has_many :requestapplications, foreign_key: :applicant_id
 
