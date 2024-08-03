@@ -15,12 +15,8 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
         resource.company_id = CompanyCode.where(code: specialcode).where(status: 'Active').take.company_id
         resource.role_id = 4
       else
-
-        charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take
-        unless charity_id.nil?
-          resource.charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take.charity_id
-          resource.role_id = 5
-        end
+        redirect_to '/register/user', notice: 'Company code does not exist or has expired'
+        return
       end
     end
 
