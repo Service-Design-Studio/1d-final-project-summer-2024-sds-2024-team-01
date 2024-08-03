@@ -95,11 +95,19 @@ When('I enter the details including the code associated with my company') do
 end
 
 Given('I click on Corporate') do
-  pending # Write code here that turns the phrase above into concrete actions
+  find('.fa-building').click
 end
 
 When('I enter my company details') do
-  pending # Write code here that turns the phrase above into concrete actions
+  fill_in 'company_name', with: 'OCBC'
+  fill_in 'email', with: 'ocbc@co.com'
+  attach_file('document_proof', Rails.root.join('lib', 'assets', 'sample.pdf'))
+end
+
+When('I enter my company details with a document in the wrong format') do
+  fill_in 'company_name', with: 'OCBC'
+  fill_in 'email', with: 'ocbc@co.com'
+  attach_file('document_proof', Rails.root.join('lib', 'assets', 'freepik-lmao.jpg'))
 end
 
 Given('I am logged in as a corporate volunteer') do
