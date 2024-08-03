@@ -5,21 +5,21 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   def create
     # add custom create logic here
     build_resource(sign_up_params)
-    puts sign_up_params
 
     specialcode = params[:code]
+    
+    if !specialcode.nil? 
+      company_code = CompanyCode.where(code: specialcode).where(status: 'Active').take
+      if !company_code.nil?
 
-    company_code = CompanyCode.where(code: specialcode).where(status: 'Active').take
-    if !company_code.nil?
-      resource.company_id = CompanyCode.where(code: specialcode).where(status: 'Active').take.company_id
-      resource.role_id = 4
-    else
-      charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take
-      if !charity_id.nil?
-        resource.charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take.charity_id
-        resource.role_id = 5
+        resource.company_id = CompanyCode.where(code: specialcode).where(status: 'Active').take.company_id
+        resource.role_id = 4
+      else
+        redirect_to '/register/user', notice: 'Company code does not exist or has expired'
+        return
       end
     end
+
 
     resource.save
     yield resource if block_given?
@@ -89,7 +89,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     @charity.status = 'Pending'
     @charity.document_proof = params[:document_proof]
 
-    @charityuser= User.new
+    @charityuser = User.new
     @charityuser.email = params[:email]
     @charityuser.name = params[:charity_name]
     @charityuser.role_id = 5
@@ -116,11 +116,9 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def corporatesuccess
-  end
+  def corporatesuccess; end
 
-  def charitysuccess
-  end
+  def charitysuccess; end
 
   private
 

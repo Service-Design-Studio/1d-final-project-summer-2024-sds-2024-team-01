@@ -49,7 +49,7 @@
           Employees
       </h6>
       <h2 class="m-0">
-        <b>
+        <b id="numemployees">
       <%= @numemployees %>
         </b>
       </h2>
@@ -65,7 +65,7 @@
           Hours this week
       </h6>
       <h2 class="m-0">
-        <b>
+        <b id="weeklyhours">
       <%= @weeklyhours %>
         </b>
       </h2>
@@ -88,7 +88,7 @@
       <div id="topemployeenames">
     <% @topvolunteers.each do |volunteer| %>
       <div class="row py-2">
-        <p class="col m-0">
+        <p id="topemployeename" class="col m-0">
       <%= volunteer.name %>
         </p>
         <p class="col m-0">
