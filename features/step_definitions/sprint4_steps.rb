@@ -54,6 +54,10 @@ Given('I have a cvm account') do
   create(:user, role_id: 4, name: 'Alice Smith', email: 'cv1@test.com', password: 'password', password_confirmation: 'password', number: nil, company_id: company)
 
   create(:user, role_id: 4, name: 'Jason Derulo', email: 'cv2@test.com', password: 'password', password_confirmation: 'password', number: nil, company_id: company)
+
+  create(:user, role_id: 4, name: 'Bob Dylan', email: 'cv3@test.com', password: 'password', password_confirmation: 'password', number: nil, company_id: company)
+
+  create(:user, role_id: 4, name: 'Jane Doe', email: 'cv4@test.com', password: 'password', password_confirmation: 'password', number: nil, company_id: company)
 end
 
 Given('Willing Hearts is registered with the application') do
@@ -72,6 +76,12 @@ end
 
 Given('Jason\'s account is deactivated') do
   user = User.where(name: 'Jason Derulo').take
+  user.status = 'Inactive'
+  user.save
+end
+
+Given('Jane\'s account is deactivated') do
+  user = User.where(name: 'Jane Doe').take
   user.status = 'Inactive'
   user.save
 end
@@ -177,28 +187,54 @@ Then('I should not see {string} #only registered charities, not any') do |string
 end
 
 Given('Jason has completed a request') do
-  pending # Write code here that turns the phrase above into concrete actions
+  req = create(:request, duration: 6)
+  jason = User.where(name: 'Jason Derulo').take
+  jason.total_hours = 6
+  jason.weekly_hours = 6
+  jason.save
+  create(:application, status: 'Completed', request_id: req.id, applicant_id: jason.id)
 end
 
 Given('Alice has completed a request') do
-  pending # Write code here that turns the phrase above into concrete actions
+  req = create(:request, duration: 4)
+  alice = User.where(name: 'Alice Smith').take
+  alice.total_hours = 4
+  alice.weekly_hours = 4
+  alice.save
+  create(:application, status: 'Completed', request_id: req.id, applicant_id: alice.id)
 end
 
 Given('Bob has completed a request') do
-  pending # Write code here that turns the phrase above into concrete actions
+  req = create(:request, duration: 2)
+  bob = User.where(name: 'Bob Dylan').take
+  bob.total_hours = 2
+  bob.weekly_hours = 2
+  bob.save
+  create(:application, status: 'Completed', request_id: req.id, applicant_id: bob.id)
 end
 
-Then('I should {int} hours volunteered this week') do |int|
-# Then('I should {float} hours volunteered this week') do |float|
-  pending # Write code here that turns the phrase above into concrete actions
+Then('I should see {int} hours volunteered this week') do |int|
+  expect(find('#weeklyhours').text.strip).to eq(int.to_s)
 end
 
-Then('I should see {string} under top employees') do |string|
-  pending # Write code here that turns the phrase above into concrete actions
+Then('I should see {int} employees') do |int|
+  expect(find('#numemployees').text.strip).to eq(int.to_s)
 end
 
-Then('I should see {string} before {string} under top employees') do |string, string2|
-  pending # Write code here that turns the phrase above into concrete actions
+Then('I should see {int} employees under top employees') do |int|
+  employeenames = all('#topemployeename')
+  expect(employeenames.count).to eq(int)
+end
+
+Then('I should see {string} before {string} under top employees') do |string1, string2|
+  rows = all('#topemployeename')
+
+  row_texts = rows.map { |row| row.text.strip }
+
+  index1 = row_texts.index { |text| text.include?(string1) }
+  index2 = row_texts.index { |text| text.include?(string2) }
+
+  expect(index1).to be < index2
 end
 
 Given('I click on the date range picker') do

@@ -4,29 +4,31 @@ Feature: Viewing of statistics
     I want to be able to see the number of hours that each employee is volunteering for 
 
     Background:
-        Given Willing Hearts is registered with the application
+        Given I have a cvm account
+        And Willing Hearts is registered with the application
         And Willing Hearts is registered with my company
         And Jason has completed a request
         And Alice has completed a request
         And Bob has completed a request
+        And Jane's account is deactivated
+        And I login as a cvm
         
     Scenario:
-        Given I have a cvm account
-        When I login as a cvm
-        Then I should 8 hours volunteered this week
+        Given I am on the cvm dashboard
+        Then I should see 12 hours volunteered this week
 
     Scenario: Viewing of employee statistics
-        Given I have a cvm account
-        When I login as a cvm
-        Then I should see '3' under top employees
+        Given I am on the cvm dashboard
+        Then I should see 3 employees
+        And I should see '1 inactive accounts'
 
     Scenario: Viewing of volunteering statistics
-        Given I have a cvm account
-        When I login as a cvm
-        Then I should see 'Jason' before 'Alice' under top employees
+        Given I am on the cvm dashboard
+        Then I should see 3 employees under top employees
         And I should see 'Alice' before 'Bob' under top employees
+        And I should see 'Jason' before 'Alice' under top employees
+        And I should see 'Jason' before 'Bob' under top employees
 
     Scenario: Viewing of charities registered with my company
-        Given I have a cvm account
-        When I login as a cvm
+        Given I am on the cvm dashboard
         Then I should see 'Willing Hearts'
