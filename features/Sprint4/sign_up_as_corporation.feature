@@ -4,7 +4,7 @@ Feature: Signing up as a corporation
     I want to be able to create an account to create more volunteering opportunities for my employees
 
     Scenario: Register as a corporation
-        Given I am on the register page
+        Given I am on the 'register' page
         And I click on Corporate
         When I enter my company details 
         And click on "Sign up!"

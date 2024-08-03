@@ -5,7 +5,7 @@ Feature: Signing up as a charity
     I want to be able to create an account to create more volunteering opportunities for my employees
 
     Scenario: Register as a charity
-        Given I am on the register page
+        Given I am on the 'register' page
         And I click on Charity
         When I enter my charity details 
         And click on "Sign up!"
@@ -18,7 +18,7 @@ Feature: Signing up as a corporation
     I want to be able to create an account to create more volunteering opportunities for my employees
 
     Scenario: Register as a corporation
-        Given I am on the register page
+        Given I am on the 'register' page
         And I click on Corporate
         When I enter my company details 
         And click on "Sign up!"
@@ -60,7 +60,7 @@ Feature: Signing up as a corporate volunteer
     I want to be able to register my account under the company
 
     Scenario:
-        Given I am on the register page
+        Given I am on the 'register' page
         And I click on 'User'
         When I enter the details including the code associated with my company
         And I click on 'Sign Up!'

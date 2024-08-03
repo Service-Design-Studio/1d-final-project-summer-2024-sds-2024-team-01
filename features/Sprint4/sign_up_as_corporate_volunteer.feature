@@ -4,7 +4,7 @@ Feature: Signing up as a corporate volunteer
     I want to be able to register my account under the company
 
     Scenario:
-        Given I am on the register page
+        Given I am on the 'register' page
         And I click on 'User'
         When I enter the details including the code associated with my company
         And I click on 'Sign Up!'
