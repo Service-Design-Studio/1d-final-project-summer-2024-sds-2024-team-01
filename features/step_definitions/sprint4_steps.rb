@@ -182,3 +182,16 @@ end
 Then('I should see {string} before {string} under top employees') do |string, string2|
   pending # Write code here that turns the phrase above into concrete actions
 end
+
+Given('I click on the date range picker') do
+  find('#reportdate').click
+end
+
+When('I select a range of dates') do
+  find(:xpath, "//span[@aria-label='July 28, 2024']").click
+  find(:xpath, "//span[@aria-label='August 28, 2024']").click
+end
+
+Then('a report should be downloaded') do
+  expect(SummaryReport.count).to eq(1)
+end

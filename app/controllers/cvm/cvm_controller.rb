@@ -133,9 +133,12 @@ class Cvm::CvmController < ApplicationController
         csv << ['']
       end
     end
+    SummaryReport.create(requested_by: current_user.id, created_at: DateTime.now, updated_at: DateTime.now)
+
+
+
     send_data csv_data, filename: "employees_data_#{Date.today}.csv"
 
-    SummaryReport.create(requested_by: current_user.id)
 
     # redirect_to '/cvm', notice: 'Report generated'
   end
