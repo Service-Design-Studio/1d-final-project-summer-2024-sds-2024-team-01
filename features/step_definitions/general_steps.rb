@@ -5,11 +5,11 @@ end
 
 Given('I have an account') do
   visit new_user_registration_path
-  fill_in 'user_name', with: 'Harrison Ford'
-  fill_in 'user_number', with: '96789012'
-  fill_in 'user_email', with: 'harrison@example.com'
-  fill_in 'user_password', with: 'asdfasdf'
-  fill_in 'user_password_confirmation', with: 'asdfasdf'
+  first('#user_name', visible: false).set('Harrison Ford')
+  first('#user_number', visible: false).set('96789012')
+  first('#user_email', visible: false).set('harrison@example.com')
+  first('#user_password', visible: false).set('asdfasdf')
+  first('#user_password_confirmation', visible: false).set('asdfasdf')
   click_button 'Sign up!'
   expect(page).to have_content('signed up successfully.')
   click_button(id: 'logoutbtn')
@@ -22,7 +22,7 @@ end
 
 And('I login') do
   visit new_user_session_path
-  fill_in 'user_number', with: '96789012'
+  fill_in 'user_login', with: '96789012'
   fill_in 'user_password', with: 'asdfasdf'
   click_button 'Login'
   expect(page).to have_content('Signed in successfully.')

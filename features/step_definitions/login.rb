@@ -9,7 +9,7 @@ When('I enter the following credentials:') do |table|
   table.hashes.each do |row|
     case row['field']
     when 'Phone number'
-      fill_in 'user_number', with: row['value']
+      fill_in 'user_login', with: row['value']
     when 'Password'
       fill_in 'user_password', with: row['value']
     end
@@ -42,7 +42,7 @@ When('I fill in the follwing:') do |table|
     when 'Nric'
       fill_in 'user_nric', with: row['value']
     when 'Phone number'
-      fill_in 'user_number', with: row['value']
+      fill_in 'user_login', with: row['value']
     when 'Email'
       fill_in 'user_email', with: row['value']
     when 'Password'
