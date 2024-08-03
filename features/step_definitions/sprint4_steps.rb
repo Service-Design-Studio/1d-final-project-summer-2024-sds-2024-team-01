@@ -90,12 +90,44 @@ When('I enter my charity details') do
   attach_file('document_proof', Rails.root.join('lib', 'assets', 'sample.pdf'))
 end
 
+When('I enter my charity details with a document in the wrong format') do
+  fill_in 'charity_name', with: 'Willing Hearts'
+  fill_in 'email', with: 'willing@hearts.com'
+  attach_file('document_proof', Rails.root.join('lib', 'assets', 'freepik-lmao.jpg'))
+end
+
 When('I enter the details including the code associated with my company') do
-  pending # Write code here that turns the phrase above into concrete actions
+  code = create(:random_company_code).code
+  fill_in 'user_name', with: 'Jason Long'
+  fill_in 'user_email', with: 'willing@hearts.com'
+  fill_in 'code', with: code
+  find('div .btn.btn-primary').click
+  fill_in 'user_password', with: 'password'
+  fill_in 'user_password_confirmation', with: 'password'
+  find('div .btn.btn-primary').click
+end
+
+When('I enter the details and an inactive company code') do
+  code = create(:random_company_code, status: 'Inactive').code
+  fill_in 'user_name', with: 'Jason Long'
+  fill_in 'user_email', with: 'willing@hearts.com'
+  fill_in 'code', with: code
+  find('div .btn.btn-primary').click
+  fill_in 'user_password', with: 'password'
+  fill_in 'user_password_confirmation', with: 'password'
+  find('div .btn.btn-primary').click
+end
+
+Then('I should see the corporate user icon') do
+  expect(page).to have_css('.fa-building')
 end
 
 Given('I click on Corporate') do
   find('.fa-building').click
+end
+
+Given('I click on User') do
+  find('.fa-user').click
 end
 
 When('I enter my company details') do

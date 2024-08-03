@@ -10,3 +10,9 @@ Feature: Signing up as a charity
         And I click on "Sign up!"
         Then I should see "Thank you for signing up with Ring of Reciprocity."
 
+    Scenario: Upload non pdf file 
+        Given I am on the 'register' page
+        And I click on Charity
+        When I enter my charity details with a document in the wrong format
+        And I click on "Sign up!"
+        Then I should see "Failed to register"
