@@ -433,7 +433,7 @@ form {
   background-color: transparent;
   padding: 15px;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   margin-bottom: 30px;
 }
 
@@ -458,12 +458,65 @@ form {
 }
 
 #filterCollapse.active {
-  max-height: 500px; /* Adjust this value based on your content's height */
+  height: 900px; /* Adjust this value based on your content's height */
   opacity: 1; /* Make it visible */
   visibility: visible; /* Make it interactive */
   transition: max-height 0.5s ease-in, opacity 0.5s ease-in, visibility 0.5s ease-in;
 }
 
+.filter-container_requests_index {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-container_requests_index .card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 100%; /* Ensure all cards have the same height */
+}
+
+.filter-container_requests_index .card-body {
+  padding: 20px; /* Increase padding inside the cards */
+}
+
+.filter-container_requests_index .card-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.filter-container_requests_index .fas {
+  color: #656DAD;
+  margin-bottom: 10px; /* Add space below icons */
+}
+
+.filter-container_requests_index label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 5px; /* Add space below labels */
+}
+
+.filter-container_requests_index .form-control,
+.filter-container_requests_index .form-select {
+  margin-bottom: 10px; /* Add space below input fields */
+}
+
+/* Ensure consistent spacing for single-input cards */
+.filter-container_requests_index .card-body:only-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+/*for hidden field in region filtering*/
+.invisible {
+  visibility: hidden;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
 
 /* Register page CSS functions*/
 /* body.registrations-new, .registrations-create{ */

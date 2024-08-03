@@ -31,11 +31,11 @@ function initializeFilterDropdown() {
         }
     });
 
-    document.addEventListener('click', (event) => {
-        if (!event.target.closest('.filter-btn') && !event.target.closest('#filterCollapse')) {
-            closeFilterDropdown(filterCollapse, chevron);
-        }
-    });
+    // document.addEventListener('click', (event) => {
+    //     if (!event.target.closest('.filter-btn') && !event.target.closest('#filterCollapse')) {
+    //         closeFilterDropdown(filterCollapse, chevron);
+    //     }
+    // });
 }
 
 function openFilterDropdown(container, chevron) {
