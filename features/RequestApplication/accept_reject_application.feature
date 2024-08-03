@@ -16,13 +16,20 @@ Scenario:
         And I press "Accept"
         Then the application should be "Accepted"
 
-# Scenario:
-#         Given I am on the 'myrequests' page
-#         And the first request is fully filled
-#         Then I should see "Unable to accept more applicants"
-
 Scenario:
         Given I am on the 'myrequests' page
         When I expand the request
         And I press "Reject"
         Then the application should be "Rejected"
+
+Scenario: Receiving a notification that someone accepted my application
+        Given that someone has 'accepted' my application
+        When I am on the 'home' page
+        And I click the notification icon
+        Then I should see 'Your application for a request has been accepted'
+
+Scenario: Receiving a notification that someone rejected my application
+        Given that someone has 'rejected' my application
+        When I am on the 'home' page
+        And I click the notification icon
+        Then I should see 'Your application for a request has been rejected'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -45,8 +45,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
 
   create_table "charities", force: :cascade do |t|
     t.string "charity_name", null: false
-    t.string "charity_code", limit: 20, null: false
     t.string "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "charity_codes", force: :cascade do |t|
+    t.bigint "charity_id", null: false
+    t.string "status", null: false
+    t.string "code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -97,6 +104,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
     t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "header", null: false
+    t.string "message", null: false
+    t.string "url", null: false
+    t.boolean "read", default: false
+    t.boolean "show", default: true
+    t.bigint "notification_for_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notification_for_id"], name: "index_notifications_on_notification_for_id"
+  end
+
   create_table "request_applications", force: :cascade do |t|
     t.string "status", default: "Pending", null: false
     t.bigint "applicant_id", null: false
@@ -112,6 +131,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
     t.text "description"
     t.string "category", null: false
     t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
+    t.string "stringlocation", null: false
     t.date "date", null: false
     t.time "start_time", null: false
     t.integer "number_of_pax", null: false
@@ -158,9 +178,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
-    t.string "number", default: "", null: false
-    t.string "description", default: "", null: false
+    t.string "number", default: ""
+    t.string "description", default: ""
+    t.string "bio", default: ""
     t.string "status", default: "active", null: false
+    t.integer "total_hours", default: 0
+    t.integer "weekly_hours", default: 0
     t.bigint "role_id", default: 1
     t.bigint "company_id"
     t.bigint "charity_id"
@@ -185,6 +208,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "charity_codes", "charities"
   add_foreign_key "chats", "requests"
   add_foreign_key "chats", "users", column: "applicant_id"
   add_foreign_key "chats", "users", column: "requester_id"
@@ -194,6 +218,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_052731) do
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users", column: "receiver_id"
   add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "notifications", "users", column: "notification_for_id"
   add_foreign_key "request_applications", "requests"
   add_foreign_key "request_applications", "users", column: "applicant_id"
   add_foreign_key "requests", "users", column: "created_by"

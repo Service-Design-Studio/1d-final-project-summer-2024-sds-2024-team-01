@@ -1,0 +1,34 @@
+<div id="notificationpopup">
+  <div class="d-flex mb-2">
+    <h5 class="m-0 flex-grow-1"> Notifications</h5>
+          <form class="m-0" method="post" action="/notifications/clear" onsubmit="removeallnotifs(event)">
+            <button type="submit" class="border-0 bg-transparent  lighthoverdark">Clear all</button> 
+          </form>
+  </div>
+  <span class="h-divider bg-white"></span>
+    <% if @notifications.present? %>
+      <% @notifications.each_with_index do | notif, index| %>
+        <a href="<%=notif.url%>" class="text-decoration-none text-white">
+        <div id="notif-<%= index %>"class="notifcolumn d-flex">
+          <div class="d-flex flex-column flex-grow-1">
+          <b>
+            <%= notif.header %>
+          </b> 
+          <p>
+            <%= notif.message %>
+          </p>
+          </div>
+          <form class="button_to" method="post" action="/notifications/read?id=<%= notif.id %>" onsubmit="removenotif(event,<%=index%>)">
+              <button class="btn m-0 px-2 py-0 lighthoverdark" type="submit" >
+            <i class="fas fa-times"></i>
+            </button>
+          </form>
+        </div>
+        </a>
+      <% end %>
+    <% else %>
+        <div id="nonotifs" class="notifcolumn d-flex">
+          No notifications
+        </div>
+    <% end %>
+</div>

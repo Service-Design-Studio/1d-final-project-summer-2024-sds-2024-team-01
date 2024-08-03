@@ -1,8 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('request_reward_type').addEventListener('change', function() {
-    const rewardType = document.getElementById('request_reward_type').value;
-    const rewardField = document.getElementById('request_reward');
+  const rewardTypeSelect = document.getElementById('request_reward_type');
+  const rewardField = document.getElementById('request_reward');
+  const form = rewardField.closest('form');
 
+  rewardTypeSelect.addEventListener('change', function() {
+    const rewardType = rewardTypeSelect.value;
+    
     if (rewardType === 'None') {
       rewardField.readOnly = true;
       rewardField.value = 'None';
@@ -10,9 +13,50 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       rewardField.disabled = false;
       rewardField.readOnly = false;
-      rewardField.value = '';
+      rewardField.value = rewardType === 'Money' ? '$' : '';
+    }
+
+    if (rewardType === 'Money') {
+      rewardField.placeholder = 'Enter amount (e.g., $100)';
+    } else if (rewardType === 'Service') {
+      rewardField.placeholder = 'Describe the service you are offering';
+    } else {
+      rewardField.placeholder = 'If you are providing an incentive, please describe it here!';
     }
   });
+
+  rewardField.addEventListener('input', function() {
+    if (rewardTypeSelect.value === 'Money') {
+      let value = rewardField.value;
+      if (!value.startsWith('$')) {
+        value = '$' + value;
+      }
+      // Remove any non-digit characters except the first '$'
+      value = '$' + value.slice(1).replace(/[^\d]/g, '');
+      rewardField.value = value;
+    }
+  });
+
+  form.addEventListener('submit', function(event) {
+    if (rewardTypeSelect.value === 'Money') {
+      const moneyPattern = /^\$\d+$/;
+      if (!moneyPattern.test(rewardField.value)) {
+        event.preventDefault();
+        alert('Please enter a valid monetary amount (e.g., $100)');
+      }
+    } else if (rewardTypeSelect.value === 'Service' && rewardField.value.trim() === '') {
+      event.preventDefault();
+      alert('Please describe the service you are offering');
+    }
+  });
+
+  // Trigger change event on page load to set the initial state of the reward field
+  rewardTypeSelect.dispatchEvent(new Event('change'));
+
+
+  // Trigger change event on page load to set the initial state of the reward field
+  rewardTypeSelect.dispatchEvent(new Event('change'));
+
 
   // Trigger change event on page load to set the initial state of the reward field
   document.getElementById('request_reward_type').dispatchEvent(new Event('change'));
@@ -100,22 +144,23 @@ document.addEventListener('DOMContentLoaded', function() {
   function initAutocomplete() {
     const input = document.getElementById('location');
     const autocomplete = new google.maps.places.Autocomplete(input);
-
+  
     let place;
-
+  
     autocomplete.addListener('place_changed', function() {
       place = autocomplete.getPlace();
       if (!place.geometry) {
-        // User entered the name of a Place that was not suggested and pressed the Enter key,
-        // or the Place Details request failed.
         return;
       }
-
+  
+      // Store the formatted address in the hidden field immediately
+      document.getElementById('stringlocation').value = place.formatted_address;
+  
       // Temporarily store the place details
       document.getElementById('location').dataset.latitude = place.geometry.location.lat();
       document.getElementById('location').dataset.longitude = place.geometry.location.lng();
     });
-
+  
     // On form submission, convert address to geocode
     const form = document.getElementById('request-form');
     form.addEventListener('submit', function(event) {
@@ -123,13 +168,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const latitude = place.geometry.location.lat();
         const longitude = place.geometry.location.lng();
         const pointFormat = `POINT(${longitude} ${latitude})`;
-
+  
         // Set the hidden fields for latitude and longitude
         document.getElementById('latitude').value = latitude;
         document.getElementById('longitude').value = longitude;
-
+  
         // Set the formatted point in the location field for submission
         document.getElementById('location').value = pointFormat;
+      }
+  
+      // Ensure the stringlocation is set (in case it wasn't set by the place_changed event)
+      if (!document.getElementById('stringlocation').value) {
+        document.getElementById('stringlocation').value = input.value;
+      }
+  
+      // Additional check to prevent submission if stringlocation is empty
+      if (!document.getElementById('stringlocation').value.trim()) {
+        event.preventDefault();
+        alert('Please enter a valid location');
       }
     });
   }

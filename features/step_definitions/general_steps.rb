@@ -1,19 +1,18 @@
 Given('Roles are seeded') do
-    role = Role.new({ id: 1, role_name: 'User'})
-    role.save
+  role = Role.new({ id: 1, role_name: 'User' })
+  role.save
 end
 
 Given('I have an account') do
-    visit new_user_registration_path
-    fill_in 'user_name', with: 'Harrison Ford'
-    fill_in 'user_number', with: '96789012'
-    fill_in 'user_email', with: 'harrison@example.com'
-    fill_in 'user_password', with: 'asdfasdf'
-    fill_in 'user_password_confirmation', with: 'asdfasdf'
-    click_button 'Sign up!'
-    expect(page).to have_content('signed up successfully.')
-    # click_button(id: 'logoutbtn')
-    # click_button 'Logout'
+  visit new_user_registration_path
+  fill_in 'user_name', with: 'Harrison Ford'
+  fill_in 'user_number', with: '96789012'
+  fill_in 'user_email', with: 'harrison@example.com'
+  fill_in 'user_password', with: 'asdfasdf'
+  fill_in 'user_password_confirmation', with: 'asdfasdf'
+  click_button 'Sign up!'
+  expect(page).to have_content('signed up successfully.')
+  click_button(id: 'logoutbtn')
 end
 
 Given('I login as an admin') do
@@ -21,15 +20,13 @@ Given('I login as an admin') do
   # sign_in
 end
 
-
-When('I login') do
+And('I login') do
   visit new_user_session_path
   fill_in 'user_number', with: '96789012'
   fill_in 'user_password', with: 'asdfasdf'
   click_button 'Login'
   expect(page).to have_content('Signed in successfully.')
 end
-
 
 Given('I am on the {string} page') do |page|
   if page == 'home'
@@ -42,6 +39,11 @@ end
 When('I click on {string} button') do |button|
   click_button button
 end
+
+When('I click on {string}') do |str|
+  click_on str
+end
+
 
 And('I press {string}') do |button_text|
   click_button button_text
@@ -73,13 +75,13 @@ And('I have a request') do
     description: 'Need someone to walk my dog for an hour every afternoon',
     category: 'Pet Care',
     location: 'POINT(34.052235 -118.243683)',
-    date: Date.tomorrow,
+    date: Date.tomorrow + 3,
     number_of_pax: 1,
     duration: 1,
     start_time: '12:00',
     reward: '$20',
     reward_type: 'Cash',
-    status: 'Open',
+    status: 'Available',
     created_by: User.where(name: 'Harrison Ford').take.id
   )
 end
@@ -114,4 +116,18 @@ end
 
 Then('I should see a list of requests') do
   FactoryBot.create_list(:random_request, 10)
+end
+
+Given('there is a notification for me') do
+  Notification.create(
+    notification_for: User.where(name: 'Harrison Ford').take,
+    message: 'Hello there this is a test notification',
+    url: '/',
+    header: 'hello',
+    read: false
+  )
+end
+
+When('I click on the notification icon') do
+  find('#shownotifs').click
 end

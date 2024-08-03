@@ -9,14 +9,14 @@ namespace :db do
     include FactoryBot::Syntax::Methods
 
     ActiveRecord::Base.logger.silence do
-      print "Creating dummy data..."
+      print 'Creating dummy data...'
       first = create(:dummy_user)
       second = create(:dummy_user_two)
       third = create(:dummy_user_three)
-      corpo = create(:user, role_id: 4, number: 87651234)
 
       6.times do
-        rq = build(:requestwiththumbnail, created_by: first.id, date: Faker::Date.backward(days: 365), status: 'Completed')
+        rq = build(:requestwiththumbnail, created_by: first.id, date: Faker::Date.backward(days: 365),
+                                          status: 'Completed')
         rq.save(validate: false)
       end
       4.times do
@@ -58,13 +58,15 @@ namespace :db do
       5.times { create(:random_chat, applicant: second) }
       5.times { create(:random_chat, applicant: third) }
 
+      20.times { create(:random_charity) }
+
       Chat.all.each do |chat|
         rand(1..3).times do
-          rand(1..4).times do 
-            create(:random_message, chat: chat, sender: chat.requester, receiver: chat.applicant)
+          rand(1..4).times do
+            create(:random_message, chat:, sender: chat.requester, receiver: chat.applicant)
           end
-          rand(1..4).times do 
-            create(:random_message, chat: chat, sender: chat.applicant, receiver: chat.requester)
+          rand(1..4).times do
+            create(:random_message, chat:, sender: chat.applicant, receiver: chat.requester)
           end
         end
       end
@@ -76,7 +78,31 @@ namespace :db do
 
         create(:application, request_id:, applicant_id:)
       end
-        print "\r100% Complete                      "
+      5.times do
+        create(:test_notification, notification_for: first)
+      end
+
+      # Mock data for corporate users
+      4.times do
+        test_company = create(:random_company, status: 'Pending')
+        create(:user, status: 'Inactive', company_id: test_company.id, role_id: 3, number: nil)
+      end
+
+      abc_company = create(:random_company, status: 'Active')
+      create(:user, status: 'Active', company_id: abc_company.id, role_id: 3,
+                    number: nil, email: 'cvm1@test.com')
+      create(:random_company_code, company: abc_company)
+      10.times do
+        create(:user, status: 'Active', company_id: abc_company.id, role_id: 4, number: nil)
+        create(:random_charity)
+      end
+
+      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
+                    number: nil, email: 'cvm2@test.com')
+      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
+                    number: nil, email: 'cvm3@test.com')
+
+      print "\r100% Complete                      "
     end
   end
 end

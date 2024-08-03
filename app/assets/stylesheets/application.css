@@ -8,6 +8,28 @@ form {
   margin: 20px 0;
 }
 
+.offsetnavbar {
+    margin-top:80px;
+}
+
+.noticefadeout {
+    position: fixed;
+    background: #505050;
+    color: #eee;
+    top: 90px;
+    right: 10px;
+    padding: 20px;
+    z-index: 200;
+    border-radius: 10px;
+    animation: fadeoutnotif 5s forwards;
+}
+
+@keyframes fadeoutnotif {
+0% { opacity: 100%;}
+80% {opacity: 100%;}
+100% { opacity: 0%;}
+}
+
 .button-container .button {
   margin-right: 10px;
 }
@@ -49,9 +71,212 @@ form {
   margin-right: 40px; /* Adjust this value to increase spacing */
 }
 
+.nav-link:hover {
+  color: lightgray;
+}
+
+.logo-circle-navbar {
+  width: 2.8em; /* Adjust the size as needed */
+  height: 2.8em; /* Adjust the size as needed */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image covers the container without distortion */
+}
+
+.logo-circle-login-reg {
+  position: relative;
+  left: 21%;
+  margin-bottom: 5%;
+  width: 12em; /* Adjust the size as needed */
+  height: 12em; /* Adjust the size as needed */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image covers the container without distortion */
+  align-items: center;
+}
 
 .text-neutral-dark{
     color: #505050
+}
+
+/* Flash notifications styling */
+.alert {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem;
+}
+
+.alert i {
+  margin-right: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.alert-message {
+  flex-grow: 1;
+}
+
+.alert-dismissible .close {
+  margin-left: auto;
+}
+
+/* Icon colors */
+.custom-alert-success i { color: #155724; }
+.custom-alert-error i, .custom-alert-alert i { color: #721c24; }
+.custom-alert-notice i { color: #0c5460; }
+.custom-alert-warning i { color: #856404; }
+
+.alert-dismissible {
+  padding-right: 4rem;
+}
+
+.alert-dismissible .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.75rem 1.25rem;
+  color: inherit;
+  background-color: transparent;
+  border: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  opacity: .5;
+  cursor: pointer;
+}
+
+.alert-dismissible .close:hover {
+  opacity: 1;
+}
+
+.custom-alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.custom-alert-error, .custom-alert-alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.custom-alert-notice {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.custom-alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.alert-dismissible {
+  padding-right: 35px;
+}
+
+.alert-dismissible .close {
+  position: relative;
+  top: -2px;
+  right: -73%;
+  color: inherit;
+}
+
+.custom-alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.custom-alert-error, .custom-alert-alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.custom-alert-notice {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.custom-alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.alert-dismissible {
+  padding-right: 35px;
+}
+
+.alert-dismissible .close {
+  position: relative;
+  top: -2px;
+  right: -73%;
+  color: inherit;
+}
+
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.empty-state-image {
+  width: 400px;
+  opacity: 40%;
+  height: auto;
+  margin-top: 200px;
+}
+
+.empty-state-message {
+  font-size: 18px;
+  color: #888;
+  font-style: italic;
+  padding-bottom: 5%;
+}
+
+/*common asset: suspended label text box*/
+.styled-input-container {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.styled-input-label {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background-color: white;
+  padding: 0 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.styled-input-content {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+/* For textarea */
+.styled-input-content.textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 /* Common asset: custom purple and lilac button*/
@@ -85,7 +310,7 @@ form {
   display: flex;
   align-items: center;
   margin-top: 10px;
-  margin-left: -25%;
+  margin-left: -10%;
 }
 
 .mini-profile {
@@ -102,6 +327,7 @@ form {
 
 .mini-profile img {
   margin-right: 10px;
+  border-radius: 50%;
 }
 
 .mini-profile .profile-text {
@@ -119,29 +345,235 @@ form {
 }
 
 
-/* Register page CSS functions*/
+/*Common percentage indicator*/
+.percentage-indicator {
+  width: 100px;
+  height: 100px;
+}
 
-body.registrations-new, .registrations-charity, .registrations-corporate, .registrations-choose_register_method, body.sessions-new {
+.circular-chart {
+  display: block;
+  margin: 10px auto;
+  max-width: 80%;
+  max-height: 250px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.percentage {
+  fill: #666;
+  font-family: sans-serif;
+  font-size: 0.5em;
+  text-anchor: middle;
+}
+
+.percentage-popup {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  display: none;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+.percentage-indicator-container:hover .percentage-popup {
+  display: block;
+}
+
+/*indicator container on req details page*/
+.percentage-indicator {
+  position: absolute;
+  left: 53%;
+  top: 1%;
+}
+
+/* filtering system CSS*/
+
+.search-filter-container {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-form_requests_index {
+  position: relative;
+}
+
+.search-input_requests_index {
+  padding-right: 40px;
+}
+
+.search-btn_requests_index {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: none;
+  border: none;
+  color: #007bff;
+}
+
+.filter-btn {
+  width: auto;
+  padding: 0.40rem 0.40rem;
+}
+
+.filter-container_requests_index {
+  background-color: transparent;
+  padding: 15px;
+  border-radius: 5px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  margin-bottom: 30px;
+}
+
+.filter-container_requests_index select,
+.filter-container_requests_index input {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.filter-container_requests_index label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#filterCollapse {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden; /* Make it non-interactive */
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+#filterCollapse.active {
+  height: 900px; /* Adjust this value based on your content's height */
+  opacity: 1; /* Make it visible */
+  visibility: visible; /* Make it interactive */
+  transition: max-height 0.5s ease-in, opacity 0.5s ease-in, visibility 0.5s ease-in;
+}
+
+.filter-container_requests_index {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-container_requests_index .card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 100%; /* Ensure all cards have the same height */
+}
+
+.filter-container_requests_index .card-body {
+  padding: 20px; /* Increase padding inside the cards */
+}
+
+.filter-container_requests_index .card-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.filter-container_requests_index .fas {
+  color: #656DAD;
+  margin-bottom: 10px; /* Add space below icons */
+}
+
+.filter-container_requests_index label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 5px; /* Add space below labels */
+}
+
+.filter-container_requests_index .form-control,
+.filter-container_requests_index .form-select {
+  margin-bottom: 10px; /* Add space below input fields */
+}
+
+/* Ensure consistent spacing for single-input cards */
+.filter-container_requests_index .card-body:only-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+/*for hidden field in region filtering*/
+.invisible {
+  visibility: hidden;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Register page CSS functions*/
+/* body.registrations-new, .registrations-create{ */
+/*     overflow:hidden; */
+/* } */
+
+body.registrations-new, .registrations-create, .registrations-charity, .registrations-corporate, .registrations-choose_register_method, body.sessions-new, .registrations-corporatesuccess, .registrations-charitysuccess {
   background: linear-gradient(180deg, #AC88C6 0%, #666DAD 100%);
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
+  overflow:hidden;
 }
 
 .signup-container {
+  position: absolute;
+  left: 0;
+  right:0;
+  top: 20vh;
   max-width: 400px;
-  margin: 0 auto;
+  max-height: 520px;
+  margin: auto;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s;
+}
+
+.signup-container .fa-arrow-left{
+    cursor:pointer;
+}
+
+.signup-container#step-2{
+    translate: 300%;
+}
+
+.signup-container#step-3{
+    translate: 300%;
+}
+
+.signup-container textarea{
+    max-height: 200px;
 }
 
 .signup-container h2 {
   text-align: center;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .signup-header {
@@ -372,7 +804,7 @@ font-weight: bold;
   background-color: #f8f9fa; /* Light background color for search bar */
   border: 1px solid #ced4da; /* Gray border */
   border-radius: 4px;
-  padding: 8px 16px;
+  /* padding: 8px 16px; */
   display: flex; /* Use flexbox to align items */
   align-items: center; /* Center items vertically */
 }
@@ -956,7 +1388,7 @@ font-weight: bold;
 
 .divider_requests_details {
   border-top: 1px solid #dee2e6;
-  margin: 20px 0;
+  margin: 30px 0;
 }
 
 .stars_requests_details {
@@ -1038,8 +1470,8 @@ font-weight: bold;
 
 .follow-btn-profile {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 0%;
   z-index: 10;
 }
 
@@ -1058,6 +1490,128 @@ font-weight: bold;
   background-color: #9852a6; /* Slightly darker shade for hover effect */
   color: white; /* White text color on hover */
 }
+/*edit profile pop-up*/
+.edit_profile_pop-up {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 100;
+}
+
+.edit_profile_pop-up-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 500px;
+  z-index: 100;
+}
+
+body.popup-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.profile-picture-upload {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-picture-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.current-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%; /* Ensure the image is circular */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Initial shadow */
+}
+
+.current-avatar:hover {
+  transform: scale(1.05); /* Slightly enlarge the image on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.empty-avatar {
+  font-size: 50px;
+  color: #999;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+#crop-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+#crop-image {
+  display: block;
+  max-width: none;
+  max-height: none;
+}
+
+#crop-button {
+  display: none;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #656dad;
+  color: white;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+/* Ensure the cropper UI is circular */
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50%;
+}
 
 .options-icon-follow {
   margin-top: 12px; /* Space between name and options icon */
@@ -1068,14 +1622,35 @@ font-weight: bold;
   transform: rotate(90deg);
 }
 
-.profile-user_description_container{
+.profile-user_description_container {
   position: absolute;
-  top: 300px;
-  right: 700px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-right: 290px; /* Adjust this value for spacing from the profile-info-container */
-  padding-bottom: 40%; /* Adjust this value for spacing below the header-card_profile */
-  width: calc(100% - 1000px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
+  top: 65%; /* Adjust as needed */
+  right: 68.5%;
+  width: 50%;
+  max-width: 250px; /* Adjust based on your layout */
+  height: 500px;
+  margin: 0 auto; /* Center the container */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.bio-label {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background-color: white;
+  padding: 0 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.bio-content {
+  padding: 20px 15px;
+  min-height: 100px; /* Adjust as needed */
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 /* Tabs container */
@@ -1148,6 +1723,20 @@ font-weight: bold;
   overflow: hidden;
 }
 
+.status-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+}
+
+.status-bar.completed {
+  background-color: #dc3545; /* Red color for completed requests */
+}
+
 .request-popup {
   position: absolute;
   top: -100%; /* Start hidden above the square */
@@ -1202,17 +1791,6 @@ font-weight: bold;
   color: #ad88c6;
 }
 
-.availability-indicator_profile_requests {
-  background-color: #f8f9fa;
-  border-radius: 5px;
-  height: 40px;
-  width: 80px;
-  margin-top: 21px;
-  display: flex; /* Use flexbox for layout */
-  align-items: center; /* Center items vertically */
-  padding-left: 10px; /* Optional: Add padding for better spacing */
-}
-
 .rating-container {
   display: flex;
   align-items: center;
@@ -1250,6 +1828,44 @@ font-weight: bold;
   border-radius: 4px;
   resize: none; /* Prevent resizing by the user */
   box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+.review-profile-section {
+  position: relative;
+  top: 1%;
+  left: 10%;
+}
+
+.review-card {
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Light transparent border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #fff; /* Background color */
+  transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+}
+
+.review-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow on hover */
+}
+
+.review-content {
+  position: relative;
+  padding: 10px;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.review-stars-card-cluster {
+  position: relative;
+  right: -20%; /* Adjust this as needed */
+  display: flex; /* Enable Flexbox layout */
+  flex-direction: row; /* Ensure children are aligned in a row */
+  align-items: center; /* Vertically center the contents */
+  justify-content: flex-start; /* Align contents to the start of the container */
+  gap: 10px; /* Add space between items (optional) */
 }
 
 .submit-button-container {
@@ -1290,23 +1906,18 @@ font-weight: bold;
   align-items: center;
   margin-bottom: 20px;
 }
-.review-filters .sort-by {
-  display: flex;
-  align-items: center;
-}
-.review-filters .sort-by label {
-  margin-right: 10px;
-}
-.review-item .card-body {
+
+/* .review-item .card-body {
   display: flex;
   justify-content: space-between;
 }
+
 .review-item .card-title {
   margin-bottom: 10px;
 }
 .review-item .card-text {
   margin-bottom: 10px;
-}
+} */
 
 /*my requests page + my applications CSSs styling*/
 .card-body {
@@ -1430,7 +2041,7 @@ font-weight: bold;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 10px 10px;
   margin-left: 10px;
 }
 
@@ -1454,6 +2065,7 @@ font-weight: bold;
   width: 150px;
   height: 40px;
   margin-left: 20px; /* Add some space between name and button */
+  margin-top: 10%;
   cursor: pointer;
   justify-content: center; /* Center the text horizontally */
   border-radius: 5px; /* Optional: Add rounded corners */
@@ -1732,7 +2344,7 @@ font-weight: bold;
 /* tmp withdraw button */
 .withdraw-button_requests_index_my {
   position: relative;
-  top: -30px;
+  top: -45px;
   display: flex;
   justify-content: flex-end; /* Align the button to the right */
   align-items: center;
@@ -1741,7 +2353,7 @@ font-weight: bold;
 
 .withdraw-btn_requests_index_my {
   position: absolute;
-  left: 450%;
+  left: 420%;
   top: -60%;
   background-color: #dc3545;
   color: white;
@@ -1803,5 +2415,414 @@ font-weight: bold;
     color: #fff;
     padding: 0px;
     border-radius: 5px;
+}
+
+/* Custom style for the inbox dropdown */
+.inbox-dropdown {
+  color: #333333; /* Dark grey color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold;
+  font-size: 1.8rem; /* Make the 'Inbox' text bigger */
+}
+
+.inbox-dropdown:hover,
+.inbox-dropdown:focus {
+  color: #333333; /* Ensure the color stays dark grey on hover and focus */
+  text-decoration: none; /* Ensure no underline on hover and focus */
+}
+
+.inbox-dropdown .fa-chevron-down {
+  font-size: 1rem; /* Adjust the size of the arrow */
+  vertical-align: middle; /* Align the arrow vertically */
+  margin-left: 0.3rem; /* Add space between text and arrow */
+}
+
+hr.my-4 {
+  border: 0;
+  height: 1px;
+  background-color: #ccc; /* Adjust the color as needed */
+  margin: 1rem 0; /* Adjust the margin for spacing */
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 33%; /* Adjust as needed for desired width */
+  height: 100vh;
+  overflow-y: auto;
+  margin-right: 3%;
+}
+
+.sidebar .dropdown {
+  margin-bottom: 5px;
+}
+
+.inbox-dropdown {
+  position: relative;
+  left: -7%;
+  font-size: 1.5rem; /* Adjust the font size as needed */
+  color: black; /* Adjust the text color */
+  text-decoration: none; /* Remove underline */
+  padding: 0.5rem 1rem; /* Add padding for spacing */
+  background-color: transparent; /* Transparent background */
+  border: 1px solid transparent; /* Transparent border */
+  border-radius: 0.25rem; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+}
+
+.inbox-dropdown:hover,
+.inbox-dropdown:focus {
+  background-color: #e9ecef; /* Light grey background on hover */
+  color: #656dad; /* Darker text color on hover */
+  text-decoration: none; /* Ensure no underline on hover */
+}
+
+.inbox-dropdown.dropdown-toggle::after {
+  margin-left: 0.5rem; /* Add space between text and caret */
+  border-top: 0.4em solid; /* Adjust the caret size */
+  border-right: 0.4em solid transparent;
+  border-left: 0.4em solid transparent;
+}
+
+
+.chat-list {
+  height: 70vh;
+  margin-left: 10%;
+}
+
+/* .empty-chat-list {
+  border: 2px dashed #ddd; 
+  padding: 1rem;
+  height: 70vh;
+  margin-left: 5%;
+} */
+/*chat preview styles*/
+/* .chat-list-group {
+  width: auto;
+  height: 80vh;
+} */
+
+.chat-preview img.request-thumbnail {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.chat-preview .time {
+  font-size: 0.75rem; /* Smaller font for date */
+}
+
+.chat-preview .info h6 {
+  font-size: 0.9rem; /* Smaller font for name */
+}
+
+.chat-preview .info p {
+  font-size: 0.8rem; /* Smaller font for title */
+}
+
+/* Chat content styles */
+.chats-index {
+  overflow: hidden;
+}
+
+.chat-header {
+  width: 80%;
+  flex-shrink: 0; 
+}
+
+.chat-header .user-details h5 {
+  font-size: 1rem; /* Adjust font size for user name */
+}
+
+.chat-header .request-details-container {
+  display: flex;
+  align-items: center;
+  padding: 0.65%;
+}
+
+/*chat header*/
+.chat_profile-requester {
+  margin-left: 5%;
+  margin-bottom: 5%;
+}
+
+.chat_profile-applicant {
+  margin-left: 5%;
+  margin-bottom: 5%;
+  font-size: 0.5em;
+}
+
+.request-details {
+  display: flex;
+  align-items: center;
+}
+
+.chat-mini-profile {
+  text-decoration: none;
+  color: inherit;
+}
+
+.chat_profile-name-container {
+  width: 150px; /* Adjust this width based on your layout needs */
+  height: 20px; /* Adjust this height based on your layout needs */
+  display: flex;
+  align-items: center;
+}
+
+.chat_profile-name {
+  font-size: 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1; /* Reduces line height to move text upwards */
+  margin-top: -10px; /* Negative margin to shift upwards, adjust as needed */
+}
+
+/* .chat_userstatus {
+  position: relative;
+  right: 73.2%;
+  padding-top: 15%;
+  font-size: 0.8em;
+} */
+
+.chat_profile-name-small {
+  font-size: 0.5em;
+}
+
+.chat_profile-request-title {
+  margin-left: 5%;
+  font-size: 1em;
+  white-space: nowrap;
+}
+
+
+.chat-header .request-thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.mini-request-card-container {
+  position: relative;
+  width: 96px;
+  height: 54px;
+  overflow: visible;
+}
+
+.mini-request-clickable-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mini-request-thumbnail-card {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 96px;
+  height: 54px;
+  z-index: 2;
+  border: 1px solid #ddd;
+  border-radius: 0 3px 3px 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mini-request-thumbnail {
+  width: 100%;
+  height: 100%;
+  border-radius: 0 3px 3px 0;
+  object-fit: cover;
+}
+
+.mini-request-chevron-indicator {
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #333;
+  z-index: 3;
+}
+
+.mini-request-details-card {
+  position: absolute;
+  top: 0;
+  right: 96px;
+  width: 200px;
+  height: 54px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mini-request-white-cover {
+  position: absolute;
+  top: 0;
+  left: 96px;  /* Positioned to the right of the thumbnail */
+  width: 200px;
+  height: 54px;
+  background-color: white;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.mini-request-card-container:hover .mini-request-details-card {
+  transform: translateX(0);
+}
+
+
+.mini-request-details {
+  padding: 5px 10px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mini-request-title {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mini-request-time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.message-area {
+  flex-grow: 1;
+  overflow-y: auto;
+  width: 85%;
+  margin: 0 auto; /* Center the message area */
+  padding: 10px;
+}
+
+.send-btn-square {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
+  border-radius: 5px; /* Make it a circle, remove this if you want a square */
+  background-color: #656DAD; /* Your preferred color */
+  border: none;
+  color: white;
+  font-size: 20px; /* Adjust the icon size as needed */
+  cursor: pointer;
+}
+
+.send-btn-square:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
+}
+
+
+.message-area {
+  position: relative;
+  left: -7%;
+  height: calc(100vh - 280px); /* Adjust based on your header and input area height */
+  overflow-y: auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.message.sent {
+  background-color: #656DAD;
+  color: white;
+  align-self: flex-end;
+}
+
+.message.received {
+  background-color: #f1f1f1;
+  color: black;
+  align-self: flex-start;
+  margin-left: 0%;
+}
+
+.message {
+  max-width: 85%;
+  padding: 10px;
+  border-radius: 10px;
+  word-wrap: break-word;
+}
+
+#message-form {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.input-area {
+  background: white;
+  width: 100%;
+  flex-shrink: 0; /* Prevent shrinking */
+  padding-right: -10%;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Style for profile link */
+.chat-mini-profile {
+  color: #333333; /* Dark grey color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold;
+}
+
+.chat-mini-profile:hover,
+.chat-mini-profile:focus {
+  color: #333333; /* Ensure the color stays dark grey on hover and focus */
+  text-decoration: none; /* Ensure no underline on hover and focus */
+}
+
+/* Style for request title link */
+.request-details a {
+  color: #333333; /* Dark grey color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold;
+}
+
+.request-details a:hover,
+.request-details a:focus {
+  color: #333333; /* Ensure the color stays dark grey on hover and focus */
+  text-decoration: none; /* Ensure no underline on hover and focus */
+}
+
+.logoutbutton:hover{
+    color: #505050 !important;
+}
+
+.lighthoverdark{
+    color: white;
+    cursor: pointer;
+}
+
+.lighthoverdark:hover{
+    color: black !important;
+}
+
+.h-divider{
+    display: block;
+    width: 100%;
+    height: 2px;
+}
+
+
+/* Pretty scrollbar */
+.message-area::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.message-area::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 

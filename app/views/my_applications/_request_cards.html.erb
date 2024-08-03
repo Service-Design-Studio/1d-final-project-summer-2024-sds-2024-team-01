@@ -7,9 +7,7 @@
               <div class="clickable-card_requests_index-wrapper_my">
                 <div class="card h-100 d-flex flex-row align-items-center">
                   <a href="<%= request_path(myapplication.request) %>" class="clickable-area_requests_index_my">
-                    <% if myapplication.request.thumbnail.attached? %>
-                      <img src="<%= image_url(myapplication.request.thumbnail) %>" class="thumbnail_requests_index_my" alt="<%= myapplication.request.title %>"/>
-                    <% end %>
+                      <img src="<%= request_thumbnail_url(myapplication.request) %>" class="thumbnail_requests_index_my" alt="<%= myapplication.request.title %>"/>
                     <div class="card-content_requests_index_my flex-grow-1">
                       <h5 class="card-title_requests_index_my"><%= myapplication.request.title %></h5>
                       <p class="card-date_requests_index_my"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>
@@ -30,9 +28,7 @@
                     <div class="applicant-info_requests_index_my">
                       <a class="mini-profile" href="/profile?id=<%= myapplication.request.user.id %>">
                         <div class="profile-info_requests_details mb-3">
-                          <% if myapplication.request.user.avatar.attached? %>
-                            <%= image_tag myapplication.request.user.avatar, alt: myapplication.request.user.name, class: "mini-profile-img", width: 50, height: 50 %>
-                          <% end %>
+                          <%= image_tag avatar_url(myapplication.request.user), alt: myapplication.request.user.name, class: "mini-profile-img", width: 50, height: 50 %>
                           <div class="profile-text">
                             <h6 class="mb-1"><%= myapplication.request.user.name %>
                               <% if myapplication.request.user.role_id == 4 %>
@@ -58,10 +54,15 @@
                           </form>
                         <% end %>
                       <% end %>
-                      <% if myapplication.status == 'Accepted' && myapplication.request.status == 'Completed' %>
-                        <a href="#" class="btn leave-review-btn">Leave a Review</a>
-                      <% end %>
                       </div>
+                      <% if myapplication.status == 'Accepted' && myapplication.request.status == 'Completed' %>
+                          <a class="ms-3" href="/reviews/new?request_application_id=<%= myapplication.id %>">
+                            <button class="btn leave-review-btn_mark_completed">
+                            <i class="bi bi-star-fill review-icon_mark_completed"></i>
+                            <span class="review-text_mark_completed">Leave a Review</span>
+                            </button>
+                          </a>
+                      <% end %>
                     </div>    
                   </div>
                 </div>

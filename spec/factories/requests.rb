@@ -9,6 +9,7 @@ FactoryBot.define do
                                        from: 1.30, to: 1.40
                                      ).round(3)})"
     end
+    stringlocation { Faker::Address.full_address }
     date { Faker::Date.forward(from: Date.tomorrow, days: 90) }
     start_time { '10:00 AM' }
     number_of_pax { Faker::Number.between(from: 1, to: 10) }
@@ -26,12 +27,13 @@ FactoryBot.define do
     description { 'Need someone to walk my dog for an hour every afternoon' }
     category { 'Pet Care' }
     location { 'POINT(34.052235 -118.243683)' }
+    stringlocation { Faker::Address.full_address }
     date { Date.tomorrow }
     number_of_pax { 1 }
     duration { 1 }
     start_time { '12:00' }
     reward { '$20' }
-    reward_type { 'Cash' }
+    reward_type { 'Money' }
     status { 'Open' }
     association :user, factory: :random_user, strategy: :build
   end
@@ -46,6 +48,7 @@ FactoryBot.define do
                                        from: 1.30, to: 1.40
                                      ).round(3)})"
     end
+    stringlocation { Faker::Address.full_address }
     date { Faker::Date.forward(from: Date.tomorrow, days: 90) }
     start_time { '10:00 AM' }
     number_of_pax { Faker::Number.between(from: 1, to: 10) }
@@ -56,12 +59,6 @@ FactoryBot.define do
     association :user, factory: :random_user, strategy: :build
     created_at { DateTime.now }
     updated_at { DateTime.now }
-    thumbnail { ActiveStorage::Blob.create_and_upload!( 
-        io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
-        filename: 'my_image.jpg',
-        content_type: 'image/jpeg'
-    )}
-
     # after(:build) do |request|
     #   image_path = request.thumbnail.attach(
     #   )

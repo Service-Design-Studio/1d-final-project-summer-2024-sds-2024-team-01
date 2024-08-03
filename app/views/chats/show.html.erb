@@ -1,0 +1,8 @@
+<div class="container-fluid chat-container chat-page d-flex p-0">
+  <div class="main-chat col-12 p-0" id="main-chat">
+    <div id="chat-content">
+      <%= render partial: 'chat_content', locals: { chat: @chat, messages: @messages } %>
+    </div>
+  </div>
+</div>
+

@@ -8,19 +8,26 @@ Background:
     And I login 
     And there is a registered user on the app
     And I have a request
+    And there is a request to be applied for
+    And I have applied for the request
 
 Scenario:
-        Given there is a request to be applied for
-        And I have applied for the request
-        And I am on the 'myapplications' page
+        When I am on the 'myapplications' page
         Then I should see "Pending" 
 
 Scenario:
-        Given I am on the 'myapplications' page
-        When my application has been accepted
+        Given my application has been accepted
+        When I am on the 'myapplications' page
         Then I should see "Accepted"
 
 Scenario:
-        Given I am on the 'myapplications' page
-        When my application has been rejected
+        Given my application has been rejected
+        When I am on the 'myapplications' page
         Then I should see "Rejected"
+
+Scenario:
+        Given my application has been accepted
+        And I have completed the request
+        When I am on the 'myapplications' page
+        And I click on 'Completed' 
+        Then I should see 'Concluded'
