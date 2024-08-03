@@ -50,6 +50,10 @@ Given('I have a cvm account') do
   create(:random_company_code)
   company = Company.first.id
   create(:user, role_id: 3, email: 'cvm@test.com', password: 'password', password_confirmation: 'password', number: nil, company_id: company)
+
+  create(:user, role_id: 4, name: 'Alice Smith', email: 'cv1@test.com', password: 'password', password_confirmation: 'password', number: nil, company_id: company)
+
+  create(:user, role_id: 4, name: 'Jason Derulo', email: 'cv2@test.com', password: 'password', password_confirmation: 'password', number: nil, company_id: company)
 end
 
 Given('Willing Hearts is registered with the application') do
@@ -67,23 +71,35 @@ Given('I click on Willing Hearts') do
 end
 
 Given('Jason\'s account is deactivated') do
-  pending # Write code here that turns the phrase above into concrete actions
+  user = User.where(name: 'Jason Derulo').take
+  user.status = 'Inactive'
+  user.save
 end
 
 Given('I deactivate Alice\'s account') do
-  pending # Write code here that turns the phrase above into concrete actions
+  first('.btn.btn-danger').click
 end
 
 Then('Alice should not be able to log in') do
-  pending # Write code here that turns the phrase above into concrete actions
+  click_button(id: 'logoutbtn')
+  visit '/login'
+  fill_in 'user_login', with: 'cv1@test.com'
+  fill_in 'user_password', with: 'password'
+  click_button 'Login'
+  expect(page).to have_content('Your account has been locked')
 end
 
 Given('I activate Jason\'s account') do
-  pending # Write code here that turns the phrase above into concrete actions
+  first('.btn.btn-success').click
 end
 
 Then('Jason should be able to log in') do
-  pending # Write code here that turns the phrase above into concrete actions
+  click_button(id: 'logoutbtn')
+  visit '/login'
+  fill_in 'user_login', with: 'cv2@test.com'
+  fill_in 'user_password', with: 'password'
+  click_button 'Login'
+  expect(page).to have_content('Signed in successfully')
 end
 
 Given('I click on Charity') do
