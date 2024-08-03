@@ -1490,6 +1490,30 @@ font-weight: bold;
   background-color: #9852a6; /* Slightly darker shade for hover effect */
   color: white; /* White text color on hover */
 }
+
+/*report button*/
+.header-container_profile {
+  position: relative;
+}
+
+.report-button-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.report-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.report-button:hover {
+  background-color: #c82333;
+}
 /*edit profile pop-up*/
 .edit_profile_pop-up {
   display: none;
