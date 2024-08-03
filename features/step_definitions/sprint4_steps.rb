@@ -174,18 +174,6 @@ When('I enter my company details with a document in the wrong format') do
   attach_file('document_proof', Rails.root.join('lib', 'assets', 'freepik-lmao.jpg'))
 end
 
-Given('I am logged in as a corporate volunteer') do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then('I should not see {string} #compensation') do |string|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then('I should not see {string} #only registered charities, not any') do |string|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
 Given('Jason has completed a request') do
   req = create(:request, duration: 6)
   jason = User.where(name: 'Jason Derulo').take
@@ -248,4 +236,19 @@ end
 
 Then('a report should be downloaded') do
   expect(SummaryReport.count).to eq(1)
+end
+
+Given('I am logged in as a corporate volunteer') do
+  company = Company.first
+  create(:user, role_id: 4, company_id: company.id, email: 'cvtest@test.com')
+  visit '/login'
+  fill_in 'user_login', with: 'cvtest@test.com'
+  fill_in 'user_password', with: 'password'
+  click_button 'Login'
+end
+
+Given('Willing Hearts has put out a request') do
+  whearts = Charity.first
+  charity = create(:user, charity_id: whearts.id, role_id: 5)
+  create(:request, title: 'Willing Hearts request', created_by: charity.id)
 end
