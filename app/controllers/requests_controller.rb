@@ -14,6 +14,8 @@ class RequestsController < ApplicationController
 
     @in_progress_requests = if !current_user.nil? && current_user.role_id == 4
                               Request.includes(:user, :request_applications)
+                                     .where(users: { role_id: 5 })
+                                     .where(users: { charity_id: CompanyCharity.where(company_id: current_user.company_id).pluck(:charity_id) })
                                      .where('date > ?', today_start)
                                      .where(reward_type: 'None')
                                      .where.not(status: 'Completed')
@@ -51,23 +53,25 @@ class RequestsController < ApplicationController
     @average_rating = @reviews_received.average(:rating).to_f.round(1)
     @review_count = @reviews_received.count
 
-    # Prepare user and request profiles for the match calculation
-    user_profile = {
-      name: @requester.name,
-      description: @requester.description
-    }
+    if !current_user.nil?
+      # Prepare user and request profiles for the match calculation
+      user_profile = {
+        name: current_user.name,
+        bio: current_user.description
+      }
 
-    request_profile = {
-      name: @request.title,
-      description: @request.description,
-      date: @request.date,
-      number_of_volunteers: @request.number_of_pax,
-      location: @request.location,
-      rewards: @request.reward
-    }
+      request_profile = {
+        title: @request.title,
+        description: @request.description,
+        location: @request.location,
+        rewards: @request.reward
+      }
 
-    # Fetch the percentage compatibility of request with user
-    @match_percentage = generate_match_percentage(user_profile, request_profile)
+      # Fetch the percentage compatibility of request with user
+      @match_percentage = generate_match_percentage(user_profile, request_profile)
+    else
+      @match_percentage = 'User is not signed in'
+    end
   end
 
   # GET /requests/new
@@ -80,6 +84,18 @@ class RequestsController < ApplicationController
   # create a new request
   def apply
     @request = Request.find(params[:id])
+    requester = User.find(@request.created_by)
+
+    if current_user.role_id == 4
+      allowed_charity_ids = CompanyCharity.where(company_id: current_user.company_id).pluck(:charity_id)
+
+      can_apply = requester.role_id == 5 && allowed_charity_ids.include?(requester.charity_id)
+
+      unless can_apply
+        redirect_to @request, notice: 'You can only apply for requests by IPCs registered with your company'
+        return
+      end
+    end
 
     if RequestApplication.where(request_id: @request.id).where(status: 'Accepted').count >= @request.number_of_pax
       redirect_to @request, notice: 'Sorry, this request is unable to accept anymore applicants.'
@@ -130,12 +146,12 @@ class RequestsController < ApplicationController
     if @request.save
       if request_params[:thumbnail].present?
         @request.thumbnail.attach(request_params[:thumbnail])
-      #   else
-      #     @request.thumbnail.attach(
-      #       io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
-      #       filename: 'freepik-lmao.jpg',
-      #       content_type: 'image/jpeg'
-      #     )
+        #   else
+        #     @request.thumbnail.attach(
+        #       io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
+        #       filename: 'freepik-lmao.jpg',
+        #       content_type: 'image/jpeg'
+        #     )
       end
       redirect_to @request, notice: 'Request was successfully created.'
       # redirect_to @request, flash: { success: 'Request was successfully created.' }

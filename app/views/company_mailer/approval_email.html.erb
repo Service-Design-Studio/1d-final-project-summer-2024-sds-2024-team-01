@@ -1,0 +1,10 @@
+<p>Dear <%= @company.users.find_by(role_id: 3).name %>,</p>
+
+<p>We are pleased to inform you that your company, <%= @company.company_name %>, has been approved.</p>
+
+<p>Your approval code is: <%= @code %></p>
+
+<p>Thank you for your cooperation.</p>
+
+<p>Best regards,<br>
+The Team</p>

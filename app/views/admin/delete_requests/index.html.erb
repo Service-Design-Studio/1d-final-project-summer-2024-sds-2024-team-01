@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <div class="container content_requests_index">
+    <div class="card custom-card_requests_index">
+      <div class="card-body header-container_requests_index">
+        <h2 class="header-text_requests_index">Filter Requests</h2>
+        <h5 class="subheader-text_requests_index">Sort Requests that are Reported by users!</h5>
+      </div>
+    </div>
+
+
+    <div class="requests-list">
+      <% @requests.each do |request| %>
+        <div class="request-item">
+          <div class="request-image">
+            <img src="<%= request.image_url %>" alt="Request Image">
+          </div>
+          <div class="request-details">
+            <h2><%= request.title %></h2>
+            <p><%= request.date %>, <%= request.time %></p>
+            <p><%= request.description %></p>
+            <p><strong>Reported by:</strong> <%= request.reported_by %></p>
+            <p><%= request.report_reason %></p>
+          </div>
+          <div class="request-actions">
+            <button class="more-button">More</button>
+            <button class="delete-button">Delete</button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>

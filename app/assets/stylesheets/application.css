@@ -344,7 +344,7 @@ form {
   border-color: #9852a6;
 }
 
-/*clickable mini profile*/
+/*clickable mini profi  le*/
 .profile-info_requests_details {
   display: flex;
   align-items: center;
@@ -1552,6 +1552,30 @@ font-weight: bold;
 .follow-btn-profile button:hover {
   background-color: #9852a6; /* Slightly darker shade for hover effect */
   color: white; /* White text color on hover */
+}
+
+/*report button*/
+.header-container_profile {
+  position: relative;
+}
+
+.report-button-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.report-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.report-button:hover {
+  background-color: #c82333;
 }
 /*edit profile pop-up*/
 .edit_profile_pop-up {
@@ -2889,3 +2913,13 @@ hr.my-4 {
   border-radius: 4px;
 }
 
+
+.profile-buttons {
+  display: flex;
+  gap: 10px; /* Adjust the gap as needed */
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+.profile-buttons .btn {
+  margin: 0; /* Remove any existing margins */
+}

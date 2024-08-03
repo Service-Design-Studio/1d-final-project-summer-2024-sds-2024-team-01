@@ -1,4 +1,5 @@
 class Cvm::CvmController < ApplicationController
+  require 'csv'
   # Display dashboard
   def index
     @numemployees = User.where(status: 'Active').where(company_id: current_user.company_id).where(role_id: 4).count
@@ -9,7 +10,7 @@ class Cvm::CvmController < ApplicationController
 
     @charitylist = Charity.where(id: addedids)
 
-    @topvolunteers = User.where(status: 'Active').where(company_id: current_user.company_id).order(:weekly_hours).last(10)
+    @topvolunteers = User.where(status: 'Active').where(company_id: current_user.company_id).order(weekly_hours: :desc).first(10)
 
     @companycode = CompanyCode.where(company_id: current_user.company_id).where(status: 'Active').last.code
 
@@ -51,8 +52,92 @@ class Cvm::CvmController < ApplicationController
   def generate_report
     start_date = params[:start_date]
     end_date = params[:end_date]
+
+    if start_date.nil? || end_date.nil?
+      redirect_to '/cvm', notice: "Please enter a date range for the report"
+      return
+    end
+
+    company_id = current_user.company_id
+
+    employees = User.where(company_id:)
+    employee_ids = User.where(company_id:).pluck(:id)
+
+    incomplete_in_date_range = RequestApplication.where(updated_at: start_date..end_date).where.not(status: 'Completed').where(applicant_id: employee_ids)
+    completed_in_date_range = RequestApplication.where(updated_at: start_date..end_date).where(status: 'Completed').where(applicant_id: employee_ids)
+
+    total_hours_all_employees = Request.where(id: completed_in_date_range.pluck(:request_id)).sum(:duration)
+
+    csv_data = CSV.generate(headers: true) do |csv|
+      csv << ['Date range start date', start_date]
+      csv << ['Date range end date', end_date]
+      csv << ['']
+      csv << ['Total hours in time range: ', total_hours_all_employees]
+      csv << ['Total completed requests in time range: ', completed_in_date_range.count]
+      csv << ['Total incomplete requests in time range: ', incomplete_in_date_range.count]
+      csv << ['']
+      csv << ['']
+
+      csv << ['Employee Name', 'Email', 'Total Hours', 'Requests Not Completed', 'Requests Completed']
+
+      employees.each do |employee|
+        incomplete = incomplete_in_date_range.where(applicant_id: employee.id)
+        complete = completed_in_date_range.where(applicant_id: employee.id)
+
+        hours_in_time_range = Request.where(id: complete.pluck(:request_id)).sum(:duration)
+        csv << [
+          employee.name,
+          employee.email,
+          hours_in_time_range,
+          incomplete.count,
+          complete.count
+        ]
+
+        csv << ['']
+        csv << ['Completed Requests']
+        complete.each do |application|
+          request = Request.find(application.request_id)
+
+          csv << ['Request Id', 'Request Title', 'Request Duration', 'Request Date', 'Request Time', 'Request Location',
+                  'Requested By']
+
+          csv << [
+            request.id,
+            request.title,
+            request.duration,
+            request.date,
+            request.start_time.strftime('%H:%M:%S'),
+            request.stringlocation,
+            User.find(request.created_by).name
+          ]
+        end
+        csv << ['']
+
+        csv << ['Incomplete Requests']
+        incomplete.each do |application|
+          request = Request.find(application.request_id)
+
+          csv << ['Request Id', 'Request Title', 'Request Duration', 'Request Date', 'Request Time', 'Request Location',
+                  'Requested By']
+
+          csv << [
+            request.id,
+            request.title,
+            request.duration,
+            request.date,
+            request.start_time.strftime('%H:%M:%S'),
+            request.stringlocation,
+            User.find(request.created_by).name
+          ]
+        end
+        csv << ['']
+      end
+    end
+    send_data csv_data, filename: "employees_data_#{Date.today}.csv"
+
     SummaryReport.create(requested_by: current_user.id)
-    redirect_to "/cvm", notice: "Report generated"
+
+    # redirect_to '/cvm', notice: 'Report generated'
   end
 
   def generate_new_code

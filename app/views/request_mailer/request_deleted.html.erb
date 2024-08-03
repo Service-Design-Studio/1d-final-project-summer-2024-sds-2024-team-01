@@ -1,0 +1,14 @@
+<!-- app/views/request_mailer/request_deleted.html.erb -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+  <h1>Request Deleted</h1>
+  <p>Hello <%= @user.name %>,</p>
+  <p>Your request titled "<%= @request.title %>" was deleted by an admin for the following reason:</p>
+  <p><%= @reason %></p>
+  <p>Thank you for understanding.</p>
+</body>
+</html>

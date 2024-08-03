@@ -4,8 +4,8 @@
 # I want to approve/deny companies
 #
 # Background:
-# Given I have an admin account
-# And I am logged in as an admin
+# Given I login as an admin
+# And I log in
 #
 # Scenario: Approve the Company
 # Given I am on the list of pending companies page

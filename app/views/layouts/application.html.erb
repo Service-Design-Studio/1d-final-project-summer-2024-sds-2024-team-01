@@ -20,72 +20,72 @@
   <%= javascript_include_tag "application", "data-turbolinks-track": "reload" %>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+<body class="<%= user_signed_in? ? 'user-signed-in' : '' %> <%= "#{controller_name}-#{action_name}" %>" data-current-user-id="<%= user_signed_in? ? current_user.id : '' %>">
 
-
-<% if !user_signed_in? %>
-  <body class="<%= "#{controller_name}-#{action_name}" %>">
-<% else %>
-  <body data-current-user-id="<%= current_user.id %>" class="<%= "#{controller_name}-#{action_name}" %>">
+  <% if controller_name == 'sessions' || controller_name == 'registrations' %>
+    <nav class="navbar fixed-top" style="background: transparent !important">
+  <% else %>
+    <nav class="navbar fixed-top">
   <% end %>
-    <% if controller_name == 'sessions' || controller_name == 'registrations'%>
-      <nav class="navbar fixed-top" style="background: transparent !important">
+    <div class="container d-flex justify-content-start align-items-center h-100">
+      <a class="navbar-brand d-flex align-items-center" href="<%= root_path %>">
+        <%= image_tag 'icon_v1.png', alt: 'Logo', class: 'd-inline-block align-text-top logo-circle-navbar' %>
+      </a>
 
-    <% else %>
-      <nav class="navbar fixed-top">
-    <% end %>
-        <div class="container d-flex justify-content-start align-items-center h-100">
-          <a class="navbar-brand d-flex align-items-center" href="<%= root_path %>">
-            <%= image_tag 'icon_v1.png', alt: 'Logo', class: 'd-inline-block align-text-top logo-circle-navbar' %>
+      <% if !user_signed_in? %>
+        <%= link_to "Register", register_path, class: "btn ms-auto" %>
+        <%= link_to "Login", new_user_session_path, class: "btn ms-3" %>
+      <% else %>
+        <% if current_user.role_id == 3 %>
+          <div class="d-flex ms-4 h-100 align-items-center">
+            <a class="nav-link py-3" href="/cvm">Dashboard</a>
+            <a class="nav-link py-3" href="/cvm/employees">Manage Employees</a>
+            <a class="nav-link py-3" href="/cvm/charities">Manage Charities</a>
+          </div>
+        <% else %>
+          <div class="d-flex ms-4 h-100 align-items-center">
+            <% if current_user.admin? %> <!-- Admin-specific links -->
+              <a class="nav-link" href="/admin/ban_user">Ban User</a>
+              <a class="nav-link" href="/admin/approve_companies">Approve Companies</a>
+              <a class="nav-link" href="/admin/charities">Manage Charities</a> <!-- New Charities link for admin -->
+            <% else %>
+              <a class="nav-link py-3" href="/myapplications">My Applications</a>
+              <a class="nav-link py-3" href="/myrequests">My Requests</a>
+              <a class="nav-link py-3" href="/about">About</a>
+              <a class="nav-link py-3" href="/chats">Chat</a>
+            <% end %>
+          </div>
+        <% end %>
+        <div class="d-flex align-items-center ms-auto h-100 align-items-center">
+          <!-- New request button -->
+          <%if !current_user.nil? && (current_user.role_id == 1  || current_user.role_id == 4) %>
+            <a href="<%= new_request_path %>" class="btn custom-btn-dark-purple me-5">
+              <span>New Request</span> <i class="fas fa-plus ms-2 m-auto"></i>
+            </a>
+          <% end %>
+          <!-- Profile on the right of Navbar -->
+          <a href="<%= profile_path %>" class="text-decoration-none text-neutral-dark">
+            <img src="<%= avatar_url(current_user) %>" alt="Profile Picture" width="40" height="40" class="rounded-circle m-auto"> <!-- Profile pic -->
           </a>
-
-          <% if !user_signed_in? %>
-            <%= link_to "Register", register_path, class: "btn ms-auto" %>
-            <%= link_to "Login", new_user_session_path, class: "btn ms-3" %>
-          <% else %>
-            <% if current_user.role_id == 3 %>
-              <div class="d-flex ms-4 h-100 align-items-center">
-                <a class="nav-link" href="/cvm">Dashboard</a>
-                <a class="nav-link" href="/cvm/employees">Manage Employees</a>
-                <a class="nav-link" href="/cvm/charities">Manage Charities</a>
-              </div>
-              <% else %>
-              <div class="d-flex ms-4 h-100 align-items-center">
-                <a class="nav-link" href="/myapplications">My Applications</a>
-                <a class="nav-link" href="/myrequests">My Requests</a>
-                <a class="nav-link" href="/chats">Chat</a>
-                <a class="nav-link" href="https://www.gebirah.org" target="_blank" rel="noopener noreferrer">About</a>
-              </div>
+          <div id="shownotifs" class="text-white notifbell h-100 ms-5 d-flex align-items-center">
+            <% if @unreadcount > 0 %>
+              <span class="bg-danger rounded notifalertcount"><%= @unreadcount %></span>
             <% end %>
-            <div class="d-flex align-items-center ms-auto h-100 align-items-center">
-              <!-- New request button -->
-            <%if !current_user.nil? && (current_user.role_id == 1  || current_user.role_id == 4) %>
-              <a href="<%= new_request_path %>" class="btn custom-btn-dark-purple me-5">
-                <span> New Request </span> <i class="fas fa-plus ms-2 m-auto"></i>
-              </a>
-              <!-- Profile on the right of Navbar -->
-            <% end %>
-              <a href="<%= profile_path %>" class="text-decoration-none text-neutral-dark">
-                <img src="<%= avatar_url(current_user) %>" alt="Profile Picture" width="40" height="40" class="nav-profile-picture rounded-circle m-auto"> <!-- Profile pic -->
-              </a>
-              <div id="shownotifs" class="text-white notifbell h-100 ms-5 d-flex align-items-center ">
-              <% if @unreadcount > 0 %>
-                <span class="bg-danger rounded notifalertcount"><%= @unreadcount%></span>
-              <% end %>
-              <i class="fas fa-bell " id="shownotifsicon"></i>
-              </div>
-              <%= render partial:'notifications/index', locals: { notifications: @notifications }  %>
-                <%= button_to destroy_user_session_path, method: :delete, class: "logoutbutton ms-5 text-white btn", id:"logoutbtn" do %>
-                <i class="bi bi-box-arrow-right " style="font-size: 1.5em;" ></i>
-              <% end %>
-            </div>
+            <i class="fas fa-bell" id="shownotifsicon"></i>
+          </div>
+          <%= render partial: 'notifications/index', locals: { notifications: @notifications } %>
+          <%= button_to destroy_user_session_path, method: :delete, class: "logoutbutton ms-5 text-white btn", id: "logoutbtn" do %>
+            <i class="bi bi-box-arrow-right" style="font-size: 1.5em;"></i>
           <% end %>
         </div>
-      </nav>
+      <% end %>
+    </div>
+  </nav>
 
-    <div class="container offsetnavbar">
-      <!-- Displaying notices and errors to user -->
-      <% flash.each do |type, msg| %>
-        <div class="noticefadeout">
+  <div class="container offsetnavbar">
+    <!-- Displaying notices and errors to user -->
+    <% flash.each do |type, msg| %>
+      <div class="noticefadeout">
         <% if msg.is_a?(Array) %>
           <% msg.each do |msg| %>
             <p><%= msg %></p>
@@ -93,10 +93,10 @@
         <% else %>
           <%= msg %>
         <% end %>
-        </div>
-      <% end %>
-      <%= yield %>
-    </div>
+      </div>
+    <% end %>
+    <%= yield %>
+  </div>
   <%= javascript_include_tag 'notifs' %>
   <%= javascript_include_tag 'application'%>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

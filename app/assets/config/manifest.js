@@ -5,3 +5,5 @@
 //= link profile.js
 //=link percentage.js
 //=link filtering.js
+//= link ban_user.js
+//= link approve_companies.js

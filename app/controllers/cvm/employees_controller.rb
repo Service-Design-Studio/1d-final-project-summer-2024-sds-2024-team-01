@@ -1,7 +1,17 @@
 class Cvm::EmployeesController < ApplicationController
   # Display all employees
   def index
-    @allemployees = User.where(company_id: current_user.company_id).where(role_id: 4).order(:total_hours)
+    start_of_week = Time.zone.now.beginning_of_week
+    end_of_week = Time.zone.now.end_of_week
+
+    @allemployees = User.where(company_id: current_user.company_id).where(role_id: 4).order(:status, total_hours: :desc, name: :asc)
+    @allemployees.each do |employee|
+        employee.weekly_hours = RequestApplication.joins(:request).where(
+        updated_at: start_of_week..end_of_week,
+        applicant_id: employee.id,
+        status: 'Completed'
+      ).sum('requests.duration')
+    end
   end
 
   # /PATCH cvm/employees/deactivate

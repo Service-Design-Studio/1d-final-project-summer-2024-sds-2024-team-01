@@ -1,4 +1,16 @@
-.cvm-index, .cvm-manage_charities{
+.employees-index{
+    background: linear-gradient(16deg, #ffefff, #fff);
+}
+
+.employees-index td, .employees-index th{
+    background: transparent;
+}
+
+.employees-index tbody tr:hover{
+    background: linear-gradient(90deg, transparent, #AD88C6, transparent)
+}
+
+.cvm-index, .cvm-manage_charities {
     height: calc(100vh - 80px);
     background: linear-gradient(16deg, #ffefff, #fff);
 }
