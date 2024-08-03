@@ -472,6 +472,12 @@ form {
 .filter-btn {
   width: auto;
   padding: 0.40rem 0.40rem;
+  background: #656DAD;
+  border: none;
+}
+
+.filter-btn:hover{
+    background: #AC88C6;
 }
 
 .filter-container_requests_index {
