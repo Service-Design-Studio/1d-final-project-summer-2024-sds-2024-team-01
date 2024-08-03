@@ -15,13 +15,13 @@ class User < ActiveRecord::Base
   has_many :chats, foreign_key: :applicant_id
   has_many :messages, foreign_key: :sender_id
   has_many :summaryreports, foreign_key: :requested_by
-  has_many :userreports, foreign_key: :created_by
+  has_many :user_reports_as_reporter, class_name: 'UserReport', foreign_key: 'reported_by'
+  has_many :user_reports_as_reported_user, class_name: 'UserReport', foreign_key: 'reported_user'
   has_many :requests, foreign_key: :created_by
   has_many :requestapplications, foreign_key: :applicant_id
 
   validates :name, presence: true
   validates :email, presence: true
-
   validates_uniqueness_of :email
   validate :normal_users_must_have_number
 
@@ -46,5 +46,10 @@ class User < ActiveRecord::Base
     elsif !number.match?(/[89]\d{7}/)
       errors.add(:number, 'Please enter a valid SG number')
     end
+  end
+
+  # Method to check if the user is an admin
+  def admin?
+    role.role_name == 'Admin'
   end
 end

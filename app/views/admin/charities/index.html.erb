@@ -1,0 +1,31 @@
+<h1>Charities</h1>
+<nav>
+  <ul>
+    <li><a href="#active-tab">Active Charities</a></li>
+    <li><a href="#inactive-tab">Inactive Charities</a></li>
+  </ul>
+</nav>
+
+<div id="active-tab">
+  <h2>Active Charities</h2>
+  <ul>
+    <% @active_charities.each do |charity| %>
+      <li>
+        <%= charity.charity_name %> - <%= charity.status %>
+        <%= button_to 'Disable', disable_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' } %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div id="inactive-tab">
+  <h2>Inactive Charities</h2>
+  <ul>
+    <% @inactive_charities.each do |charity| %>
+      <li>
+        <%= charity.charity_name %> - <%= charity.status %>
+        <%= button_to 'Approve', approve_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' } %>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -28,6 +28,51 @@ if Role.count == 0
   p "Created Roles"
 end
 
+#####################################################
+# # Check if roles exist before creating them
+# user_role = Role.find_or_create_by!(role_name: 'User')
+admin_role = Role.find_or_create_by!(role_name: 'Admin')
+user_role = Role.find_or_create_by!(role_name: 'User')
+
+# Check if users exist before creating them
+admin = User.find_or_create_by!(email: 'admin@example.com') do |user|
+  user.name = 'Admin User'
+  user.number = '90000001'
+  user.password = 'password'
+  user.password_confirmation = 'password'
+  user.role = admin_role
+end
+
+user1 = User.find_or_create_by!(email: 'user1@example.com') do |user|
+  user.name = 'User One'
+  user.number = '90000002'
+  user.password = 'password'
+  user.password_confirmation = 'password'
+  user.role = user_role
+end
+
+user2 = User.find_or_create_by!(email: 'user2@example.com') do |user|
+  user.name = 'User Two'
+  user.number = '90000003'
+  user.password = 'password'
+  user.password_confirmation = 'password'
+  user.role = user_role
+end
+
+# Check if user reports exist before creating them
+UserReport.find_or_create_by!(reported_user: user1, reported_by: admin) do |report|
+  report.report_reason = 'Suspicious activity'
+  report.status = 'under_review'
+end
+
+UserReport.find_or_create_by!(reported_user: user2, reported_by: admin) do |report|
+  report.report_reason = 'Violation of terms'
+  report.status = 'ban'
+end
+
+
+
+
 # users = [
 #   {
 #     name: "Alice Smith",

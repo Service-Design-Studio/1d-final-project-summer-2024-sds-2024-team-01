@@ -4,16 +4,15 @@
 # I want to delete requests from the database
 #
 # Background:
-# Given I have an admin account
-# And I am logged in as an admin
-# And there is a list of "Report Requests"
+# Given I login as an admin
+# And I log in
 #
 # Scenario: Unreasonable/ Violated Requests
 # Given I am on the "Report Requests" page
 # And I saw a request "Help me splash red paint on different doors"
 # When I click on the request
 # Then I should see the request "Help me splash red paint on different doors" details
-# Then I click on "delete" 
+# Then I click on "Delete" 
 # Then I should be on the "Requests" page
 # And I should not see "Help me splash red paint on different doors"
 #
