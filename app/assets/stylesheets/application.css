@@ -71,6 +71,10 @@ form {
   margin-right: 40px; /* Adjust this value to increase spacing */
 }
 
+.nav-link:hover {
+  color: lightgray;
+}
+
 .logo-circle-navbar {
   width: 2.8em; /* Adjust the size as needed */
   height: 2.8em; /* Adjust the size as needed */
@@ -219,6 +223,7 @@ form {
   justify-content: center;
   height: 300px;
   text-align: center;
+  margin-bottom: 100px;
 }
 
 .empty-state-image {
@@ -232,6 +237,7 @@ form {
   font-size: 18px;
   color: #888;
   font-style: italic;
+  padding-bottom: 5%;
 }
 
 /*common asset: suspended label text box*/
@@ -395,6 +401,127 @@ form {
   position: absolute;
   left: 53%;
   top: 1%;
+}
+
+/* filtering system CSS*/
+
+.search-filter-container {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-form_requests_index {
+  position: relative;
+}
+
+.search-input_requests_index {
+  padding-right: 40px;
+}
+
+.search-btn_requests_index {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: none;
+  border: none;
+  color: #007bff;
+}
+
+.filter-btn {
+  width: auto;
+  padding: 0.40rem 0.40rem;
+}
+
+.filter-container_requests_index {
+  background-color: transparent;
+  padding: 15px;
+  border-radius: 5px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  margin-bottom: 30px;
+}
+
+.filter-container_requests_index select,
+.filter-container_requests_index input {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.filter-container_requests_index label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#filterCollapse {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden; /* Make it non-interactive */
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+#filterCollapse.active {
+  height: 900px; /* Adjust this value based on your content's height */
+  opacity: 1; /* Make it visible */
+  visibility: visible; /* Make it interactive */
+  transition: max-height 0.5s ease-in, opacity 0.5s ease-in, visibility 0.5s ease-in;
+}
+
+.filter-container_requests_index {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-container_requests_index .card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 100%; /* Ensure all cards have the same height */
+}
+
+.filter-container_requests_index .card-body {
+  padding: 20px; /* Increase padding inside the cards */
+}
+
+.filter-container_requests_index .card-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.filter-container_requests_index .fas {
+  color: #656DAD;
+  margin-bottom: 10px; /* Add space below icons */
+}
+
+.filter-container_requests_index label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 5px; /* Add space below labels */
+}
+
+.filter-container_requests_index .form-control,
+.filter-container_requests_index .form-select {
+  margin-bottom: 10px; /* Add space below input fields */
+}
+
+/* Ensure consistent spacing for single-input cards */
+.filter-container_requests_index .card-body:only-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+/*for hidden field in region filtering*/
+.invisible {
+  visibility: hidden;
+  height: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /* Register page CSS functions*/
@@ -677,7 +804,7 @@ font-weight: bold;
   background-color: #f8f9fa; /* Light background color for search bar */
   border: 1px solid #ced4da; /* Gray border */
   border-radius: 4px;
-  padding: 8px 16px;
+  /* padding: 8px 16px; */
   display: flex; /* Use flexbox to align items */
   align-items: center; /* Center items vertically */
 }

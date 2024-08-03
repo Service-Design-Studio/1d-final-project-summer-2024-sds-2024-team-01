@@ -4,3 +4,4 @@
 //= link application.js
 //= link profile.js
 //=link percentage.js
+//=link filtering.js
