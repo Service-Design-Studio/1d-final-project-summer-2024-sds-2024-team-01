@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   end
 
   def normal_users_must_have_number
-    return unless role.id == 1
+    return unless role_id == 1
 
     if number.blank?
       errors.add(:number, "Phone number can't be blank")
