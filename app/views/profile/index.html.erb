@@ -21,6 +21,13 @@
           </p>
           <%# <p>Trusted user</p> %>
         </div>
+        
+         <!-- Report Button -->
+        <% if user_signed_in? && !current_user.admin? %>
+          <div class="report-button-container">
+            <%= link_to 'Report', new_user_report_path(reported_user_id: @profile.id), class: 'btn btn-danger report-button' %>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="card mb-0 custom-card_profile body-card_profile">
@@ -34,8 +41,6 @@
           <div class="edit_profile_pop-up-content">
             <span class="close">&times;</span>
             <%= render 'edit' %>
-            <!-- Report button -->
-            <%= link_to 'Report', new_user_report_path(user_id: @profile.id), class: 'btn btn-danger' %>
           </div>
         </div>
         <%# <div class="options-icon-follow">
