@@ -37,63 +37,103 @@
     </div>
 
     <div id="filterCollapse" class="filter-container_requests_index">
-      <div class="row mb-3">
-        <div class="col-md-3">
-          <label for="startDateFilter">Dates ranging from</label>
-          <input type="date" class="form-control" id="startDateFilter">
-        </div>
-        <div class="col-md-3">
-          <label for="startTimeFilter">Anytime from</label>
-          <select class="form-select" id="startTimeFilter"></select>
-        </div>
-        <%# <div class="col-md-3">
-          <label for="durationFilter">Duration</label>
-          <select class="form-select" id="durationFilter">
-            <option value="">Any</option>
-            <option value="0-3">0-3 hours</option>
-            <option value="4-6">4-6 hours</option>
-            <option value="7-9">7-9 hours</option>
-            <option value="9-12">9-12 hours</option>
-            <option value="12+">12+ hours</option>
-          </select>
-        </div> %>
-        <div class="col-md-3">
-          <label for="rewardFilter">Rewards?</label>
-          <select class="form-select" id="rewardFilter">
-            <option value="">Any</option>
-            <option value="with">With Reward</option>
-            <option value="without">Without Reward</option>
-          </select>
-        </div>
-      </div>
+      <h4 class="mb-4 text-center">What kind of request are you looking for?</h4>
+      
       <div class="row">
-        <div class="col-md-3">
-          <label for="endDateFilter">To</label>
-          <input type="date" class="form-control" id="endDateFilter">
+        <!-- Date Range -->
+        <div class="col-md-3 mb-3">
+          <div class="text-center mb-2">
+            <i class="fas fa-calendar-alt fa-2x"></i>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">I am free within these range of dates</h5>
+              <div>
+                <label for="startDateFilter">From</label>
+                <input type="date" class="form-control" id="startDateFilter">
+              </div>
+              <div>
+                <label for="endDateFilter">To</label>
+                <input type="date" class="form-control" id="endDateFilter">
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-3">
-          <label for="endTimeFilter">To</label>
-          <select class="form-select" id="endTimeFilter"></select>
+
+        <!-- Time Range -->
+        <div class="col-md-3 mb-3">
+          <div class="text-center mb-2">
+            <i class="fas fa-clock fa-2x"></i>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">I am available within this time range</h5>
+              <div>
+                <label for="startTimeFilter">From</label>
+                <select class="form-select" id="startTimeFilter"></select>
+              </div>
+              <div>
+                <label for="endTimeFilter">To</label>
+                <select class="form-select" id="endTimeFilter"></select>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-3">
-          <label for="regionFilter">Region</label>
-          <select class="form-select" id="regionFilter">
-            <option value="">All Regions</option>
-            <option value="North">North</option>
-            <option value="South">South</option>
-            <option value="East">East</option>
-            <option value="West">West</option>
-            <option value="Central">Central</option>
-          </select>
+
+        <!-- Region -->
+        <div class="col-md-3 mb-3">
+          <div class="text-center mb-2">
+            <i class="fas fa-map-marker-alt fa-2x"></i>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title" style="margin-bottom: 40px;">These areas are convenient for me</h5>
+              <label for="regionFilter">Select Region</label>
+              <select class="form-select" id="regionFilter">
+                <option value="">All Regions</option>
+                <option value="North">North</option>
+                <option value="South">South</option>
+                <option value="East">East</option>
+                <option value="West">West</option>
+                <option value="Central">Central</option>
+              </select>
+            </div>
+            <div class="invisible">
+              <label for="invisibleField" class="invisible">Invisible Field</label>
+              <select class="form-select invisible" id="invisibleField">
+                <option value="">Invisible option</option>
+              </select>
+            </div>
+          </div>
         </div>
-        <div class="col-md-3">
-          <label for="categoryFilter">Category</label>
-          <select class="form-select" id="categoryFilter">
-            <option value="">All</option>
-            <option value="General">General</option>
-            <option value="Manual labour">Manual labour</option>
-            <option value="Teaching">Teaching</option>
-          </select>
+
+        <!-- Other Filters -->
+        <div class="col-md-3 mb-3">
+          <div class="text-center mb-2">
+            <i class="fas fa-sliders-h fa-2x"></i>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Other things I am looking for</h5>
+              <div>
+                <label for="rewardFilter">Rewards?</label>
+                <select class="form-select" id="rewardFilter">
+                  <option value="">Any</option>
+                  <option value="with">With Reward</option>
+                  <option value="without">Without Reward</option>
+                </select>
+              </div>
+              <div>
+                <label for="categoryFilter">Category</label>
+                <select class="form-select" id="categoryFilter">
+                  <option value="">All</option>
+                  <option value="General">General</option>
+                  <option value="Manual labour">Manual labour</option>
+                  <option value="Teaching">Teaching</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
