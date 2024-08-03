@@ -1,82 +1,48 @@
-/* Card Styles */
-.company-card {
-          display: flex;
-          align-items: center;
-          background-color: white;
-          border: 1px solid #ddd;
-          border-radius: 5px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          overflow: hidden;
-          margin: 20px 0;
-          max-width: 800px; /* Adjust the max-width as needed */
-          width: 100%;
-          padding: 10px;
-        }
-        
-        .company-card .card-thumbnail {
-          height: 100px;
-          width: 100px;
-          object-fit: cover;
-          border-radius: 5px 0 0 5px;
-          background: linear-gradient(45deg, #ad88c6, #656DAD);
-        }
-        
-        .company-card .card-content {
-          flex-grow: 1;
-          padding: 10px 20px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-        
-        .company-card .card-title {
-          font-size: 1.25rem;
-          font-weight: 500;
-          margin: 0;
-        }
-        
-        .company-card .card-date {
-          font-size: 0.875rem;
-          color: #6c757d;
-          margin: 5px 0 0;
-        }
-        
-        .company-card .card-actions {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          padding-right: 15px;
-        }
-        
-        .company-card .card-status {
-          font-size: 0.875rem;
-          color: #656dad;
-        }
-        
-        .company-card .btn {
-          padding: 5px 10px;
-          font-size: 0.875rem;
-          border-radius: 5px;
-          border: none;
-          cursor: pointer;
-        }
-        
-        .company-card .btn-approve {
-          background-color: #383838;
-          color: white;
-        }
-        
-        .company-card .btn-approve:hover {
-          background-color: #505050;
-        }
-        
-        .company-card .btn-reject {
-          background-color: #dc3545;
-          color: white;
-        }
-        
-        .company-card .btn-reject:hover {
-          background-color: #c82333;
-        }
-        
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #007bff;
+  cursor: pointer;
+}
+
+nav ul li a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content h2 {
+  margin-top: 20px;
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}

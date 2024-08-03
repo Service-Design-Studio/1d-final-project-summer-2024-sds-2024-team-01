@@ -1,57 +1,31 @@
-document.addEventListener("DOMContentLoaded", function() {
-          const approveForms = document.querySelectorAll('.approve-form');
-          const rejectForms = document.querySelectorAll('.reject-form');
-          const companyCards = document.querySelectorAll('.company-card');
-        
-          approveForms.forEach(form => {
-            form.addEventListener('submit', function(event) {
-              event.preventDefault();
-              const formData = new FormData(form);
-              fetch(form.action, {
-                method: 'POST',
-                body: formData
-              })
-              .then(response => response.json())
-              .then(data => {
-                // Handle success response
-                alert('Company approved successfully');
-                // You can also update the UI here, for example, removing the approved card
-              })
-              .catch(error => {
-                // Handle error response
-                console.error('Error:', error);
-                alert('Error approving company');
-              });
-            });
-          });
-        
-          rejectForms.forEach(form => {
-            form.addEventListener('submit', function(event) {
-              event.preventDefault();
-              const formData = new FormData(form);
-              fetch(form.action, {
-                method: 'POST',
-                body: formData
-              })
-              .then(response => response.json())
-              .then(data => {
-                // Handle success response
-                alert('Company rejected successfully');
-                // You can also update the UI here, for example, removing the rejected card
-              })
-              .catch(error => {
-                // Handle error response
-                console.error('Error:', error);
-                alert('Error rejecting company');
-              });
-            });
-          });
-        
-          companyCards.forEach(card => {
-            card.addEventListener('click', function() {
-              const url = card.getAttribute('data-url');
-              window.location.href = url;
-            });
-          });
-        });
-        
+document.addEventListener("DOMContentLoaded", () => {
+  const tabs = document.querySelectorAll(".tab-link");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetTab = e.target.getAttribute("data-tab");
+
+      tabContents.forEach(content => {
+        if (content.id === targetTab) {
+          content.style.display = "block";
+        } else {
+          content.style.display = "none";
+        }
+      });
+
+      tabs.forEach(tab => {
+        if (tab.getAttribute("data-tab") === targetTab) {
+          tab.classList.add("active");
+        } else {
+          tab.classList.remove("active");
+        }
+      });
+    });
+  });
+
+  // Initialize to show the active companies tab by default
+  const defaultTab = window.location.hash ? window.location.hash.substring(1) : 'active-tab';
+  document.querySelector(`.tab-link[data-tab='${defaultTab}']`).click();
+});

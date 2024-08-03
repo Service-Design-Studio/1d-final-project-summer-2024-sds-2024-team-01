@@ -3,51 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Approve/Reject Companies</title>
-  <link rel="stylesheet" href="approve_companies.css">
+  <title>Approve/Disable Companies</title>
+  <link rel="stylesheet" href="<%= asset_path('approve_companies.css') %>">
   <%= javascript_include_tag 'approve_companies' %>
 </head>
-<body data-controller="my-requests">
-  <div class="container content_requests_index">
-    <div class="card custom-card_requests_index mb-4">
-      <div class="card-body header-container_requests_index">
-        <h2 class="header-text_requests_index">Approve/Reject Companies</h2>
-        <h5 class="subheader-text_requests_index">Approve Companies to aid volunteer services!</h5>
-      </div>
+<body>
+  <div class="container">
+    <h1>Approve/Disable Companies</h1>
+    <nav>
+      <ul>
+        <li><a href="#active-tab" class="tab-link" data-tab="active-tab">Active Companies</a></li>
+        <li><a href="#inactive-tab" class="tab-link" data-tab="inactive-tab">Inactive Companies</a></li>
+      </ul>
+    </nav>
+
+    <div id="active-tab" class="tab-content">
+      <h2>Active Companies</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Company Name</th>
+            <th>Created At</th>
+            <th>Corporate Manager</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @active_companies.each do |company| %>
+            <tr>
+              <td><%= company.company_name %></td>
+              <td><%= company.created_at.strftime('%d %b %Y, %H:%M') %></td>
+              <td><%= company.users.find_by(role_id: 3).name %></td>
+              <td><%= company.status %></td>
+              <td>
+                <%= button_to 'Disable', disable_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
-    <div class="row">
-      <% @companies.each do |company| %>
-        <div class="col-md-12 mb-4">
-          <div class="card company-card" data-url="<%= admin_approve_company_path(company) %>">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="<%= asset_path('company.jpg') %>" alt="Company Image" class="img-fluid rounded-start">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h4 class="card-title"><%= company.company_name %></h4>
-                  <p class="card-text">
-                    <strong>Created At:</strong> <%= company.created_at.strftime('%d %b %Y, %H:%M') %><br>
-                    <strong>Corporate Manager:</strong> <%= company.users.find_by(role_id: 3).name %><br>
-                    <strong>Status:</strong> <%= company.status %>
-                  </p>
-                  <div class="company-actions">
-                    <%= form_with url: approve_admin_approve_company_path(company), method: :post, local: true, class: 'approve-form' do %>
-                      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                      <button type="submit" class="btn btn-success approve-button">Approve</button>
-                    <% end %>
-                    <%= form_with url: reject_admin_approve_company_path(company), method: :post, local: true, class: 'reject-form' do %>
-                      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-                      <button type="submit" class="btn btn-danger reject-button">Reject</button>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
+    <div id="inactive-tab" class="tab-content" style="display: none;">
+      <h2>Inactive Companies</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Company Name</th>
+            <th>Created At</th>
+            <th>Corporate Manager</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @inactive_companies.each do |company| %>
+            <tr>
+              <td><%= company.company_name %></td>
+              <td><%= company.created_at.strftime('%d %b %Y, %H:%M') %></td>
+              <td><%= company.users.find_by(role_id: 3).name %></td>
+              <td><%= company.status %></td>
+              <td>
+                <%= button_to 'Approve', approve_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </body>

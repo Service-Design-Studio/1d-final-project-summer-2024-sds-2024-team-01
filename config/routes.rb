@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   authenticated :user, lambda { |u| u.role_id == 2 } do
     namespace :admin do
-      root 'admin#index', as: :admin_root
+      root 'charities#index', as: :admin_root
     end
   end
 
@@ -47,11 +47,9 @@ Rails.application.routes.draw do
 
   get 'profile/:id', to: 'profile#index', as: 'user_profile'
 
-  # Keep the existing profile routes
   get 'profile', to: 'profile#index'
   get 'profile/edit', to: 'profile#edit'
   patch 'profile', to: 'profile#update'
-
 
   post 'requests/apply' => 'requests#apply'
 
@@ -68,14 +66,9 @@ Rails.application.routes.draw do
   post 'notifications/read' => 'notifications#read'
   post 'notifications/clear' => 'notifications#clear'
 
-  # get 'myrequests/chats' => 'chats#new'
-
-  # get 'myapplications/chats' => 'chats#new'
-
   resources :chats, only: [:index, :show, :new, :create] do
     resources :messages, only: [:create]
   end
-  
 
   namespace :api do
     namespace :v1 do
@@ -91,14 +84,20 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :approve_companies, only: [:index, :show] do
+    resources :approve_companies, only: [:index] do
       member do
-        post 'approve'
-        post 'reject'
+        patch :approve
+        patch :disable
       end
     end
-    
-   
+
+    resources :charities do
+      member do
+        patch :approve
+        patch :disable
+      end
+    end
+
     resources :ban_user, only: [:index] do
       member do
         post :ban
@@ -106,10 +105,10 @@ Rails.application.routes.draw do
         post :cancel_ban
       end
     end
-    
+
     resources :delete_requests, only: [:index, :destroy] do
       member do
-        get 'confirm' # This will create a route for GET /admin/delete_requests/:id/confirm
+        get 'confirm'
       end
     end
   end
@@ -121,4 +120,3 @@ Rails.application.routes.draw do
   delete 'admin/logout', to: 'admin_sessions#destroy', as: 'destroy_admin_session'
 end
 
-  
