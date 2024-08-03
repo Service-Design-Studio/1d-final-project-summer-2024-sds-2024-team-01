@@ -76,8 +76,17 @@ function initializeTimePickers() {
     populateTimePicker(startTimePicker);
     populateTimePicker(endTimePicker);
 
-    startTimePicker.addEventListener('change', applyFilters);
-    endTimePicker.addEventListener('change', applyFilters);
+    startTimePicker.addEventListener('change', function() {
+        if (validateTimeInputs()) {
+            applyFilters();
+        }
+    });
+
+    endTimePicker.addEventListener('change', function() {
+        if (validateTimeInputs()) {
+            applyFilters();
+        }
+    });
 }
 
 function populateTimePicker(picker) {
@@ -104,8 +113,49 @@ function initializeDatePickers() {
     startDatePicker.min = today;
     endDatePicker.min = today;
 
-    startDatePicker.addEventListener('change', applyFilters);
-    endDatePicker.addEventListener('change', applyFilters);
+    startDatePicker.addEventListener('change', function() {
+        // Set the minimum date for the end date picker to be the selected start date
+        endDatePicker.min = this.value;
+        
+        // If end date is now earlier than start date, clear it
+        if (endDatePicker.value && endDatePicker.value < this.value) {
+            endDatePicker.value = '';
+        }
+        
+        if (validateDateInputs()) {
+            applyFilters();
+        }
+    });
+
+    endDatePicker.addEventListener('change', function() {
+        if (validateDateInputs()) {
+            applyFilters();
+        }
+    });
+}
+
+function validateDateInputs() {
+    const startDate = document.getElementById('startDateFilter').value;
+    const endDate = document.getElementById('endDateFilter').value;
+
+    if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+        alert("End date must be on or after the start date.");
+        document.getElementById('endDateFilter').value = '';
+        return false;
+    }
+    return true;
+}
+
+function validateTimeInputs() {
+    const startTime = document.getElementById('startTimeFilter').value;
+    const endTime = document.getElementById('endTimeFilter').value;
+
+    if (startTime && endTime && startTime >= endTime) {
+        alert("Start time must be earlier than end time.");
+        document.getElementById('endTimeFilter').value = '';
+        return false;
+    }
+    return true;
 }
 
 function initializeRegionFilter() {
@@ -147,6 +197,9 @@ function isTimeInRange(requestStart24h, requestEnd24h, filterStart24h, filterEnd
 }
 
 function filterCards() {
+    if (!validateTimeInputs()) {
+        return;
+    }
     applyFilters();
 }
 
@@ -162,6 +215,8 @@ function applyFilters() {
 
     const cards = document.querySelectorAll('.request-card_requests_index');
     
+    let visibleCards = 0;
+
     cards.forEach(card => {
         const cardDateTimeText = card.querySelector('.fas.fa-calendar-alt + span').textContent.trim();
         const [cardDateText, cardTimeText] = cardDateTimeText.split(',');
@@ -177,22 +232,19 @@ function applyFilters() {
         
         let showCard = true;
         
-        // Search filter
+        // Apply filters (unchanged)
         showCard = showCard && title.includes(searchTerm);
         
-        // Date range filter
         if (startDate && endDate) {
             const filterStartDate = new Date(startDate);
             const filterEndDate = new Date(endDate);
             showCard = showCard && cardDate >= filterStartDate && cardDate <= filterEndDate;
         }
         
-        // Time range filter
         if (startTime && endTime) {
             showCard = showCard && isTimeInRange(cardStartTime24h, cardEndTime24h, startTime, endTime);
         }
         
-        // Reward filter
         if (reward) {
             if (reward === 'with') {
                 showCard = showCard && cardReward !== 'Reward: None';
@@ -201,17 +253,30 @@ function applyFilters() {
             }
         }
         
-        // Category filter
         if (category && category !== '') {
             showCard = showCard && cardCategory === category;
         }
 
-        // Region filter
         if (region) {
             const cardRegion = getRegion(lat, lng);
             showCard = showCard && cardRegion === region;
         }
         
-        card.style.display = showCard ? 'block' : 'none';
+        if (showCard) {
+            card.style.display = 'block';
+            visibleCards++;
+        } else {
+            card.style.display = 'none';
+        }
     });
+
+    // Show or hide the empty state partial
+    const emptyStateContainer = document.getElementById('emptyStateContainer');
+    if (emptyStateContainer) {
+        if (visibleCards === 0) {
+            emptyStateContainer.style.display = 'block';
+        } else {
+            emptyStateContainer.style.display = 'none';
+        }
+    }
 }

@@ -139,6 +139,9 @@
     </div>
     <!-- Container for Request Cards -->
     <div class="card mt-0" id="requestContainer">
+      <div id="emptyStateContainer" style="display: none;">
+        <%= render 'shared/filter_empty_state' %>
+      </div>
       <div class="card-body">
         <div class="row">
           <% @in_progress_requests.each do |request| %>
