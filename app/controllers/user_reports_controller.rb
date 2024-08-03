@@ -35,4 +35,3 @@ class UserReportsController < ApplicationController
     params.require(:user_report).permit(:report_reason, :reported_user)
   end
 end
-Í
