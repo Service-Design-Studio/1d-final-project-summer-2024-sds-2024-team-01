@@ -7,25 +7,21 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
 
     specialcode = params[:code]
+    
+    if !specialcode.nil? 
+      company_code = CompanyCode.where(code: specialcode).where(status: 'Active').take
+      if !company_code.nil?
 
-    company_code = CompanyCode.where(code: specialcode).where(status: 'Active').take
-    if !company_code.nil?
+        resource.company_id = CompanyCode.where(code: specialcode).where(status: 'Active').take.company_id
+        resource.role_id = 4
+      else
 
-      resource.company_id = CompanyCode.where(code: specialcode).where(status: 'Active').take.company_id
-      resource.role_id = 4
-    else
-
-      charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take
-      unless charity_id.nil?
-        resource.charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take.charity_id
-        resource.role_id = 5
+        charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take
+        unless charity_id.nil?
+          resource.charity_id = CharityCode.where(code: specialcode).where(status: 'Active').take.charity_id
+          resource.role_id = 5
+        end
       end
-
-      unless specialcode.nil?
-        redirect_to '/register/user', notice: 'Company code does not exist'
-        return
-      end
-
     end
 
 

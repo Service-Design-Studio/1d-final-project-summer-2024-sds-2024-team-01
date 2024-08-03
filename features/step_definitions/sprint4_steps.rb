@@ -1,5 +1,11 @@
+Given('there is a corporate user on the app') do
+  create(:user, role_id: 4)
+end
+
 Given('there is an application for my request from a corporate user') do
-  pending # Write code here that turns the phrase above into concrete actions
+  myreq = Request.where(created_by: User.where(name: 'Harrison Ford').take.id).take
+  corpo = User.where(role_id: 4).take
+  create(:application, request_id: myreq.id, applicant_id: corpo.id)
 end
 
 Then('I should see {string} applicants') do |string|
