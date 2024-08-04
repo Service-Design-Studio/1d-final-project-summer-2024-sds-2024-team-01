@@ -5,10 +5,11 @@ Feature: Report User
 
 Background: 
     Given I have an account
-    And I login
+    Then I login 
 
 Scenario: Report User
-    Given I am on the "Help with saluting alarm" page
+    Given I am on the "All Requests" page
+    Then I click on "Help with saluting alarm" 
     Then I click on "Millard Robel"
     Then I click on "Report" button
     Then I fill in "Reason for Reporting" with "Inappropriate harrassing"
@@ -17,8 +18,10 @@ Scenario: Report User
     Then I should see a message "User has been reported successfully."
 
 Scenario: Don't want to report user
-    Given I am on the "Help with saluting alarm" page
+    Given I am on the "All Requests" page
+    Then I click on "Help with saluting alarm" 
     Then I click on "Millard Robel"
+    Then I click on "Report" button
     Then I click on "Back" 
     Then I am on the "Millard Robel Profile" page
 

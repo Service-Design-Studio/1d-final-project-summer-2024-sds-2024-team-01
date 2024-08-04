@@ -4,55 +4,56 @@ Feature: Approving corporations and charities as an Administrator
     I want to be able to approve of companies and charities who have registered
 
 Background:
-    Given I login as an admin
-    And I login as admin
+    Given I have an admin account
+    Then I login as an admin
+    
 
 Scenario: Approve companies
-    Given I am on the "Approve Inactive Companies" page
-    And I click on "friendlyCompany" 
-    Then I should see more details of company
-    Then I am on the "Approve Inactive Companies" page
+    Given I am on "Approve Inactive Companies" page
+    And I click on "GraceCompany" 
+    Then I should see more details of "GraceCompany"
+    Then I am on "Approve Inactive Companies" page
     When I click on "Approve" button
     Then I should see message "Company has been approved and email sent."
 
 Scenario: Disable companies
-    Given I am on the "Approve Active Companies" page
-    And I click on "friendlyCompany" 
-    Then I should see more details of company
-    Then I am on the "Approve Inactive Companies" page
+    Given I am on "Approve Active Companies" page
+    And I click on "LoveCompany" 
+    Then I should see more details of "LoveCompany"
+    Then I am on "Approve Inactive Companies" page
     When I click on "Disable" button
     Then I should see message "Company has been disabled."
 
 Scenario: Reject Companies 
-    Given I am on the "Approve Rejected Companies" page
+    Given I am on "Approve Inactive Companies" page
     And I click on "friendlyCompany" 
-    Then I should see more details of company
-    Then I am on the "Approve Inactive Companies" page
+    Then I should see more details of "FriendlyCompany"
+    Then I am on "Approve Inactive Companies" page
     When I click on "Reject" button
     Then I should see message "Company has been rejected."
 
 ########################################################################
 
 Scenario: Approve charities
-    Given I am on the "Approve Inactive Charities" page
-    And I click on "inexpensive charity"
-    Then I should see more details of charity
-    Then I am on the "Approve Inactive Charities" page
+    Given I am on "Approve Inactive Charities" page
+    And I click on "Tasty Charity"
+    Then I should see more details of "Tasty Charity"
+    Then I am on "Approve Inactive Charities" page
     When I click on "Approve" button
     Then I should see message "Charity approved successfully and email sent."
 
 Scenario: Disable charities
-    Given I am on the "Approve Active Charities" page
-    And I click on "inexpensive charity"
-    Then I should see more details of charity
-    Then I am on the "Approve Inactive Charities" page
+    Given I am on "Approve Active Charities" page
+    And I click on "Delightful Charity"
+    Then I should see more details of "Delightful Charity"
+    Then I am on "Approve Inactive Charities" page
     When I click on "Disable" button
     Then I should see message "Charity disabled successfully."
 
 Scenario: Rejected charities
-    Given I am on the "Approve Rejected Charities" page
-    And I click on "inexpensive charity"
-    Then I should see more details of charity
-    Then I am on the "Approve Inactive Charities" page
+    Given I am on "Approve Inactive Charities" page
+    And I click on "Inexpensive Charity"
+    Then I should see more details of "Inexpensive Charity"
+    Then I am on "Approve Inactive Charities" page
     When I click on "Reject" button
     Then I should see message "Charity rejected successfully."
