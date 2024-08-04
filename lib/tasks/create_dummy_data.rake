@@ -13,7 +13,17 @@ namespace :db do
       first = create(:dummy_user)
       second = create(:dummy_user_two)
       third = create(:dummy_user_three)
+      admin = create(:admin_user)
 
+      # Create user reports
+      UserReport.create!(reported_user: first, reported_by: admin, report_reason: "Suspicious activity", status: "under_review")
+      UserReport.create!(reported_user: second, reported_by: admin, report_reason: "Violation of terms", status: "ban")
+      UserReport.create!(reported_user: third, reported_by: admin, report_reason: "Harassment", status: "under_review")
+
+      # Create specific user and request
+      millard_robel = create(:millard_robel)
+      create(:specific_request, user: millard_robel)
+      
       6.times do
         rq = build(:requestwiththumbnail, created_by: first.id, date: Faker::Date.backward(days: 365),
                                           status: 'Completed')
@@ -101,6 +111,17 @@ namespace :db do
                     number: nil, email: 'cvm2@test.com')
       create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
                     number: nil, email: 'cvm3@test.com')
+
+      
+      # Create dummy data for charities
+      create(:inexpensive_charity)
+      create(:tasty_charity)
+      create(:delightful_charity)
+
+      # Specific companies
+      create(:friendly_company)
+      create(:grace_company)
+      create(:love_company)
 
       print "\r100% Complete                      "
     end
