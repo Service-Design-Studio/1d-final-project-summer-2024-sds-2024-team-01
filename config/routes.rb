@@ -88,6 +88,7 @@ Rails.application.routes.draw do
       member do
         patch :approve
         patch :disable
+        patch :reject
       end
     end
 
@@ -95,6 +96,7 @@ Rails.application.routes.draw do
       member do
         patch :approve
         patch :disable
+        patch :reject
       end
     end
 

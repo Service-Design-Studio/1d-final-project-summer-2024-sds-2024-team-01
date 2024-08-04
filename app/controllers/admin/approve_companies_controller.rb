@@ -1,11 +1,12 @@
 class Admin::ApproveCompaniesController < ApplicationController
   before_action :authenticate_user!
   before_action :check_admin
-  before_action :set_company, only: [:show, :approve, :disable]
+  before_action :set_company, only: [:show, :approve, :disable, :reject]
 
   def index
     @active_companies = Company.where(status: 'Active')
     @inactive_companies = Company.where(status: 'Inactive')
+    @rejected_companies = Company.where(status: 'Rejected')
   end
 
   def show
@@ -27,6 +28,11 @@ class Admin::ApproveCompaniesController < ApplicationController
   def disable
     @company.update(status: 'Inactive')
     redirect_to admin_approve_companies_path, notice: 'Company has been disabled.'
+  end
+
+  def reject
+    @company.update(status: 'Rejected')
+    redirect_to admin_approve_companies_path, notice: 'Company has been rejected.'
   end
 
   private
