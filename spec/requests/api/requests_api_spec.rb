@@ -6,9 +6,10 @@ context 'when calling the Requests API', type: :request do
     5.times {FactoryBot.create(:request)}
     @request = Request.last
     @id_of_request = @request.id
-    @created_user = FactoryBot.create(:user)
+    @created_user = User.last
     @phone_number = @created_user.number
-    @password = @created_user.password
+    @password = "password"
+    # p @phone_number, @password
   end
 
   describe 'GET /requests' do
@@ -51,7 +52,8 @@ context 'when calling the Requests API', type: :request do
 
   describe 'PATCH /requests/:id' do
     it 'updates an existing request' do
-      patch "/api/v3/requests/#{@id_of_request}", params: {request: {number: @phone_number,
+      patch "/api/v3/requests/#{@id_of_request}", params: {request: {
+                                                                    number: @phone_number,
                                                                     password: @password,
                                                                     description: "I need someone to trim my bushes \n I have changed the date and no. of pax",
                                                                     date: '2024-10-16',
@@ -68,7 +70,8 @@ context 'when calling the Requests API', type: :request do
   describe 'DELETE /requests/:id' do 
     it 'deletes an existing request' do
       expect{delete "/api/v3/requests/#{@id_of_request}", params: {request: {number: @phone_number,
-                                                                             password: @password
+                                                                             password: @password,
+                                                                             title: "Need help with mowing lawn"
                                                                             }}}.to change {Request.count}.from(5).to(4)
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).not_to eq(Request.where(request_id: 5))

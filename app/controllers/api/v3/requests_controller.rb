@@ -33,7 +33,6 @@ class Api::V3::RequestsController < ApplicationController
   # GET /requests/1
   # show a single request
   def show
-    @request = Request.find(params[:id])
     if @request.nil?
       render json: { error: 'Request does not exist.' }, status: :not_found
       return
@@ -147,47 +146,44 @@ class Api::V3::RequestsController < ApplicationController
   # POST /requests
   # create a new request
   def create
-    user = auth_with_phone_and_password
-    if user
-      @request = Request.new(request_params.except(:number, :password))
-      if @request.nil?
-        puts "Request is nil after initialization"
-        render json: { error: 'Failed to create request' }, status: :unprocessable_entity
-        return
-      end
-      @request.status = 'Available'
-      @request.created_by = user.id
-      @request.created_at = DateTime.now
-      @request.updated_at = DateTime.now
-      @request.stringlocation = params[:request][:stringlocation] if params[:request][:stringlocation].present?
-    end
-    # p @request
-    if @request.save
-      if request_params[:thumbnail].present?
-        @request.thumbnail.attach(request_params[:thumbnail])
+    begin
+      @user = auth_with_phone_and_password
+      if @user
+        @request = Request.new(request_params.except(:number, :password))
+        @request.status = 'Available'
+        @request.created_by = @user.id
+        @request.stringlocation = params[:request][:stringlocation] if params[:request][:stringlocation].present?
+
+        if @request.save
+          if request_params[:thumbnail].present?
+            @request.thumbnail.attach(request_params[:thumbnail])
+          else
+            @request.thumbnail.attach(
+              io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
+              filename: 'freepik-lmao.jpg',
+              content_type: 'image/jpeg'
+            )
+          end
+          render json: { message: 'Request was successfully created.' }, status: :created
+        else
+          error_message = @request ? @request.errors.full_messages : "Request object is nil"
+          render json: { message: 'Failed to create request.', errors: error_message }, status: :unprocessable_entity    end
       else
-        @request.thumbnail.attach(
-          io: File.open(Rails.root.join('app', 'assets', 'images', 'freepik-lmao.jpg')),
-          filename: 'freepik-lmao.jpg',
-          content_type: 'image/jpeg'
-        )
+        render json: { message: 'Authentication failed.', errors: ['Invalid phone number or password'] }, status: :unauthorized
       end
-      render json: { message: 'Request was successfully created.' }, status: :created
-    else
-      p @request
-      render json: { message: 'Failed to create request.' }, status: :unprocessable_entity
+
+    rescue => e
+      render json: {message: "An error occurred.", error: e.message}, status: :internal_server_error
     end
   end
 
   def update
-    user = auth_with_phone_and_password
-    if user
+    @user = auth_with_phone_and_password
+    if @user
       @request = Request.find(params[:id])
       if @request.update(request_params.except(:number, :password))
         @request.updated_at = DateTime.now
-        # p "Updated at:#{@request.updated_at}"
         render json: @request, status: :ok
-        # p "Description:#{@request.description}"
       else
         render json: { message: 'Failed to update request.', errors: @request.errors.full_messages }, status: :unprocessable_entity
       end
@@ -199,17 +195,16 @@ class Api::V3::RequestsController < ApplicationController
   rescue => e
     render json: { message: 'An error occurred while updating the request.', error: e.message }, status: :internal_server_error
   end
-  
 
 
   # destroy request feature implmentation?
   def destroy
-    user = auth_with_phone_and_password
-    if user
+    @user = auth_with_phone_and_password
+    if @user
       @request = Request.find(params[:id])
       if @request
         if @request.destroy
-          render json: @in_progress_requests, status: :ok
+          render json: { message: 'Successfully deleted request.'}, status: :ok
         else
           render json: { message: 'Failed to delete request.' }, status: :unprocessable_entity
         end
@@ -233,13 +228,13 @@ class Api::V3::RequestsController < ApplicationController
   end
 
   def auth_with_phone_and_password
-    phone_number = params[:request][:number]
-    password = params[:request][:password]
-    # p phone_number, password
-    user = User.find_by(number: phone_number)
-    # p user
-    user&.valid_password?(password) ? user : nil
-    # p "Successful"
-
+    @phone_number = params[:request][:number]
+    @password = params[:request][:password]
+    @user = User.find_by(number: @phone_number)
+    if @user && @user.valid_password?(@password)
+      @user
+    else
+      nil
+    end
   end
 end
