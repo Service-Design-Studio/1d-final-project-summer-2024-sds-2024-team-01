@@ -82,7 +82,7 @@
               <% end %>
               <% if @request.status == 'Completed' %>
                 <div class="status-indicator_requests_details mb-3 w-100">Concluded</div>
-              <% elsif @is_creator || current_user.admin? %>
+              <% elsif @is_creator || ( !current_user.nil? && current_user.admin? ) %>
                 <div class="request-availability_requests_details mb-3 w-100">
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="availability-indicator_requests_details flex-grow-1"><%= @slots_remaining %> slots remaining</div>

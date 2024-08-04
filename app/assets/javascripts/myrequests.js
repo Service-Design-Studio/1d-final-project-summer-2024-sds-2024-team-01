@@ -367,10 +367,6 @@ function handleAcceptRejectForm(form) {
   fetch(action, {
     method: method,
     body: formData,
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-    }
   })
   .then(response => {
     if (response.ok) {
