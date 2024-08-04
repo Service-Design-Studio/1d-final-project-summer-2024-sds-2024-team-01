@@ -14,7 +14,7 @@ class UserReportsController < ApplicationController
     @report.reported_user = @user
     if @report.save
       @user.update(status: 'under_review') if @user.status == 'Active'
-      redirect_to profile_path, notice: 'User has been reported successfully.'
+      redirect_to requests_path, notice: 'User has been reported successfully.'
     else
       render :new
     end

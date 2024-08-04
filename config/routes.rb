@@ -84,7 +84,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :approve_companies, only: [:index] do
+    resources :approve_companies, only: [:index, :show] do
       member do
         patch :approve
         patch :disable
