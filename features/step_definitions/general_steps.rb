@@ -15,17 +15,16 @@ Given('I have an account') do
   click_button(id: 'logoutbtn')
 end
 
-Given('I login as an admin') do
-  admin = create(:user, role_id: 2)
-  # sign_in
-end
+# Given('I login as an admin') do
+#   admin = create(:user, role_id: 2)
+#   # sign_in
+# end
 
-And('I login') do
+Then('I login') do
   visit new_user_session_path
-  fill_in 'user_login', with: '96789012'
-  fill_in 'user_password', with: 'asdfasdf'
-  click_button 'Login'
-  expect(page).to have_content('Signed in successfully.')
+  fill_in 'Email', with: @user.email
+  fill_in 'Password', with: @user.password
+  click_button 'Log in'
 end
 
 Given('I am on the {string} page') do |page|
@@ -40,9 +39,14 @@ When('I click on {string} button') do |button|
   click_button button
 end
 
-When('I click on {string}') do |str|
-  click_on str
+When('I click on {string}') do |text|
+  begin
+    click_link_or_button text
+  rescue Capybara::ElementNotFound
+    find('tr.clickable-row', text: text).click
+  end
 end
+
 
 
 And('I press {string}') do |button_text|
