@@ -21,11 +21,10 @@
           </p>
           <%# <p>Trusted user</p> %>
         </div>
-        
          <!-- Report Button -->
         <% if user_signed_in? && !current_user.admin? %>
           <div class="report-button-container">
-            <%= link_to 'Report', new_user_report_path(reported_user_id: @profile.id), class: 'btn btn-danger report-button' %>
+            <%= link_to 'Report', new_user_report_path(reported_user: @profile.id), class: 'btn btn-danger report-button' %>
           </div>
         <% end %>
       </div>

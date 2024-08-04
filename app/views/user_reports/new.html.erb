@@ -1,14 +1,15 @@
-<h1>Report User: <%= @reported_user.name %></h1>
+<!-- app/views/user_reports/new.html.erb -->
+<h1>Report <%= @user.name %></h1>
 
-<%= form_with model: @user_report, url: user_reports_path, local: true do |form| %>
-  <div class="form-group">
-    <%= form.label :report_reason, "Reason for Report" %>
-    <%= form.text_area :report_reason, class: "form-control" %>
+<%= form_with url: confirm_report_path, method: :get, local: true do |form| %>
+  <div class="field">
+    <%= form.label :report_reason, 'Reason for Reporting' %>
+    <%= form.text_area :report_reason, name: 'user_report[report_reason]' %>
   </div>
-  
-  <%= form.hidden_field :reported_user, value: @reported_user.id %>
-  
-  <div class="form-group">
-    <%= form.submit "Submit Report", class: "btn btn-danger" %>
+  <%= form.hidden_field :reported_user, value: @user.id, name: 'user_report[reported_user]' %>
+  <div class="actions">
+    <%= form.submit 'Next', class: 'btn btn-danger' %>
   </div>
 <% end %>
+
+<%= link_to 'Back', user_profile_path(@user) %>

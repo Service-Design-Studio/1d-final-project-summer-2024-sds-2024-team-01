@@ -113,10 +113,15 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :user_reports, only: [:new, :create]
+  resources :user_reports, only: [:new, :create] do
+    collection do
+      get 'confirm'
+    end
+  end
+
+  get 'confirm_report', to: 'user_reports#confirm', as: 'confirm_report'
 
   get 'admin/login', to: 'admin_sessions#new', as: 'new_admin_session'
   post 'admin/login', to: 'admin_sessions#create', as: 'admin_sessions'
   delete 'admin/logout', to: 'admin_sessions#destroy', as: 'destroy_admin_session'
 end
-
