@@ -10,7 +10,7 @@ class Cvm::CvmController < ApplicationController
 
     @charitylist = Charity.where(id: addedids)
 
-    @topvolunteers = User.where(status: 'Active').where(company_id: current_user.company_id).order(weekly_hours: :desc).first(10)
+    @topvolunteers = User.where(status: 'Active').where(role_id: 4).where(company_id: current_user.company_id).order(weekly_hours: :desc).first(10)
 
     @companycode = CompanyCode.where(company_id: current_user.company_id).where(status: 'Active').last.code
 
@@ -133,9 +133,12 @@ class Cvm::CvmController < ApplicationController
         csv << ['']
       end
     end
+    SummaryReport.create(requested_by: current_user.id, created_at: DateTime.now, updated_at: DateTime.now)
+
+
+
     send_data csv_data, filename: "employees_data_#{Date.today}.csv"
 
-    SummaryReport.create(requested_by: current_user.id)
 
     # redirect_to '/cvm', notice: 'Report generated'
   end

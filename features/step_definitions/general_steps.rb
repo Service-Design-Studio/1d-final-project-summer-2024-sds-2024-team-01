@@ -23,8 +23,8 @@ Given('I have an account') do
     puts "Description field is present, but will be left blank for this test."
   end
   click_button 'Sign up!'
-  expect(page).to have_content('Email has already been taken')
-  # click_button(id: 'logoutbtn')
+  expect(page).to have_content('Welcome! You have signed up successfully.')
+  click_button(id: 'logoutbtn')
 end
 
 Given('I login as an admin') do
@@ -79,6 +79,7 @@ And('I have a request') do
     description: 'Need someone to walk my dog for an hour every afternoon',
     category: 'Pet Care',
     location: 'POINT(34.052235 -118.243683)',
+    stringlocation: 'Test',
     date: Date.tomorrow + 3,
     number_of_pax: 1,
     duration: 1,
@@ -134,4 +135,12 @@ end
 
 When('I click on the notification icon') do
   find('#shownotifs').click
+end
+
+Then('I should see {int} applicants') do |count|
+  expect(page).to have_css('.applicant-info_requests_index_my', count: count)
+end
+
+Then('I should see {int} corporate volunteer applicant') do |count|
+  expect(page).to have_css('.fa-building', count: count)
 end
