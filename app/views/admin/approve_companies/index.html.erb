@@ -14,6 +14,7 @@
       <ul>
         <li><a href="#active-tab" class="tab-link" data-tab="active-tab">Active Companies</a></li>
         <li><a href="#inactive-tab" class="tab-link" data-tab="inactive-tab">Inactive Companies</a></li>
+        <li><a href="#rejected-tab" class="tab-link" data-tab="rejected-tab">Rejected Companies</a></li>
       </ul>
     </nav>
 
@@ -34,7 +35,7 @@
             <tr data-link="<%= admin_approve_company_path(company) %>" class="clickable-row">
               <td><%= company.company_name %></td>
               <td><%= company.created_at.strftime('%d %b %Y, %H:%M') %></td>
-              <td><%= company.users.find_by(role_id: 3).name %></td>
+              <td><%= company.users.find_by(role_id: 3)&.name || 'No manager assigned' %></td>
               <td><%= company.status %></td>
               <td>
                 <%= button_to 'Disable', disable_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning' %>
@@ -62,10 +63,39 @@
             <tr data-link="<%= admin_approve_company_path(company) %>" class="clickable-row">
               <td><%= company.company_name %></td>
               <td><%= company.created_at.strftime('%d %b %Y, %H:%M') %></td>
-              <td><%= company.users.find_by(role_id: 3).name %></td>
+              <td><%= company.users.find_by(role_id: 3)&.name || 'No manager assigned' %></td>
               <td><%= company.status %></td>
               <td>
                 <%= button_to 'Approve', approve_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success' %>
+                <%= button_to 'Reject', reject_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="rejected-tab" class="tab-content" style="display: none;">
+      <h2>Rejected Companies</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Company Name</th>
+            <th>Created At</th>
+            <th>Corporate Manager</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @rejected_companies.each do |company| %>
+            <tr data-link="<%= admin_approve_company_path(company) %>" class="clickable-row">
+              <td><%= company.company_name %></td>
+              <td><%= company.created_at.strftime('%d %b %Y, %H:%M') %></td>
+              <td><%= company.users.find_by(role_id: 3)&.name || 'No manager assigned' %></td>
+              <td><%= company.status %></td>
+              <td>
+                <!-- Add any actions for rejected companies if needed -->
               </td>
             </tr>
           <% end %>
