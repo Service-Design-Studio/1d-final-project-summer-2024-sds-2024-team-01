@@ -9,9 +9,9 @@
     <div class="request-details-container d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center">
         <% if @chat.applicant_id == current_user.id %>
-          <img src="<%= user_avatar_url(@chat.requester) %>" alt="<%= @chat.request.title %>" class="request-thumbnail">
+          <img src="<%= avatar_url(@chat.requester) %>" alt="<%= @chat.request.title %>" class="request-thumbnail">
         <% else %>
-          <img src="<%= user_avatar_url(@chat.applicant) %>" alt="<%= @chat.request.title %>" class="request-thumbnail">
+          <img src="<%= avatar_url(@chat.applicant) %>" alt="<%= @chat.request.title %>" class="request-thumbnail">
         <% end %>
         <div class="request-details ml-3">
           <% if @chat.applicant_id == current_user.id %>
