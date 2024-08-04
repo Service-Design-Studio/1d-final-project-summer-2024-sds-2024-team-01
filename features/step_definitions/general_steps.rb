@@ -132,3 +132,7 @@ end
 Then('I should see {int} corporate volunteer applicant') do |count|
   expect(page).to have_css('.fa-building', count: count)
 end
+
+Then('sleep') do
+  sleep 500
+end
