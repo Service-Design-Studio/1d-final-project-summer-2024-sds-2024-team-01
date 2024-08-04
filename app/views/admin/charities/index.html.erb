@@ -1,31 +1,93 @@
-<h1>Charities</h1>
-<nav>
-  <ul>
-    <li><a href="#active-tab">Active Charities</a></li>
-    <li><a href="#inactive-tab">Inactive Charities</a></li>
-  </ul>
-</nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Approve Charities</title>
+  <link rel="stylesheet" href="<%= asset_path('approve_charities.css') %>">
+  <%= javascript_include_tag 'approve_charities' %>
+</head>
+<body>
+  <div class="container">
+    <h1>Approve Charities</h1>
+    <nav>
+      <ul>
+        <li><a href="#active-tab" class="tab-link" data-tab="active-tab">Active Charities</a></li>
+        <li><a href="#inactive-tab" class="tab-link" data-tab="inactive-tab">Inactive Charities</a></li>
+      </ul>
+    </nav>
 
-<div id="active-tab">
-  <h2>Active Charities</h2>
-  <ul>
-    <% @active_charities.each do |charity| %>
-      <li>
-        <%= charity.charity_name %> - <%= charity.status %>
-        <%= button_to 'Disable', disable_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' } %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+    <div id="active-tab" class="tab-content">
+      <h2>Active Charities</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Charity Name</th>
+            <th>Created At</th>
+            <th>Charity Manager</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @active_charities.each do |charity| %>
+            <tr data-link="<%= admin_charity_path(charity) %>" class="clickable-row">
+              <td><%= charity.charity_name %></td>
+              <td><%= charity.created_at.strftime('%d %b %Y, %H:%M') %></td>
+              <td>
+                <% manager = charity.users.find_by(role_id: 5) %>
+                <%= manager ? manager.name : 'No manager assigned' %>
+              </td>
+              <td><%= charity.status %></td>
+              <td>
+                <%= button_to 'Disable', disable_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
-<div id="inactive-tab">
-  <h2>Inactive Charities</h2>
-  <ul>
-    <% @inactive_charities.each do |charity| %>
-      <li>
-        <%= charity.charity_name %> - <%= charity.status %>
-        <%= button_to 'Approve', approve_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' } %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+    <div id="inactive-tab" class="tab-content" style="display: none;">
+      <h2>Inactive Charities</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Charity Name</th>
+            <th>Created At</th>
+            <th>Charity Manager</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @inactive_charities.each do |charity| %>
+            <tr data-link="<%= admin_charity_path(charity) %>" class="clickable-row">
+              <td><%= charity.charity_name %></td>
+              <td><%= charity.created_at.strftime('%d %b %Y, %H:%M') %></td>
+              <td>
+                <% manager = charity.users.find_by(role_id: 5) %>
+                <%= manager ? manager.name : 'No manager assigned' %>
+              </td>
+              <td><%= charity.status %></td>
+              <td>
+                <%= button_to 'Approve', approve_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.clickable-row').forEach(row => {
+        row.addEventListener('click', function() {
+          window.location = this.dataset.link;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

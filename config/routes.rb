@@ -91,7 +91,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :charities, only: [:index] do
+    resources :charities, only: [:index, :show] do
       member do
         patch :approve
         patch :disable

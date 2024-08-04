@@ -7,3 +7,5 @@
 //=link filtering.js
 //= link ban_user.js
 //= link approve_companies.js
+//= link approve_charities.js
+//= link approve_charities.css
