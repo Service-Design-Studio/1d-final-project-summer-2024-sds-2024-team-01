@@ -14,6 +14,7 @@
       <ul>
         <li><a href="#active-tab" class="tab-link" data-tab="active-tab">Active Charities</a></li>
         <li><a href="#inactive-tab" class="tab-link" data-tab="inactive-tab">Inactive Charities</a></li>
+        <li><a href="#rejected-tab" class="tab-link" data-tab="rejected-tab">Rejected Charities</a></li>
       </ul>
     </nav>
 
@@ -72,6 +73,38 @@
               <td><%= charity.status %></td>
               <td>
                 <%= button_to 'Approve', approve_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success' %>
+                <%= button_to 'Reject', reject_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="rejected-tab" class="tab-content" style="display: none;">
+      <h2>Rejected Charities</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Charity Name</th>
+            <th>Created At</th>
+            <th>Charity Manager</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @rejected_charities.each do |charity| %>
+            <tr data-link="<%= admin_charity_path(charity) %>" class="clickable-row">
+              <td><%= charity.charity_name %></td>
+              <td><%= charity.created_at.strftime('%d %b %Y, %H:%M') %></td>
+              <td>
+                <% manager = charity.users.find_by(role_id: 5) %>
+                <%= manager ? manager.name : 'No manager assigned' %>
+              </td>
+              <td><%= charity.status %></td>
+              <td>
+                <!-- Add any actions for rejected charities if needed -->
               </td>
             </tr>
           <% end %>

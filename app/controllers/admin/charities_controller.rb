@@ -2,11 +2,12 @@ module Admin
   class CharitiesController < ApplicationController
     before_action :authenticate_user!
     before_action :check_admin
-    before_action :set_charity, only: [:show, :approve, :disable]
+    before_action :set_charity, only: [:show, :approve, :disable, :reject]
 
     def index
       @active_charities = Charity.where(status: 'Active')
       @inactive_charities = Charity.where(status: 'Inactive')
+      @rejected_charities = Charity.where(status: 'Rejected')
     end
 
     def show
@@ -28,6 +29,11 @@ module Admin
     def disable
       @charity.update(status: 'Inactive')
       redirect_to admin_charities_path(anchor: 'inactive-tab'), notice: 'Charity disabled successfully.'
+    end
+
+    def reject
+      @charity.update(status: 'Rejected')
+      redirect_to admin_charities_path(anchor: 'rejected-tab'), notice: 'Charity rejected successfully.'
     end
 
     private

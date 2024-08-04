@@ -22,10 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
           tab.classList.remove("active");
         }
       });
+
+      history.pushState(null, null, `#${targetTab}`);
     });
   });
 
-  // Initialize to show the active companies tab by default
   const defaultTab = window.location.hash ? window.location.hash.substring(1) : 'active-tab';
-  document.querySelector(`.tab-link[data-tab='${defaultTab}']`).click();
+  const defaultTabLink = document.querySelector(`.tab-link[data-tab='${defaultTab}']`);
+  if (defaultTabLink) {
+    defaultTabLink.click();
+  } else {
+    tabs[0].click();
+  }
 });
