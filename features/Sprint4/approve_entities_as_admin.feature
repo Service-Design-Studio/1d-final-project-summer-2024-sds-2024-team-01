@@ -23,13 +23,13 @@ Scenario: Disable companies
     When I click on "Disable" button
     Then I should see message "Company has been disabled."
 
-# Scenario: Reject Companies 
-#     Given I am on the "Approve Rejected Companies" page
-#     And I click on "friendlyCompany" 
-#     Then I should see more details of company
-#     Then I am on the "Approve Inactive Companies" page
-#     When I click on "Reject" button
-#     Then I should see message "Company has been rejected."
+Scenario: Reject Companies 
+    Given I am on the "Approve Rejected Companies" page
+    And I click on "friendlyCompany" 
+    Then I should see more details of company
+    Then I am on the "Approve Inactive Companies" page
+    When I click on "Reject" button
+    Then I should see message "Company has been rejected."
 
 ########################################################################
 
@@ -49,10 +49,10 @@ Scenario: Disable charities
     When I click on "Disable" button
     Then I should see message "Charity disabled successfully."
 
-# Scenario: Rejected charities
-#     Given I am on the "Approve Rejected Charities" page
-#     And I click on "inexpensive charity"
-#     Then I should see more details of charity
-#     Then I am on the "Approve Inactive Charities" page
-#     When I click on "Disable" button
-#     Then I should see message "Charity disabled successfully."
+Scenario: Rejected charities
+    Given I am on the "Approve Rejected Charities" page
+    And I click on "inexpensive charity"
+    Then I should see more details of charity
+    Then I am on the "Approve Inactive Charities" page
+    When I click on "Reject" button
+    Then I should see message "Charity rejected successfully."
