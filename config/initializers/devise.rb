@@ -20,7 +20,7 @@ Devise.setup do |config|
   require 'devise/orm/active_record'
 
   # Configure which keys are used when authenticating a user. 
- config.authentication_keys = [:number]
+ config.authentication_keys = [:login]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the

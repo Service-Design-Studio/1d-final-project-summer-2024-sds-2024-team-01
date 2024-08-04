@@ -4,7 +4,9 @@
       <div class="card-body header-container_profile">
         <!-- Profile picture container -->
         <div class="profile-picture-container">
-          <div class="profile-picture"></div>
+          <div class="profile-picture">
+            <%= image_tag avatar_url(@profile), class: "current-avatar" %>
+          </div>
         </div>
         <!-- Profile info container -->
         <div class="profile-info-container">
@@ -17,18 +19,33 @@
             <% end %>
             (<%= @reviews_received.count %>)
           </p>
-          <p>Trusted user</p>
+          <%# <p>Trusted user</p> %>
         </div>
+        
+         <!-- Report Button -->
+        <% if user_signed_in? && !current_user.admin? %>
+          <div class="report-button-container">
+            <%= link_to 'Report', new_user_report_path(reported_user_id: @profile.id), class: 'btn btn-danger report-button' %>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="card mb-0 custom-card_profile body-card_profile">
       <div class="card-body body-container_profile">
-        <div class="follow-btn-profile">
-          <button type="submit" class="btn follow-btn-profile">Edit profile</button>
+        <% if user_signed_in? && current_user == @profile %>
+          <div class="follow-btn-profile">
+            <%= button_tag 'Edit profile', type: 'button', id: 'edit-profile-btn', class: 'btn follow-btn-profile' %>
+          </div>
+        <% end %>
+        <div id="edit_profile_pop-up" class="edit_profile_pop-up">
+          <div class="edit_profile_pop-up-content">
+            <span class="close">&times;</span>
+            <%= render 'edit' %>
+          </div>
         </div>
-        <div class="options-icon-follow">
+        <%# <div class="options-icon-follow">
           <i class="fas fa-ellipsis-h"></i>
-        </div>
+        </div> %>
         <!-- Tabs container -->
         <div class="tabs-container">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -48,17 +65,23 @@
                     <div class="request-content">
                       <a href="<%= request_path(request) %>">
                         <div class="request-square">
-                          <img src="<%= request_thumbnail_url(request) %>" class="card-img-top" alt="<%= request.title %>"/>
-                          <div class="request-popup">
-                            <p> Number of slots available (TBI) </p>
-                          </div>
+                          <img src="<%= request_thumbnail_url(request) %>" class="card-img-top" alt="<%= request.title %>" />
+                          <% if request.status.downcase != 'completed' %>
+                            <div class="request-popup">
+                              <div>Slots Remaining: <%= calculate_slots_remaining(request) %></div>
+                            </div>
+                          <% else %>
+                            <div class="request-popup">
+                              <div>This request has concluded</div>
+                            </div>
+                            <div class="status-bar completed">Completed</div>
+                          <% end %>
                         </div>
                       </a>
                       <p class="request-name"><%= request.title %></p>
-                      <div class="availability-indicator_profile_requests"><%= request.status %></div>
-                      <div class="options-icon-requests">
-                        <i class="fas fa-ellipsis-h"></i>
-                      </div>
+                        <%# <div class="options-icon-requests">
+                          <i class="fas fa-ellipsis-h"></i>
+                        </div> %>
                     </div>
                   </div>
                 <% end %>
@@ -76,36 +99,80 @@
                 </p>
               </div>
               <div class="review-filters">
-                <button class="btn btn-outline-dark">All</button>
-                <button class="btn btn-outline-dark">From Volunteers</button>
-                <button class="btn btn-outline-dark">From Requesters</button>
-                <div class="sort-by">
+                <!-- Dropdown for filtering review sources -->
+                <div class="filter-by-source">
+                  <label for="filter-reviews">Filter by</label>
+                  <select id="filter-reviews" class="form-control">
+                    <option value="all">All</option>
+                    <option value="volunteers">From Volunteers</option>
+                    <option value="requesters">From Requesters</option>
+                  </select>
+                </div>
+
+                <!-- Existing dropdown for sorting reviews -->
+                <div class="filter-by-source">
                   <label for="sort-reviews">Sort by</label>
                   <select id="sort-reviews" class="form-control">
-                    <option>Highest ratings</option>
-                    <option>Lowest ratings</option>
-                    <option>Recent</option>
+                    <option value="highest">Highest ratings</option>
+                    <option value="lowest">Lowest ratings</option>
+                    <option value="recent">Recent</option>
                   </select>
                 </div>
               </div>
-              <% if @reviews_received.any? %>
-                <% @reviews_received.each do |review| %>
-                  <div class="review-item card mb-3">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between">
-                        <div>
-                          <h5 class="card-title"><%= review.review_by.name %></h5>
-                          <p class="card-text"><%= review.review_content %></p>
+              <% if @reviews_from_requesters.any? || @reviews_from_applicants.any? %>
+                <% [@reviews_from_requesters, @reviews_from_applicants].flatten.sort_by(&:created_at).reverse.each do |review| %>
+                  <div class="review-card card mb-3" data-review-type="<%= review.review_by == review.request.created_by ? 'requester' : 'applicant' %>">
+                    <!-- Mini Profile Cluster (Top Left) -->
+                    <div style="position: absolute; top: 20px; left: 20px;">
+                      <a class="mini-profile" href="/profile?id=<%= review.review_by.id %>">
+                        <div style="display: flex; align-items: center;">
+                          <img src="<%= avatar_url(review.review_by) %>" alt="<%= review.review_by.name %>" width="50" height="50" style="border-radius: 50%; margin-right: 10px;">
+                          <div>
+                            <h5 style="margin: 0;"><%= review.review_by.name %>
+                              <% if review.review_by.role_id == 4 %>
+                                <i class="fas fa-building" style="font-size: 16px; margin-left: 5px;"></i>
+                              <% end %>
+                            </h5>
+                            <!-- Requester or applicant indicator -->
+                            <small><%= review.review_by == review.request.created_by ? 'Requester' : 'Applicant' %></small>
+                          </div>
                         </div>
-                        <div>
-                          <p class="stars_user_profile">
-                            <% 5.times do |i| %>
-                              <i class="fas fa-star <%= 'checked' if i < review.rating %>"></i>
-                            <% end %>
-                          </p>
-                          <small class="text-muted"><%= time_ago_in_words(review.created_at) %> ago</small>
+                      </a>
+                    </div>
+
+                    <!-- Mini Request Card (Top Right) -->
+                    <div class="mini-request-card-container" style="position: absolute; top: 20px; right: 20px;">
+                      <a href="<%= request_path(review.request) %>" class="mini-request-clickable-card">
+                        <div class="mini-request-chevron-indicator">❮</div>
+                        <div class="mini-request-details-card">
+                          <div class="mini-request-details">
+                            <h6 class="mini-request-title"><%= review.request.title %></h6>
+                            <p class="mini-request-time">
+                              <%= review.request.date.strftime('%d %B %Y') %>,
+                              <%= review.request.start_time.strftime('%H:%M') %>
+                            </p>
+                          </div>
                         </div>
+                        <div class="mini-request-thumbnail-card">
+                          <img src="<%= request_thumbnail_url(review.request) %>" alt="<%= review.request.title %>" class="mini-request-thumbnail">
+                        </div>
+                      </a>
+                      <div class="mini-request-white-cover"></div>
+                    </div>
+
+                    <!-- Review Stars and Timestamp (Below Profile, Aligned) -->
+                    <div style="margin-top: 80px; margin-left: 10px; display: flex; align-items: center;">
+                      <div style="margin-right: 15px;">
+                        <% 5.times do |i| %>
+                          <i class="fas fa-star <%= 'checked' if i < review.rating %>" style="color: <%= i < review.rating ? '#ffc107' : '#ddd' %>; font-size: 15px;"></i>
+                        <% end %>
                       </div>
+                      <small style="color: #6c757d;"><%= time_ago_in_words(review.created_at) %> ago</small>
+                    </div>
+
+                    <!-- Review Content -->
+                    <div style="margin-top: 15px; margin-left: 10px; margin-right: 220px;">
+                      <p><%= review.review_content %></p>
                     </div>
                   </div>
                 <% end %>
@@ -115,14 +182,17 @@
             </div>
           </div>
         </div>
-        <!--Profile user description container-->
-        <div class="card mb-0 profile-user_description_container">
-          <p>This holds the user written description.</p>
-        </div>
       </div>
+    </div>
+  </div>
+  <div class="profile-user_description_container">
+    <span class="bio-label">Bio</span>
+    <div class="bio-content">
+      <%= @profile.description.presence || 'This user has not provided a description.' %>
     </div>
   </div>
 </body>
 
+<%= javascript_include_tag 'profile' %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

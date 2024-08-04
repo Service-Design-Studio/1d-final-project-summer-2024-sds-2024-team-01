@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
   
-      // Store the formatted address in the hidden field
+      // Store the formatted address in the hidden field immediately
       document.getElementById('stringlocation').value = place.formatted_address;
   
       // Temporarily store the place details
@@ -175,11 +175,17 @@ document.addEventListener('DOMContentLoaded', function() {
   
         // Set the formatted point in the location field for submission
         document.getElementById('location').value = pointFormat;
+      }
   
-        // Ensure the stringlocation is set (in case it wasn't set by the place_changed event)
-        if (!document.getElementById('stringlocation').value) {
-          document.getElementById('stringlocation').value = input.value;
-        }
+      // Ensure the stringlocation is set (in case it wasn't set by the place_changed event)
+      if (!document.getElementById('stringlocation').value) {
+        document.getElementById('stringlocation').value = input.value;
+      }
+  
+      // Additional check to prevent submission if stringlocation is empty
+      if (!document.getElementById('stringlocation').value.trim()) {
+        event.preventDefault();
+        alert('Please enter a valid location');
       }
     });
   }

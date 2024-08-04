@@ -168,7 +168,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
 
   create_table "user_reports", force: :cascade do |t|
     t.text "report_reason", null: false
-    t.string "status", null: false
+    t.string "status", default: "under_review", null: false
     t.bigint "reported_by", null: false
     t.bigint "reported_user", null: false
     t.datetime "created_at", null: false
@@ -180,9 +180,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
     t.string "email", null: false
     t.string "number", default: ""
     t.string "description", default: ""
+    t.string "bio", default: ""
     t.string "status", default: "active", null: false
-    t.integer "total_hours"
-    t.integer "weekly_hours"
+    t.integer "total_hours", default: 0
+    t.integer "weekly_hours", default: 0
     t.bigint "role_id", default: 1
     t.bigint "company_id"
     t.bigint "charity_id"

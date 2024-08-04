@@ -5,8 +5,12 @@
   </head>
 
 <div class="signup-container">
-  <%= image_tag 'icon_v1.png', alt: 'Logo', class: 'd-inline-block align-text-top logo-circle-login-reg' %>
-  <h2 class="signup-header">Sign up for your corporation</h2>
+          <a href="/register" class="position-absolute fa-arrow-left fas text-decoration-none text-black"></a>
+
+      <div class="d-flex justify-content-center">
+        <%= image_tag 'icon_v1.png', width:'20%', alt: 'Logo', class: 'd-inline-block align-text-top rounded-circle'%>
+      </div>
+  <h2 class="signup-header">Join us as a company</h2>
 
   <%= form_with url: "/register/corporate", method: :post do |f| %>
 
@@ -24,7 +28,7 @@
     </div>
 
       <div class="actions pt-4">
-        <%= f.submit "Submit", class: "btn btn-primary btn-block" %>
+        <%= f.submit "Sign up!", class: "btn btn-primary btn-block" %>
       </div>
   <% end %>
   <div class="devise-links">

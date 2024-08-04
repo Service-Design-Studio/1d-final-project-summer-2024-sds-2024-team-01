@@ -1,9 +1,8 @@
-
 class MyDevise::SessionsController < DeviseController
-  prepend_before_action :require_no_authentication, only: [:new, :create]
-  prepend_before_action :allow_params_authentication!, only: :create
+  prepend_before_action :require_no_authentication, only: %i[new create]
+  # prepend_before_action :allow_params_authentication!, only: :create
   prepend_before_action :verify_signed_out_user, only: :destroy
-  prepend_before_action(only: [:create, :destroy]) { request.env["devise.skip_timeout"] = true }
+  prepend_before_action(only: %i[create destroy]) { request.env['devise.skip_timeout'] = true }
 
   # GET /resource/sign_in
   def new
@@ -15,11 +14,20 @@ class MyDevise::SessionsController < DeviseController
 
   # POST /resource/sign_in
   def create
-    self.resource = warden.authenticate!(auth_options)
-    set_flash_message!(:notice, :signed_in)
-    sign_in(resource_name, resource)
-    yield resource if block_given?
-    respond_with resource, location: after_sign_in_path_for(resource)
+    login = params[:user][:login]
+    user = User.find_by('email = ? OR number = ?', login, login)
+
+    if !user.nil? && (user.status == 'Inactive')
+      redirect_to '/login', notice: 'Your account has been locked'
+    else
+      allow_params_authentication!
+      self.resource = warden.authenticate!(auth_options)
+      sign_in(resource_name, resource)
+      set_flash_message!(:notice, :signed_in)
+
+      yield resource if block_given?
+      respond_with resource, location: after_sign_in_path_for(resource)
+    end
   end
 
   # DELETE /resource/sign_out
@@ -40,7 +48,7 @@ class MyDevise::SessionsController < DeviseController
     methods = resource_class.authentication_keys.dup
     methods = methods.keys if methods.is_a?(Hash)
     methods << :password if resource.respond_to?(:password)
-    { methods: methods, only: [:password] }
+    { methods:, only: [:password] }
   end
 
   def auth_options
@@ -58,11 +66,11 @@ class MyDevise::SessionsController < DeviseController
   # If there is no signed in user, it will set the flash message and redirect
   # to the after_sign_out path.
   def verify_signed_out_user
-    if all_signed_out?
-      set_flash_message! :notice, :already_signed_out
+    return unless all_signed_out?
 
-      respond_to_on_destroy
-    end
+    set_flash_message! :notice, :already_signed_out
+
+    respond_to_on_destroy
   end
 
   def all_signed_out?
@@ -76,7 +84,9 @@ class MyDevise::SessionsController < DeviseController
     # support returning empty response on GET request
     respond_to do |format|
       format.all { head :no_content }
-      format.any(*navigational_formats) { redirect_to after_sign_out_path_for(resource_name), status: Devise.responder.redirect_status }
+      format.any(*navigational_formats) do
+        redirect_to after_sign_out_path_for(resource_name), status: Devise.responder.redirect_status
+      end
     end
   end
 end
