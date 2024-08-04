@@ -7,8 +7,8 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
 
     specialcode = params[:code]
-    
-    if !specialcode.nil? 
+
+    unless specialcode.empty?
       company_code = CompanyCode.where(code: specialcode).where(status: 'Active').take
       if !company_code.nil?
 
@@ -19,7 +19,6 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
         return
       end
     end
-
 
     resource.save
     yield resource if block_given?
