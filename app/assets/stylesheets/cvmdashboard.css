@@ -1,5 +1,4 @@
 .employees-index{
-    margin-top: 5%;
     background: linear-gradient(16deg, #ffefff, #fff);
 }
 
@@ -12,10 +11,8 @@
 }
 
 .cvm-index, .cvm-manage_charities {
-    margin-top: 5%;
-    height: calc(100vh - 0px);
+    height: calc(100vh - 80px);
     background: linear-gradient(16deg, #ffefff, #fff);
-    overflow: hidden;
 }
 
 #cvmdashboard{
