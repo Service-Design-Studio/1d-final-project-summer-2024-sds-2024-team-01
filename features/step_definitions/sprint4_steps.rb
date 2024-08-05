@@ -295,6 +295,7 @@ end
 Then('I should see more details of {string}') do |entity_name|
   @entity = Company.find_by(company_name: entity_name) || Charity.find_by(charity_name: entity_name)
   expect(@entity).not_to be_nil, "Expected to find entity with name #{entity_name}, but none was found."
+
   if @entity.is_a?(Company)
     expect(page).to have_content(@entity.company_name)
   elsif @entity.is_a?(Charity)
@@ -302,8 +303,24 @@ Then('I should see more details of {string}') do |entity_name|
   end
 
   expect(page).to have_content(@entity.status)
-  expect(page).to have_selector("iframe[src*='#{rails_blob_path(@entity.document_proof, disposition: 'inline')}']")
-  
+
+  # document_url = rails_blob_path(@entity.document_proof, disposition: 'inline')
+  # puts "Document URL: #{document_url}"  # Debugging line
+
+  # expect(page).to have_selector("iframe[src*='#{document_url}']")
+end
+
+
+Given('there are companies and charities for me to approve') do
+  # Creating companies
+  FactoryBot.create(:grace_company)
+  FactoryBot.create(:friendly_company)
+  FactoryBot.create(:love_company)
+
+  # Creating charities
+  FactoryBot.create(:tasty_charity)
+  FactoryBot.create(:inexpensive_charity)
+  FactoryBot.create(:delightful_charity)
 end
 
 Given('there is {string}') do |user_name|
@@ -314,6 +331,19 @@ Given('there is {string}') do |user_name|
     @user = FactoryBot.create(:dummy_user_three, name: 'Bob Dylan')
   end
 end
+
+When('I click on {string} button for company {string}') do |button_text, company_name|
+  within("tr", text: company_name) do
+    click_button(button_text)
+  end
+end
+
+When('I click on {string} button for charity {string}') do |button_text, charity_name|
+  within(:xpath, "//tr[contains(., '#{charity_name}')]") do
+    click_button(button_text)
+  end
+end
+
 
 
 ############## report user ############

@@ -1,3 +1,4 @@
+
 FactoryBot.define do
   factory :charity do
     charity_name { Faker::Company.name }

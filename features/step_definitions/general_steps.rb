@@ -35,17 +35,29 @@ Given('I am on the {string} page') do |page|
   end
 end
 
-When('I click on {string} button') do |button|
-  click_button button
-end
-
-When('I click on {string}') do |text|
+When('I click on {string} button') do |button_text|
   begin
-    click_link_or_button text
-  rescue Capybara::ElementNotFound
-    find('tr.clickable-row', text: text).click
+    # Wait for the button to appear and be visible
+    button = find_button(button_text, wait: 10, visible: true)
+    button.click
+  rescue Capybara::ElementNotFound => e
+    puts "Element not found: #{button_text} button"
+    save_and_open_page # Opens the page in the browser to inspect the HTML
+    raise e
   end
 end
+
+
+When('I click on {string}') do |element|
+  begin
+    # Use a more specific CSS selector if necessary
+    find('tr.clickable-row', text: element).click
+  rescue Capybara::ElementNotFound => e
+    puts "Element not found: #{element}"
+    raise e
+  end
+end
+
 
 
 
