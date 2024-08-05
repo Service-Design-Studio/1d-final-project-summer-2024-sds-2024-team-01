@@ -33,11 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
   handleAction('.cancel-ban-button', '/admin/ban_user/:id/cancel_ban', 'Successfully cancelled');
 
   // Handle card click to navigate to the user profile
-  document.querySelectorAll('.user-card').forEach(card => {
+  document.querySelectorAll('.clickable-card').forEach(card => {
     card.addEventListener('click', function(event) {
       if (event.target.tagName.toLowerCase() !== 'button' && event.target.tagName.toLowerCase() !== 'form') {
         const profileUrl = this.getAttribute('data-profile-url');
-        console.log('Navigating to:', profileUrl); // Add this line to log the profile URL
+        console.log('Navigating to:', profileUrl); // Log the profile URL
         if (profileUrl) {
           window.location.href = profileUrl;
         } else {
