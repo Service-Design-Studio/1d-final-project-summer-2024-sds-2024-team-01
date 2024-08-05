@@ -9,3 +9,5 @@
 //= link approve_companies.js
 //= link approve_charities.js
 //= link approve_charities.css
+
+ //= link employee.js
