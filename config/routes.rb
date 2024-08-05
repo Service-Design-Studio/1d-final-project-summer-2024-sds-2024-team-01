@@ -49,7 +49,6 @@ Rails.application.routes.draw do
   get 'profile/:id', to: 'profile#index', as: 'user_profile'
 
   get 'profile', to: 'profile#index'
-  get 'profile/edit', to: 'profile#edit'
   patch 'profile', to: 'profile#update'
 
   post 'requests/apply' => 'requests#apply'
@@ -67,22 +66,22 @@ Rails.application.routes.draw do
   post 'notifications/read' => 'notifications#read'
   post 'notifications/clear' => 'notifications#clear'
 
-  resources :chats, only: [:index, :show, :new, :create] do
+  resources :chats, only: [:index, :show] do
     resources :messages, only: [:create]
   end
 
-  namespace :api do
-    namespace :v1 do
-      resources :requests
-    end
-    namespace :v2 do
-      resources :reviews, :requests
-    end
-  end
-
-  # resources :request_application, path: 'applications' do
-  #   resources :reviews, only: %i[new create edit update]
+  # namespace :api do
+  #   namespace :v1 do
+  #     resources :requests
+  #   end
+  #   namespace :v2 do
+  #     resources :reviews, :requests
+  #   end
   # end
+
+  resources :request_application, path: 'applications' do
+    resources :reviews, only: %i[new create edit update]
+  end
 
   namespace :admin do
     resources :approve_companies, only: [:index, :show] do
