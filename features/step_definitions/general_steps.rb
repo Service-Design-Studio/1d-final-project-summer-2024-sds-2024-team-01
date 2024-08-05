@@ -8,20 +8,8 @@ Given('I have an account') do
   first('#user_name', visible: false).set('Harrison Ford')
   first('#user_number', visible: false).set('96789012')
   first('#user_email', visible: false).set('harrison@example.com')
-  first('#code', visible: false).set('No')
-  find('.btn.btn-primary', text: 'Continue').click
   first('#user_password', visible: false).set('asdfasdf')
   first('#user_password_confirmation', visible: false).set('asdfasdf')
-  find('.btn.btn-primary', text: 'Continue').click
-  # Check if the file upload field exists
-  if page.has_css?('#user_avatar')
-    puts "File upload field is present, but no file will be uploaded for this test."
-  end
-
-  # Check if the description field exists
-  if page.has_css?('#user_description')
-    puts "Description field is present, but will be left blank for this test."
-  end
   click_button 'Sign up!'
   expect(page).to have_content('Welcome! You have signed up successfully.')
   click_button(id: 'logoutbtn')
