@@ -1,7 +1,8 @@
 module RequestsHelper
+  include MediaHelper
   def request_thumbnail_url(request)
     if request.thumbnail.attached?
-      url_for(request.thumbnail)
+      image_url(request.thumbnail)
     else
       asset_path('freepik-lmao.jpg')
     end
