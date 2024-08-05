@@ -1,12 +1,9 @@
 <% user.user_reports_as_reported_user.each do |user_report| %>
   <% if user_report.status == 'under_review' %>
-    <% puts "Reported User: #{user_report.reported_user.id} - #{user_report.reported_user.name}" %>
-    <div class="card mb-3 user-card" data-profile-url="<%= profile_path(user_report.reported_user) %>">
+    <div class="card mb-3 user-card clickable-card" data-profile-url="<%= user_profile_path(user_report.reported_user) %>">
       <div class="row g-0">
         <div class="col-md-4">
-          <a href="<%= profile_path(user_report.reported_user) %>">
-            <%= image_tag avatar_url(user_report.reported_user), alt: "Profile Picture", class: "img-fluid rounded-start" %>
-          </a>
+          <%= image_tag avatar_url(user_report.reported_user), alt: "Profile Picture", class: "img-fluid rounded-start" %>
         </div>
         <div class="col-md-8 user-info-padding">
           <div class="card-body">
@@ -18,8 +15,8 @@
             <p class="card-text"><small class="text-muted">Reported by: <%= user_report.reported_by.name %></small></p>
             <p class="card-text"><strong>Reason:</strong> <%= user_report.report_reason %></p>
             <div class="d-flex justify-content-between">
-              <button class="btn custom-btn-banuser-purple ban-button" data-user-id="<%= user_report.reported_user.id %>">Ban</button>
-              <button class="btn custom-btn-banuser-purple cancel-ban-button" data-user-id="<%= user_report.reported_user.id %>">Cancel</button>
+              <button type="button" class="btn custom-btn-banuser-purple ban-button" data-user-id="<%= user_report.reported_user.id %>">Ban</button>
+              <button type="button" class="btn custom-btn-banuser-purple cancel-ban-button" data-user-id="<%= user_report.reported_user.id %>">Cancel</button>
             </div>
           </div>
         </div>
