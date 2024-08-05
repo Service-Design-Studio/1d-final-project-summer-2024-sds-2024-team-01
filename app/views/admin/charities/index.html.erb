@@ -8,119 +8,83 @@
   <%= javascript_include_tag 'approve_charities' %>
 </head>
 <body>
-  <div class="container">
-    <h1>Approve Charities</h1>
-    <nav>
-      <ul>
-        <li><a href="#active-tab" class="tab-link" data-tab="active-tab">Active Charities</a></li>
-        <li><a href="#inactive-tab" class="tab-link" data-tab="inactive-tab">Inactive Charities</a></li>
-        <li><a href="#rejected-tab" class="tab-link" data-tab="rejected-tab">Rejected Charities</a></li>
-      </ul>
-    </nav>
-
-    <div id="active-tab" class="tab-content">
-      <h2>Active Charities</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Charity Name</th>
-            <th>Created At</th>
-            <th>Charity Manager</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @active_charities.each do |charity| %>
-            <tr data-link="<%= admin_charity_path(charity) %>" class="clickable-row">
-              <td><%= charity.charity_name %></td>
-              <td><%= charity.created_at.strftime('%d %b %Y, %H:%M') %></td>
-              <td>
-                <% manager = charity.users.find_by(role_id: 5) %>
-                <%= manager ? manager.name : 'No manager assigned' %>
-              </td>
-              <td><%= charity.status %></td>
-              <td>
-                <%= button_to 'Disable', disable_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning' %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+  <div class="container content_requests_index">
+    <div class="card admin_header">
+      <div class="overlay-container_admin_header">
+        <img src="<%= asset_path('company.jpg') %>" alt="Header Background" class="background-image_admin_header">
+        <div class="overlay_admin_header">
+          <div class="header-text-group_admin_header">
+            <h2 class="header-text_admin_header">Charities management</h2>
+            <h5 class="subheader-text_admin_header">Moderate Charity accounts here</h5>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div id="inactive-tab" class="tab-content" style="display: none;">
-      <h2>Inactive Charities</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Charity Name</th>
-            <th>Created At</th>
-            <th>Charity Manager</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @inactive_charities.each do |charity| %>
-            <tr data-link="<%= admin_charity_path(charity) %>" class="clickable-row">
-              <td><%= charity.charity_name %></td>
-              <td><%= charity.created_at.strftime('%d %b %Y, %H:%M') %></td>
-              <td>
-                <% manager = charity.users.find_by(role_id: 5) %>
-                <%= manager ? manager.name : 'No manager assigned' %>
-              </td>
-              <td><%= charity.status %></td>
-              <td>
-                <%= button_to 'Approve', approve_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success' %>
-                <%= button_to 'Reject', reject_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+    <div class="search-container_requests_index">
+      <div class="">
+        <div class="row">
+          <div class="col-md-12">
+            <form class="search-form_requests_index">
+              <input type="text" class="search-input_requests_index_my form-control" id="searchInput" placeholder="Search for charities here!">
+              <button type="submit" class="btn search-btn_requests_index"><i class="fas fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
+    <ul class="nav nav-tabs charities-tabs mb-3 nav-fill" id="charitiesTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab" aria-controls="active" aria-selected="true">Active Charities</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="inactive-tab" data-bs-toggle="tab" data-bs-target="#inactive" type="button" role="tab" aria-controls="inactive" aria-selected="false">Inactive Charities</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected" type="button" role="tab" aria-controls="rejected" aria-selected="false">Rejected Charities</button>
+      </li>
+    </ul>
 
-    <div id="rejected-tab" class="tab-content" style="display: none;">
-      <h2>Rejected Charities</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Charity Name</th>
-            <th>Created At</th>
-            <th>Charity Manager</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @rejected_charities.each do |charity| %>
-            <tr data-link="<%= admin_charity_path(charity) %>" class="clickable-row">
-              <td><%= charity.charity_name %></td>
-              <td><%= charity.created_at.strftime('%d %b %Y, %H:%M') %></td>
-              <td>
-                <% manager = charity.users.find_by(role_id: 5) %>
-                <%= manager ? manager.name : 'No manager assigned' %>
-              </td>
-              <td><%= charity.status %></td>
-              <td>
-                <!-- Add any actions for rejected charities if needed -->
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+    <div class="tab-content charities-tab-content" id="charitiesTabContent">
+      <% ['active', 'inactive', 'rejected'].each do |tab| %>
+        <div class="tab-pane charities-tab-pane fade <%= 'show active' if @current_tab == tab %>" 
+            id="<%= tab %>" role="tabpanel" aria-labelledby="<%= tab %>-tab">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Charity Name</th>
+                <th>Created At</th>
+                <th>Charity Manager</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% instance_variable_get("@#{tab}_charities").each do |charity| %>
+                <tr data-link="<%= admin_charity_path(charity) %>" class="clickable-row">
+                  <td><%= charity.charity_name %></td>
+                  <td><%= charity.created_at.strftime('%d %b %Y, %H:%M') %></td>
+                  <td>
+                    <% manager = charity.users.find_by(role_id: 5) %>
+                    <%= manager ? manager.name : 'No manager assigned' %>
+                  </td>
+                  <td><%= charity.status %></td>
+                  <td>
+                    <div class="btn-group" role="group">
+                      <% if tab == 'active' %>
+                        <%= button_to 'Disable', disable_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning' %>
+                      <% elsif tab == 'inactive' %>
+                        <%= button_to 'Approve', approve_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success' %>
+                        <%= button_to 'Reject', reject_admin_charity_path(charity), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
     </div>
   </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.clickable-row').forEach(row => {
-        row.addEventListener('click', function() {
-          window.location = this.dataset.link;
-        });
-      });
-    });
-  </script>
 </body>
 </html>
