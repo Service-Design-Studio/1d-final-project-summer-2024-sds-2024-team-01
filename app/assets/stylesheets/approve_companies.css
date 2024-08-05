@@ -87,21 +87,21 @@ nav ul li a:hover {
   cursor: pointer;
 }
 
-.table .btn-warning {
+.btn-warning {
   background-color: #f0ad4e;
   color: #fff;
 }
 
-.table .btn-warning:hover {
+.btn-warning:hover {
   background-color: #ec971f;
 }
 
-.table .btn-success {
+.btn-success {
   background-color: #5cb85c;
   color: #fff;
 }
 
-.table .btn-success:hover {
+.btn-success:hover {
   background-color: #449d44;
 }
 
@@ -131,4 +131,35 @@ nav ul li a:hover {
 }
 
 
+.company-card,
+.charity-card {
+  height: 250px; /* Adjust as needed */
+}
 
+.company-details,
+.charity-details {
+  border-left: 4px solid #007bff;
+  height: 250px;
+}
+
+.company-name {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.text-info {
+  font-weight: 500;
+}
+
+.badge {
+  font-size: 0.9em;
+}
+
+.company-document iframe,
+.charity-document iframe {
+  border: none;
+}

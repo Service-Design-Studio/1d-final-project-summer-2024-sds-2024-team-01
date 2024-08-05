@@ -107,8 +107,32 @@ nav ul li a {
   padding: 0px; /* Adjust padding for tab content spacing */
 }
 
-/* Optional: Customize the table within the tab */
-.table {
-  max-height: 100%; /* Ensure the table doesn't overflow */
-  overflow-y: auto; /* Allow scrolling within the table */
+.charity-card {
+  height: 250px; /* Adjust as needed */
+}
+
+.charity-details {
+  border-left: 4px solid #007bff;
+  height: 250px;
+}
+
+.charity-name {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.text-info {
+  font-weight: 500;
+}
+
+.badge {
+  font-size: 0.9em;
+}
+
+.charity-document iframe {
+  border: none;
 }
