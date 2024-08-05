@@ -1,0 +1,14 @@
+<h1>Confirm Report for <%= @user.name %></h1>
+
+<p>Please confirm that you want to report this user for the following reason:</p>
+<p><strong><%= @report_reason %></strong></p>
+
+<%= form_with url: user_reports_path, method: :post, local: true do |form| %>
+  <%= form.hidden_field :report_reason, value: @report_reason, name: 'user_report[report_reason]' %>
+  <%= form.hidden_field :reported_user, value: @user.id, name: 'user_report[reported_user]' %>
+  <div class="actions">
+    <%= form.submit 'Confirm Report', class: 'btn btn-danger' %>
+  </div>
+<% end %>
+
+<%= link_to 'Cancel', user_profile_path(@user), class: 'btn btn-secondary' %>

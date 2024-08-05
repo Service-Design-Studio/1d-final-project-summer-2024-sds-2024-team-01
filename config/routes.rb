@@ -20,7 +20,9 @@ Rails.application.routes.draw do
 
   authenticated :user, lambda { |u| u.role_id == 2 } do
     namespace :admin do
-      root 'charities#index', as: :admin_root
+      # root to: 'requests#index', as: :admin_root
+      # resources :requests, only: [:index]
+    root 'charities#index', as: :admin_root
     end
   end
 
@@ -84,17 +86,19 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :approve_companies, only: [:index] do
+    resources :approve_companies, only: [:index, :show] do
       member do
         patch :approve
         patch :disable
+        patch :reject
       end
     end
 
-    resources :charities, only: [:index] do
+    resources :charities, only: [:index, :show] do
       member do
         patch :approve
         patch :disable
+        patch :reject
       end
     end
 
@@ -113,10 +117,15 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :user_reports, only: [:new, :create]
+  resources :user_reports, only: [:new, :create] do
+    collection do
+      get 'confirm'
+    end
+  end
+
+  get 'confirm_report', to: 'user_reports#confirm', as: 'confirm_report'
 
   get 'admin/login', to: 'admin_sessions#new', as: 'new_admin_session'
   post 'admin/login', to: 'admin_sessions#create', as: 'admin_sessions'
   delete 'admin/logout', to: 'admin_sessions#destroy', as: 'destroy_admin_session'
 end
-

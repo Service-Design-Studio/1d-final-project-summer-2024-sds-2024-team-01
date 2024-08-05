@@ -9,8 +9,10 @@ class Admin::BanUserController < ApplicationController
 
   def ban
     user = User.find(params[:id])
-    user_report = user.user_reports_as_reported_user.find_by(status: 'under_review')
-    if user_report && user_report.update(status: 'ban')
+    user_reports = user.user_reports_as_reported_user.where(status: 'under_review')
+    
+    if user_reports.exists?
+      user_reports.update_all(status: 'ban')
       send_notification_and_email(user, 'You have been banned from the web app.')
       flash[:notice] = "#{user.name} has been banned."
       render json: { success: true }
@@ -21,8 +23,9 @@ class Admin::BanUserController < ApplicationController
 
   def unban
     user = User.find(params[:id])
-    user_report = user.user_reports_as_reported_user.find_by(status: 'ban')
-    if user_report && user_report.update(status: 'Active')
+    user_reports = user.user_reports_as_reported_user.where(status: 'ban')
+    if user_reports.exists?
+      user_reports.update_all(status: 'Active')
       send_notification_and_email(user, 'You have been unbanned from the web app.')
       flash[:notice] = "#{user.name} has been unbanned."
       render json: { success: true }
@@ -33,8 +36,9 @@ class Admin::BanUserController < ApplicationController
 
   def cancel_ban
     user = User.find(params[:id])
-    user_report = user.user_reports_as_reported_user.find_by(status: 'under_review')
-    if user_report && user_report.update(status: 'Active')
+    user_reports = user.user_reports_as_reported_user.where(status: 'under_review')
+    if user_reports.exists?
+      user_reports.update_all(status: 'Active')
       flash[:notice] = "No ban placed on #{user.name}."
       render json: { success: true }
     else

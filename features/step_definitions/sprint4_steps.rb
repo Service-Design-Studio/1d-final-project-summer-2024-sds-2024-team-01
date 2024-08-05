@@ -252,3 +252,110 @@ Given('Willing Hearts has put out a request') do
   charity = create(:user, charity_id: whearts.id, role_id: 5)
   create(:request, title: 'Willing Hearts request', created_by: charity.id)
 end
+
+##############################################  ADMIN ###################
+Given('I have an admin account') do
+  create(:user,role_id: 2, email:'admin@example.com',password: 'password',password_confirmation:'password',number: nil)
+end
+
+
+Then('I login as an admin') do
+  visit '/login'
+  fill_in 'user_login', with: 'admin@example.com'
+  fill_in 'user_password', with: 'password'
+  click_button 'Login'
+end
+
+Given('I am on {string} page') do |page|
+  case page
+  when "Approve Inactive Companies"
+    visit admin_approve_companies_path(anchor: 'inactive-tab')
+  when "Approve Active Companies"
+    visit admin_approve_companies_path(anchor: 'active-tab')
+  when "Approve Rejected Companies"
+    visit admin_approve_companies_path(anchor: 'rejected-tab')
+  when "Approve Inactive Charities"
+    visit admin_charities_path(anchor: 'inactive-tab')
+  when "Approve Active Charities"
+    visit admin_charities_path(anchor: 'active-tab')
+  when "Approve Rejected Charities"
+    visit admin_charities_path(anchor: 'rejected-tab')
+  when 'Ban User'
+    visit admin_ban_user_index_path(anchor: 'ban-tab')
+  when 'Unban User'
+    visit admin_ban_user_index_path(anchor: 'unban-tab')
+  when "Millard Robel Profile" 
+    visit 
+
+  else
+    raise "Unknown page: #{page}"
+  end
+end
+
+Then('I should see more details of {string}') do |entity_name|
+  @entity = Company.find_by(company_name: entity_name) || Charity.find_by(charity_name: entity_name)
+  expect(@entity).not_to be_nil, "Expected to find entity with name #{entity_name}, but none was found."
+
+  if @entity.is_a?(Company)
+    expect(page).to have_content(@entity.company_name)
+  elsif @entity.is_a?(Charity)
+    expect(page).to have_content(@entity.charity_name)
+  end
+
+  expect(page).to have_content(@entity.status)
+
+  # document_url = rails_blob_path(@entity.document_proof, disposition: 'inline')
+  # puts "Document URL: #{document_url}"  # Debugging line
+
+  # expect(page).to have_selector("iframe[src*='#{document_url}']")
+end
+
+
+Given('there are companies and charities for me to approve') do
+  # Creating companies
+  FactoryBot.create(:grace_company)
+  FactoryBot.create(:friendly_company)
+  FactoryBot.create(:love_company)
+
+  # Creating charities
+  FactoryBot.create(:tasty_charity)
+  FactoryBot.create(:inexpensive_charity)
+  FactoryBot.create(:delightful_charity)
+end
+
+Given('there is {string}') do |user_name|
+  case user_name
+  when 'Alice Smith'
+    @user = FactoryBot.create(:dummy_user, name: 'Alice Smith')
+  when 'Bob Dylan'
+    @user = FactoryBot.create(:dummy_user_three, name: 'Bob Dylan')
+  end
+end
+
+When('I click on {string} button for company {string}') do |button_text, company_name|
+  within("tr", text: company_name) do
+    click_button(button_text)
+  end
+end
+
+When('I click on {string} button for charity {string}') do |button_text, charity_name|
+  within(:xpath, "//tr[contains(., '#{charity_name}')]") do
+    click_button(button_text)
+  end
+end
+
+
+
+############## report user ############
+Then('I login as User') do
+  visit '/login'
+  fill_in 'user_login', with: 'alice.smith@example.com'
+  fill_in 'user_password', with: 'password'
+  click_button 'Login'
+end
+
+Then('I click on {string} profile') do |profile_name|
+  within('.profile-card_requests_details') do
+    find('h6', text: profile_name).click
+  end
+end
