@@ -5,7 +5,6 @@ Rails.application.routes.draw do
              path_names: { sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register/user', sign_out: 'logout' }
 
   resources :requests
-  resources :devise
   root 'requests#index'
 
   devise_scope :user do
@@ -81,9 +80,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :request_application, path: 'applications' do
-    resources :reviews, only: %i[new create edit update]
-  end
+  # resources :request_application, path: 'applications' do
+  #   resources :reviews, only: %i[new create edit update]
+  # end
 
   namespace :admin do
     resources :approve_companies, only: [:index, :show] do
