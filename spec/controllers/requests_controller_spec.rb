@@ -4,8 +4,12 @@ require 'rails_helper'
 
 RSpec.describe RequestsController, type: :controller do
   let(:testfile) { fixture_file_upload('app/assets/images/freepik-lmao.jpg', 'image/jpeg') }
+  let(:company) { create(:random_company) }
+  let(:charity) { create(:random_charity) }
+  let(:char_comp_assoc) { create(:random_company_charity, company_id: company.id, charity_id: charity.id) }
   let(:user) { create(:user) }
-  let(:corp) { create(:user, role_id: 4) }
+  let(:charuser) { create(:user, role_id: 5, charity_id: charity.id) }
+  let(:corp) { create(:user, role_id: 4, company_id: company.id) }
   let(:valid_attributes) { attributes_for(:request, created_by: user.id, thumbnail: testfile) }
   let(:valid_attributes_no_thumb) { attributes_for(:request, created_by: user.id) }
   let(:invalid_attributes) { attributes_for(:request, title: nil, created_by: user.id) }
@@ -32,10 +36,12 @@ RSpec.describe RequestsController, type: :controller do
     end
     describe 'GET #index' do
       it 'assigns @requests with requests to user ' do
+        puts char_comp_assoc.charity_id
+        create(:request, created_by: charuser.id)
         create(:request)
-        create(:request, reward_type: 'Cash', reward: '$50')
         get :index
         expect(assigns(:in_progress_requests).length).to eq(1)
+        expect(Request.count).to eq(2)
       end
     end
   end

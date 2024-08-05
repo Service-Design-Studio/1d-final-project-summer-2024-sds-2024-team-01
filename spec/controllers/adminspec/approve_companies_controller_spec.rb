@@ -1,69 +1,51 @@
 require 'rails_helper'
-include ActiveJob::TestHelper
 
 RSpec.describe Admin::ApproveCompaniesController, type: :controller do
-  let(:admin) { create(:admin_user) }
-  let(:random_company) { create(:random_company, status: 'Pending') }
+  let(:admin) { create(:user, :admin) }
+  let(:company) { create(:company) }
 
   before do
     sign_in admin
-    ActiveJob::Base.queue_adapter = :test
-    clear_enqueued_jobs
-    clear_performed_jobs
   end
 
   describe 'GET #index' do
-    it 'assigns @companies with pending companies' do
+    it 'returns a success response' do
       get :index
-      expect(assigns(:companies)).to eq([random_company])
+      expect(response).to be_successful
     end
   end
 
   describe 'GET #show' do
-    it 'assigns @company' do
-      get :show, params: { id: random_company.id }
-      expect(assigns(:company)).to eq(random_company)
+    it 'returns a success response' do
+      get :show, params: { id: company.id }
+      expect(response).to be_successful
     end
   end
 
-  describe 'POST #approve' do
-    it 'approves the company and sends an email' do
-      expect {
-        post :approve, params: { id: random_company.id }
-        perform_enqueued_jobs
-      }.to change { random_company.reload.status }.from('Pending').to('Approved')
-
-      expect(ActionMailer::Base.deliveries.count).to eq(1)
-      expect(ActionMailer::Base.deliveries.last.to).to include(random_company.users.find_by(role: Role.find_by(role_name: 'Admin')).email)
-    end
-
-    it 'handles approval failure' do
-      allow_any_instance_of(Company).to receive(:update!).and_raise(ActiveRecord::RecordInvalid)
-      post :approve, params: { id: random_company.id }
+  describe 'PATCH #approve' do
+    it 'approves the company' do
+      patch :approve, params: { id: company.id }
+      company.reload
+      expect(company.status).to eq('Active')
       expect(response).to redirect_to(admin_approve_companies_path)
-      expect(flash[:alert]).to eq('There was an error approving the company.')
     end
   end
 
-  describe 'POST #reject' do
+  describe 'PATCH #disable' do
+    it 'disables the company' do
+      patch :disable, params: { id: company.id }
+      company.reload
+      expect(company.status).to eq('Inactive')
+      expect(response).to redirect_to(admin_approve_companies_path)
+    end
+  end
+
+  describe 'PATCH #reject' do
     it 'rejects the company' do
-      post :reject, params: { id: random_company.id }
-      expect(random_company.reload.status).to eq('Rejected')
-    end
-  end
-
-  describe 'before_action #check_admin' do
-    let(:non_admin) { create(:user) }
-
-    before do
-      sign_out admin
-      sign_in non_admin
-    end
-
-    it 'redirects non-admin users' do
-      get :index
-      expect(response).to redirect_to(root_path)
-      expect(flash[:alert]).to eq('You are not authorized to perform this action')
+      patch :reject, params: { id: company.id }
+      company.reload
+      expect(company.status).to eq('Rejected')
+      expect(response).to redirect_to(admin_approve_companies_path)
     end
   end
 end

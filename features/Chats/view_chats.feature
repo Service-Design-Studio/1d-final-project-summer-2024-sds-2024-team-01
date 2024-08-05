@@ -12,7 +12,7 @@ Background:
     Scenario: View chats from the home page
         Given I am on the 'home' page
         When I click on the request
-        And I choose "Chat"
+        And I click on Chat
         Then I should be redirected to a chat with that user
     
     Scenario: View chats from the myapplications page
@@ -20,7 +20,7 @@ Background:
         And I am on the 'myapplications' page
         When I click on 'Pending'
         When I click on 'Test Request to Apply'
-        And I choose "Chat"
+        And I click on Chat
         Then I should be redirected to a chat with that user
 
     Scenario: View chats from the myrequests page
@@ -28,15 +28,11 @@ Background:
         And there is an application for my request
         And I am on the 'myrequests' page
         When I expand the request
-        And I choose "Chat"
+        And I click on Chat under request
         Then I should be redirected to a chat with that user
 
     Scenario: View chats from the navbar
         Given I have a chat with another user
-        When I click on "Chat" 
+        When I click on Chat on the navbar 
         Then I should be redirected to the chats page
         And I should see "Alice Smith"
-
-
-
-

@@ -72,14 +72,19 @@ FactoryBot.define do
       password_confirmation { 'password' }
     end
 
-    factory :admin_user do
-      name { Faker::Name.name }
-      email { Faker::Internet.email }
-      number { "90000001" }
-      status { 'Active' }
-      role_id { 2 }
+    factory :admin_user, traits: [:admin] do
+      email { 'admin@example.com' }
       password { 'password' }
       password_confirmation { 'password' }
+    end
+    factory :millard_robel do
+      name { 'Millard Robel' }
+      email { 'millard.robel@example.com' }
+      number { '90000002' }
+      status { 'Active' }
+      password { 'password' }
+      password_confirmation { 'password' }
+      role_id { 1 }
     end
   end
 end

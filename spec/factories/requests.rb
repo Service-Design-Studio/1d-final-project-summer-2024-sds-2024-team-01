@@ -64,4 +64,21 @@ FactoryBot.define do
     #   )
     # end
   end
+  factory :specific_request, class: 'Request' do
+    title { 'Help with saluting alarm' }
+    description { 'Description of the request' }
+    category { 'General' }
+    location { 'POINT(103.851959 1.290270)' }
+    stringlocation { 'Address of the request' }
+    date { Faker::Date.forward(from: Date.tomorrow, days: 90) }
+    start_time { '10:00 AM' }
+    number_of_pax { 1 }
+    duration { 2 }
+    reward_type { 'None' }
+    reward { 'None' }
+    status { 'Available' }
+    association :user, factory: :millard_robel, strategy: :build
+    created_at { DateTime.now }
+    updated_at { DateTime.now }
+  end
 end

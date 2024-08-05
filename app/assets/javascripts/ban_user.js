@@ -7,10 +7,6 @@ function initializeBanUser() {
   const banUserContainer = document.getElementById('banUserContainer');
   const unbanUserContainer = document.getElementById('unbanUserContainer');
 
-  // Initialize tab functionality
-  initializeTabs();
-
-  // Event delegation for dynamically loaded content
   if (banUserContainer) {
     banUserContainer.addEventListener('click', handleBanUserContainerClick);
   }
@@ -18,10 +14,8 @@ function initializeBanUser() {
     unbanUserContainer.addEventListener('click', handleUnbanUserContainerClick);
   }
 
-  // Event listener for card click
   document.querySelectorAll('.user-card').forEach(card => {
     card.addEventListener('click', function(event) {
-      // Prevent form button clicks from triggering card click
       if (event.target.tagName.toLowerCase() !== 'button' && event.target.tagName.toLowerCase() !== 'form') {
         const userId = card.dataset.userId;
         window.location.href = `/profile/${userId}`;
@@ -29,18 +23,15 @@ function initializeBanUser() {
     });
   });
 
-  // Update UI when the page loads
   updateUIBasedOnStatus();
 }
 
 function handleBanUserContainerClick(event) {
-  // handle "Ban" button click
   if (event.target.closest('.ban-form')) {
     event.preventDefault();
     handleStatusChange(event.target.closest('.ban-form'), 'ban');
   }
 
-  // handle cancel button
   if (event.target.closest('.cancel-form')) {
     event.preventDefault();
     handleStatusChange(event.target.closest('.cancel-form'), 'Active');
@@ -85,7 +76,10 @@ function updateUserStatus(userCard, status) {
     unbanUserContainer.appendChild(userCard);
     switchTab(document.querySelector('[href="#unban"]'));
   } else if (status === 'Active') {
-    userCard.remove();
+    const banUserContainer = document.getElementById('banUserContainer');
+    userCard.setAttribute('data-status', 'under_review');
+    banUserContainer.appendChild(userCard);
+    switchTab(document.querySelector('[href="#ban"]'));
   }
 
   updateUIBasedOnStatus();

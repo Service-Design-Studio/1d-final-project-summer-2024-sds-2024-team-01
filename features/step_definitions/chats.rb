@@ -7,8 +7,16 @@ Then("I should be redirected to a chat with that user") do
     expect(page).to have_content('Alice Smith')
 end
 
-And("I choose {string}") do |button_text|
-    find('a.btn.custom-btn-chat_my', text: button_text).click
+And("I click on Chat") do
+  find('.chat-button').click
+end
+
+And("I click on Chat under request") do
+  find('.btn.custom-btn-chat_my').click
+end
+
+And("I click on Chat on the navbar") do
+  find('.navbar .nav-link', text: 'Chat').click
 end
 
 #navbar

@@ -8,13 +8,15 @@ Background:
     And I login 
     And there is a registered user on the app
     And there is a request to be applied for
-    And there is an application for my request
     And I am on the "home" page
     And I click on the request
+    And I click on 'Apply'
+    And my application has been accepted
 
 Scenario:
         Given I am on the 'myapplications' page
         When I expand the request
         And I press "Withdraw"
+        And I click on "Withdrawn/Rejected"
         Then the application should be "Withdrawn"
-        And I should see 'Withdraw Success'
+        And I should see 'Withdraw success'
