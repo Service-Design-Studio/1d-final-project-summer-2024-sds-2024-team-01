@@ -46,31 +46,30 @@ nav ul li a {
   border-radius: 5px;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-}
-
-.table th, .table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.table th {
-  background-color: #f2f2f2;
-  text-align: left;
-}
-
-.table tr:hover {
-  background-color: #f1f1f1;
-}
-
-.table tr:hover {
-  background-color: rgba(173, 136, 198, 0.1); /* Light purple overlay */
+.clickable-row {
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
+.clickable-row:hover {
+  background-color: #f8f9fa;
+}
+
+.container-fluid{
+  padding: 0px;
+  overflow-x: hidden;
+}
+
+.col-3, .col-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
 
 .btn {
   padding: 8px 12px;
@@ -105,7 +104,7 @@ nav ul li a {
 .charities-tab-pane {
   height: 100%; /* Ensure the tab pane fills the container */
   overflow-y: auto; /* Enable scrolling for tab content */
-  padding: 15px; /* Adjust padding for tab content spacing */
+  padding: 0px; /* Adjust padding for tab content spacing */
 }
 
 /* Optional: Customize the table within the tab */

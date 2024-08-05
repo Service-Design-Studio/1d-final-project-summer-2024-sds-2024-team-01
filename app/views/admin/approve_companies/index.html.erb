@@ -49,37 +49,36 @@
       <% ['active', 'inactive', 'rejected'].each do |tab| %>
         <div class="tab-pane companies-tab-pane fade <%= 'show active' if @current_tab == tab %>" 
             id="<%= tab %>" role="tabpanel" aria-labelledby="<%= tab %>-tab">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Company Name</th>
-                <th>Created At</th>
-                <th>Corporate Manager</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% instance_variable_get("@#{tab}_companies").each do |company| %>
-                <tr data-link="<%= admin_approve_company_path(company) %>" class="clickable-row">
-                  <td><%= company.company_name %></td>
-                  <td><%= company.created_at.strftime('%d %b %Y, %H:%M') %></td>
-                  <td><%= company.users.find_by(role_id: 3)&.name || 'No manager assigned' %></td>
-                  <td><%= company.status %></td>
-                  <td>
-                    <div class="btn-group" role="group">
-                      <% if tab == 'active' %>
-                        <%= button_to 'Disable', disable_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning' %>
-                      <% elsif tab == 'inactive' %>
-                        <%= button_to 'Approve', approve_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success' %>
-                        <%= button_to 'Reject', reject_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-                      <% end %>
-                    </div>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+          <div class="container-fluid">
+            <div class="row bg-light py-2 fw-bold">
+              <div class="col-3 d-flex align-items-center ps-4">Company Name</div>
+              <div class="col-2 d-flex align-items-center">Created At</div>
+              <div class="col-3 d-flex align-items-center">Corporate Manager</div>
+              <div class="col-2 d-flex align-items-center">Status</div>
+              <div class="col-2 d-flex align-items-center">Actions</div>
+            </div>
+
+            <% instance_variable_get("@#{tab}_companies").each do |company| %>
+              <div class="row py-2 border-bottom clickable-row" data-link="<%= admin_approve_company_path(company) %>">
+                <div class="col-3 ps-4"><%= company.company_name %></div>
+                <div class="col-2"><%= company.created_at.strftime('%d %b %Y, %H:%M') %></div>
+                <div class="col-3">
+                  <%= company.users.find_by(role_id: 3)&.name || 'No manager assigned' %>
+                </div>
+                <div class="col-2"><%= company.status %></div>
+                <div class="col-2">
+                  <div class="btn-group" role="group">
+                    <% if tab == 'active' %>
+                      <%= button_to 'Disable', disable_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-warning btn-sm' %>
+                    <% elsif tab == 'inactive' %>
+                      <%= button_to 'Approve', approve_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-success btn-sm me-1' %>
+                      <%= button_to 'Reject', reject_admin_approve_company_path(company), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>

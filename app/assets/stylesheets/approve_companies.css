@@ -54,27 +54,31 @@ nav ul li a:hover {
   color: #fff;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table th,
-.table td {
-  padding: 15px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.table th {
-  background-color: #f4f4f4;
-  color: #333;
-}
-
-.table tr:hover {
-  background-color: rgba(173, 136, 198, 0.1); /* Light purple overlay */
+.clickable-row {
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
+.clickable-row:hover {
+  background-color: #f8f9fa;
+}
+
+.container-fluid{
+  padding: 0px;
+  overflow-x: hidden;
+}
+
+.col-3, .col-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
 
 .table .btn {
   padding: 8px 16px;
@@ -116,7 +120,6 @@ nav ul li a:hover {
 .companies-tab-content {
   height: 58vh; /* Set a fixed height for the tab content container */
   overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
-  padding: 10px; /* Optional padding for spacing */
   margin-top: -16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visual separation */
   border-radius: 5px; /* Optional: Add rounded corners for a smoother look */
@@ -125,12 +128,7 @@ nav ul li a:hover {
 .companies-tab-pane {
   height: 100%; /* Make sure each tab pane takes up the full height of the container */
   overflow-y: auto; /* Allow scrolling within the tab pane */
-  padding: 15px; /* Add padding to the tab content for better readability */
 }
 
-/* Optional: Customize the table within the tab */
-.table {
-  max-height: 100%; /* Ensure the table doesn't exceed the container height */
-  overflow-y: auto; /* Allow scrolling within the table */
-}
+
 
