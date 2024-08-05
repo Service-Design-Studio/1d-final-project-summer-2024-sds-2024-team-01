@@ -15,16 +15,17 @@ Given('I have an account') do
   click_button(id: 'logoutbtn')
 end
 
-# Given('I login as an admin') do
-#   admin = create(:user, role_id: 2)
-#   # sign_in
-# end
+Given('I login as an admin') do
+  admin = create(:user, role_id: 2)
+  # sign_in
+end
 
-Then('I login') do
+And('I login') do
   visit new_user_session_path
-  fill_in 'Email', with: @user.email
-  fill_in 'Password', with: @user.password
-  click_button 'Log in'
+  fill_in 'user_login', with: '96789012'
+  fill_in 'user_password', with: 'asdfasdf'
+  click_button 'Login'
+  expect(page).to have_content('Signed in successfully.')
 end
 
 Given('I am on the {string} page') do |page|
@@ -35,30 +36,13 @@ Given('I am on the {string} page') do |page|
   end
 end
 
-When('I click on {string} button') do |button_text|
-  begin
-    # Wait for the button to appear and be visible
-    button = find_button(button_text, wait: 10, visible: true)
-    button.click
-  rescue Capybara::ElementNotFound => e
-    puts "Element not found: #{button_text} button"
-    save_and_open_page # Opens the page in the browser to inspect the HTML
-    raise e
-  end
+When('I click on {string} button') do |button|
+  click_button button
 end
 
-
-When('I click on {string}') do |element|
-  begin
-    # Use a more specific CSS selector if necessary
-    find('tr.clickable-row', text: element).click
-  rescue Capybara::ElementNotFound => e
-    puts "Element not found: #{element}"
-    raise e
-  end
+When('I click on {string}') do |str|
+  click_on str
 end
-
-
 
 
 And('I press {string}') do |button_text|
