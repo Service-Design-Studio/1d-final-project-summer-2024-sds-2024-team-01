@@ -21,7 +21,6 @@
           </p>
           <%# <p>Trusted user</p> %>
         </div>
-        
          <!-- Report Button -->
         <% if user_signed_in? && !current_user.admin? %>
           <div class="report-button-container">
@@ -32,6 +31,12 @@
     </div>
     <div class="card mb-0 custom-card_profile body-card_profile">
       <div class="card-body body-container_profile">
+        <div class="profile-user_description_container">
+          <span class="bio-label">Bio</span>
+          <div class="bio-content">
+            <%= @profile.description.presence || 'This user has not provided a description.' %>
+          </div>
+        </div>
         <% if user_signed_in? && current_user == @profile %>
           <div class="follow-btn-profile">
             <%= button_tag 'Edit profile', type: 'button', id: 'edit-profile-btn', class: 'btn follow-btn-profile' %>
@@ -183,12 +188,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="profile-user_description_container">
-    <span class="bio-label">Bio</span>
-    <div class="bio-content">
-      <%= @profile.description.presence || 'This user has not provided a description.' %>
     </div>
   </div>
 </body>

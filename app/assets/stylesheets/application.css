@@ -1,139 +1,140 @@
 /* Navbar CSS functions*/
-header {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
-
-form {
-  margin: 20px 0;
-}
-
-.offsetnavbar {
-    margin-top:80px;
-}
-
-.noticefadeout {
+.navbar {
+  width: 100%;
+  padding: 0 1rem;
+  background: linear-gradient(45deg, #ad88c6, #656DAD);
+  height: 80px;
+  display: flex;
   position: fixed;
-  background: rgba(80, 80, 80, 0.7);
-  backdrop-filter: blur(10px);
-  color: #fff;
-  top: 90px;
-  right: 10px;
-  padding: 20px;
-  z-index: 200;
-  border-radius: 15px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  animation: fadeoutnotif 5s forwards;
-  transition: all 0.3s ease;
-}
-
-.noticefadeout::before {
-  content: '';
-  position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  pointer-events: none;
+  z-index: 1000;
 }
 
-@keyframes fadeoutnotif {
-  0% {
-      opacity: 0;
-      transform: translateY(20px);
-  }
-  10% {
-      opacity: 1;
-      transform: translateY(0);
-  }
-  90% {
-      opacity: 1;
-      transform: translateY(0);
-  }
-  100% {
-      opacity: 0;
-      transform: translateY(-20px);
-  }
-}
-
-.button-container .button {
-  margin-right: 10px;
-}
-
-.button-container {
+.navbar .container {
   display: flex;
-  align-items: flex-end;
-}
-
-.navbar {
+  align-items: center;
   width: 100%;
-  padding: 0rem; /* Adjust padding as needed */
-  background-color: #ad88c6 !important;
-    background-color: linear;
-    background: linear-gradient(45deg, #ad88c6, #656DAD);
-  height: 80px; /* Set a fixed height */
-  display: flex;
-  align-items: center; /* Center items vertically */
+  height: 100%;
 }
 
 .navbar-brand {
   display: flex;
   align-items: center;
+  margin-right: 2rem; /* Add some space between logo and nav links */
 }
 
-.navbar-brand img {
-  margin-right: 8px; /* Adjust the spacing as needed */
+.logo-circle-navbar {
+  width: 2.8em;
+  height: 2.8em;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.d-flex > button {
-  margin-left: 10px; /* Adjust spacing between buttons */
-}
-
-.content {
-  padding-top: 40px; /* Adjust this value based on the height of your navbar */
+.nav-links {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: auto; /* This pushes the rest of the content to the right */
 }
 
 .nav-link {
-  margin-right: 40px; /* Adjust this value to increase spacing */
+  color: white;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
 }
 
 .nav-link:hover {
   color: lightgray;
 }
 
-/*navbar profile picture*/
-.nav-profile-picture {
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for both transformations */
-  cursor: pointer; /* Change cursor to pointer to indicate interactivity */
-}
-
-.nav-profile-picture:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow effect */
-}
-
-
-.logo-circle-navbar {
-  width: 2.8em; /* Adjust the size as needed */
-  height: 2.8em; /* Adjust the size as needed */
-  border-radius: 50%; /* Makes the image circular */
-  object-fit: cover; /* Ensures the image covers the container without distortion */
-}
-
-.logo-circle-login-reg {
-  position: relative;
-  left: 21%;
-  margin-bottom: 5%;
-  width: 12em; /* Adjust the size as needed */
-  height: 12em; /* Adjust the size as needed */
-  border-radius: 50%; /* Makes the image circular */
-  object-fit: cover; /* Ensures the image covers the container without distortion */
+.navbar-right {
+  display: flex;
   align-items: center;
 }
 
-.text-neutral-dark{
-    color: #505050
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.custom-btn-dark-purple {
+  margin-right: 1rem;
+}
+
+.profile-link {
+  margin-right: 5rem;
+}
+
+.notification-bell {
+  position: relative;
+  margin-right: 1rem;
+}
+
+.notifalertcount {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 0.75rem;
+}
+
+.logoutbutton {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+  .nav-link {
+    padding: 0 0.5rem;
+  }
+  
+  .custom-btn-dark-purple {
+    margin-right: 0.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar {
+    height: auto;
+    padding: 0.5rem 1rem;
+  }
+  
+  .navbar .container {
+    flex-wrap: wrap;
+  }
+  
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 0.5rem;
+  }
+  
+  .navbar-right {
+    order: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-right {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  
+  .custom-btn-dark-purple {
+    margin-bottom: 0.5rem;
+  }
 }
 
 /* Flash notifications styling */
@@ -1524,6 +1525,7 @@ font-weight: bold;
 }
 
 .body-container_profile {
+  position: relative;
   min-height: 800px;
 }
 
@@ -1717,16 +1719,17 @@ body.popup-open {
 
 .profile-user_description_container {
   position: absolute;
-  top: 65%; /* Adjust as needed */
-  right: 68.5%;
+  top: 32%; /* Adjust this value to move it up or down */
+  left: 15px; /* Adjust this value to move it left or right */
   width: 50%;
-  max-width: 250px; /* Adjust based on your layout */
-  height: 500px;
-  margin: 0 auto; /* Center the container */
+  max-width: 250px;
+  height: auto;
+  min-height: 200px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: white;
+  z-index: 100;
 }
 
 .bio-label {
