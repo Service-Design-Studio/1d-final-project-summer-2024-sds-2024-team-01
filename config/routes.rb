@@ -20,7 +20,9 @@ Rails.application.routes.draw do
 
   authenticated :user, lambda { |u| u.role_id == 2 } do
     namespace :admin do
-      root 'charities#index', as: :admin_root
+      # root to: 'requests#index', as: :admin_root
+      # resources :requests, only: [:index]
+    root 'charities#index', as: :admin_root
     end
   end
 
