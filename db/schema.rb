@@ -168,7 +168,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
 
   create_table "user_reports", force: :cascade do |t|
     t.text "report_reason", null: false
-    t.string "status", null: false
+    t.string "status", default: "under_review", null: false
     t.bigint "reported_by", null: false
     t.bigint "reported_user", null: false
     t.datetime "created_at", null: false

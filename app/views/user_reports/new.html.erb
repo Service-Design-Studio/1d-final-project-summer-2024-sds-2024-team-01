@@ -1,0 +1,14 @@
+<h1>Report User: <%= @reported_user.name %></h1>
+
+<%= form_with model: @user_report, url: user_reports_path, local: true do |form| %>
+  <div class="form-group">
+    <%= form.label :report_reason, "Reason for Report" %>
+    <%= form.text_area :report_reason, class: "form-control" %>
+  </div>
+  
+  <%= form.hidden_field :reported_user, value: @reported_user.id %>
+  
+  <div class="form-group">
+    <%= form.submit "Submit Report", class: "btn btn-danger" %>
+  </div>
+<% end %>

@@ -17,6 +17,6 @@ Feature: Login
     | Phone number  |        |
     | Password      |        |
     And I click on "Login" button
-    Then I should see a message "Invalid Number or password."
+    Then I should see a message "Invalid Login or password."
 
     Scenario: Test login

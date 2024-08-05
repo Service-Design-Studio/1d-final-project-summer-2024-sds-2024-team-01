@@ -25,8 +25,16 @@ Scenario: Applying for a request that is full
         When I click on 'Apply'
         Then I should see "Sorry, this request is unable to accept anymore applicants"
 
-Scenario: Receiving a notification that someone has applied for my request
-        Given that someone has applied for my request
+Scenario: Receiving a notification that someone accepted my application
+        Given I click on 'Apply'
+        And that someone has 'accepted' my application
         When I am on the 'home' page
-        And I click on the notification icon
-        Then I should see 'Someone has applied for your request'
+        And I click the notification icon
+        Then I should see 'Your application for a request has been accepted'
+
+Scenario: Receiving a notification that someone rejected my application
+        Given I click on 'Apply'
+        And that someone has 'rejected' my application
+        When I am on the 'home' page
+        And I click the notification icon
+        Then I should see 'Your application for a request has been rejected'

@@ -92,7 +92,7 @@ RSpec.describe MyRequestsController, type: :controller do
 
     it 'notifies all the applicants' do
       post :complete, params: { id: request.id }
-      expect(Notification.count).to eq(RequestApplication.where(request_id: request.id).where(status: 'Accepted').count)
+      expect(Notification.count).to eq(RequestApplication.where(request_id: request.id).where(status: 'Completed').count)
     end
     # Add more specific tests as needed
   end

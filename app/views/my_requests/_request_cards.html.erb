@@ -66,7 +66,7 @@
                           </div>
                         </div>
                       </a>
-                      <% if application.status == 'Accepted' and application.request.status == 'Completed' %>
+                      <% if application.status == 'Completed' %>
                         <% if application.reviewed?(current_user) != true %>
                           <a href="/reviews/new?request_application_id=<%= application.id %>">
                             <button class="btn leave-review-btn_mark_completed">
@@ -93,7 +93,7 @@
                     </div>
                     <!-- Split button or status indicator -->
                     <div class="split-button_requests_index_my" data-application-id="<%= application.id %>">
-                      <% if application.status == 'Accepted' %>
+                      <% if application.status == 'Accepted' || application.status == 'Completed' %>
                         <div class="status-indicator_my accepted">Accepted</div>
                       <% elsif application.status == 'Rejected' %>
                         <div class="status-indicator_my rejected">Rejected</div>

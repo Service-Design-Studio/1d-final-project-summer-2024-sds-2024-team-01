@@ -84,7 +84,7 @@ namespace :db do
 
       # Mock data for corporate users
       4.times do
-        test_company = create(:random_company, status: 'Pending')
+        test_company = create(:random_company, status: 'Inactive')
         create(:user, status: 'Inactive', company_id: test_company.id, role_id: 3, number: nil)
       end
 

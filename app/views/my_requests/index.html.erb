@@ -3,9 +3,14 @@
 <body data-controller="my-requests">
   <div class="container content_requests_index">
     <div class="card custom-card_requests_index">
-      <div class="card-body header-container_requests_index">
-        <h2 class="header-text_requests_index">My Requests</h2>
-        <h5 class="subheader-text_requests_index">Check on your own requests and accept help from applicants!</h5>
+      <div class="overlay-container_requests_index">
+        <img src="<%= asset_path('pexels-mikhail-nilov-8297478.jpg') %>" alt="Header Background" class="background-image_requests_index">
+        <div class="overlay_requests_index">
+          <div class="header-text-group_requests_index">
+            <h2 class="header-text_requests_index">My Requests</h2>
+            <h5 class="subheader-text_requests_index">Check on your own requests and accept help from applicants!</h5>
+          </div>
+        </div>
       </div>
     </div>
     <!-- Search Bar Container -->
@@ -21,6 +26,8 @@
         </div>
       </div>
     </div>
+
+    <!--Tabs for MyRequest -->
     <ul class="nav nav-tabs my-requests-tabs mb-3" id="myRequestsTabs" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active" id="in-progress-tab" data-bs-toggle="tab" data-bs-target="#in-progress" type="button" role="tab" aria-controls="in-progress" aria-selected="true">In Progress</button>

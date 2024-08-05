@@ -9,7 +9,7 @@ When('I enter the following credentials:') do |table|
   table.hashes.each do |row|
     case row['field']
     when 'Phone number'
-      fill_in 'user_number', with: row['value']
+      fill_in 'user_login', with: row['value']
     when 'Password'
       fill_in 'user_password', with: row['value']
     end
@@ -47,7 +47,7 @@ When('I fill in the following:') do |table|
       fill_in 'user_email', with: row['value']
     when 'Password'
       fill_in 'user_password', with: row['value']
-    when 'Confirm password'
+    when 'Confirm Password'
       fill_in 'user_password_confirmation', with: row['value']
     end
   end
@@ -58,3 +58,7 @@ Then('I will be at request page') do
   visit '/requests'
 end
 ### I should not be needing to write this code cos they will ownself go to the request page and then I have to check that I am at the request page and see the items there 
+
+When('I click on Continue') do
+  find('div .btn.btn-primary', visible: true).click
+end
