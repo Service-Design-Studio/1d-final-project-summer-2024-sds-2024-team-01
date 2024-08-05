@@ -1,4 +1,7 @@
 .notifbell {
+    position: relative;
+    top: 5%;
+    left: -15%;
     cursor: pointer; 
  }
  

@@ -1,50 +1,86 @@
-<div class="pt-5">
-  <h3 class="pb-4">
-    <b>
-    Manage Employees
-    </b>
-  </h3>
-<table class="table">
-  <thead>
-    <th>Name</th>
-    <th>Email</th>
-    <th class="text-center">Weekly Hours</th>
-    <th class="text-center">Total Hours</th>
-    <th class="text-center">Actions</th>
-  </thead>
-  <tbody>
-  <% @allemployees.each do |employee| %>
-    <tr class="align-middle">
-      <td>
-        <a href="/profile?id=<%=employee.id%>">
-        <%= employee.name %> 
-        </a>
-      </td>
-      <td>
-      <%= employee.email %> 
-      </td>
-      <td class="text-center">
-      <%= employee.weekly_hours %> 
-      </td>
-      <td class="text-center">
-      <%= employee.total_hours %> 
-      </td>
-      <td>
+<div class="container content_requests_index">
+  <div class="card custom-card_requests_index">
+    <div class="overlay-container_requests_index">
+      <img src="<%= asset_path('pexels-sora-shimazaki-5668859.jpg') %>" alt="Header Background" class="background-image_requests_index">
+      <div class="overlay_requests_index">
+        <div class="header-text-group_requests_index">
+          <h2 class="header-text_requests_index">Manage Employees</h2>
+          <h5 class="subheader-text_requests_index">Manage your employees' accounts here!</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="search-container_requests_index">
+    <div class="">
+      <div class="row">
+        <div class="col-md-12">
+          <form class="search-form_requests_index">
+            <input type="text" class="search-input_requests_index_my form-control" id="searchInput" placeholder="Find your employees using their name, or their email!">
+            <button type="submit" class="btn search-btn_requests_index"><i class="fas fa-search"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="cvmdashboard">
+    <div class="employee-container">
+      <div class="pt-5">
+      <table class="table">
+        <thead>
+          <th>Name</th>
+          <th>Email</th>
+          <th class="text-center">Weekly Hours</th>
+          <th class="text-center">Total Hours</th>
+          <th class="text-center">Actions</th>
+        </thead>
+        <tbody id="employeeTableBody">
+        <% @allemployees.each do |employee| %>
+          <tr class="align-middle">
+            <td>
+              <div class="employee-item mb-3">
+                <a href="/profile?id=<%= employee.id %>" class="text-decoration-none">
+                  <div class="d-flex align-items-center">
+                    <img src="<%= avatar_url(employee) %>" alt="<%= employee.name %>" width="50" height="50" class="rounded-circle mr-3">
+                    <div>
+                      <h6 class="mb-0" style="margin-left: 10px;"><%= employee.name %>
+                        <% if employee.role_id == 4 %>
+                          <i class="fas fa-building ml-2" style="font-size: 16px;"></i>
+                        <% end %>
+                      </h6>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </td>
+            <td>
+            <%= employee.email %> 
+            </td>
+            <td class="text-center">
+            <%= employee.weekly_hours %> 
+            </td>
+            <td class="text-center">
+            <%= employee.total_hours %> 
+            </td>
+            <td>
 
-      <% if employee.status != 'Active' %>
-        <%= form_with url: cvm_employees_activate_path, method: :patch, class: "my-2 d-flex justify-content-center" do %>
-          <%= hidden_field_tag :employee_id, employee.id %>
-          <button type="submit" class="m-0 btn btn-success"> Activate </button>
+            <% if employee.status != 'Active' %>
+              <%= form_with url: cvm_employees_activate_path, method: :patch, class: "my-2 d-flex justify-content-center" do %>
+                <%= hidden_field_tag :employee_id, employee.id %>
+                <button type="submit" class="m-0 btn btn-success"> Activate </button>
+              <% end %>
+            <% else %>
+              <%= form_with url: cvm_employees_deactivate_path, method: :patch, class: "my-2 d-flex justify-content-center" do %>
+                <%= hidden_field_tag :employee_id, employee.id %>
+                <button type="submit" class="m-0 btn btn-danger"> Deactivate </button>
+              <% end %>
+            <% end %>
+            </td>
+          </tr>
         <% end %>
-      <% else %>
-        <%= form_with url: cvm_employees_deactivate_path, method: :patch, class: "my-2 d-flex justify-content-center" do %>
-          <%= hidden_field_tag :employee_id, employee.id %>
-          <button type="submit" class="m-0 btn btn-danger"> Deactivate </button>
-        <% end %>
-      <% end %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
 </div>
+<%= javascript_include_tag 'employee' %>

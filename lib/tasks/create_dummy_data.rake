@@ -102,10 +102,12 @@ namespace :db do
       create(:user, status: 'Active', company_id: abc_company.id, role_id: 3,
                     number: nil, email: 'cvm1@test.com')
       create(:random_company_code, company: abc_company)
+      create(:user, email: 'cv@test.com' status: 'Active', company_id: abc_company.id, role_id: 4, number: nil)
       10.times do
         create(:user, status: 'Active', company_id: abc_company.id, role_id: 4, number: nil)
         create(:random_charity)
       end
+      create(:user, email: 'charity@test.com' status: 'Active', charity_id: Charity.first.id, role_id: 5, number: nil)
 
       create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
                     number: nil, email: 'cvm2@test.com')

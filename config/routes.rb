@@ -5,7 +5,6 @@ Rails.application.routes.draw do
              path_names: { sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register/user', sign_out: 'logout' }
 
   resources :requests
-  resources :devise
   root 'requests#index'
 
   devise_scope :user do
@@ -50,7 +49,6 @@ Rails.application.routes.draw do
   get 'profile/:id', to: 'profile#index', as: 'user_profile'
 
   get 'profile', to: 'profile#index'
-  get 'profile/edit', to: 'profile#edit'
   patch 'profile', to: 'profile#update'
 
   post 'requests/apply' => 'requests#apply'
@@ -68,18 +66,18 @@ Rails.application.routes.draw do
   post 'notifications/read' => 'notifications#read'
   post 'notifications/clear' => 'notifications#clear'
 
-  resources :chats, only: [:index, :show, :new, :create] do
+  resources :chats, only: [:index, :show] do
     resources :messages, only: [:create]
   end
 
-  namespace :api do
-    namespace :v1 do
-      resources :requests
-    end
-    namespace :v2 do
-      resources :reviews, :requests
-    end
-  end
+  # namespace :api do
+  #   namespace :v1 do
+  #     resources :requests
+  #   end
+  #   namespace :v2 do
+  #     resources :reviews, :requests
+  #   end
+  # end
 
   resources :request_application, path: 'applications' do
     resources :reviews, only: %i[new create edit update]
