@@ -9,11 +9,23 @@ class ApplicationController < ActionController::Base
   def check_role
     return if current_user.nil?
     allowed_routes = ['/login', '/logout', '/profile']
-    return unless current_user.role_id == 3
+    apply_routes = ['/requests/apply', '/myapplications', '/myapplications/withdraw']
 
-    return if allowed_routes.any? { |route| request.path.start_with?(route) } || request.path.start_with?('/cvm')
+    case current_user.role_id
+    when 3
+      return if allowed_routes.any? { |route| request.path.start_with?(route) } || request.path.start_with?('/cvm')
 
-    redirect_to '/cvm'
+      redirect_to '/cvm'
+    when 2
+      return if allowed_routes.any? { |route| request.path.start_with?(route) } || request.path.start_with?('/admin')
+
+      redirect_to '/admin'
+    when 5
+      return if allowed_routes.any? { |route| request.path.start_with?(route) } || !apply_routes.any? { |route| request.path.start_with?(route) }
+
+      redirect_to '/'
+    end
+
   end
 
   private

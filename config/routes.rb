@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users,
-             controllers: { registrations: 'my_devise/registrations', sessions: 'my_devise/sessions' }, path: '', path_names: { sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register/user', sign_out: 'logout' }
+             controllers: { registrations: 'my_devise/registrations', sessions: 'my_devise/sessions' },
+             path: '',
+             path_names: { sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register/user', sign_out: 'logout' }
 
-  # ,path: "", controllers: {sessions: "sessions", registrations:"registrations"}, path_names: {sign_in: 'login', password: 'forgot', confirmation: 'confirm', unblock: 'unblock', sign_up: 'register', sign_out: 'logout'}
   resources :requests
-  resources :devise
   root 'requests#index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   devise_scope :user do
     get 'register' => 'my_devise/registrations#choose_register_method'
     get 'register/charity' => 'my_devise/registrations#charity'
@@ -22,7 +19,9 @@ Rails.application.routes.draw do
 
   authenticated :user, lambda { |u| u.role_id == 2 } do
     namespace :admin do
-      root 'admin#index', as: :admin_root
+      # root to: 'requests#index', as: :admin_root
+      # resources :requests, only: [:index]
+    root 'charities#index', as: :admin_root
     end
   end
 
@@ -47,11 +46,13 @@ Rails.application.routes.draw do
 
   get 'up' => 'rails/health#show', as: :rails_health_check
 
-  get 'profile' => 'profile#index'
-  get 'profile/edit' => 'profile#edit', as: :edit_profile
-  patch 'profile' => 'profile#update'
+  get 'profile/:id', to: 'profile#index', as: 'user_profile'
+
+  get 'profile', to: 'profile#index'
+  patch 'profile', to: 'profile#update'
 
   post 'requests/apply' => 'requests#apply'
+
   get 'myrequests' => 'my_requests#index'
   post 'myrequests/complete' => 'my_requests#complete'
   post 'myrequests/accept' => 'my_requests#accept'
@@ -62,33 +63,67 @@ Rails.application.routes.draw do
 
   resources :reviews, only: [:edit, :update, :index, :new, :create]
 
-  # get 'reviews/new_temp' => 'reviews#new_temp'
-  # get 'reviews/new' => 'reviews#new'
-  # get 'reviews/edit' => 'reviews#update'
-
   post 'notifications/read' => 'notifications#read'
   post 'notifications/clear' => 'notifications#clear'
 
-  # get 'myrequests/chats' => 'chats#new'
-
-  # get 'myapplications/chats' => 'chats#new'
-
-  resources :chats, only: [:index, :show, :new, :create] do
+  resources :chats, only: [:index, :show] do
     resources :messages, only: [:create]
   end
-  
 
-  namespace :api do
-    namespace :v1 do
-      resources :requests
-    end
-    namespace :v2 do
-      resources :reviews, :requests
-    end
-  end
+  # namespace :api do
+  #   namespace :v1 do
+  #     resources :requests
+  #   end
+  #   namespace :v2 do
+  #     resources :reviews, :requests
+  #   end
+  # end
 
   resources :request_application, path: 'applications' do
     resources :reviews, only: %i[new create edit update]
   end
 
+  namespace :admin do
+    resources :approve_companies, only: [:index, :show] do
+      member do
+        patch :approve
+        patch :disable
+        patch :reject
+      end
+    end
+
+    resources :charities, only: [:index, :show] do
+      member do
+        patch :approve
+        patch :disable
+        patch :reject
+      end
+    end
+
+    resources :ban_user, only: [:index] do
+      member do
+        post :ban
+        post :unban
+        post :cancel_ban
+      end
+    end
+
+    resources :delete_requests, only: [:index, :destroy] do
+      member do
+        get 'confirm'
+      end
+    end
+  end
+
+  resources :user_reports, only: [:new, :create] do
+    collection do
+      get 'confirm'
+    end
+  end
+
+  get 'confirm_report', to: 'user_reports#confirm', as: 'confirm_report'
+
+  get 'admin/login', to: 'admin_sessions#new', as: 'new_admin_session'
+  post 'admin/login', to: 'admin_sessions#create', as: 'admin_sessions'
+  delete 'admin/logout', to: 'admin_sessions#destroy', as: 'destroy_admin_session'
 end

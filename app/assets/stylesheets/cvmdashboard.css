@@ -1,11 +1,28 @@
-.cvm-index{
+.employees-index{
     background: linear-gradient(16deg, #ffefff, #fff);
+    margin-top: 0%;
+    overflow: hidden;
+}
+
+.employees-index td, .employees-index th{
+    background: transparent;
+}
+
+.employees-index tbody tr:hover{
+    background: linear-gradient(90deg, transparent, #AD88C6, transparent)
+}
+
+.cvm-index, .cvm-manage_charities {
+    height: calc(150vh - 0px);
+    background: linear-gradient(16deg, #ffefff, #fff);
+    margin-top: 5%;
+    overflow: hidden;
 }
 
 #cvmdashboard{
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 90px);
     overflow:hidden;
 }
 
@@ -74,7 +91,6 @@
     padding: 20px;
 }
 
-
 .dashboardcard.stats{
     box-shadow: 1px 1px 2px rgba(66, 66, 66, 0.3);
 }
@@ -100,6 +116,21 @@
     color: #505050
 }
 
+.dashboardcard > .list-group{
+    height: calc(100vh - 340px);
+    overflow-y: scroll;
+}
+
+.dashboardcard .list-group-item{
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.3s;
+}
+
+.dashboardcard .list-group-item:hover{
+    background: linear-gradient(90deg, #AD88C6, transparent);
+}
+
 #copycompanycode:hover{
     background:#656DAD !important
 }
@@ -111,4 +142,65 @@
 
 #refreshcode:hover{
     transform: rotate(180deg);
+}
+
+#savecharities{
+    background: #AD88C6;
+    border:0;
+    padding: 10px 25px;
+}
+
+/*To store employee table*/
+.employee-container{
+    height: 70vh;
+    overflow-y: auto;
+}
+
+/*Charity management cluster*/
+.charity-search-cluster {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+  }
+  
+  .charity-search-cluster .search-container_requests_index {
+    flex-grow: 1;
+    margin-right: 15px; /* Space between search bar and button */
+  }
+  
+  .charity-search-cluster .search-form_requests_index {
+    display: flex;
+  }
+  
+  .charity-search-cluster .search-input_requests_index_my {
+    flex-grow: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .charity-search-cluster .search-btn_requests_index {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+  .charity-search-cluster #charity-form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .charity-search-cluster #savecharities {
+    white-space: nowrap;
+  }
+
+button#savecharities {
+    margin-bottom: 20px;
+}
+
+button#savecharities:hover {
+    color: #9852a6;
+}
+
+.cvm_container{
+    overflow: hidden;
 }

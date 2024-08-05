@@ -1,27 +1,32 @@
 /* Navbar CSS functions*/
-header {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
-
-form {
-  margin: 20px 0;
+.navbar {
+  width: 100%;
+  padding: 0 1rem;
+  background: linear-gradient(45deg, #ad88c6, #656DAD);
+  height: 80px;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  /* margin-bottom: 5%; */
 }
 
 .offsetnavbar {
-    margin-top:80px;
+  margin-top:80px;
 }
 
 .noticefadeout {
-    position: fixed;
-    background: #505050;
-    color: #eee;
-    top: 90px;
-    right: 10px;
-    padding: 20px;
-    z-index: 200;
-    border-radius: 10px;
-    animation: fadeoutnotif 5s forwards;
+  position: fixed;
+  background: #505050;
+  color: #eee;
+  top: 90px;
+  right: 10px;
+  padding: 20px;
+  z-index: 200;
+  border-radius: 10px;
+  animation: fadeoutnotif 5s forwards;
 }
 
 @keyframes fadeoutnotif {
@@ -30,71 +35,139 @@ form {
 100% { opacity: 0%;}
 }
 
-.button-container .button {
-  margin-right: 10px;
-}
 
-.button-container {
+.navbar .container {
   display: flex;
-  align-items: flex-end;
-}
-
-.navbar {
+  align-items: center;
   width: 100%;
-  padding: 0rem; /* Adjust padding as needed */
-  background-color: #ad88c6 !important;
-    background-color: linear;
-    background: linear-gradient(45deg, #ad88c6, #656DAD);
-  height: 80px; /* Set a fixed height */
-  display: flex;
-  align-items: center; /* Center items vertically */
+  height: 100%;
 }
 
 .navbar-brand {
   display: flex;
   align-items: center;
-}
-
-.navbar-brand img {
-  margin-right: 8px; /* Adjust the spacing as needed */
-}
-
-.d-flex > button {
-  margin-left: 10px; /* Adjust spacing between buttons */
-}
-
-.content {
-  padding-top: 40px; /* Adjust this value based on the height of your navbar */
-}
-
-.nav-link {
-  margin-right: 40px; /* Adjust this value to increase spacing */
+  margin-right: 2rem; /* Add some space between logo and nav links */
 }
 
 .logo-circle-navbar {
-  width: 2.8em; /* Adjust the size as needed */
-  height: 2.8em; /* Adjust the size as needed */
-  border-radius: 50%; /* Makes the image circular */
-  object-fit: cover; /* Ensures the image covers the container without distortion */
+  width: 2.8em;
+  height: 2.8em;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.logo-circle-login-reg {
-  position: relative;
-  left: 21%;
-  margin-bottom: 5%;
-  width: 12em; /* Adjust the size as needed */
-  height: 12em; /* Adjust the size as needed */
-  border-radius: 50%; /* Makes the image circular */
-  object-fit: cover; /* Ensures the image covers the container without distortion */
+.nav-links {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: auto; /* This pushes the rest of the content to the right */
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: lightgray;
+}
+
+.navbar-right {
+  display: flex;
   align-items: center;
 }
 
-.text-neutral-dark{
-    color: #505050
+.navbar-right {
+  display: flex;
+  align-items: center;
 }
 
+.custom-btn-dark-purple {
+  margin-right: 1rem;
+}
+
+.profile-link {
+  margin-right: 5rem;
+}
+
+.notification-bell {
+  position: relative;
+  margin-right: 1rem;
+}
+
+.notifalertcount {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 0.75rem;
+}
+
+.logoutbutton {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+  .nav-link {
+    padding: 0 0.5rem;
+  }
+  
+  .custom-btn-dark-purple {
+    margin-right: 0.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar {
+    height: auto;
+    padding: 0.5rem 1rem;
+  }
+  
+  .navbar .container {
+    flex-wrap: wrap;
+  }
+  
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 0.5rem;
+  }
+  
+  .navbar-right {
+    order: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-right {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  
+  .custom-btn-dark-purple {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Universal container for all pages*/
+
+.container.content_requests_index{
+  margin-top: 8% ;
+}
 /* Flash notifications styling */
-.alert {
+/* .alert {
   display: flex;
   align-items: center;
   padding: 1rem 1.25rem;
@@ -111,10 +184,10 @@ form {
 
 .alert-dismissible .close {
   margin-left: auto;
-}
+} */
 
 /* Icon colors */
-.custom-alert-success i { color: #155724; }
+/* .custom-alert-success i { color: #155724; }
 .custom-alert-error i, .custom-alert-alert i { color: #721c24; }
 .custom-alert-notice i { color: #0c5460; }
 .custom-alert-warning i { color: #856404; }
@@ -210,7 +283,7 @@ form {
   top: -2px;
   right: -73%;
   color: inherit;
-}
+} */
 
 .empty-state-container {
   display: flex;
@@ -219,6 +292,7 @@ form {
   justify-content: center;
   height: 300px;
   text-align: center;
+  margin-bottom: 100px;
 }
 
 .empty-state-image {
@@ -232,6 +306,46 @@ form {
   font-size: 18px;
   color: #888;
   font-style: italic;
+  padding-bottom: 5%;
+}
+
+/*common asset: suspended label text box*/
+.styled-input-container {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  margin: 20px auto;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.styled-input-label {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background-color: white;
+  padding: 0 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.styled-input-content {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+/* For textarea */
+.styled-input-content.textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 /* Common asset: custom purple and lilac button*/
@@ -260,7 +374,7 @@ form {
   border-color: #9852a6;
 }
 
-/*clickable mini profile*/
+/*clickable mini profi  le*/
 .profile-info_requests_details {
   display: flex;
   align-items: center;
@@ -299,6 +413,191 @@ form {
   color: #666; /* Adjust this color as needed */
 }
 
+
+/*Common percentage indicator*/
+.percentage-indicator {
+  width: 100px;
+  height: 100px;
+}
+
+.circular-chart {
+  display: block;
+  margin: 10px auto;
+  max-width: 80%;
+  max-height: 250px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.percentage {
+  fill: #666;
+  font-family: sans-serif;
+  font-size: 0.5em;
+  text-anchor: middle;
+}
+
+.percentage-popup {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  display: none;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+.percentage-indicator-container:hover .percentage-popup {
+  display: block;
+}
+
+/*indicator container on req details page*/
+.percentage-indicator {
+  position: absolute;
+  left: 53%;
+  top: 1%;
+}
+
+/* filtering system CSS*/
+
+.search-filter-container {
+  background-color: #f8f9fa;
+  padding: 0px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-form_requests_index {
+  position: relative;
+}
+
+.search-input_requests_index {
+  padding-right: 40px;
+}
+
+.search-btn_requests_index {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: none;
+  border: none;
+  color: #007bff;
+}
+
+.filter-btn {
+  width: auto;
+  padding: 0.40rem 0.40rem;
+  background: #656DAD;
+  border: none;
+}
+
+.filter-btn:hover{
+    background: #AC88C6;
+}
+
+.filter-container_requests_index {
+  background-color: transparent;
+  padding: 15px;
+  border-radius: 5px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  margin-bottom: 30px;
+}
+
+.filter-container_requests_index select,
+.filter-container_requests_index input {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.filter-container_requests_index label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#filterCollapse {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden; /* Make it non-interactive */
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+#filterCollapse.active {
+  height: 900px; /* Adjust this value based on your content's height */
+  opacity: 1; /* Make it visible */
+  visibility: visible; /* Make it interactive */
+  transition: max-height 0.5s ease-in, opacity 0.5s ease-in, visibility 0.5s ease-in;
+}
+
+.filter-container_requests_index {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-container_requests_index .card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 100%; /* Ensure all cards have the same height */
+}
+
+.filter-container_requests_index .card-body {
+  padding: 20px; /* Increase padding inside the cards */
+}
+
+.filter-container_requests_index .card-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.filter-container_requests_index .fas {
+  color: #656DAD;
+  margin-bottom: 10px; /* Add space below icons */
+}
+
+.filter-container_requests_index label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 5px; /* Add space below labels */
+}
+
+.filter-container_requests_index .form-control,
+.filter-container_requests_index .form-select {
+  margin-bottom: 10px; /* Add space below input fields */
+}
+
+/* Ensure consistent spacing for single-input cards */
+.filter-container_requests_index .card-body:only-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+/*for hidden field in region filtering*/
+.invisible {
+  visibility: hidden;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
 
 /* Register page CSS functions*/
 /* body.registrations-new, .registrations-create{ */
@@ -434,31 +733,109 @@ font-weight: bold;
 
 /* Requests home page CSS functions */
 .custom-card_requests_index {
-  margin-top: 30px;
+  /* margin-top: 100px; */
   margin-bottom: 30px; 
-  background-color: white; /* Background color for the header container */
-  color: black; /* Text color for the header container */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
-  height: 120px;
-  border: 1px solid transparent; /* Make border transparent */
+  position: relative;
+  overflow: hidden; /* Ensures the image stays within the bounds of the container */
   border-radius: 5px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+  height: 300px; /* Adjust the height as needed */
+}
+
+.background-image_requests_index {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Fill the container, cropping if necessary */
+  object-position: center; /* Center the image within the container */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1; /* Ensures the image is below the overlay and text */
+}
+
+.overlay_requests_index {
+  background-color: rgba(0, 0, 0, 0.5); /* Translucent black overlay */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Ensures the overlay is above the image */
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-left: 40px; /* Adjust this for text alignment */
 }
 
 .header-text-group_requests_index {
+  position: relative;
+  z-index: 3; /* Ensures the text is above both the image and the overlay */
+  color: white; /* Text color */
   display: flex;
   flex-direction: column;
-  justify-content: left;
-  padding-left: 40px; /* Adjust this value to set the left margin for both heading and subheading */
 }
 
 .header-text_requests_index {
-  position: relative;
-  margin: 20px 0 10px 20px; /* Add some bottom margin to separate from subheader */
+  margin: 20px 0 10px 0; /* Adjust margins as needed */
 }
 
 .subheader-text_requests_index {
+  margin: 0;
+  font-weight: normal;
+}
+
+/*admin pages heading skinnier*/
+
+/*header for company page*/
+.admin_header {
+  /* margin-top: 100px; */
+  margin-bottom: 30px; 
   position: relative;
-  margin: 0 0 0 20px;
+  overflow: hidden; /* Ensures the image stays within the bounds of the container */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+  height: 15vh; /* Reduced height */
+}
+
+.background-image_admin_header {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Fill the container, cropping if necessary */
+  object-position: center; /* Center the image within the container */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1; /* Ensures the image is below the overlay and text */
+}
+
+.overlay_admin_header {
+  background-color: rgba(0, 0, 0, 0.5); /* Translucent black overlay */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Ensures the overlay is above the image */
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-left: 40px; /* Adjust this for text alignment */
+}
+
+.header-text-group_admin_header {
+  position: relative;
+  z-index: 3; /* Ensures the text is above both the image and the overlay */
+  color: white; /* Text color */
+  display: flex;
+  flex-direction: column;
+}
+
+.header-text_admin_header {
+  margin: 20px 0 10px 0; /* Adjust margins as needed */
+}
+
+.subheader-text_admin_header {
+  margin: 0;
   font-weight: normal;
 }
 
@@ -580,7 +957,7 @@ font-weight: bold;
   background-color: #f8f9fa; /* Light background color for search bar */
   border: 1px solid #ced4da; /* Gray border */
   border-radius: 4px;
-  padding: 8px 16px;
+  /* padding: 8px 16px; */
   display: flex; /* Use flexbox to align items */
   align-items: center; /* Center items vertically */
 }
@@ -1164,7 +1541,7 @@ font-weight: bold;
 
 .divider_requests_details {
   border-top: 1px solid #dee2e6;
-  margin: 20px 0;
+  margin: 30px 0;
 }
 
 .stars_requests_details {
@@ -1192,6 +1569,7 @@ font-weight: bold;
 }
 
 .body-card_profile {
+  position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-top: none;
   border-bottom-left-radius: 5px;
@@ -1231,6 +1609,7 @@ font-weight: bold;
 }
 
 .body-container_profile {
+  position: relative;
   min-height: 800px;
 }
 
@@ -1246,8 +1625,8 @@ font-weight: bold;
 
 .follow-btn-profile {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 0%;
   z-index: 10;
 }
 
@@ -1267,23 +1646,176 @@ font-weight: bold;
   color: white; /* White text color on hover */
 }
 
-.options-icon-follow {
-  margin-top: 12px; /* Space between name and options icon */
-  margin-left: 1220px;
-  color: #999;
-  cursor: pointer;
-  text-align: center;
-  transform: rotate(90deg);
+/*report button*/
+.header-container_profile {
+  position: relative;
 }
 
-.profile-user_description_container{
+.report-button-container {
   position: absolute;
-  top: 300px;
-  right: 700px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-right: 290px; /* Adjust this value for spacing from the profile-info-container */
-  padding-bottom: 40%; /* Adjust this value for spacing below the header-card_profile */
-  width: calc(100% - 1000px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
+  top: 20px;
+  right: 20px;
+}
+
+.report-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.report-button:hover {
+  background-color: #c82333;
+}
+/*edit profile pop-up*/
+.edit_profile_pop-up {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 100;
+}
+
+.edit_profile_pop-up-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 500px;
+  z-index: 100;
+}
+
+body.popup-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.profile-picture-upload {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-picture-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.current-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%; /* Ensure the image is circular */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Initial shadow */
+}
+
+.current-avatar:hover {
+  transform: scale(1.05); /* Slightly enlarge the image on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.empty-avatar {
+  font-size: 50px;
+  color: #999;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+#crop-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+#crop-image {
+  display: block;
+  max-width: none;
+  max-height: none;
+}
+
+#crop-button {
+  display: none;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #656dad;
+  color: white;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.profile-user_description_container {
+  position: absolute;
+  top: 22%; /* Adjust this value to move it up or down */
+  left: 15px; /* Adjust this value to move it left or right */
+  width: 50%;
+  max-width: 250px;
+  height: auto;
+  min-height: 200px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  z-index: 100;
+}
+
+.bio-label {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background-color: white;
+  padding: 0 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.bio-content {
+  padding: 20px 15px;
+  min-height: 100px; /* Adjust as needed */
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 /* Tabs container */
@@ -1292,24 +1824,31 @@ font-weight: bold;
   margin-left: 290px; /* Adjust this value for spacing from the profile-info-container */
   margin-top: 130px; /* Adjust this value for spacing below the header-card_profile */
   width: calc(100% - 300px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
+  height: 130vh;
 }
 
 .nav-tabs {
-  border-bottom: 2px solid #ad88c6; /* Lilac border for tabs */
+  border-bottom: 2px solid #ad88c6;
   display: flex;
+  height: 40px; /* Fixed height for tab buttons */
 }
 
 .nav-item {
-  margin: 0; /* Remove default margin */
+  flex: 1;
 }
 
 .nav-tabs .nav-link {
-  color: #ad88c6; /* Lilac text color for tabs */
+  color: #ad88c6;
   border-radius: 5px 5px 0 0;
   border-color: #ad88c6;
-  margin-right: -1px; /* Adjust margin to remove spacing */
-  width: 150px;
+  margin-right: -1px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
   text-align: center;
+  white-space: nowrap;
 }
 
 .nav-tabs .nav-link.active {
@@ -1320,6 +1859,7 @@ font-weight: bold;
 
 .tab-content {
   margin-top: 40px;
+  /* overflow-y: auto; */
 }
 
 .request-item, .review-item {
@@ -1331,6 +1871,8 @@ font-weight: bold;
   display: flex;
   flex-wrap: wrap;
   gap: 10px; /* Adjust gap between squares */
+  overflow-y: auto;
+  height: 120vh;
 }
 
 .request-item {
@@ -1354,6 +1896,20 @@ font-weight: bold;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+}
+
+.status-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+}
+
+.status-bar.completed {
+  background-color: #dc3545; /* Red color for completed requests */
 }
 
 .request-popup {
@@ -1396,9 +1952,9 @@ font-weight: bold;
   text-align: center;
 }
 
-.options-icon-requests {
+/* .options-icon-requests {
   position: relative;
-  margin-top: 5px; /* Space between name and options icon */
+  margin-top: 5px; 
   margin-left: 275px;
   color: #ad88c6;
   cursor: pointer;
@@ -1408,18 +1964,7 @@ font-weight: bold;
 
 .options-icon:hover {
   color: #ad88c6;
-}
-
-.availability-indicator_profile_requests {
-  background-color: #f8f9fa;
-  border-radius: 5px;
-  height: 40px;
-  width: 80px;
-  margin-top: 21px;
-  display: flex; /* Use flexbox for layout */
-  align-items: center; /* Center items vertically */
-  padding-left: 10px; /* Optional: Add padding for better spacing */
-}
+} */
 
 .rating-container {
   display: flex;
@@ -1449,6 +1994,11 @@ font-weight: bold;
   margin-left: 10px; /* Adjust spacing after stars */
 }
 
+.reviews-container {
+  height: 120vh;
+  overflow-y: auto;
+}
+
 .review-textarea {
   width: 100%;
   height: 300px; /* Adjust height as needed */
@@ -1458,6 +2008,44 @@ font-weight: bold;
   border-radius: 4px;
   resize: none; /* Prevent resizing by the user */
   box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+.review-profile-section {
+  position: relative;
+  top: 1%;
+  left: 10%;
+}
+
+.review-card {
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Light transparent border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #fff; /* Background color */
+  transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+}
+
+.review-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow on hover */
+}
+
+.review-content {
+  position: relative;
+  padding: 10px;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.review-stars-card-cluster {
+  position: relative;
+  right: -20%; /* Adjust this as needed */
+  display: flex; /* Enable Flexbox layout */
+  flex-direction: row; /* Ensure children are aligned in a row */
+  align-items: center; /* Vertically center the contents */
+  justify-content: flex-start; /* Align contents to the start of the container */
+  gap: 10px; /* Add space between items (optional) */
 }
 
 .submit-button-container {
@@ -1498,23 +2086,18 @@ font-weight: bold;
   align-items: center;
   margin-bottom: 20px;
 }
-.review-filters .sort-by {
-  display: flex;
-  align-items: center;
-}
-.review-filters .sort-by label {
-  margin-right: 10px;
-}
-.review-item .card-body {
+
+/* .review-item .card-body {
   display: flex;
   justify-content: space-between;
 }
+
 .review-item .card-title {
   margin-bottom: 10px;
 }
 .review-item .card-text {
   margin-bottom: 10px;
-}
+} */
 
 /*my requests page + my applications CSSs styling*/
 .card-body {
@@ -2423,3 +3006,13 @@ hr.my-4 {
   border-radius: 4px;
 }
 
+
+.profile-buttons {
+  display: flex;
+  gap: 10px; /* Adjust the gap as needed */
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+.profile-buttons .btn {
+  margin: 0; /* Remove any existing margins */
+}

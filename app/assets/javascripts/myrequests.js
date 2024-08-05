@@ -79,6 +79,7 @@ function initializeMyRequests() {
   console.log('initializeMyRequests completed');
 }
 
+//this is to search 
 function performSearch() {
   const searchTerm = this.value.toLowerCase().trim();
   document.querySelectorAll('.request-card_requests_index_my').forEach(card => {
@@ -318,7 +319,9 @@ function closePopup(container) {
 }
 
 function handleOutsideClick(event) {
-  if (!event.target.closest('.clickable-card_requests_index-wrapper_my')) {
+  if (!event.target.closest('.clickable-card_requests_index-wrapper_my') &&
+      !event.target.closest('.accept-form') &&
+      !event.target.closest('.reject-form')) {
     const openPopups = document.querySelectorAll('.popups-container_my.active');
     openPopups.forEach(closePopup);
 
@@ -349,6 +352,8 @@ function hideEmptyDropdowns() {
 
 
 function handleAcceptRejectForm(form) {
+
+  event.stopPropagation();
   const action = form.getAttribute('action');
   const method = form.getAttribute('method');
   const formData = new FormData(form);
@@ -366,10 +371,6 @@ function handleAcceptRejectForm(form) {
   fetch(action, {
     method: method,
     body: formData,
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-    }
   })
   .then(response => {
     if (response.ok) {

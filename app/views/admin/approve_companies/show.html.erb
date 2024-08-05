@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Details</title>
+  <link rel="stylesheet" href="<%= asset_path('company_details.css') %>">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <!-- Company Title -->
+        <h2 class="card-title"><%= @company.company_name %></h2>
+
+        <!-- Company Details -->
+        <div class="company-details">
+          <p class="card-text">
+            <strong>Created At:</strong> <%= @company.created_at.strftime('%d %b %Y, %H:%M') %><br>
+            <strong>Corporate Manager:</strong> <%= @company.users.find_by(role_id: 3).name %><br>
+            <strong>Status:</strong> <%= @company.status %>
+          </p>
+        </div>
+
+        <!-- Company Document Proof -->
+        <div class="company-document">
+          <% if @company.document_proof.attached? %>
+            <iframe src="<%= rails_blob_path(@company.document_proof, disposition: 'inline') %>" width="100%" height="600px"></iframe>
+          <% else %>
+            <p class="no-document">No document proof attached.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

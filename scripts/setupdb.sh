@@ -16,7 +16,7 @@ bundle exec rails db:migrate
 echo "Seeding database..."
 bundle exec rails db:seed
 
-bundle exec rake db:create_dummy_data
+# bundle exec rake db:create_dummy_data
 
 #rake db:create_dummy_data
 

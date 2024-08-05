@@ -22,14 +22,9 @@ Scenario:
         And I press "Reject"
         Then the application should be "Rejected"
 
-Scenario: Receiving a notification that someone accepted my application
-        Given that someone has 'accepted' my application
+Scenario: Receiving a notification that someone has applied for my request
+        Given I have a request
+        And that someone has applied for my request
         When I am on the 'home' page
-        And I click the notification icon
-        Then I should see 'Your application for a request has been accepted'
-
-Scenario: Receiving a notification that someone rejected my application
-        Given that someone has 'rejected' my application
-        When I am on the 'home' page
-        And I click the notification icon
-        Then I should see 'Your application for a request has been rejected'
+        And I click on the notification icon
+        Then I should see 'Someone has applied for your request'

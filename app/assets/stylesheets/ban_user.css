@@ -1,0 +1,117 @@
+/* General Styles */
+/* Tabs container */
+.tabs-container {
+  margin-left: 290px; /* Adjust this value for spacing from the profile-info-container */
+  margin-top: 130px; /* Adjust this value for spacing below the header-card_profile */
+  width: calc(100% - 300px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
+}
+
+.nav-tabs {
+  border-bottom: 2px solid #ad88c6; /* Lilac border for tabs */
+  display: flex;
+}
+
+.nav-item {
+  margin: 0; /* Remove default margin */
+}
+
+.nav-tabs .nav-link {
+  color: #ad88c6; /* Lilac text color for tabs */
+  border-radius: 5px 5px 0 0;
+  border-color: #ad88c6;
+  margin-right: -1px; /* Adjust margin to remove spacing */
+  width: 100%;
+  text-align: center;
+}
+
+.nav-tabs .nav-link.active {
+  color: #fff; /* White text color for active tab */
+  background-color: #ad88c6; /* Lilac background for active tab */
+  border-color: #ad88c6; /* Lilac border for active tab */
+}
+
+.tab-content {
+  margin-top: 40px;
+}
+
+/* the banuser card */
+.clickable-card_requests_index {
+  text-decoration: none;
+  color: inherit;
+  display: block; /* Make the link cover the entire card */
+}
+
+.clickable-card_requests_index:hover .card {
+  border-color: #ad88c6; /* Change border color on hover */
+}
+
+/* the banuser buttons */
+.user-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-card .row {
+  min-height: 120px;
+}
+
+.user-card .card-body {
+  padding: 1rem;
+}
+
+.user-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-info-padding {
+  padding-left: 0;
+}
+
+.custom-btn-banuser-purple {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+.custom-btn-banuser-purple:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+  color: white;
+}
+
+.ban-button {
+  padding: 0.75rem 1.0rem;
+  font-size: 1rem;
+  margin-right: 20px;
+}
+
+/* header card */
+/* .header-card {
+  margin-bottom: 20px;
+  background: url('<%= asset_path('company.jpg') %>') no-repeat center center;
+  background-size: cover;
+  color: white;
+  position: relative;
+  border-radius: 10px;
+} */
+
+.header-container_requests_index {
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.header-text_requests_index {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.subheader-text_requests_index {
+  font-size: 1.25rem;
+}
+
+

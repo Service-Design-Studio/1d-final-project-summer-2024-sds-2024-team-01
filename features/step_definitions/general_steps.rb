@@ -5,13 +5,13 @@ end
 
 Given('I have an account') do
   visit new_user_registration_path
-  fill_in 'user_name', with: 'Harrison Ford'
-  fill_in 'user_number', with: '96789012'
-  fill_in 'user_email', with: 'harrison@example.com'
-  fill_in 'user_password', with: 'asdfasdf'
-  fill_in 'user_password_confirmation', with: 'asdfasdf'
+  first('#user_name', visible: false).set('Harrison Ford')
+  first('#user_number', visible: false).set('96789012')
+  first('#user_email', visible: false).set('harrison@example.com')
+  first('#user_password', visible: false).set('asdfasdf')
+  first('#user_password_confirmation', visible: false).set('asdfasdf')
   click_button 'Sign up!'
-  expect(page).to have_content('signed up successfully.')
+  expect(page).to have_content('Welcome! You have signed up successfully.')
   click_button(id: 'logoutbtn')
 end
 
@@ -22,7 +22,7 @@ end
 
 And('I login') do
   visit new_user_session_path
-  fill_in 'user_number', with: '96789012'
+  fill_in 'user_login', with: '96789012'
   fill_in 'user_password', with: 'asdfasdf'
   click_button 'Login'
   expect(page).to have_content('Signed in successfully.')
@@ -67,6 +67,7 @@ And('I have a request') do
     description: 'Need someone to walk my dog for an hour every afternoon',
     category: 'Pet Care',
     location: 'POINT(34.052235 -118.243683)',
+    stringlocation: 'Test',
     date: Date.tomorrow + 3,
     number_of_pax: 1,
     duration: 1,
@@ -122,4 +123,16 @@ end
 
 When('I click on the notification icon') do
   find('#shownotifs').click
+end
+
+Then('I should see {int} applicants') do |count|
+  expect(page).to have_css('.applicant-info_requests_index_my', count: count)
+end
+
+Then('I should see {int} corporate volunteer applicant') do |count|
+  expect(page).to have_css('.fa-building', count: count)
+end
+
+Then('sleep') do
+  sleep 500
 end

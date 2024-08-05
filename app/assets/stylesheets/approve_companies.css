@@ -1,0 +1,136 @@
+/* body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f4f6f9;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 20px;
+} */
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 10px;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #ad88c6;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+  background-color: #ad88c6;
+  color: #fff;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.table tr:hover {
+  background-color: rgba(173, 136, 198, 0.1); /* Light purple overlay */
+  cursor: pointer;
+}
+
+.table .btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.table .btn-warning {
+  background-color: #f0ad4e;
+  color: #fff;
+}
+
+.table .btn-warning:hover {
+  background-color: #ec971f;
+}
+
+.table .btn-success {
+  background-color: #5cb85c;
+  color: #fff;
+}
+
+.table .btn-success:hover {
+  background-color: #449d44;
+}
+
+.companies-tabs {
+  width: 100%;
+}
+
+.btn-group {
+  display: flex;
+}
+
+.btn-group .btn {
+  flex: 1;
+}
+
+.companies-tab-content {
+  height: 58vh; /* Set a fixed height for the tab content container */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+  padding: 10px; /* Optional padding for spacing */
+  margin-top: -16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visual separation */
+  border-radius: 5px; /* Optional: Add rounded corners for a smoother look */
+}
+
+.companies-tab-pane {
+  height: 100%; /* Make sure each tab pane takes up the full height of the container */
+  overflow-y: auto; /* Allow scrolling within the tab pane */
+  padding: 15px; /* Add padding to the tab content for better readability */
+}
+
+/* Optional: Customize the table within the tab */
+.table {
+  max-height: 100%; /* Ensure the table doesn't exceed the container height */
+  overflow-y: auto; /* Allow scrolling within the table */
+}
+

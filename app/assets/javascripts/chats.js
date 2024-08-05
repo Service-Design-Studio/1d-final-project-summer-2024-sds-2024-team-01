@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function setupMessageForm(chatId) {
     const messageForm = document.getElementById('message-form');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
     if (messageForm) {
       messageForm.addEventListener('submit', function(event) {
@@ -74,9 +73,6 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch(`/chats/${chatId}/messages`, {
           method: 'POST',
           body: formData,
-          headers: {
-            'X-CSRF-Token': csrfToken
-          }
         })
         .then(response => response.json())
         .then(message => {
