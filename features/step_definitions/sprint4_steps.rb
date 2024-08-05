@@ -259,7 +259,7 @@ Given('I have an admin account') do
 end
 
 
-Then('I login as an admin') do
+Then('I login as admin') do
   visit '/login'
   fill_in 'user_login', with: 'admin@example.com'
   fill_in 'user_password', with: 'password'
@@ -284,13 +284,22 @@ Given('I am on {string} page') do |page|
     visit admin_ban_user_index_path(anchor: 'ban-tab')
   when 'Unban User'
     visit admin_ban_user_index_path(anchor: 'unban-tab')
-  when "Millard Robel Profile" 
-    visit 
-
   else
     raise "Unknown page: #{page}"
   end
 end
+
+
+# Then('I click on {string} tab') do |tab_name|
+#   case tab_name
+#   when "Ban"
+#     find('a.nav-link', text: 'Ban').click
+#   when "Unban"
+#     find('a.nav-link', text: 'Unban').click
+#   else
+#     raise "Unknown tab: #{tab_name}"
+#   end
+# end
 
 Then('I should see more details of {string}') do |entity_name|
   @entity = Company.find_by(company_name: entity_name) || Charity.find_by(charity_name: entity_name)
@@ -343,6 +352,13 @@ When('I click on {string} button for charity {string}') do |button_text, charity
     click_button(button_text)
   end
 end
+
+When('I click on {string} button for user {string}') do |button_text, user_name|
+  within('.user-card', text: user_name) do
+    click_button(button_text)
+  end
+end
+
 
 
 
