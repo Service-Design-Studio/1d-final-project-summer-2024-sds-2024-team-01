@@ -100,3 +100,37 @@ nav ul li a:hover {
 .table .btn-success:hover {
   background-color: #449d44;
 }
+
+.companies-tabs {
+  width: 100%;
+}
+
+.btn-group {
+  display: flex;
+}
+
+.btn-group .btn {
+  flex: 1;
+}
+
+.companies-tab-content {
+  height: 58vh; /* Set a fixed height for the tab content container */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
+  padding: 10px; /* Optional padding for spacing */
+  margin-top: -16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visual separation */
+  border-radius: 5px; /* Optional: Add rounded corners for a smoother look */
+}
+
+.companies-tab-pane {
+  height: 100%; /* Make sure each tab pane takes up the full height of the container */
+  overflow-y: auto; /* Allow scrolling within the tab pane */
+  padding: 15px; /* Add padding to the tab content for better readability */
+}
+
+/* Optional: Customize the table within the tab */
+.table {
+  max-height: 100%; /* Ensure the table doesn't exceed the container height */
+  overflow-y: auto; /* Allow scrolling within the table */
+}
+

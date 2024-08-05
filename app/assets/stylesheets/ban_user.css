@@ -20,7 +20,7 @@
   border-radius: 5px 5px 0 0;
   border-color: #ad88c6;
   margin-right: -1px; /* Adjust margin to remove spacing */
-  width: 150px;
+  width: 100%;
   text-align: center;
 }
 
@@ -46,64 +46,47 @@
 }
 
 /* the banuser buttons */
-.ban-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #656dad;
-  border-color: #656dad;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 1rem;
-  margin: 10px;
-}
-
-.ban-button:hover {
-  background-color: #56569d;
-  border-color: #56569d;
-}
-
-/* the content in the banuser card */ 
 .user-card {
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .user-card .row {
-  margin: 0;
-}
-
-.user-card .col-md-4 {
-  padding: 0; /* Remove padding from column */
-}
-
-.user-card .col-md-8 {
-  padding: 0 20px; /* Add horizontal padding to text column */
+  min-height: 120px;
 }
 
 .user-card .card-body {
-  padding: 10px 0; /* Add padding inside the card body */
+  padding: 1rem;
 }
 
-.user-card .card-title {
-  font-size: 1.25em; /* Increase font size */
-  margin-bottom: 5px; /* Reduce margin below title */
+.user-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.user-card .card-text {
-  margin: 5px 0; /* Add vertical margin to text */
-  font-size: 0.9em; /* Reduce font size */
+.user-info-padding {
+  padding-left: 0;
 }
 
-.user-card .d-flex {
-  justify-content: space-between; /* Space out buttons */
-  align-items: center; /* Align items vertically */
+.custom-btn-banuser-purple {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+.custom-btn-banuser-purple:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+  color: white;
+}
+
+.ban-button {
+  padding: 0.75rem 1.0rem;
+  font-size: 1rem;
+  margin-right: 20px;
 }
 
 /* header card */
@@ -130,3 +113,5 @@
 .subheader-text_requests_index {
   font-size: 1.25rem;
 }
+
+

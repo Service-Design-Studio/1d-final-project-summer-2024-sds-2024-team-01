@@ -1,42 +1,115 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const tabs = document.querySelectorAll(".tab-link");
-  const tabContents = document.querySelectorAll(".tab-content");
-
-  tabs.forEach(tab => {
-    tab.addEventListener("click", (e) => {
-      e.preventDefault();
-      const targetTab = e.target.getAttribute("data-tab");
-
-      // Show the corresponding tab content and hide others
-      tabContents.forEach(content => {
-        if (content.id === targetTab) {
-          content.style.display = "block";
-        } else {
-          content.style.display = "none";
-        }
-      });
-
-      // Update active tab class
-      tabs.forEach(tab => {
-        if (tab.getAttribute("data-tab") === targetTab) {
-          tab.classList.add("active");
-        } else {
-          tab.classList.remove("active");
-        }
-      });
-
-      // Update the URL hash without reloading the page
-      history.pushState(null, null, `#${targetTab}`);
-    });
-  });
-
-  // Initialize to show the active companies tab by default or based on URL hash
-  const defaultTab = window.location.hash ? window.location.hash.substring(1) : 'active-tab';
-  const defaultTabLink = document.querySelector(`.tab-link[data-tab='${defaultTab}']`);
-  if (defaultTabLink) {
-    defaultTabLink.click();
-  } else {
-    // Fallback to the first tab if the hash does not match any tab
-    tabs[0].click();
+document.addEventListener("DOMContentLoaded", function() {
+  initializeCompanies();
+  initializeTabs();
+  handleClickableRows();
+  initializeSearch(); // Add this line to initialize the search functionality
+  
+  // Show initial active tab content
+  const activeTab = document.querySelector("#companiesTabs .nav-link.active");
+  if (activeTab) {
+    switchTab(activeTab);
   }
 });
+
+function initializeCompanies() {
+  // Add any initialization logic for companies if needed
+}
+
+function initializeTabs() {
+  const tabButtons = document.querySelectorAll("#companiesTabs button");
+  tabButtons.forEach((button) => {
+    button.addEventListener("click", function(event) {
+      event.preventDefault();
+      switchTab(this);
+    });
+  });
+}
+
+function switchTab(tabButton) {
+  const tabId = tabButton.getAttribute("data-bs-target").replace("#", "");
+
+  // Remove active class from all tabs
+  const tabButtons = document.querySelectorAll("#companiesTabs button");
+  tabButtons.forEach((btn) => {
+    btn.classList.remove("active");
+    btn.setAttribute("aria-selected", "false");
+  });
+
+  // Add active class to clicked tab
+  tabButton.classList.add("active");
+  tabButton.setAttribute("aria-selected", "true");
+
+  // Hide all tab panes
+  document.querySelectorAll(".tab-pane").forEach((pane) => {
+    pane.classList.remove("show", "active");
+  });
+
+  // Show the selected tab pane
+  const selectedPane = document.querySelector(
+    tabButton.getAttribute("data-bs-target")
+  );
+  selectedPane.classList.add("show", "active");
+
+  updateCompanyCards(tabId);
+}
+
+function updateCompanyCards(tabId) {
+  fetch(`/admin/approve_companies?tab=${tabId}`, {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Accept': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    const tabPane = document.querySelector(`#${tabId}`);
+    if (data.html) {
+      tabPane.innerHTML = data.html;
+    }
+    
+    if (!data.is_empty) {
+      initializeCompanies();
+      handleClickableRows();
+    }
+
+    document.dispatchEvent(new CustomEvent('companyCardsUpdated', { detail: { tabId: tabId, isEmpty: data.is_empty } }));
+  });
+}
+
+function handleClickableRows() {
+  document.querySelectorAll('.clickable-row').forEach(row => {
+    row.addEventListener('click', function() {
+      window.location = this.dataset.link;
+    });
+  });
+}
+
+// Add search functionality
+function initializeSearch() {
+  const searchInput = document.getElementById('searchInput');
+
+  // Add an event listener for input events on the search input
+  searchInput.addEventListener('input', function() {
+    // Get the search query and convert it to lowercase
+    const query = searchInput.value.toLowerCase();
+
+    // Get the currently active tab pane
+    const activeTabPane = document.querySelector('.companies-tab-pane.show.active');
+
+    // Get all table rows in the active tab
+    const rows = activeTabPane.querySelectorAll('tbody tr');
+
+    // Loop through each row and check if it matches the search query
+    rows.forEach(row => {
+      const companyNameCell = row.querySelector('td:nth-child(1)'); // Assuming company name is in the first column
+      const managerNameCell = row.querySelector('td:nth-child(3)'); // Assuming manager name is in the third column
+
+      // Check if the company name or manager name includes the search query
+      if (companyNameCell.textContent.toLowerCase().includes(query) || managerNameCell.textContent.toLowerCase().includes(query)) {
+        row.style.display = ''; // Show the row
+      } else {
+        row.style.display = 'none'; // Hide the row
+      }
+    });
+  });
+}

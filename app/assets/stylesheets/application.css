@@ -784,6 +784,60 @@ font-weight: bold;
   font-weight: normal;
 }
 
+/*admin pages heading skinnier*/
+
+/*header for company page*/
+.admin_header {
+  /* margin-top: 100px; */
+  margin-bottom: 30px; 
+  position: relative;
+  overflow: hidden; /* Ensures the image stays within the bounds of the container */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+  height: 15vh; /* Reduced height */
+}
+
+.background-image_admin_header {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Fill the container, cropping if necessary */
+  object-position: center; /* Center the image within the container */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1; /* Ensures the image is below the overlay and text */
+}
+
+.overlay_admin_header {
+  background-color: rgba(0, 0, 0, 0.5); /* Translucent black overlay */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Ensures the overlay is above the image */
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-left: 40px; /* Adjust this for text alignment */
+}
+
+.header-text-group_admin_header {
+  position: relative;
+  z-index: 3; /* Ensures the text is above both the image and the overlay */
+  color: white; /* Text color */
+  display: flex;
+  flex-direction: column;
+}
+
+.header-text_admin_header {
+  margin: 20px 0 10px 0; /* Adjust margins as needed */
+}
+
+.subheader-text_admin_header {
+  margin: 0;
+  font-weight: normal;
+}
 
 /* Clickable card CSS for all requests display pages, e.g my applications, my requests, requests page*/
 
