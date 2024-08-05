@@ -21,7 +21,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body class="<%= user_signed_in? ? 'user-signed-in' : '' %> <%= "#{controller_name}-#{action_name}" %>" data-current-user-id="<%= user_signed_in? ? current_user.id : '' %>">
-  <nav class="navbar">
+  <% if controller_name == 'sessions' || controller_name == 'registrations'%>
+    <nav class="navbar" style="background: transparent !important">
+  <% else %>
+    <nav class="navbar">
+  <% end %>
     <div class="container">
       <a class="navbar-brand" href="<%= root_path %>">
         <%= image_tag 'icon_v1.png', alt: 'Logo', class: 'logo-circle-navbar' %>
