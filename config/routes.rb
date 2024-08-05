@@ -87,6 +87,7 @@ Rails.application.routes.draw do
     end
     namespace :v3 do
       resources :reviews, :requests
+      resources :myapplications, :myrequests
     end
   end
 

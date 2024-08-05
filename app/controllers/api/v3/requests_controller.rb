@@ -34,7 +34,7 @@ class Api::V3::RequestsController < ApplicationController
   # show a single request
   def show
     if @request.nil?
-      render json: { error: 'Request does not exist.' }, status: :not_found
+      render json: { message: 'Request does not exist.' }, status: :not_found
       return
     end
 
@@ -137,7 +137,8 @@ class Api::V3::RequestsController < ApplicationController
     else
       # redirect_to @request, flash: { warning: 'You have already applied for this request.' }
       render json:, notice: 'You have already applied for this request.'
-    end  end
+    end
+  end
 
   # GET /requests/1/edit
   # show a form to edit a request
@@ -166,12 +167,11 @@ class Api::V3::RequestsController < ApplicationController
           end
           render json: { message: 'Request was successfully created.' }, status: :created
         else
-          error_message = @request ? @request.errors.full_messages : "Request object is nil"
-          render json: { message: 'Failed to create request.', errors: error_message }, status: :unprocessable_entity    end
+          render json: { message: 'Failed to create request.' }, status: :unprocessable_entity    
+        end
       else
         render json: { message: 'Authentication failed.', errors: ['Invalid phone number or password'] }, status: :unauthorized
       end
-
     rescue => e
       render json: {message: "An error occurred.", error: e.message}, status: :internal_server_error
     end
@@ -191,7 +191,7 @@ class Api::V3::RequestsController < ApplicationController
       render json: { message: 'Authentication failed.' }, status: :unauthorized
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { message: 'Request not found.' }, status: :not_found
+    render json: { message: 'Request does not exist.' }, status: :not_found
   rescue => e
     render json: { message: 'An error occurred while updating the request.', error: e.message }, status: :internal_server_error
   end
@@ -205,13 +205,15 @@ class Api::V3::RequestsController < ApplicationController
       if @request
         if @request.destroy
           render json: { message: 'Successfully deleted request.'}, status: :ok
-        else
-          render json: { message: 'Failed to delete request.' }, status: :unprocessable_entity
         end
-      else
-        render json: { message: 'Request not found.' }, status: :not_found
       end
+    else
+      render json: { message: 'Authentication failed.' }, status: :unauthorized
     end
+  # rescue ActiveRecord::RecordNotFound
+  #   render json: { message: 'Request does not exist.' }, status: :not_found
+  # rescue => e
+  #   render json: { message: 'An error occurred while updating the request.', error: e.message }, status: :internal_server_error
   end
 
   private
@@ -219,6 +221,14 @@ class Api::V3::RequestsController < ApplicationController
   # # Use callbacks to share common setup or constraints between actions.
   def set_request
     @request = Request.find(params[:id])
+    if @request
+      @request
+    else
+      nil
+    end
+  rescue ActiveRecord::RecordNotFound
+    render json: { message: "Request does not exist."}, status: :not_found
+
   end
 
   # Only allow a list of trusted parameters through.
