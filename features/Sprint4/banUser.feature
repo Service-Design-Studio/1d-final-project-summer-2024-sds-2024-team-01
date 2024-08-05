@@ -9,20 +9,29 @@ Background:
 
 Scenario: Ban User
     Given I am on "Ban User" page
-    And there is "Alice Smith"
+    And there is "Alice Smith" details
+    And I click "Alice Smith" details
+    Then there is more details of "Alice Smith"
+    Then I am on "Ban User" page
     When I click on "Ban" button for user "Alice Smith" 
-    # Then I should see a message "Ban placed successfully."
+    Then I should see the message "Successfully banned"
 
 Scenario: Unban User
     Given I am on "Unban User" page
-    And there is "Alice Smith"
-    When I click on "Unban" button for user "Alice Smith"
-    # Then I should see a message "Ban placed successfully."
+    And there is "Jane Doe" details
+    And I click "Jane Doe" details
+    Then there is more details of "Jane Doe"
+    Then I am on "Ban User" page
+    When I click on "Unban" button for user "Jane Doe"
+    Then I should see the message "Successfully unbanned."
 
 Scenario: Cancel User 
     Given I am on "Ban User" page
-    And there is "Bob Dylan"
+    And there is "Bob Dylan" details
+    And I click "Bob Dylan" details
+    Then there is more details of "Bob Dylan"
+    Then I am on "Ban User" page
     When I click on "Cancel" button for user "Bob Dylan"
-    # Then I should see a message "No ban placed."
+    Then I should see the message "Successfully cancelled"
     
 
