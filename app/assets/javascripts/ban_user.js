@@ -34,10 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Handle card click to navigate to the user profile
   document.querySelectorAll('.user-card').forEach(card => {
-    card.addEventListener('click', event => {
-      // Ensure the click didn't originate from a button within the card
-      if (!event.target.classList.contains('btn')) {
-        const profileUrl = card.getAttribute('data-profile-url');
+    card.addEventListener('click', function(event) {
+      if (event.target.tagName.toLowerCase() !== 'button' && event.target.tagName.toLowerCase() !== 'form') {
+        const profileUrl = this.getAttribute('data-profile-url');
+        console.log('Navigating to:', profileUrl); // Add this line to log the profile URL
         if (profileUrl) {
           window.location.href = profileUrl;
         } else {
