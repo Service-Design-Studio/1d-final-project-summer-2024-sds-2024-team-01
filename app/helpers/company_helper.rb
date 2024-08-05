@@ -1,7 +1,8 @@
 module CompanyHelper
   def company_image_url(company)
+    include MediaHelper
     if company.image.present?
-      url_for(company.image)
+      image_url(company.image)
     else
       asset_path('company.jpg')
     end

@@ -94,7 +94,9 @@
               <img src="<%= avatar_url(volunteer) %>" alt="<%= volunteer.name %>" width="50" height="50" class="me-3" style="border-radius: 50%;">
               <div class="profile-text">
                 <h6 class="mb-0">
-                  <%= volunteer.name %>
+                  <span id="topemployeename" >
+                    <%= volunteer.name %>
+                  </span>
                   <% if volunteer.role_id == 4 %>
                     <i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i>
                   <% end %>
