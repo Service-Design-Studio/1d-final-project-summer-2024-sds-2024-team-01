@@ -64,7 +64,7 @@
             <% end %>
             <i class="fas fa-bell" id="shownotifsicon"></i>
           </div>
-          <%= render partial: 'notifications/index', locals: { notifications: @notifications } %>
+          <%= render partial:'notifications/index', locals: { notifications: @notifications }  %>
           <%= button_to destroy_user_session_path, method: :delete, class: "logoutbutton", id: "logoutbtn" do %>
             <i class="bi bi-box-arrow-right" style="font-size: 1.5em;"></i>
           <% end %>

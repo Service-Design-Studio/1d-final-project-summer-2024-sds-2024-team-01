@@ -1,5 +1,6 @@
 .employees-index{
     background: linear-gradient(16deg, #ffefff, #fff);
+    margin-top: 5%;
 }
 
 .employees-index td, .employees-index th{
@@ -11,14 +12,15 @@
 }
 
 .cvm-index, .cvm-manage_charities {
-    height: calc(100vh - 80px);
+    height: calc(100vh - 0px);
     background: linear-gradient(16deg, #ffefff, #fff);
+    margin-top: 5%;
 }
 
 #cvmdashboard{
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 90px);
     overflow:hidden;
 }
 
@@ -86,7 +88,6 @@
     border: solid 1px rgba(66, 66, 66, 0.3);
     padding: 20px;
 }
-
 
 .dashboardcard.stats{
     box-shadow: 1px 1px 2px rgba(66, 66, 66, 0.3);

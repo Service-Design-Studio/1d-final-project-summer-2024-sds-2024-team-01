@@ -10,8 +10,31 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  margin-bottom: 5%;
+  /* margin-bottom: 5%; */
 }
+
+.offsetnavbar {
+  margin-top:80px;
+}
+
+.noticefadeout {
+  position: fixed;
+  background: #505050;
+  color: #eee;
+  top: 90px;
+  right: 10px;
+  padding: 20px;
+  z-index: 200;
+  border-radius: 10px;
+  animation: fadeoutnotif 5s forwards;
+}
+
+@keyframes fadeoutnotif {
+0% { opacity: 100%;}
+80% {opacity: 100%;}
+100% { opacity: 0%;}
+}
+
 
 .navbar .container {
   display: flex;
@@ -138,6 +161,11 @@
   }
 }
 
+/* Universal container for all pages*/
+
+.container.content_requests_index{
+  margin-top: 8% ;
+}
 /* Flash notifications styling */
 /* .alert {
   display: flex;
@@ -705,7 +733,7 @@ font-weight: bold;
 
 /* Requests home page CSS functions */
 .custom-card_requests_index {
-  margin-top: 100px;
+  /* margin-top: 100px; */
   margin-bottom: 30px; 
   position: relative;
   overflow: hidden; /* Ensures the image stays within the bounds of the container */
@@ -1487,6 +1515,7 @@ font-weight: bold;
 }
 
 .body-card_profile {
+  position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-top: none;
   border-bottom-left-radius: 5px;
@@ -1703,24 +1732,9 @@ body.popup-open {
   z-index: 1000;
 }
 
-/* Ensure the cropper UI is circular */
-/* .cropper-view-box,
-.cropper-face {
-  border-radius: 50%;
-} */
-
-.options-icon-follow {
-  margin-top: 12px; /* Space between name and options icon */
-  margin-left: 1220px;
-  color: #999;
-  cursor: pointer;
-  text-align: center;
-  transform: rotate(90deg);
-}
-
 .profile-user_description_container {
   position: absolute;
-  top: 32%; /* Adjust this value to move it up or down */
+  top: 22%; /* Adjust this value to move it up or down */
   left: 15px; /* Adjust this value to move it left or right */
   width: 50%;
   max-width: 250px;
@@ -1756,24 +1770,31 @@ body.popup-open {
   margin-left: 290px; /* Adjust this value for spacing from the profile-info-container */
   margin-top: 130px; /* Adjust this value for spacing below the header-card_profile */
   width: calc(100% - 300px); /* Ensure it fits within the body-card_profile without obstructing profile-info-container */
+  height: 130vh;
 }
 
 .nav-tabs {
-  border-bottom: 2px solid #ad88c6; /* Lilac border for tabs */
+  border-bottom: 2px solid #ad88c6;
   display: flex;
+  height: 40px; /* Fixed height for tab buttons */
 }
 
 .nav-item {
-  margin: 0; /* Remove default margin */
+  flex: 1;
 }
 
 .nav-tabs .nav-link {
-  color: #ad88c6; /* Lilac text color for tabs */
+  color: #ad88c6;
   border-radius: 5px 5px 0 0;
   border-color: #ad88c6;
-  margin-right: -1px; /* Adjust margin to remove spacing */
-  width: 150px;
+  margin-right: -1px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
   text-align: center;
+  white-space: nowrap;
 }
 
 .nav-tabs .nav-link.active {
@@ -1784,6 +1805,7 @@ body.popup-open {
 
 .tab-content {
   margin-top: 40px;
+  /* overflow-y: auto; */
 }
 
 .request-item, .review-item {
@@ -1795,6 +1817,8 @@ body.popup-open {
   display: flex;
   flex-wrap: wrap;
   gap: 10px; /* Adjust gap between squares */
+  overflow-y: auto;
+  height: 120vh;
 }
 
 .request-item {
@@ -1874,9 +1898,9 @@ body.popup-open {
   text-align: center;
 }
 
-.options-icon-requests {
+/* .options-icon-requests {
   position: relative;
-  margin-top: 5px; /* Space between name and options icon */
+  margin-top: 5px; 
   margin-left: 275px;
   color: #ad88c6;
   cursor: pointer;
@@ -1886,7 +1910,7 @@ body.popup-open {
 
 .options-icon:hover {
   color: #ad88c6;
-}
+} */
 
 .rating-container {
   display: flex;
@@ -1914,6 +1938,11 @@ body.popup-open {
 .rating-text {
   font-size: 15px;
   margin-left: 10px; /* Adjust spacing after stars */
+}
+
+.reviews-container {
+  height: 120vh;
+  overflow-y: auto;
 }
 
 .review-textarea {

@@ -3,7 +3,7 @@
 
 <body>
 
-  <div class="container content"> 
+  <div class="container content_requests_index"> 
     <div class="request-image-container_requests_details">
         <img src="<%= request_thumbnail_url(@request) %>" alt="Request Image" class="request-image_requests_details">
       <div class="btn-report_requests_details">
@@ -76,7 +76,7 @@
                 </div>
               </div>
               <% if @is_creator %>
-                <button class="btn custom-btn-dark-purple mb-3 w-100 chat-button" onclick="location.href='<%= chats_path(request_id: @request.id) %>'">View related Chats</button>
+                <button class="btn custom-btn-dark-purple mb-3 w-100 chat-button" style="margin-left:4.5%" onclick="location.href='<%= chats_path(request_id: @request.id) %>'">View related Chats</button>
               <% else %>
                 <%= link_to "Chat", chat_path_with_request_and_user(@request, @request.user, false), class: 'btn custom-btn-dark-purple mb-3 w-100 chat-button', style: 'margin-left:4.5%' %>
               <% end %>

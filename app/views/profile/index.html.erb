@@ -1,5 +1,5 @@
 <body>
-  <div class="container content">
+  <div class="container content_requests_index">
     <div class="card mb-0 custom-card_profile header-card_profile">
       <div class="card-body header-container_profile">
         <!-- Profile picture container -->
@@ -64,30 +64,36 @@
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="requests" role="tabpanel" aria-labelledby="requests-tab">
               <!-- Content for Requests -->
-              <div class="requests-grid">
-                <% @requests.each do |request| %>
-                  <div class="request-item">
-                    <div class="request-content">
-                      <a href="<%= request_path(request) %>">
-                        <div class="request-square">
-                          <img src="<%= request_thumbnail_url(request) %>" class="card-img-top" alt="<%= request.title %>" />
-                          <% if request.status.downcase != 'completed' %>
-                            <div class="request-popup">
-                              <div>Slots Remaining: <%= calculate_slots_remaining(request) %></div>
+              <div class="requests-container">
+                <% if @requests.empty? %>
+                  <%= render 'shared/empty_state' %>
+                <% else %>
+                  <div class="requests-grid">
+                    <% @requests.each do |request| %>
+                      <div class="request-item">
+                        <div class="request-content">
+                          <a href="<%= request_path(request) %>">
+                            <div class="request-square">
+                              <img src="<%= request_thumbnail_url(request) %>" class="card-img-top" alt="<%= request.title %>" />
+                              <% if request.status.downcase != 'completed' %>
+                                <div class="request-popup">
+                                  <div>Slots Remaining: <%= calculate_slots_remaining(request) %></div>
+                                </div>
+                              <% else %>
+                                <div class="request-popup">
+                                  <div>This request has concluded</div>
+                                </div>
+                                <div class="status-bar completed">Completed</div>
+                              <% end %>
                             </div>
-                          <% else %>
-                            <div class="request-popup">
-                              <div>This request has concluded</div>
-                            </div>
-                            <div class="status-bar completed">Completed</div>
-                          <% end %>
+                          </a>
+                          <p class="request-name"><%= request.title %></p>
+                          <%# <div class="options-icon-requests">
+                            <i class="fas fa-ellipsis-h"></i>
+                          </div> %>
                         </div>
-                      </a>
-                      <p class="request-name"><%= request.title %></p>
-                        <%# <div class="options-icon-requests">
-                          <i class="fas fa-ellipsis-h"></i>
-                        </div> %>
-                    </div>
+                      </div>
+                    <% end %>
                   </div>
                 <% end %>
               </div>
@@ -124,6 +130,7 @@
                   </select>
                 </div>
               </div>
+              <div class="reviews-container">
               <% if @reviews_from_requesters.any? || @reviews_from_applicants.any? %>
                 <% [@reviews_from_requesters, @reviews_from_applicants].flatten.sort_by(&:created_at).reverse.each do |review| %>
                   <div class="review-card card mb-3" data-review-type="<%= review.review_by == review.request.created_by ? 'requester' : 'applicant' %>">
@@ -182,8 +189,9 @@
                   </div>
                 <% end %>
               <% else %>
-                <p>No reviews yet.</p>
+                <%= render 'shared/empty_state' %>
               <% end %>
+              </div>
             </div>
           </div>
         </div>
