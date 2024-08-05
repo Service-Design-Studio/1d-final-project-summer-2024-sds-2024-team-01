@@ -7,12 +7,12 @@ Given("I am in a chat with another user") do
   end
   
   When("I send a message to the user") do
-    fill_in "message[message_text]", with: "Hello, this is a test message."
+    fill_in "chatmessagebox", with: "Hello, this is a test message."
     find('.send-btn-square').click
   end
   
   Then("the message should appear in the chat") do
-    expect(page).to have_content("Hello, this is a test message.")
+    expect(find('.message.sent')).to have_content("Hello, this is a test message.")
   end
   
   Given("another user sends me a message") do
