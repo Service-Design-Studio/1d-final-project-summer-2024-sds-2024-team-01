@@ -4,16 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeBanUser() {
-  const banUserContainer = document.getElementById('banUserContainer');
-  const unbanUserContainer = document.getElementById('unbanUserContainer');
-
-  if (banUserContainer) {
-    banUserContainer.addEventListener('click', handleBanUserContainerClick);
-  }
-  if (unbanUserContainer) {
-    unbanUserContainer.addEventListener('click', handleUnbanUserContainerClick);
-  }
-
   document.querySelectorAll('.user-card').forEach(card => {
     card.addEventListener('click', function(event) {
       if (event.target.tagName.toLowerCase() !== 'button' && event.target.tagName.toLowerCase() !== 'form') {
@@ -23,26 +13,15 @@ function initializeBanUser() {
     });
   });
 
+  document.querySelectorAll('.ban-form, .unban-form, .cancel-form').forEach(form => {
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const status = form.classList.contains('ban-form') ? 'ban' : form.classList.contains('unban-form') ? 'Active' : 'Active';
+      handleStatusChange(form, status);
+    });
+  });
+
   updateUIBasedOnStatus();
-}
-
-function handleBanUserContainerClick(event) {
-  if (event.target.closest('.ban-form')) {
-    event.preventDefault();
-    handleStatusChange(event.target.closest('.ban-form'), 'ban');
-  }
-
-  if (event.target.closest('.cancel-form')) {
-    event.preventDefault();
-    handleStatusChange(event.target.closest('.cancel-form'), 'Active');
-  }
-}
-
-function handleUnbanUserContainerClick(event) {
-  if (event.target.closest('.unban-form')) {
-    event.preventDefault();
-    handleStatusChange(event.target.closest('.unban-form'), 'Active');
-  }
 }
 
 function handleStatusChange(form, status) {
@@ -56,8 +35,10 @@ function handleStatusChange(form, status) {
   })
   .then(response => response.json())
   .then(data => {
+    console.log('Server response:', data); // Add this line to log the response
     if (data.success) {
       updateUserStatus(form.closest('.user-card'), status);
+      alert('Status updated successfully.');
     } else {
       alert('Failed to update user status.');
     }
@@ -76,13 +57,11 @@ function updateUserStatus(userCard, status) {
     unbanUserContainer.appendChild(userCard);
     switchTab(document.querySelector('[href="#unban"]'));
   } else if (status === 'Active') {
-    const banUserContainer = document.getElementById('banUserContainer');
-    userCard.setAttribute('data-status', 'under_review');
-    banUserContainer.appendChild(userCard);
-    switchTab(document.querySelector('[href="#ban"]'));
+    userCard.remove(); // Remove the user card from both tabs
   }
 
   updateUIBasedOnStatus();
+  reattachEventListeners(); // Re-attach event listeners to newly moved elements
 }
 
 function initializeTabs() {
@@ -129,4 +108,29 @@ function updateUIBasedOnStatus() {
       card.querySelector('.unban-form').style.display = 'block';
     }
   });
+}
+
+function reattachEventListeners() {
+  document.querySelectorAll('.user-card').forEach(card => {
+    card.removeEventListener('click', handleCardClick);
+    card.addEventListener('click', handleCardClick);
+  });
+
+  document.querySelectorAll('.ban-form, .unban-form, .cancel-form').forEach(form => {
+    form.removeEventListener('submit', handleFormSubmit);
+    form.addEventListener('submit', handleFormSubmit);
+  });
+}
+
+function handleCardClick(event) {
+  if (event.target.tagName.toLowerCase() !== 'button' && event.target.tagName.toLowerCase() !== 'form') {
+    const userId = this.dataset.userId;
+    window.location.href = `/profile/${userId}`;
+  }
+}
+
+function handleFormSubmit(event) {
+  event.preventDefault();
+  const status = this.classList.contains('ban-form') ? 'ban' : 'Active';
+  handleStatusChange(this, status);
 }
