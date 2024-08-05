@@ -80,6 +80,24 @@ Rails.application.routes.draw do
     namespace :v3 do
       resources :reviews, :requests
       resources :myapplications, :myrequests
+      post 'requests/apply' => 'requests#apply'
+      # resources :chats, only: [:index, :show, :new, :create] do
+      #   resources :messages, only: [:create]
+      # end
+      # resources :notifications, :profile
+      # resources :user_reports
+      # get 'profile/:id', to: 'profile#index', as: 'user_profile'
+      # get 'profile', to: 'profile#index'
+      # get 'profile/edit', to: 'profile#edit'
+      # patch 'profile', to: 'profile#update'
+      # get 'myrequests' => 'my_requests#index'
+      # post 'myrequests/complete' => 'my_requests#complete'
+      # post 'myrequests/accept' => 'my_requests#accept'
+      # post 'myrequests/reject' => 'my_requests#reject'
+      # get 'myapplications' => 'my_applications#index'
+      # post 'myapplications/withdraw' => 'my_applications#withdraw'
+      # post 'notifications/read' => 'notifications#read'
+      # post 'notifications/clear' => 'notifications#clear'
     end
   end
 
