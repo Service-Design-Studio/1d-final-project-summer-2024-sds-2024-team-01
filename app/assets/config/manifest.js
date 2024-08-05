@@ -7,3 +7,4 @@
 //=link filtering.js
 //= link ban_user.js
 //= link approve_companies.js
+ //= link employee.js
