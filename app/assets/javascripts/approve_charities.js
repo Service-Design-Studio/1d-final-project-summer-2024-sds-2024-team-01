@@ -87,26 +87,36 @@ function handleClickableRows() {
 function initializeSearch() {
   const searchInput = document.getElementById('searchInput');
 
-  // Add an event listener for input events on the search input
   searchInput.addEventListener('input', function() {
-    // Get the search query and convert it to lowercase
     const query = searchInput.value.toLowerCase();
+    const activeTabPane = document.querySelector('.tab-pane.show.active');
+    
+    if (!activeTabPane) {
+      console.error('No active tab pane found');
+      return;
+    }
 
-    // Get the currently active tab pane
-    const activeTabPane = document.querySelector('.charities-tab-pane.show.active');
+    const rows = activeTabPane.querySelectorAll('.row.py-2.border-bottom.clickable-row');
+    
+    if (rows.length === 0) {
+      console.error('No rows found in the active tab pane');
+      return;
+    }
 
-    // Get all table rows in the active tab
-    const rows = activeTabPane.querySelectorAll('tbody tr');
-
-    // Loop through each row and check if it matches the search query
     rows.forEach(row => {
-      const charityNameCell = row.querySelector('td:nth-child(1)'); // Assuming charity name is in the first column
+      const nameCell = row.querySelector('.col-3:first-child');
+      const managerCell = row.querySelector('.col-3:nth-child(3)');
 
-      // Check if the charity name includes the search query
-      if (charityNameCell.textContent.toLowerCase().includes(query)) {
-        row.style.display = ''; // Show the row
+      if (!nameCell || !managerCell) {
+        console.error('Required cells not found in row', row);
+        return;
+      }
+
+      if (nameCell.textContent.toLowerCase().includes(query) || 
+          managerCell.textContent.toLowerCase().includes(query)) {
+        row.style.display = '';
       } else {
-        row.style.display = 'none'; // Hide the row
+        row.style.display = 'none';
       }
     });
   });
