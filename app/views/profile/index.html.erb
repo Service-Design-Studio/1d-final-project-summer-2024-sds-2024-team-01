@@ -154,7 +154,7 @@
                             <h6 class="mini-request-title"><%= review.request.title %></h6>
                             <p class="mini-request-time">
                               <%= review.request.date.strftime('%d %B %Y') %>,
-                              <%= review.request.start_time.strftime('%H:%M') %>
+                              <%= review.request.start_time.localtime.strftime('%I:%M %p') %>
                             </p>
                           </div>
                         </div>
