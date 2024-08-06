@@ -1,0 +1,23 @@
+<div class="modal fade" id="reportConfirmationModal" tabindex="-1" aria-labelledby="reportConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reportConfirmationModalLabel">Confirm Report for <%= @profile.name %></h5>
+        <%# <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> %>
+      </div>
+      <div class="modal-body">
+        <div class="confirmation_message">Please confirm that you want to report this user for the following reason:</div>
+        <div class="report_reason" id="confirmationReportReason"></div>
+        
+        <%= form_with url: user_reports_path, method: :post, id: 'confirmationForm', local: true do |form| %>
+          <%= form.hidden_field :report_reason, id: 'confirmationReportReasonField', name: 'user_report[report_reason]' %>
+          <%= form.hidden_field :reported_user, value: @profile.id, name: 'user_report[reported_user]' %>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="backToReport">Back</button>
+            <%= form.submit 'Confirm Report', class: 'btn btn-danger' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
