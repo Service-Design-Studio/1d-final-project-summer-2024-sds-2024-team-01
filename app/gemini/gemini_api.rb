@@ -24,7 +24,7 @@ module Gemini_Helper
 
       Description: #{request[:description]}
 
-      Please give me a percentage of how well I match this request, ignoring the availabilities of both parties
+    Please give me a percentage of how well I match this request, ignoring the availabilities of both parties. Only give me the percentage in the format of: xx%
       PROMPT
 
       response_text = client.generate_content({
