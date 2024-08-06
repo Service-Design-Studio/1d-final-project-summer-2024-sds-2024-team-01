@@ -51,6 +51,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
     @company.status = 'Pending'
     @company.document_proof = params[:document_proof]
 
+
     @corpuser = User.new
     @corpuser.email = params[:email]
     @corpuser.name = params[:company_name]
@@ -68,7 +69,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
         if @corpuser.save
           redirect_to '/register/corporatesuccess'
         else
-          @corpuser.errors.full_messages
+          puts @corpuser.errors.full_messages
           redirect_to '/register/corporate', notice: 'Failed to register user'
           raise ActiveRecord::Rollback
         end
