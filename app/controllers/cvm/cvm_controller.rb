@@ -22,7 +22,7 @@ class Cvm::CvmController < ApplicationController
     addedids = CompanyCharity.where(company_id: current_user.company_id).pluck(:charity_id)
 
     @addedcharities = Charity.where(id: addedids)
-    @notaddedcharities = Charity.where.not(id: @addedcharities.pluck(:id))
+    @notaddedcharities = Charity.where.not(id: @addedcharities.pluck(:id)).where.not(status: 'Inactive')
   end
 
   # /PATCH CVM/charities/update
