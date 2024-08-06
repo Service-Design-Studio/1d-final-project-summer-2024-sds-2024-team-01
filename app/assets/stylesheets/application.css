@@ -465,12 +465,6 @@
   display: block;
 }
 
-/*indicator container on req details page*/
-.percentage-indicator {
-  position: absolute;
-  left: 53%;
-  top: 1%;
-}
 
 /* filtering system CSS*/
 
@@ -620,7 +614,7 @@ body.registrations-new, .registrations-create, .registrations-charity, .registra
   right:0;
   top: 20vh;
   max-width: 400px;
-  max-height: 520px;
+  max-height: 550px;
   margin: auto;
   padding: 20px;
   background-color: white;
@@ -1180,6 +1174,25 @@ font-weight: bold;
   min-height: 38px; /* Adjust this value as needed */
 }
 
+.request-details-title-cluster {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.request-title {
+  font-size: xx-large;
+  flex: 1;
+  padding-right: 20px; /* Add some space between title and indicator */
+  width: 70vh;
+}
+
+.percentage-indicator {
+  position: relative;
+  flex-shrink: 0; /* Prevent the indicator from shrinking */
+  margin-right: 20px; /* Add some space between title and indicator */
+}
+
 /* Flexbox container for the indicator and button */
 .request-availability_requests_details {
   display: flex;
@@ -1729,6 +1742,7 @@ font-weight: bold;
 .report-button:hover {
   background-color: #c82333;
 }
+
 /*edit profile pop-up*/
 .edit_profile_pop-up {
   display: none;
@@ -1944,7 +1958,7 @@ body.popup-open {
 
 .request-item {
   width: calc(33.333% - 10px); /* Three items per row with a 10px gap */
-  height: calc(33% - 10px);
+  height: calc(33% - 0px);
   box-sizing: border-box;
 }
 
@@ -1964,6 +1978,14 @@ body.popup-open {
   cursor: pointer;
   position: relative;
   overflow: hidden;
+}
+
+.request-name-square{
+  margin-top: 20px;
+  width: 100%;
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  text-align: center;
 }
 
 .status-bar {

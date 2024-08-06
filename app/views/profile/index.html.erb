@@ -12,16 +12,16 @@
         <div class="profile-info-container">
           <!-- Profile name -->
           <h5>
-            <%= @profile.name %>
+            <%= truncate(@profile.name, length: 20, separator: ' ') %> <!-- Truncates name to 20 characters -->
             <% case @profile.role_id %>
-            <% when 2 %>
-              <i class="fas fa-user-shield" style="font-size: 16px; margin-left: 10px;"></i>
-            <% when 3 %>
-              <i class="fas fa-building-shield" style="font-size: 16px; margin-left: 10px;"></i>
-            <% when 4 %>
-              <i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i>
-            <% when 5 %>
-              <i class="fas fa-hand-holding-heart" style="font-size: 16px; margin-left: 10px;"></i>
+              <% when 2 %>
+                <i class="fas fa-user-shield" style="font-size: 16px; margin-left: 10px;"></i>
+              <% when 3 %>
+                <i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i>
+              <% when 4 %>
+                <i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i>
+              <% when 5 %>
+                <i class="fas fa-hand-holding-heart" style="font-size: 16px; margin-left: 10px;"></i>
             <% end %>
           </h5>
           <!-- Star ratings -->
@@ -101,7 +101,7 @@
                               <% end %>
                             </div>
                           </a>
-                          <p class="request-name"><%= request.title %></p>
+                          <div class="request-name-square"><%= truncate(request.title, length: 30, separator: ' ') %></div>
                           <%# <div class="options-icon-requests">
                             <i class="fas fa-ellipsis-h"></i>
                           </div> %>
