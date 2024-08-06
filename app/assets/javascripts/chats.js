@@ -59,16 +59,21 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       setupMessageForm(chatId);
+      scrollToBottom();
     })
     .catch(error => console.error('Error loading chat:', error));
   }
 
   function setupMessageForm(chatId) {
     const messageForm = document.getElementById('message-form');
+    const messageInput = document.getElementById('chatmessagebox');
 
     if (messageForm) {
       messageForm.addEventListener('submit', function(event) {
         event.preventDefault();
+        const messageText = messageInput.value.trim();
+        if (!messageText) return;
+
         const formData = new FormData(this);
         fetch(`/chats/${chatId}/messages`, {
           method: 'POST',
@@ -76,13 +81,32 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(response => response.json())
         .then(message => {
-          const messagesDiv = document.querySelector('.message-area');
-          messagesDiv.innerHTML += `<div class="message ${message.sender_id == currentUserId ? 'sent' : 'received'}">${message.message_text}</div>`;
+          addNewMessage(message);
           this.reset();
         })
         .catch(error => console.error('Error sending message:', error));
       });
     }
+  }
+
+  function addNewMessage(message) {
+    const messagesDiv = document.querySelector('.message-area');
+    const lastMessage = messagesDiv.lastElementChild;
+    const isSender = message.sender_id == currentUserId;
+    const senderClass = isSender ? 'sent' : 'received';
+    const spacing_class = lastMessage && lastMessage.classList.contains(senderClass) ? 'mt-1' : 'mt-4';
+    
+    const newMessageElement = document.createElement('div');
+    newMessageElement.className = `message ${senderClass} ${spacing_class}`;
+    newMessageElement.textContent = message.message_text;
+    
+    messagesDiv.appendChild(newMessageElement);
+    scrollToBottom();
+  }
+
+  function scrollToBottom() {
+    const messagesDiv = document.querySelector('.message-area');
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
 
   function filterChats(filterType, requestId = null) {
