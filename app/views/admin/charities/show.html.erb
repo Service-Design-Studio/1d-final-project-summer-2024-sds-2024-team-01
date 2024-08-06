@@ -35,7 +35,7 @@
       <%# <h3 class="h5 text-secondary mb-3">Document Proof</h3> %>
       <% if @charity.document_proof.attached? %>
         <div class="ratio ratio-16x9">
-          <iframe src="<%= rails_blob_path(@charity.document_proof, disposition: 'inline') %>" class="rounded shadow-sm"></iframe>
+          <iframe src="<%= document_url(@charity.document_proof) %>" class="rounded shadow-sm"></iframe>
         </div>
       <% else %>
         <p class="no-document alert alert-warning">No document proof attached.</p>
