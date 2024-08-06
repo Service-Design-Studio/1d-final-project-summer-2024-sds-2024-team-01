@@ -11,7 +11,7 @@ module Gemini_Helper
         service: 'generative-language-api',
         api_key: Rails.application.credentials.google.gemini_api_key
       },
-      options: { model: 'gemini-pro', server_sent_events: true }
+      options: { model: 'gemini-1.5-pro', server_sent_events: true }
     )
       prompt = <<-PROMPT
       This is my profile bio:
