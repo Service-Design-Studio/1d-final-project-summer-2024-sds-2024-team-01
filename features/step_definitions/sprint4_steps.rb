@@ -597,3 +597,24 @@ Then('I press on {string}') do |button_text|
   end
 end
 
+# Given('I have a user account') do
+#   User.create!(
+#     name: 'Regular User',
+#     email: 'user@example.com',
+#     password: 'password',
+#     password_confirmation: 'password',
+#     number: '92220000',  
+#     role_id: 1,          
+#     status: 'Active'
+#   )
+# end
+
+Then('I login as a user') do
+  visit '/login'
+  fill_in 'user_login', with: '98765432'
+  fill_in 'user_password', with: 'password'
+  click_button 'Login'
+end
+
+
+  
