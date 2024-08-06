@@ -289,18 +289,6 @@ Given('I am on {string} page') do |page|
   end
 end
 
-
-# Then('I click on {string} tab') do |tab_name|
-#   case tab_name
-#   when "Ban"
-#     find('a.nav-link', text: 'Ban').click
-#   when "Unban"
-#     find('a.nav-link', text: 'Unban').click
-#   else
-#     raise "Unknown tab: #{tab_name}"
-#   end
-# end
-
 Then('I should see more details of {string}') do |entity_name|
   @entity = Company.find_by(company_name: entity_name) || Charity.find_by(charity_name: entity_name)
   expect(@entity).not_to be_nil, "Expected to find entity with name #{entity_name}, but none was found."
@@ -332,26 +320,69 @@ Given('there are companies and charities for me to approve') do
   FactoryBot.create(:delightful_charity)
 end
 
-Given('there is {string}') do |user_name|
+And('there is {string} details') do |user_name|
+  puts "Creating user with name: #{user_name}"  # Debug statement
+
   case user_name
   when 'Alice Smith'
     @user = FactoryBot.create(:dummy_user, name: 'Alice Smith')
   when 'Bob Dylan'
     @user = FactoryBot.create(:dummy_user_three, name: 'Bob Dylan')
+  when 'Jane Doe'
+    @user = FactoryBot.create(:dummy_user_two, name: 'Jane Doe')
+  else
+    raise "Unknown user name: #{user_name}"
+  end
+
+  puts "Created user: #{@user.inspect}"  # Debug statement
+end
+
+
+And('I click on {string} button for company {string}') do |button_text, company_name|
+  puts "Looking for company row with name: #{company_name}"  # Debug statement
+
+  page.all('tr').each do |row|
+    puts "Row text: #{row.text}"  # Debug statement
+  end
+
+  begin
+    company_row = find('tr', text: company_name, visible: true)
+    if company_row
+      puts "Found company row: #{company_row.text}"  # Debug statement
+      within(company_row) do
+        click_button(button_text)
+      end
+    else
+      puts "Company row not found for: #{company_name}"  # Debug statement
+      raise "Company row not found for: #{company_name}"
+    end
+  rescue Capybara::ElementNotFound => e
+    puts "Error: #{e.message}"  # Debug statement
+    raise "Company row not found for: #{company_name}"
   end
 end
 
-When('I click on {string} button for company {string}') do |button_text, company_name|
-  within("tr", text: company_name) do
-    click_button(button_text)
+
+And('I click on {string} button for charity {string}') do |button_text, charity_name|
+  puts "Looking for charity row with name: #{charity_name}"  # Debug statement
+
+  begin
+    charity_row = find('tr', text: charity_name, visible: true)
+    if charity_row
+      puts "Found charity row: #{charity_row.text}"  # Debug statement
+      within(charity_row) do
+        click_button(button_text)
+      end
+    else
+      puts "Charity row not found for: #{charity_name}"  # Debug statement
+      raise "Charity row not found for: #{charity_name}"
+    end
+  rescue Capybara::ElementNotFound => e
+    puts "Error: #{e.message}"  # Debug statement
+    raise "Charity row not found for: #{charity_name}"
   end
 end
 
-When('I click on {string} button for charity {string}') do |button_text, charity_name|
-  within(:xpath, "//tr[contains(., '#{charity_name}')]") do
-    click_button(button_text)
-  end
-end
 
 When('I click on {string} button for user {string}') do |button_text, user_name|
   within('.user-card', text: user_name) do
@@ -359,6 +390,55 @@ When('I click on {string} button for user {string}') do |button_text, user_name|
   end
 end
 
+And('I click on {string} details') do |entity_name|
+  puts "Looking for entity row with name: #{entity_name}"  # Debug statement
+
+  begin
+    entity_row = find('tr.clickable-row', text: entity_name, visible: true)
+    if entity_row
+      puts "Found entity row: #{entity_row.text}"  # Debug statement
+      entity_row.click
+    else
+      puts "Entity row not found for: #{entity_name}"  # Debug statement
+      raise "Entity row not found for: #{entity_name}"
+    end
+  rescue Capybara::ElementNotFound => e
+    puts "Error: #{e.message}"  # Debug statement
+    raise "Entity row not found for: #{entity_name}"
+  end
+end
+
+Then('I should see the message {string}') do |message|
+  # Wait for the alert to be present
+  alert = nil
+  Timeout.timeout(Capybara.default_max_wait_time) do
+    loop until (alert = page.driver.browser.switch_to.alert rescue nil)
+  end
+
+  # Ensure the alert is present and has the expected message
+  expect(alert.text).to eq(message)
+  alert.accept
+end
+
+
+Then('there is more details of {string}') do |user_name|
+  expect(page).to have_content(user_name)
+end
+
+
+And('I click {string} details') do |user_name|
+  puts "Looking for user card with name: #{user_name}"  # Debug statement
+
+  user_card = find('.clickable-card', text: user_name, visible: true)
+
+  if user_card
+    puts "Found user card: #{user_card.text}"  # Debug statement
+    user_card.click
+  else
+    puts "User card not found for: #{user_name}"  # Debug statement
+    raise "User card not found for: #{user_name}"
+  end
+end
 
 
 
