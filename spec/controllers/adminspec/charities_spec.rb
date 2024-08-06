@@ -27,7 +27,7 @@ RSpec.describe Admin::CharitiesController, type: :controller do
       patch :approve, params: { id: charity.id }
       charity.reload
       expect(charity.status).to eq('Active')
-      expect(response).to redirect_to(admin_charities_path)
+      expect(response).to redirect_to(admin_charities_path(anchor: 'active-tab'))
     end
   end
 
@@ -36,7 +36,7 @@ RSpec.describe Admin::CharitiesController, type: :controller do
       patch :disable, params: { id: charity.id }
       charity.reload
       expect(charity.status).to eq('Inactive')
-      expect(response).to redirect_to(admin_charities_path)
+      expect(response).to redirect_to(admin_charities_path(anchor: 'inactive-tab'))
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.describe Admin::CharitiesController, type: :controller do
       patch :reject, params: { id: charity.id }
       charity.reload
       expect(charity.status).to eq('Rejected')
-      expect(response).to redirect_to(admin_charities_path)
+      expect(response).to redirect_to(admin_charities_path(anchor: 'rejected-tab'))
     end
   end
 end

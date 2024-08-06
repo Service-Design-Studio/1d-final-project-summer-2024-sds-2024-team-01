@@ -24,6 +24,10 @@ class UserReportsController < ApplicationController
     Rails.logger.debug "Parameters in confirm: #{params.inspect}"
     @user = User.find(params[:user_report][:reported_user])
     @report_reason = params[:user_report][:report_reason]
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   private

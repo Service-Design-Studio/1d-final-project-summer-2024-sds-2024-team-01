@@ -99,8 +99,7 @@ namespace :db do
       end
 
       abc_company = create(:random_company, status: 'Active')
-      create(:user, status: 'Active', company_id: abc_company.id, role_id: 3,
-                    number: nil, email: 'cvm1@test.com')
+      create(:user, status: 'Active', company_id: abc_company.id, role_id: 3, number: nil, email: 'cvm1@test.com')
       create(:random_company_code, company: abc_company)
 
       create(:user, email: 'cv@test.com', status: 'Active', company_id: abc_company.id, role_id: 4, number: nil)
@@ -110,12 +109,9 @@ namespace :db do
       end
       create(:user, email: 'charity@test.com', status: 'Active', charity_id: Charity.first.id, role_id: 5, number: nil)
 
-      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
-                    number: nil, email: 'cvm2@test.com')
-      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3,
-                    number: nil, email: 'cvm3@test.com')
+      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3, number: nil, email: 'cvm2@test.com')
+      create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3, number: nil, email: 'cvm3@test.com')
 
-      
       # Create dummy data for charities
       create(:inexpensive_charity)
       create(:tasty_charity)

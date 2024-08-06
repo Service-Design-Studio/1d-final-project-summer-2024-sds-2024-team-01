@@ -5,23 +5,32 @@ Feature: Ban User who got reported
 
 Background:
     Given I have an admin account
-    Then I login as an admin
+    Then I login as admin
 
 Scenario: Ban User
-    Given I am on the "Ban User" page
-    And there is "Alice Smith"
-    When I click on "Ban" button
-    Then I should see a message "Alice Smith has been banned."
+    Given I am on "Ban User" page
+    And there is "Alice Smith" details
+    And I click "Alice Smith" details
+    Then there is more details of "Alice Smith"
+    Then I am on "Ban User" page
+    When I click on "Ban" button for user "Alice Smith" 
+    Then I should see the message "Successfully banned"
 
 Scenario: Unban User
-    Given I am on the "Unban User" page
-    And there is "Alice Smith"
-    When I click on "Unban" button
-    Then I should see a message "Alice Smith has been unbanned."
+    Given I am on "Unban User" page
+    And there is "Jane Doe" details
+    And I click "Jane Doe" details     
+    Then I am on "Unban User" page
+    When I click on "Unban" button for user "Jane Doe"
+    Then I should see the message "Successfully unbanned"
 
 Scenario: Cancel User 
-    Given I am on the "Ban User" page
-    And there is "Bob Dylan"
-    When I click on "Cancel" button
-    Then I should see a message "Bob Dylan placed on User One"
+    Given I am on "Ban User" page
+    And there is "Bob Dylan" details
+    And I click "Bob Dylan" details
+    Then there is more details of "Bob Dylan"
+    Then I am on "Ban User" page
+    When I click on "Cancel" button for user "Bob Dylan"
+    Then I should see the message "Successfully cancelled"
     
+
