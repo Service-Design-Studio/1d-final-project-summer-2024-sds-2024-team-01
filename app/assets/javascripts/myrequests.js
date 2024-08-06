@@ -379,12 +379,18 @@ function handleAcceptRejectForm(form) {
   })
   .then(data => {
     if (data.redirect) {
+    console.log(data)
       alert(data.notice);
       window.location.href = data.redirect;
     } else {
-      // Update UI only after successful response
-      updateUI(buttonContainer, data.status);
-      updateApplicantCountFromServer(buttonContainer, data.acceptedCount, data.numberOfPax);
+        if (data.status == 'Full'){
+            alert('This request has already been fulfilled. Thank you.')
+        }
+        else{
+          // Update UI only after successful response
+          updateUI(buttonContainer, data.status);
+          updateApplicantCountFromServer(buttonContainer, data.acceptedCount, data.numberOfPax);
+        }
     }
   })
   .catch(error => {
