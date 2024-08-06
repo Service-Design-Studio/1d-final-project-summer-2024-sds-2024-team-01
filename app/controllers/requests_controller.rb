@@ -151,6 +151,11 @@ class RequestsController < ApplicationController
     @request.updated_at = DateTime.now
     @request.stringlocation = params[:request][:stringlocation] if params[:request][:stringlocation].present?
 
+    if params[:request][:start_time].present?
+      time = Time.parse(params[:request][:start_time])
+      @request.start_time = Time.find_zone('Singapore').local_to_utc(time)
+    end
+
     if @request.save
       if request_params[:thumbnail].present?
         @request.thumbnail.attach(request_params[:thumbnail])

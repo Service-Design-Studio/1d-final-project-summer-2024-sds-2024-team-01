@@ -37,7 +37,7 @@
               </div>
               <div class="details-item_requests_details">
                 <i class="fas fa-clock"></i>
-                <span><%= @request.start_time.strftime('%H:%M') %> , lasting <%= @request.duration %> hours</span>
+                <span><%= @request.start_time.localtime.strftime('%I:%M %p') %> , lasting <%= @request.duration %> hours</span>
               </div>
               <div class="details-item_requests_details">
                 <i class="fas fa-users"></i>
@@ -119,7 +119,7 @@
                     <div class="availability-indicator_requests_details flex-grow-1"><%= @slots_remaining %> slots remaining</div>
                       <%= button_to 'Apply', {:controller => "requests", :action => "apply", :id => @request.id, :method => :post }, { class: 'accept-button_requests_details ms-2'} %>
                     </div>
-                  <% end %>
+                  
                 </div>
               <% end %>
             </div>

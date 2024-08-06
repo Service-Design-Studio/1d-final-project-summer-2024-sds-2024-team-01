@@ -15,7 +15,7 @@
           <h3 class="h5 text-secondary mb-3">Company Information</h3>
           <p class="card-text">
             <i class="fas fa-calendar-alt me-2 text-muted"></i><strong>Created:</strong> 
-            <span class="text-info"><%= @company.created_at.strftime('%d %b %Y, %H:%M') %></span><br>
+            <span class="text-info"><%= @company.created_at.localtime.strftime('%d %b %Y, %I:%M %p') %></span><br>
             
             <i class="fas fa-user-tie me-2 text-muted"></i><strong>Corporate Manager:</strong> 
             <span class="text-info"><%= @company.users.find_by(role_id: 3).name %></span><br>
@@ -34,7 +34,7 @@
         <%# <h3 class="h5 text-secondary mb-3">Document Proof</h3> %>
         <% if @company.document_proof.attached? %>
           <div class="ratio ratio-16x9">
-            <iframe src="<%= rails_blob_path(@company.document_proof, disposition: 'inline') %>" class="rounded shadow-sm"></iframe>
+            <iframe src="<%= document_url(@company.document_proof) %>" class="rounded shadow-sm"></iframe>
           </div>
         <% else %>
           <p class="no-document alert alert-warning">No document proof attached.</p>
