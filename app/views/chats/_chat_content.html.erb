@@ -35,7 +35,7 @@
           <div class="mini-request-details-card">
             <div class="mini-request-details">
               <h6 class="mini-request-title"><%= @chat.request.title %></h6>
-              <p class="mini-request-time"><%= @chat.request.date.strftime('%d %B %Y') %>, <%= @chat.request.start_time.strftime('%H:%M') %></p>
+              <p class="mini-request-time"><%= @chat.request.date.strftime('%d %B %Y') %>, <%= @chat.request.start_time.localtime.strftime('%I:%M %p') %></p>
             </div>
           </div>
           <div class="mini-request-thumbnail-card">

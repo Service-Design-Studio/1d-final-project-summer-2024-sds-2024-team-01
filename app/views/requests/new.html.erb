@@ -87,6 +87,7 @@
           <div class="col-md-3 input-with-icon">
             <%= f.label :start_time, class: "form-label" %>
             <%= f.time_field :start_time, class: "form-control", placeholder: "Time of the event", required: true, id: "start_time" %>
+            <%= hidden_field_tag :time_zone, 'Singapore' %>
             <i class="fa fa-clock input-icon" id="time-icon"></i>
           </div>
           <div class="col-md-3">
