@@ -2305,7 +2305,7 @@ body.popup-open {
   width: 150px;
   height: 40px;
   margin-left: 20px; /* Add some space between name and button */
-  margin-top: 10%;
+  /* margin-top: 10%; */
   cursor: pointer;
   justify-content: center; /* Center the text horizontally */
   border-radius: 5px; /* Optional: Add rounded corners */
