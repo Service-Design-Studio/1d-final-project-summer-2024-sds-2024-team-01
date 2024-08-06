@@ -134,5 +134,5 @@ Then('I should see {int} corporate volunteer applicant') do |count|
 end
 
 Then('sleep') do
-  sleep 500
+  sleep 50
 end

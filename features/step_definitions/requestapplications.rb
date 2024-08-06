@@ -85,10 +85,6 @@ Then('I should see the applicants profile') do
   expect(page).to have_selector('.body-container_profile')
 end
 
-When('I click on the request title') do
-  pending
-end
-
 Given('that someone has {string} my application') do |string|
   click_button(id: 'logoutbtn')
   visit '/login'
