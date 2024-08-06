@@ -47,7 +47,7 @@
     </div>
   </div>
 
-  <div class="message-area">
+  <div class="message-area" id="message-area">
     <% if @messages.any? %>
       <% @messages.each_with_index do |message, index| %>
         <% is_sender = message.sender == current_user %>

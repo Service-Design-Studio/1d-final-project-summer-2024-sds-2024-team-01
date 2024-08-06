@@ -40,7 +40,7 @@ function removeallnotifs(event) {
     })
         .then((response) => {
             if (response.ok) {
-                const notifElements = document.querySelectorAll(".notifcolumn");
+                const notifElements = document.querySelectorAll(".notif-card");
                 notifElements.forEach((notif) => {
                     notif.remove();
                 });

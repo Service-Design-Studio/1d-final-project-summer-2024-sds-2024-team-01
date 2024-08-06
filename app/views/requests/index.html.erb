@@ -176,7 +176,7 @@
                         <% end %>
                       </span>
                     </div>
-                    <h5 class="card-title_requests_index"><%= request.title %></h5>
+                    <h5 class="card-title_requests_index"><%= truncate(request.title, length: 40, separator: ' ')%></h5>
                     <h6 class="card-subtitle_requests_index mb-2 text-muted"><%= request.category %></h6>
                     <div class="reward-text_requests_index">
                       <p class="card-text_requests_index">Reward: <%= request.reward %></p>
@@ -185,7 +185,7 @@
                     <div class="card-details_requests_index">
                       <div class="row">
                         <div class="col-6">
-                          <p class="card-text_requests_index"><i class="fas fa-map-marker-alt"><span class="icon-text_requests_index"></i><%= request.stringlocation.presence || 'Address not available' %></span></p>
+                          <p class="card-text_requests_index"><i class="fas fa-map-marker-alt"><span class="icon-text_requests_index"></i><%= truncate(request.stringlocation.presence || 'Address not available', length: 65) %></span></p>
                         </div>
                         <div class="col-6">
                           <p class="card-text_requests_index"><i class="fas fa-users"></i><span class="icon-text_requests_index"><%= request.number_of_pax %></span></p>

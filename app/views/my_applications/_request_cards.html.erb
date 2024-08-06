@@ -9,7 +9,7 @@
                   <a href="<%= request_path(myapplication.request) %>" class="clickable-area_requests_index_my">
                       <img src="<%= request_thumbnail_url(myapplication.request) %>" class="thumbnail_requests_index_my" alt="<%= myapplication.request.title %>"/>
                     <div class="card-content_requests_index_my flex-grow-1">
-                      <h5 class="card-title_requests_index_my"><%= myapplication.request.title %></h5>
+                      <h5 class="card-title_requests_index_my"><%= truncate(myapplication.request.title, length:50) %></h5>
                       <p class="card-date_requests_index_my"><%= myapplication.request.date.strftime('%d %B %Y') %> , <%= myapplication.request.start_time.strftime('%H:%M') %></p>
                     </div>
                   </a>
@@ -47,12 +47,14 @@
                       </a>
                       <div>
                       <% if myapplication.status == 'Completed' || (myapplication.status == 'Accepted' && myapplication.request.status == 'Completed') %>
+                        <% if myapplication.reviewed?(current_user) != true %>
                           <a class="ms-3" href="/reviews/new?request_application_id=<%= myapplication.id %>">
                             <button class="btn leave-review-btn_mark_completed">
                             <i class="bi bi-star-fill review-icon_mark_completed"></i>
                             <span class="review-text_mark_completed">Leave a Review</span>
                             </button>
                           </a>
+                        <% end %>
                       <% elsif myapplication.status != 'Rejected' %>
                         <%= link_to "Chat", chat_path_with_request_and_user(myapplication.request, myapplication.request.user, true), class: 'btn custom-btn-chat_my' %>
                         <% if myapplication.status != 'Withdrawn' %>

@@ -2,7 +2,6 @@ module Gemini_Helper
   require 'gemini-ai'
 
   def generate_match_percentage(user, request)
-
     return 'User did not provide a bio' if user[:bio] == ''
     return 'Request does not have a description' if request[:description] == ''
 
@@ -13,47 +12,54 @@ module Gemini_Helper
       },
       options: { model: 'gemini-1.5-pro', server_sent_events: true }
     )
-    prompt = <<-PROMPT
-      This is my profile bio: { #{user[:bio]} }
-
-      This is request that I want to apply for:  
+    prompt = <<~PROMPT
+      This is my profile:
       {
-      Request Title: { #{request[:title]} }
-
-      Request Description: { #{request[:description] }
+        My Name: #{user[:name]}
+        My Bio: #{user[:bio]}
       }
 
-      Following these range guidelines
+      This is the request that I want to apply for:
       {
-        0%-29%: life-threatening compatibility, 
-        30%-49%: extermely poor compatibility,
+        Request Title: { #{request[:title]} }
+        Request Description: { #{request[:description]} }
+      }
+
+      You MUST follow these range guidelines:
+      {
+        0%-29%: life-threatening compatibility,
+        30%-49%: poor compatibility,
         50%-69%: average compatibility,
-        70%-100%: good compatibility.
+        70%-79%: good compatibility,
+        80%-94%: extremely high compatibility,
+        95%-100%: perfect compatibility.
       }
 
-      While completely ignoring the availabilities of both parties,
-      Please give me a numerical percentage of how well I match this request in the format of just "xx%.". Don't explain.
+      Consider the following aspects for comparison:
+      1. Difficulty of the request
+      2. Relevant skills and experience.
+      3. Similar interests and goals.
+      4. Specific requirements mentioned in the request description.
+
+    Ignoring the availabilities of both parties, please provide a numerical percentage of how well I match this request. Respond only with the percentage in the format "xx%". Do not include any explanations. Try not to give numbers in multiples of 5.
+
     PROMPT
-
     response_text = client.generate_content({
-      contents: { role: 'user', parts: { text: prompt } }
-    })
+                                              contents: { role: 'user', parts: { text: prompt } }
+                                            })
 
-    response_text["candidates"][0]["content"]["parts"][0]["text"]
-
+    response_text['candidates'][0]['content']['parts'][0]['text']
   end
 end
-
 
 # require 'gemini-ai'
 
 # #test user profile
 # user = {
-#   name: 'Alice Greenfield', 
+#   name: 'Alice Greenfield',
 #   bio: 'I am a dedicated elementary school teacher from Simei, Singapore, with a passion for gardening and community service. With over a decade of experience in organic gardening and landscape design, Alice has honed her skills in creating beautiful and sustainable green spaces. She volunteers at the local community garden, where she manages plots and conducts workshops for children, fostering a love for nature in the younger generation.
 #         In her free time, Alice enjoys cooking with fresh ingredients from her garden, bird watching, and reading. Her enthusiasm for the outdoors and helping others drives her to participate in community clean-up and planting events. With her extensive gardening knowledge and commitment to environmental sustainability, Alice is a valuable asset to any volunteer gardening project.'
 # }
-
 
 # # test request profile
 # request = {
@@ -65,7 +71,6 @@ end
 #   location: 'SUTD, Singapore',
 #   rewards: 'None'
 # }
-
 
 # # With an API key
 # client = Gemini.new(
