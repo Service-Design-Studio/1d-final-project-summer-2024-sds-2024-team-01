@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
   const handleAction = (buttonSelector, url, successMessage) => {
     document.querySelectorAll(buttonSelector).forEach(button => {
@@ -12,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken
           }
         })
         .then(response => response.json())
