@@ -48,7 +48,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   def create_corporate
     @company = Company.new
     @company.company_name = params[:company_name]
-    @company.status = 'Pending'
+    @company.status = 'Inactive'
     @company.document_proof = params[:document_proof]
 
 
