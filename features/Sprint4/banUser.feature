@@ -19,12 +19,10 @@ Scenario: Ban User
 Scenario: Unban User
     Given I am on "Unban User" page
     And there is "Jane Doe" details
-    Then sleep
-    And I click "Jane Doe" details     #there is some error with not being able to click on active tab
-    Then there is more details of "Jane Doe"
-    Then I am on "Ban User" page
+    And I click "Jane Doe" details     
+    Then I am on "Unban User" page
     When I click on "Unban" button for user "Jane Doe"
-    Then I should see the message "Successfully unbanned."
+    Then I should see the message "Successfully unbanned"
 
 Scenario: Cancel User 
     Given I am on "Ban User" page

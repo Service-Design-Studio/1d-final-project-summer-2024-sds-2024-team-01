@@ -283,7 +283,8 @@ Given('I am on {string} page') do |page|
   when 'Ban User'
     visit admin_ban_user_index_path(anchor: 'ban-tab')
   when 'Unban User'
-    visit admin_ban_user_index_path(anchor: 'unban-tab')
+    visit admin_ban_user_index_path
+    find('#unban-tab').click
   when 'All Requests'
     visit root_path
   when 'Help with gardening'
