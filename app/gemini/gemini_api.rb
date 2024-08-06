@@ -13,42 +13,36 @@ module Gemini_Helper
       },
       options: { model: 'gemini-1.5-pro', server_sent_events: true }
     )
-      prompt = <<-PROMPT
-        This is my profile bio and information about me: { #{user[:bio]} }
+    prompt = <<-PROMPT
+      This is my profile bio: { #{user[:bio]} }
 
+      This is request that I want to apply for:  
+      {
+      Request Title: { #{request[:title]} }
 
+      Request Description: { #{request[:description] }
+      }
 
-        This is request that I want to apply for:  
-        {
-        Request Title: { #{request[:title]} }
-
-        Request Description: { #{request[:description] }
-        }
-
-
-
-        With the context of 
-
-        0%-29%: detrimental compatibility, 
-
-        30%-49%: horrible compatibility,
-
+      Following these range guidelines
+      {
+        0%-29%: life-threatening compatibility, 
+        30%-49%: extermely poor compatibility,
         50%-69%: average compatibility,
+        70%-100%: good compatibility.
+      }
 
-        70%-100%: good to perfect compatibility.
-
-        While completely ignoring the availabilities of both parties, only match based on compatibility.
-        Please give me a numerical percentage of how well I match this request in the format of just "xx%.". Don't explain.
+      While completely ignoring the availabilities of both parties,
+      Please give me a numerical percentage of how well I match this request in the format of just "xx%.". Don't explain.
     PROMPT
 
-      response_text = client.generate_content({
-        contents: { role: 'user', parts: { text: prompt } }
-      })
+    response_text = client.generate_content({
+      contents: { role: 'user', parts: { text: prompt } }
+    })
 
-      response_text["candidates"][0]["content"]["parts"][0]["text"]
+    response_text["candidates"][0]["content"]["parts"][0]["text"]
 
-    end
   end
+end
 
 
 # require 'gemini-ai'
