@@ -14,16 +14,17 @@ module Gemini_Helper
       options: { model: 'gemini-pro', server_sent_events: true }
     )
       prompt = <<-PROMPT
-      Only provide the numerical match percentage based on the compatibility of the two descriptions according in this format: xx%.
-      Compare the following post for a request for assistance and the profile of the user and provide a numerical match percentage based on their compatibility
+      This is my profile bio:
 
-      Volunteer Name: #{user[:name]}
-      Volunteer Bio: #{user[:bio]}
+      #{user[:bio]}
 
-      Request Title: #{request[:title]}
-      Request Description: #{request[:description]}
-      Request Location: #{request[:location]}
-      Request Rewards: #{request[:rewards]}
+      This is request that I want to apply for:
+
+      Title: #{request[:title]}
+
+      Description: #{request[:description]}
+
+      Please give me a percentage of how well I match this request, ignoring the availabilities of both parties
       PROMPT
 
       response_text = client.generate_content({

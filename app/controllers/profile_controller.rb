@@ -4,7 +4,7 @@
 class ProfileController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index]
   before_action :set_user, only: %i[edit update]
-  
+
   def index
     if params[:id].nil?
       if current_user.nil?
