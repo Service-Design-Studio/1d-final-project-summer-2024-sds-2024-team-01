@@ -1944,6 +1944,7 @@ body.popup-open {
 
 .request-item {
   width: calc(33.333% - 10px); /* Three items per row with a 10px gap */
+  height: calc(33% - 10px);
   box-sizing: border-box;
 }
 
