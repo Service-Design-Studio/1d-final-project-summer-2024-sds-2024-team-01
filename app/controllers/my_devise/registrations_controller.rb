@@ -86,7 +86,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   def create_charity
     @charity = Charity.new
     @charity.charity_name = params[:charity_name]
-    @charity.status = 'Pending'
+    @charity.status = 'Inactive'
     @charity.document_proof = params[:document_proof]
 
     @charityuser = User.new
