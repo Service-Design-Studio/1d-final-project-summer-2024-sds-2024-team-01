@@ -284,10 +284,20 @@ Given('I am on {string} page') do |page|
     visit admin_ban_user_index_path(anchor: 'ban-tab')
   when 'Unban User'
     visit admin_ban_user_index_path(anchor: 'unban-tab')
+  when 'All Requests'
+    visit root_path
+  when 'Help with gardening'
+    request = Request.find_by(title: 'Help with gardening')
+    if request
+      visit request_path(request)
+    else
+      raise "Request with title 'Help with gardening' not found"
+    end
   else
     raise "Unknown page: #{page}"
   end
 end
+
 
 Then('I should see more details of {string}') do |entity_name|
   @entity = Company.find_by(company_name: entity_name) || Charity.find_by(charity_name: entity_name)
@@ -307,12 +317,80 @@ Then('I should see more details of {string}') do |entity_name|
   # expect(page).to have_selector("iframe[src*='#{document_url}']")
 end
 
-
+###### cannot use factory bot need to ownself create ######
 Given('there are companies and charities for me to approve') do
   # Creating companies
-  FactoryBot.create(:grace_company)
-  FactoryBot.create(:friendly_company)
-  FactoryBot.create(:love_company)
+    # Creating companies
+  grace_company = Company.create!(
+    company_name: 'GraceCompany',
+    status: 'Inactive',
+    created_at: DateTime.now,
+    updated_at: DateTime.now
+  )
+  grace_company.document_proof.attach(
+    io: File.open(Rails.root.join('lib', 'assets', 'sample.pdf')),
+    filename: 'sample.pdf',
+    content_type: 'application/pdf'
+  )
+
+  friendly_company = Company.create!(
+    company_name: 'FriendlyCompany',
+    status: 'Inactive',
+    created_at: DateTime.now,
+    updated_at: DateTime.now
+  )
+  friendly_company.document_proof.attach(
+    io: File.open(Rails.root.join('lib', 'assets', 'sample.pdf')),
+    filename: 'sample.pdf',
+    content_type: 'application/pdf'
+  )
+
+  love_company = Company.create!(
+    company_name: 'LoveCompany',
+    status: 'Active',
+    created_at: DateTime.now,
+    updated_at: DateTime.now
+  )
+  love_company.document_proof.attach(
+    io: File.open(Rails.root.join('lib', 'assets', 'sample.pdf')),
+    filename: 'sample.pdf',
+    content_type: 'application/pdf'
+  )
+
+  # Creating associated users for companies
+  User.create!(
+    name: Faker::Name.name,
+    email: Faker::Internet.email,
+    number: "9#{Faker::Number.number(digits: 7)}",
+    status: 'Active',
+    password: 'password',
+    password_confirmation: 'password',
+    role_id: 3, # Assuming role_id 3 is for a corporate manager
+    company: grace_company
+  )
+
+  User.create!(
+    name: Faker::Name.name,
+    email: Faker::Internet.email,
+    number: "9#{Faker::Number.number(digits: 7)}",
+    status: 'Active',
+    password: 'password',
+    password_confirmation: 'password',
+    role_id: 3,
+    company: friendly_company
+  )
+
+  User.create!(
+    name: Faker::Name.name,
+    email: Faker::Internet.email,
+    number: "9#{Faker::Number.number(digits: 7)}",
+    status: 'Active',
+    password: 'password',
+    password_confirmation: 'password',
+    role_id: 3,
+    company: love_company
+  )
+
 
   # Creating charities
   FactoryBot.create(:tasty_charity)
@@ -320,6 +398,7 @@ Given('there are companies and charities for me to approve') do
   FactoryBot.create(:delightful_charity)
 end
 
+###### cannot use factory bot ###########
 And('there is {string} details') do |user_name|
   puts "Creating user with name: #{user_name}"  # Debug statement
 
@@ -443,15 +522,78 @@ end
 
 
 ############## report user ############
-Then('I login as User') do
-  visit '/login'
-  fill_in 'user_login', with: 'alice.smith@example.com'
-  fill_in 'user_password', with: 'password'
-  click_button 'Login'
-end
+# Then('I login as User') do
+#   visit '/login'
+#   fill_in 'user_login', with: 'alice.smith@example.com'
+#   fill_in 'user_password', with: 'password'
+#   click_button 'Login'
+# end
 
-Then('I click on {string} profile') do |profile_name|
-  within('.profile-card_requests_details') do
-    find('h6', text: profile_name).click
+Then('I click on {string} profile') do |user_name|
+  within(".profile-info_requests_details") do
+    find("a", text: user_name).click
   end
 end
+
+
+And('there is {string} request') do |string|
+  case string
+  when "Help with gardening"
+    millard_robel = User.find_or_create_by!(
+      name: 'Millard Robel',
+      email: 'millard.robel@example.com'
+    ) do |user|
+      user.number = '96000000'
+      user.description = 'Description of Millard Robel'
+      user.bio = 'Bio of Millard Robel'
+      user.status = 'Active'
+      user.total_hours = 0
+      user.weekly_hours = 0
+      user.role_id = 1 # Assuming 1 is the ID of the role you want to assign
+      user.company_id = nil # Assuming the user is not associated with any company
+      user.charity_id = nil # Assuming the user is not associated with any charity
+      user.password = 'password' # Ensure this matches your validation criteria
+      user.password_confirmation = 'password'
+    end
+
+    Request.find_or_create_by!(
+      title: 'Help with gardening',
+      created_by: millard_robel.id
+    ) do |request|
+      request.description = 'Description of the request'
+      request.category = 'General'
+      request.location = 'POINT(103.851959 1.290270)' # Adjust the location point as needed
+      request.stringlocation = 'Address of the request'
+      request.date = Date.tomorrow + 30 # Adjust the date as needed
+      request.start_time = '10:00 AM'
+      request.number_of_pax = 1
+      request.duration = 2
+      request.reward_type = 'None'
+      request.reward = 'None'
+      request.status = 'Available'
+      request.created_at = DateTime.now
+      request.updated_at = DateTime.now
+    end
+  end
+end
+
+Then('I click on {string} request') do |request_title|
+  card = find('.request-card_requests_index', text: request_title)
+  card.click
+end
+
+Then('I press on {string}') do |button_text|
+  case button_text
+  when "Report"
+    within('.report-button-container') do
+      click_link(button_text)
+    end
+  when "Back"
+    click_link(button_text)
+  when "Cancel"
+    click_link(button_text)
+  else
+    click_button(button_text)
+  end
+end
+
