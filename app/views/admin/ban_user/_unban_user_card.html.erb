@@ -1,28 +1,25 @@
-<% @under_review_users.each do |user| %>
-  <% user.user_reports_as_reported_user.each do |user_report| %>
-    <% if user_report.status == 'under_review' %>
-      <div class="card mb-3 user-card clickable-card" data-profile-url="<%= user_profile_path(user_report.reported_user) %>">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <%= image_tag avatar_url(user_report.reported_user), alt: "Profile Picture", class: "img-fluid rounded-start" %>
-          </div>
-          <div class="col-md-8 user-info-padding">
-            <div class="card-body">
-              <h5 class="card-title"><span class="user-name"><%= user_report.reported_user.name %></span></h5>
-              <p class="card-text"><small class="text-muted"><%= user_report.reported_user.role.role_name %></small></p>
-              <% if user_report.reported_user.role.role_name == "Corporate Employee" && user_report.reported_user.company %>
-                <p class="card-text"><small class="text-muted">Company: <%= user_report.reported_user.company.name %></small></p>
-              <% end %>
-              <p class="card-text"><small class="text-muted">Reported by: <%= user_report.reported_by.name %></small></p>
-              <p class="card-text"><strong>Reason:</strong> <%= user_report.report_reason %></p>
-              <div class="d-flex justify-content-between">
-                <button type="button" class="btn custom-btn-banuser-purple ban-button" data-user-id="<%= user_report.reported_user.id %>">Ban</button>
-                <button type="button" class="btn custom-btn-banuser-purple cancel-ban-button" data-user-id="<%= user_report.reported_user.id %>">Cancel</button>
-              </div>
+<% user.user_reports_as_reported_user.each do |user_report| %>
+  <% if user_report.status == 'ban' %>
+    <div class="card mb-3 user-card clickable-card" data-profile-url="<%= user_profile_path(user_report.reported_user) %>">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <%= image_tag avatar_url(user_report.reported_user), alt: "Profile Picture", class: "img-fluid rounded-start" %>
+        </div>
+        <div class="col-md-8 user-info-padding">
+          <div class="card-body">
+            <h5 class="card-title"><span class="user-name"><%= user_report.reported_user.name %></span></h5>
+            <p class="card-text"><small class="text-muted"><%= user_report.reported_user.role.role_name %></small></p>
+            <% if user_report.reported_user.role.role_name == "Corporate Employee" && user_report.reported_user.company %>
+              <p class="card-text"><small class="text-muted">Company: <%= user_report.reported_user.company.name %></small></p>
+            <% end %>
+            <p class="card-text"><small class="text-muted">Reported by: <%= user_report.reported_by.name %></small></p>
+            <p class="card-text"><strong>Reason:</strong> <%= user_report.report_reason %></p>
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn custom-btn-banuser-purple unban-button" data-user-id="<%= user_report.reported_user.id %>">Unban</button>
             </div>
           </div>
         </div>
       </div>
-    <% end %>
+    </div>
   <% end %>
 <% end %>
