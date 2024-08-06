@@ -47,12 +47,14 @@
                       </a>
                       <div>
                       <% if myapplication.status == 'Completed' || (myapplication.status == 'Accepted' && myapplication.request.status == 'Completed') %>
+                        <% if myapplication.reviewed?(current_user) != true %>
                           <a class="ms-3" href="/reviews/new?request_application_id=<%= myapplication.id %>">
                             <button class="btn leave-review-btn_mark_completed">
                             <i class="bi bi-star-fill review-icon_mark_completed"></i>
                             <span class="review-text_mark_completed">Leave a Review</span>
                             </button>
                           </a>
+                        <% end %>
                       <% elsif myapplication.status != 'Rejected' %>
                         <%= link_to "Chat", chat_path_with_request_and_user(myapplication.request, myapplication.request.user, true), class: 'btn custom-btn-chat_my' %>
                         <% if myapplication.status != 'Withdrawn' %>

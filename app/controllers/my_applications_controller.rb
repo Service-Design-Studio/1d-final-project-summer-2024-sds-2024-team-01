@@ -4,7 +4,7 @@ class MyApplicationsController < ApplicationController
     
     @upcomingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Accepted').where.not(request: { status: 'Completed' })
     @pendingapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Pending')
-    @completedapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: ['Accepted', 'Completed']).where(request: { status: 'Completed' })
+    @completedapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Accepted').where(request: { status: 'Completed' }).or(RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Completed'))
     @withdrawnapplications = RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Withdrawn').or(RequestApplication.includes(request: :user).where(applicant_id: current_user.id).where(status: 'Rejected'))
   
     @applications = instance_variable_get("@#{@current_tab}applications")
