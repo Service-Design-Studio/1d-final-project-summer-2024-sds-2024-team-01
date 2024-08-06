@@ -65,7 +65,7 @@ FactoryBot.define do
     # end
   end
   factory :specific_request, class: 'Request' do
-    title { 'Help with saluting alarm' }
+    title { 'Help with gardening' }
     description { 'Description of the request' }
     category { 'General' }
     location { 'POINT(103.851959 1.290270)' }

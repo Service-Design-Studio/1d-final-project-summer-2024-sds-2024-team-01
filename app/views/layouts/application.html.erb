@@ -40,7 +40,7 @@
           <% elsif current_user.admin? %>
             <a class="nav-link" href="/admin/ban_user">Ban User</a>
             <a class="nav-link" href="/admin/approve_companies">Approve Companies</a>
-            <a class="nav-link" href="/admin/charities">Manage Charities</a>
+            <a class="nav-link" href="/admin/charities">Approve Charities</a>
           <% else %>
             <% if current_user.role_id != 5 %>
               <a class="nav-link" href="/myapplications">My Applications</a>
