@@ -2,9 +2,9 @@ class Cvm::CvmController < ApplicationController
   require 'csv'
   # Display dashboard
   def index
-    @numemployees = User.where(status: 'Active').where(company_id: current_user.company_id).where(role_id: 4).count
-    @numdeactivated = User.where.not(status: 'Active').where(company_id: current_user.company_id).where(role_id: 4).count
-    @weeklyhours = User.where(status: 'Active').where(company_id: current_user.company_id).sum(:weekly_hours)
+    @numemployees = User.where.not(status: 'Inactive').where(company_id: current_user.company_id).where(role_id: 4).count
+    @numdeactivated = User.where(status: 'Inactive').where(company_id: current_user.company_id).where(role_id: 4).count
+    @weeklyhours = User.where.not(status: 'Inactive').where(company_id: current_user.company_id).sum(:weekly_hours)
 
     addedids = CompanyCharity.where(company_id: current_user.company_id).pluck(:charity_id)
 
