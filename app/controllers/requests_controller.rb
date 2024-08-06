@@ -68,9 +68,9 @@ class RequestsController < ApplicationController
       }
 
     #   Fetch the percentage compatibility of request with user
-    #   @match_percentage = generate_match_percentage(user_profile, request_profile)
-    # else
-    #   @match_percentage = 'User is not signed in'
+      @match_percentage = generate_match_percentage(user_profile, request_profile)
+    else
+      @match_percentage = 'User is not signed in'
     end
   end
 
