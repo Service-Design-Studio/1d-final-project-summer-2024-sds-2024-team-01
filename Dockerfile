@@ -26,7 +26,7 @@ RUN bundle
 
 ADD . /docker/rails
 
-ENTRYPOINT ["scripts/setupdb.sh"]
+# ENTRYPOINT ["scripts/setupdb.sh"]
 
 EXPOSE ${DEFAULT_PORT}
 

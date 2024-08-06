@@ -1,6 +1,7 @@
 .employees-index{
     background: linear-gradient(16deg, #ffefff, #fff);
-    margin-top: 5%;
+    margin-top: 0%;
+    overflow: hidden;
 }
 
 .employees-index td, .employees-index th{
@@ -15,6 +16,7 @@
     height: calc(150vh - 0px);
     background: linear-gradient(16deg, #ffefff, #fff);
     margin-top: 5%;
+    overflow: hidden;
 }
 
 #cvmdashboard{
@@ -150,7 +152,7 @@
 
 /*To store employee table*/
 .employee-container{
-    height: 60vh;
+    height: 70vh;
     overflow-y: auto;
 }
 
@@ -197,4 +199,8 @@ button#savecharities {
 
 button#savecharities:hover {
     color: #9852a6;
+}
+
+.cvm_container{
+    overflow: hidden;
 }

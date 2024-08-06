@@ -1,0 +1,23 @@
+<div class="modal fade" id="reportInputModal" tabindex="-1" aria-labelledby="reportInputModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reportInputModalLabel">Report <%= @profile.name %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with url: confirm_report_path, method: :get, id: 'reportForm', local: false do |form| %>
+          <div class="mb-3">
+            <%= form.label :report_reason, 'Reason for Reporting', class: 'form-label' %>
+            <%= form.text_area :report_reason, name: 'user_report[report_reason]', class: 'form-control', style: 'height:27vh; overflow-y: auto; resize: none;', required: true %>
+          </div>
+          <%= form.hidden_field :reported_user, value: @profile.id, name: 'user_report[reported_user]' %>
+          <div class="modal-footer">
+            <%# <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> %>
+            <%= form.submit 'Next', class: 'btn btn-primary', id: 'proceedToConfirmation' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

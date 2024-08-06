@@ -48,8 +48,9 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   def create_corporate
     @company = Company.new
     @company.company_name = params[:company_name]
-    @company.status = 'Pending'
+    @company.status = 'Inactive'
     @company.document_proof = params[:document_proof]
+
 
     @corpuser = User.new
     @corpuser.email = params[:email]
@@ -68,7 +69,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
         if @corpuser.save
           redirect_to '/register/corporatesuccess'
         else
-          @corpuser.errors.full_messages
+          puts @corpuser.errors.full_messages
           redirect_to '/register/corporate', notice: 'Failed to register user'
           raise ActiveRecord::Rollback
         end
@@ -85,7 +86,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
   def create_charity
     @charity = Charity.new
     @charity.charity_name = params[:charity_name]
-    @charity.status = 'Pending'
+    @charity.status = 'Inactive'
     @charity.document_proof = params[:document_proof]
 
     @charityuser = User.new

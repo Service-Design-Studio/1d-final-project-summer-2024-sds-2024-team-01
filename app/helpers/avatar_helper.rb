@@ -1,7 +1,8 @@
 module AvatarHelper
+  include MediaHelper
   def avatar_url(user)
     if user.avatar.present?
-      url_for(user.avatar)
+      image_url(user.avatar)
     else
       asset_path('default-avatar.png')
     end

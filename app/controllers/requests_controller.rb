@@ -43,7 +43,7 @@ class RequestsController < ApplicationController
 
     @is_creator = current_user && @request.created_by == current_user.id
     @accepted_application_count = @request.request_applications.where(status: 'Accepted').count
-    @slots_remaining = @request.number_of_pax - @accepted_application_count
+    @slots_remaining = [@request.number_of_pax - @accepted_application_count, 0].max
 
     # Fetch the user who created the request
     @requester = User.find(@request.created_by)

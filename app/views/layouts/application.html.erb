@@ -42,15 +42,19 @@
             <a class="nav-link" href="/admin/approve_companies">Approve Companies</a>
             <a class="nav-link" href="/admin/charities">Approve Charities</a>
           <% else %>
-            <a class="nav-link" href="/myapplications">My Applications</a>
-            <a class="nav-link" href="/myrequests">My Requests</a>
-            <a class="nav-link" href="/about">About</a>
+            <% if current_user.role_id != 5 %>
+              <a class="nav-link" href="/myapplications">My Applications</a>
+            <% end %>
+            <% if current_user.role_id != 4 %>
+              <a class="nav-link" href="/myrequests">My Requests</a>
+            <% end %>
             <a class="nav-link" href="/chats">Chat</a>
+            <a class="nav-link" href="https://www.gebirah.org/">About</a>
           <% end %>
         </div>
 
         <div class="navbar-right">
-          <% if current_user.role_id == 1 || current_user.role_id == 4 %>
+          <% if current_user.role_id == 1 || current_user.role_id == 5 %>
             <a href="<%= new_request_path %>" class="btn custom-btn-dark-purple me-5">
               <span> New Request </span> <i class="fas fa-plus ms-2 m-auto"></i>
             </a>

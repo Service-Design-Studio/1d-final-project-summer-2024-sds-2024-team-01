@@ -11,7 +11,19 @@
         <!-- Profile info container -->
         <div class="profile-info-container">
           <!-- Profile name -->
-          <h5><%= @profile.name %><% if @profile.role_id == 4 %><i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i><% end %></h5>
+          <h5>
+            <%= @profile.name %>
+            <% case @profile.role_id %>
+            <% when 2 %>
+              <i class="fas fa-user-shield" style="font-size: 16px; margin-left: 10px;"></i>
+            <% when 3 %>
+              <i class="fas fa-building-shield" style="font-size: 16px; margin-left: 10px;"></i>
+            <% when 4 %>
+              <i class="fas fa-building" style="font-size: 16px; margin-left: 10px;"></i>
+            <% when 5 %>
+              <i class="fas fa-hand-holding-heart" style="font-size: 16px; margin-left: 10px;"></i>
+            <% end %>
+          </h5>
           <!-- Star ratings -->
           <p class="mb-1 stars_user_profile">
             <% 5.times do |i| %>
@@ -22,9 +34,9 @@
           <%# <p>Trusted user</p> %>
         </div>
          <!-- Report Button -->
-        <% if user_signed_in? && !current_user.admin? && @profile.id != current_user.id %>
+        <% if user_signed_in? && !current_user.admin? && current_user != @profile %>
           <div class="report-button-container">
-            <%= link_to 'Report', new_user_report_path(reported_user: @profile.id), class: 'btn btn-danger report-button' %>
+            <%= button_tag 'Report User', class: 'btn btn-danger report-button', data: { bs_toggle: 'modal', bs_target: '#reportInputModal' } %>
           </div>
         <% end %>
       </div>
@@ -199,7 +211,8 @@
     </div>
   </div>
 </body>
-
+<%= render 'user_reports/new' %>
+<%= render 'user_reports/confirm' %>
 <%= javascript_include_tag 'profile' %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
