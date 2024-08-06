@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
   initializeCompanies();
   initializeTabs();
   handleClickableRows();
-  initializeSearch(); // Add this line to initialize the search functionality
+  initializeSearch();
   
   // Show initial active tab content
   const activeTab = document.querySelector("#companiesTabs .nav-link.active");
@@ -73,42 +73,59 @@ function updateCompanyCards(tabId) {
     }
 
     document.dispatchEvent(new CustomEvent('companyCardsUpdated', { detail: { tabId: tabId, isEmpty: data.is_empty } }));
+    
+    // Reapply search after updating cards
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput.value) {
+      const event = new Event('input');
+      searchInput.dispatchEvent(event);
+    }
   });
 }
 
 function handleClickableRows() {
   document.querySelectorAll('.clickable-row').forEach(row => {
-    row.addEventListener('click', function() {
-      window.location = this.dataset.link;
+    row.addEventListener('click', function(e) {
+      if (!e.target.closest('button')) {
+        window.location = this.dataset.link;
+      }
     });
   });
 }
 
-// Add search functionality
 function initializeSearch() {
   const searchInput = document.getElementById('searchInput');
 
-  // Add an event listener for input events on the search input
   searchInput.addEventListener('input', function() {
-    // Get the search query and convert it to lowercase
     const query = searchInput.value.toLowerCase();
+    const activeTabPane = document.querySelector('.tab-pane.show.active');
+    
+    if (!activeTabPane) {
+      console.error('No active tab pane found');
+      return;
+    }
 
-    // Get the currently active tab pane
-    const activeTabPane = document.querySelector('.companies-tab-pane.show.active');
+    const rows = activeTabPane.querySelectorAll('.row.py-2.border-bottom.clickable-row');
+    
+    if (rows.length === 0) {
+      console.error('No rows found in the active tab pane');
+      return;
+    }
 
-    // Get all table rows in the active tab
-    const rows = activeTabPane.querySelectorAll('tbody tr');
-
-    // Loop through each row and check if it matches the search query
     rows.forEach(row => {
-      const companyNameCell = row.querySelector('td:nth-child(1)'); // Assuming company name is in the first column
-      const managerNameCell = row.querySelector('td:nth-child(3)'); // Assuming manager name is in the third column
+      const nameCell = row.querySelector('.col-3:first-child');
+      const managerCell = row.querySelector('.col-3:nth-child(3)');
 
-      // Check if the company name or manager name includes the search query
-      if (companyNameCell.textContent.toLowerCase().includes(query) || managerNameCell.textContent.toLowerCase().includes(query)) {
-        row.style.display = ''; // Show the row
+      if (!nameCell || !managerCell) {
+        console.error('Required cells not found in row', row);
+        return;
+      }
+
+      if (nameCell.textContent.toLowerCase().includes(query) || 
+          managerCell.textContent.toLowerCase().includes(query)) {
+        row.style.display = '';
       } else {
-        row.style.display = 'none'; // Hide the row
+        row.style.display = 'none';
       }
     });
   });

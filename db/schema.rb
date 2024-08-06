@@ -178,7 +178,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_040210) do
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
-    t.string "number", default: ""
+    t.string "number"
     t.string "description", default: ""
     t.string "bio", default: ""
     t.string "status", default: "active", null: false

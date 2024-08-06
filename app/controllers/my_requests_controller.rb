@@ -122,6 +122,23 @@ class MyRequestsController < ApplicationController
           array_agg(request_applications.applicant_id) as applicant_ids').first
     return if current_user.id != @request.created_by
 
+    num_accepted = RequestApplication.where(request_id: @request.id).where(status: 'Accepted').count
+    if num_accepted >= @request.number_of_pax
+      respond_to do |format|
+        format.html { 
+          redirect_to '/myrequests', notice: "You have already accepted the maximum number of people for this request."
+        }
+        format.json do
+          render json: {
+            status: 'Full',
+            acceptedCount: num_accepted,
+            numberOfPax: @request.number_of_pax
+          }
+        end
+      end
+      return
+    end
+
 
     @reqapp.status = 'Accepted'
     if @reqapp.save

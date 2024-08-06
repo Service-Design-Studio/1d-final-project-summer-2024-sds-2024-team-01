@@ -197,7 +197,7 @@ function handleCompleteForm(form) {
   applicationIndicator.style.display = 'none';
   form.style.display = 'none';
 
-  // Check if the request is unfulfilled (you may need to add a check here based on your criteria)
+  // Check if the request is unfulfilled
   const isUnfulfilled = checkIfUnfulfilled(requestCard);
 
   if (isUnfulfilled) {
@@ -205,7 +205,12 @@ function handleCompleteForm(form) {
   } else {
     reviewButton.classList.remove('d-none');
   }
+
+  // Update request card status
+  requestCard.dataset.status = 'Completed';
+
   // Update buttons for all applicants
+  updateApplicantButtonsForCompleted(requestCard);
   const applicantPopups = requestCard.querySelectorAll('.popup_requests_index_my');
   applicantPopups.forEach(popup => {
     const chatButton = popup.querySelector('.custom-btn-chat_my');
@@ -352,45 +357,50 @@ function hideEmptyDropdowns() {
 
 
 function handleAcceptRejectForm(form) {
-
   event.stopPropagation();
   const action = form.getAttribute('action');
   const method = form.getAttribute('method');
   const formData = new FormData(form);
   const buttonContainer = form.closest('.split-button_requests_index_my');
 
-  // Determine the new status based on which form was submitted
-  const newStatus = form.classList.contains('accept-form') ? 'Accepted' : 'Rejected';
-
-  // Immediately update the UI
-  updateUI(buttonContainer, newStatus);
-
-  // Immediately update the count
-  updateApplicantCountImmediately(buttonContainer, newStatus);
-
   fetch(action, {
     method: method,
     body: formData,
-  })
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error('Network response was not ok.');
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Accept': 'application/json'
     }
   })
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(err => { throw err; });
+    }
+    return response.json();
+  })
   .then(data => {
-    // Confirm the UI update based on the server response
-    updateUI(buttonContainer, data.status);
-    // Update the applicant count based on the server response
-    updateApplicantCountFromServer(buttonContainer, data.acceptedCount, data.numberOfPax);
+    if (data.redirect) {
+    console.log(data)
+      alert(data.notice);
+      window.location.href = data.redirect;
+    } else {
+        if (data.status == 'Full'){
+            alert('This request has already been fulfilled. Thank you.')
+        }
+        else{
+          // Update UI only after successful response
+          updateUI(buttonContainer, data.status);
+          updateApplicantCountFromServer(buttonContainer, data.acceptedCount, data.numberOfPax);
+        }
+    }
   })
   .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-    // Revert the UI change if there was an error
-    revertUI(buttonContainer);
-    // Revert the count change
-    updateApplicantCountImmediately(buttonContainer, 'Revert');
+    console.error('Error in handleAcceptRejectForm:', error);
+    if (error.redirect) {
+      alert(error.notice);
+      window.location.href = error.redirect;
+    } else {
+      alert('An error occurred. Please try again.');
+    }
   });
 }
 
@@ -403,8 +413,9 @@ function updateUIBasedOnStatus() {
     const repostButton = card.querySelector('.repost-btn_unfulfilled');
 
     const currentTab = card.closest('.tab-pane').id;
+    const requestStatus = card.dataset.status;
 
-    if (currentTab === 'completed') {
+    if (requestStatus === 'Completed') {
       // For completed requests
       if (applicationIndicator) applicationIndicator.style.display = 'none';
       if (completeForm) completeForm.style.display = 'none';
@@ -467,13 +478,13 @@ function updateApplicantButtonsForCompleted(card) {
   applicantPopups.forEach(popup => {
     const chatButton = popup.querySelector('.custom-btn-chat_my');
     const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
-    const applicationStatus = popup.dataset.applicationStatus;
+    const applicationStatus = popup.querySelector('.status-indicator_my')?.textContent.trim();
 
     // Remove chat button
     if (chatButton) chatButton.remove();
 
-    // Add review button if the applicant was accepted
-    if (applicationStatus === 'Accepted' && applicantInfo && !applicantInfo.querySelector('.leave-review-btn')) {
+    // Add review button only if the application was accepted and the request is completed
+    if (applicationStatus === 'Accepted' && card.dataset.status === 'Completed' && applicantInfo && !applicantInfo.querySelector('.leave-review-btn')) {
       const reviewButton = document.createElement('button');
       reviewButton.classList.add('btn', 'leave-review-btn');
       reviewButton.textContent = 'Leave a Review';
@@ -487,7 +498,7 @@ function updateApplicantButtons(card) {
   applicantPopups.forEach(popup => {
     const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
     let chatButton = popup.querySelector('.custom-btn-chat_my');
-    const reviewButton = applicantInfo.querySelector('.leave-review-btn');
+    const reviewButton = applicantInfo.querySelector('.leave-review-btn_mark_completed');
 
     // Add chat button if it doesn't exist
     if (!chatButton) {
