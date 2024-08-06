@@ -226,7 +226,7 @@ function handleCompleteForm(form) {
       const reviewButton = document.createElement('button');
       reviewButton.classList.add('btn', 'leave-review-btn');
       reviewButton.textContent = 'Leave a Review';
-      applicantInfo.appendChild(reviewButton);
+      // applicantInfo.appendChild(reviewButton);
     }
   });
 
@@ -488,7 +488,7 @@ function updateApplicantButtonsForCompleted(card) {
       const reviewButton = document.createElement('button');
       reviewButton.classList.add('btn', 'leave-review-btn');
       reviewButton.textContent = 'Leave a Review';
-      applicantInfo.appendChild(reviewButton);
+      // applicantInfo.appendChild(reviewButton);
     }
   });
 }

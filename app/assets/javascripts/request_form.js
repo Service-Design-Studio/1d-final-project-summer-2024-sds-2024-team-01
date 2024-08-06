@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   cropAndUploadButton.addEventListener('click', function() {
+    event.preventDefault()
     if (cropper) {
       const canvas = cropper.getCroppedCanvas({
         width: 1600,

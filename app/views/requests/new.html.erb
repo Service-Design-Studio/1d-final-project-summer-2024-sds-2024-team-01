@@ -63,8 +63,7 @@
         <div class="row mb-3">
           <div class="col-md-3">
             <%= f.label :category, class: "form-label" %>
-            <%= f.select :category, options_for_select(
-            [
+            <%= f.select :category, options_for_select([
               "Community Service",
               "Environmental Conservation",
               "Education and Literacy",
@@ -79,8 +78,7 @@
               "Special Needs Support",
               "Event Coordination",
               "Social Services"
-            ]
-            , selected: ""), { prompt: "Choose..." }, { class: "form-control", required: true } %>
+            ], selected: ""), { prompt: "Choose..." }, { class: "form-control", required: true } %>
           </div>
           <div class="col-md-3">
             <%= f.label :number_of_pax, "Number of volunteers needed:", class: "form-label" %>

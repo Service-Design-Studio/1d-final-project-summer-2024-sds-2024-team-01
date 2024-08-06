@@ -16,7 +16,7 @@
     <!-- Form Card Container -->
     <div class="card mb-4 custom-card_requests_new">
       <div class="card-body">
-        <%= form_with model: @request, url: requests_path, local: true, id: "request-form" do |f| %>
+        <%= form_with model: @request, local: true, id: "request-form" do |f| %>
         <!-- Banner Photo Card Container -->
         <div class="card mb-4 custom-card_requests_details">
           <div class="card-body">
@@ -63,7 +63,23 @@
         <div class="row mb-3">
           <div class="col-md-3">
             <%= f.label :category, class: "form-label" %>
-            <%= f.select :category, options_for_select(["Manual labour", "Teaching", "Delivery"], selected: ""), { prompt: "Choose..." }, { class: "form-control", required: true } %>
+            <%= f.select :category, options_for_select(
+             [
+              "Community Service",
+              "Environmental Conservation",
+              "Education and Literacy",
+              "Healthcare and Wellness",
+              "Youth Services",
+              "Senior Services",
+              "Animal Care",
+              "Disaster Relief",
+              "Arts and Culture",
+              "Advocacy and Human Rights",
+              "International Volunteering",
+              "Special Needs Support",
+              "Event Coordination",
+              "Social Services"
+            ], selected: ""), { prompt: "Choose..." }, { class: "form-control", required: true } %>
           </div>
           <div class="col-md-3">
             <%= f.label :number_of_pax, "Number of volunteers needed:", class: "form-label" %>
@@ -173,6 +189,7 @@
     });
 
     cropAndUploadButton.addEventListener('click', function() {
+      event.preventDefault();
       if (cropper) {
         const canvas = cropper.getCroppedCanvas({
           width: 1600,
