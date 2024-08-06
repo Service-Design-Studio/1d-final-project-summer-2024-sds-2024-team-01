@@ -119,7 +119,7 @@
                     <div class="availability-indicator_requests_details flex-grow-1"><%= @slots_remaining %> slots remaining</div>
                       <%= button_to 'Apply', {:controller => "requests", :action => "apply", :id => @request.id, :method => :post }, { class: 'accept-button_requests_details ms-2'} %>
                     </div>
-                  
+                  <% end %>
                 </div>
               <% end %>
             </div>
