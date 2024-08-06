@@ -19,7 +19,7 @@ module Admin
         @charity.update!(status: 'Active')
         unique_code = generate_unique_code
         CharityCode.create!(charity: @charity, status: 'Approved', code: unique_code)
-        # CharityMailer.with(charity: @charity, code: unique_code).approval_email.deliver_later
+        CharityMailer.with(charity: @charity, code: unique_code).approval_email.deliver_later
         charityuser = User.where(charity_id: @charity.id).where(role_id: 5).take
         charityuser.status = 'Active'
         charityuser.save

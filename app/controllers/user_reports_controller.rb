@@ -4,7 +4,6 @@ class UserReportsController < ApplicationController
   def new
     @user = User.find(params[:reported_user])
     @report = UserReport.new
-    render partial: 'user_reports/new'
   end
 
   def create
@@ -17,7 +16,7 @@ class UserReportsController < ApplicationController
       @user.update(status: 'under_review') if @user.status == 'Active'
       redirect_to requests_path, notice: 'User has been reported successfully.'
     else
-      render partial: 'user_reports/new'
+      render :new
     end
   end
 
@@ -26,8 +25,8 @@ class UserReportsController < ApplicationController
     @user = User.find(params[:user_report][:reported_user])
     @report_reason = params[:user_report][:report_reason]
     respond_to do |format|
-      format.html { render partial: 'user_reports/confirm' }
-      # format.js
+      format.html
+      format.js
     end
   end
 
