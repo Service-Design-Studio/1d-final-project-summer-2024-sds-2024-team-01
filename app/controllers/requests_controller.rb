@@ -67,10 +67,10 @@ class RequestsController < ApplicationController
         rewards: @request.reward
       }
 
-      # Fetch the percentage compatibility of request with user
-      @match_percentage = generate_match_percentage(user_profile, request_profile)
-    else
-      @match_percentage = 'User is not signed in'
+    #   Fetch the percentage compatibility of request with user
+    #   @match_percentage = generate_match_percentage(user_profile, request_profile)
+    # else
+    #   @match_percentage = 'User is not signed in'
     end
   end
 
@@ -165,6 +165,7 @@ class RequestsController < ApplicationController
       # redirect_to @request, flash: { success: 'Request was successfully created.' }
     else
       puts @request.errors.full_messages
+      flash.now[:alert] = 'Invalid information inserted. Please try again'
       render :new, status: :unprocessable_entity
     end
   end

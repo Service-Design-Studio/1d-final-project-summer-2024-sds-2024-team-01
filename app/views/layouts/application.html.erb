@@ -52,17 +52,16 @@
             <a class="nav-link" href="https://www.gebirah.org/">About</a>
           <% end %>
         </div>
-
+        <% if current_user.role_id == 1 || current_user.role_id == 5 %>
+          <a href="<%= new_request_path %>" class="btn new-request-button">
+            <span> New Request </span> <i class="fas fa-plus ms-2 m-auto"></i>
+          </a>
+        <% end %>
         <div class="navbar-right">
-          <% if current_user.role_id == 1 || current_user.role_id == 5 %>
-            <a href="<%= new_request_path %>" class="btn custom-btn-dark-purple me-5">
-              <span> New Request </span> <i class="fas fa-plus ms-2 m-auto"></i>
-            </a>
-          <% end %>
           <a href="<%= profile_path %>" class="profile-link">
             <img src="<%= avatar_url(current_user) %>" alt="Profile Picture" width="40" height="40" class="rounded-circle">
           </a>
-          <div id="shownotifs" class="text-white notifbell h-100 ms-5 d-flex align-items-center">
+          <div id="shownotifs" class="text-white notifbell d-flex align-items-center">
             <% if @unreadcount > 0 %>
               <span class="bg-danger rounded notifalertcount"><%= @unreadcount %></span>
             <% end %>
