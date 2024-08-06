@@ -92,7 +92,7 @@
 }
 
 .profile-link {
-  margin-right: 5rem;
+  margin-right: 6rem;
 }
 
 .notification-bell {
@@ -112,10 +112,26 @@
 }
 
 .logoutbutton {
+  position: relative;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
+}
+
+.new-request-button{
+  position: relative;
+  right: 5%;
+  display: flex;
+  text-align: center;
+  background-color: #505050;
+  border-color: #656dad;
+  color: white;
+}
+
+.new-request-button:hover {
+  background-color: #9852a6; /* Slightly darker shade for hover effect */
+  border-color: #9852a6;
 }
 
 @media (max-width: 1200px) {
