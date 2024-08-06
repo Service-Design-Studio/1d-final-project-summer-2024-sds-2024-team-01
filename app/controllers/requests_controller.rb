@@ -3,7 +3,7 @@ require_relative '../gemini/gemini_api'
 include Gemini_Helper
 
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[show edit destroy]
+  before_action :set_request, only: %i[show edit update destroy]
   skip_before_action :authenticate_user!, only: %i[index show]
 
   # GET /requests
@@ -132,6 +132,14 @@ class RequestsController < ApplicationController
   # GET /requests/1/edit
   # show a form to edit a request
   def edit; end
+
+  def update
+    if @request.update(request_params)
+    redirect_to @request, notice: 'Request was successfully updated.'
+    else
+      render :edit
+    end
+  end
 
   # POST /requests
   # create a new request

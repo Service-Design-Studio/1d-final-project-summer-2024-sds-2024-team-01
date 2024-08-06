@@ -45,8 +45,10 @@
       <div class="card-body body-container_profile">
         <div class="profile-user_description_container">
           <span class="bio-label">Bio</span>
-          <div class="bio-content">
-            <%= @profile.description.presence || 'This user has not provided a description.' %>
+          <div class="bio-content-container">
+            <div class="bio-content">
+              <%= @profile.description.presence || 'This user has not provided a description.' %>
+            </div>
           </div>
         </div>
         <% if user_signed_in? && current_user == @profile %>
@@ -120,27 +122,6 @@
                   <% end %>
                   (<%= @reviews_received.count %> Reviews)
                 </p>
-              </div>
-              <div class="review-filters">
-                <!-- Dropdown for filtering review sources -->
-                <div class="filter-by-source">
-                  <label for="filter-reviews">Filter by</label>
-                  <select id="filter-reviews" class="form-control">
-                    <option value="all">All</option>
-                    <option value="volunteers">From Volunteers</option>
-                    <option value="requesters">From Requesters</option>
-                  </select>
-                </div>
-
-                <!-- Existing dropdown for sorting reviews -->
-                <div class="filter-by-source">
-                  <label for="sort-reviews">Sort by</label>
-                  <select id="sort-reviews" class="form-control">
-                    <option value="highest">Highest ratings</option>
-                    <option value="lowest">Lowest ratings</option>
-                    <option value="recent">Recent</option>
-                  </select>
-                </div>
               </div>
               <div class="reviews-container">
               <% if @reviews_from_requesters.any? || @reviews_from_applicants.any? %>
