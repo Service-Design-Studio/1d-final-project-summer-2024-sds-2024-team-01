@@ -11,21 +11,35 @@ module Gemini_Helper
         service: 'generative-language-api',
         api_key: Rails.application.credentials.google.gemini_api_key
       },
-      options: { model: 'gemini-pro', server_sent_events: true }
+      options: { model: 'gemini-1.5-pro', server_sent_events: true }
     )
       prompt = <<-PROMPT
-      This is my profile bio:
+        This is my profile bio and information about me: { #{user[:bio]} }
 
-      #{user[:bio]}
 
-      This is request that I want to apply for:
 
-      Title: #{request[:title]}
+        This is request that I want to apply for:  
+        {
+        Request Title: { #{request[:title]} }
 
-      Description: #{request[:description]}
+        Request Description: { #{request[:description] }
+        }
 
-    Please give me a percentage of how well I match this request, ignoring the availabilities of both parties. Only give me the percentage in the format of: xx%
-      PROMPT
+
+
+        With the context of 
+
+        0%-29%: detrimental compatibility, 
+
+        30%-49%: horrible compatibility,
+
+        50%-69%: average compatibility,
+
+        70%-100%: good to perfect compatibility.
+
+        While completely ignoring the availabilities of both parties, only match based on compatibility.
+        Please give me a numerical percentage of how well I match this request in the format of just "xx%.". Don't explain.
+    PROMPT
 
       response_text = client.generate_content({
         contents: { role: 'user', parts: { text: prompt } }

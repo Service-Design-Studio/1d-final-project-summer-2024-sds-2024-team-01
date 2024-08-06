@@ -259,7 +259,7 @@ Given('I have an admin account') do
 end
 
 
-Then('I login as an admin') do
+Then('I login as admin') do
   visit '/login'
   fill_in 'user_login', with: 'admin@example.com'
   fill_in 'user_password', with: 'password'
@@ -283,14 +283,22 @@ Given('I am on {string} page') do |page|
   when 'Ban User'
     visit admin_ban_user_index_path(anchor: 'ban-tab')
   when 'Unban User'
-    visit admin_ban_user_index_path(anchor: 'unban-tab')
-  when "Millard Robel Profile" 
-    visit 
-
+    visit admin_ban_user_index_path
+    find('#unban-tab').click
+  when 'All Requests'
+    visit root_path
+  when 'Help with gardening'
+    request = Request.find_by(title: 'Help with gardening')
+    if request
+      visit request_path(request)
+    else
+      raise "Request with title 'Help with gardening' not found"
+    end
   else
     raise "Unknown page: #{page}"
   end
 end
+
 
 Then('I should see more details of {string}') do |entity_name|
   @entity = Company.find_by(company_name: entity_name) || Charity.find_by(charity_name: entity_name)
@@ -310,12 +318,80 @@ Then('I should see more details of {string}') do |entity_name|
   # expect(page).to have_selector("iframe[src*='#{document_url}']")
 end
 
-
+###### cannot use factory bot need to ownself create ######
 Given('there are companies and charities for me to approve') do
   # Creating companies
-  FactoryBot.create(:grace_company)
-  FactoryBot.create(:friendly_company)
-  FactoryBot.create(:love_company)
+    # Creating companies
+  grace_company = Company.create!(
+    company_name: 'GraceCompany',
+    status: 'Inactive',
+    created_at: DateTime.now,
+    updated_at: DateTime.now
+  )
+  grace_company.document_proof.attach(
+    io: File.open(Rails.root.join('lib', 'assets', 'sample.pdf')),
+    filename: 'sample.pdf',
+    content_type: 'application/pdf'
+  )
+
+  friendly_company = Company.create!(
+    company_name: 'FriendlyCompany',
+    status: 'Inactive',
+    created_at: DateTime.now,
+    updated_at: DateTime.now
+  )
+  friendly_company.document_proof.attach(
+    io: File.open(Rails.root.join('lib', 'assets', 'sample.pdf')),
+    filename: 'sample.pdf',
+    content_type: 'application/pdf'
+  )
+
+  love_company = Company.create!(
+    company_name: 'LoveCompany',
+    status: 'Active',
+    created_at: DateTime.now,
+    updated_at: DateTime.now
+  )
+  love_company.document_proof.attach(
+    io: File.open(Rails.root.join('lib', 'assets', 'sample.pdf')),
+    filename: 'sample.pdf',
+    content_type: 'application/pdf'
+  )
+
+  # Creating associated users for companies
+  User.create!(
+    name: Faker::Name.name,
+    email: Faker::Internet.email,
+    number: "9#{Faker::Number.number(digits: 7)}",
+    status: 'Active',
+    password: 'password',
+    password_confirmation: 'password',
+    role_id: 3, # Assuming role_id 3 is for a corporate manager
+    company: grace_company
+  )
+
+  User.create!(
+    name: Faker::Name.name,
+    email: Faker::Internet.email,
+    number: "9#{Faker::Number.number(digits: 7)}",
+    status: 'Active',
+    password: 'password',
+    password_confirmation: 'password',
+    role_id: 3,
+    company: friendly_company
+  )
+
+  User.create!(
+    name: Faker::Name.name,
+    email: Faker::Internet.email,
+    number: "9#{Faker::Number.number(digits: 7)}",
+    status: 'Active',
+    password: 'password',
+    password_confirmation: 'password',
+    role_id: 3,
+    company: love_company
+  )
+
 
   # Creating charities
   FactoryBot.create(:tasty_charity)
@@ -323,39 +399,223 @@ Given('there are companies and charities for me to approve') do
   FactoryBot.create(:delightful_charity)
 end
 
-Given('there is {string}') do |user_name|
+###### cannot use factory bot ###########
+And('there is {string} details') do |user_name|
+  puts "Creating user with name: #{user_name}"  # Debug statement
+
   case user_name
   when 'Alice Smith'
     @user = FactoryBot.create(:dummy_user, name: 'Alice Smith')
   when 'Bob Dylan'
     @user = FactoryBot.create(:dummy_user_three, name: 'Bob Dylan')
+  when 'Jane Doe'
+    @user = FactoryBot.create(:dummy_user_two, name: 'Jane Doe')
+  else
+    raise "Unknown user name: #{user_name}"
+  end
+
+  puts "Created user: #{@user.inspect}"  # Debug statement
+end
+
+
+And('I click on {string} button for company {string}') do |button_text, company_name|
+  puts "Looking for company row with name: #{company_name}"  # Debug statement
+
+  page.all('tr').each do |row|
+    puts "Row text: #{row.text}"  # Debug statement
+  end
+
+  begin
+    company_row = find('tr', text: company_name, visible: true)
+    if company_row
+      puts "Found company row: #{company_row.text}"  # Debug statement
+      within(company_row) do
+        click_button(button_text)
+      end
+    else
+      puts "Company row not found for: #{company_name}"  # Debug statement
+      raise "Company row not found for: #{company_name}"
+    end
+  rescue Capybara::ElementNotFound => e
+    puts "Error: #{e.message}"  # Debug statement
+    raise "Company row not found for: #{company_name}"
   end
 end
 
-When('I click on {string} button for company {string}') do |button_text, company_name|
-  within("tr", text: company_name) do
+
+And('I click on {string} button for charity {string}') do |button_text, charity_name|
+  puts "Looking for charity row with name: #{charity_name}"  # Debug statement
+
+  begin
+    charity_row = find('tr', text: charity_name, visible: true)
+    if charity_row
+      puts "Found charity row: #{charity_row.text}"  # Debug statement
+      within(charity_row) do
+        click_button(button_text)
+      end
+    else
+      puts "Charity row not found for: #{charity_name}"  # Debug statement
+      raise "Charity row not found for: #{charity_name}"
+    end
+  rescue Capybara::ElementNotFound => e
+    puts "Error: #{e.message}"  # Debug statement
+    raise "Charity row not found for: #{charity_name}"
+  end
+end
+
+
+When('I click on {string} button for user {string}') do |button_text, user_name|
+  within('.user-card', text: user_name) do
     click_button(button_text)
   end
 end
 
-When('I click on {string} button for charity {string}') do |button_text, charity_name|
-  within(:xpath, "//tr[contains(., '#{charity_name}')]") do
-    click_button(button_text)
+And('I click on {string} details') do |entity_name|
+  puts "Looking for entity row with name: #{entity_name}"  # Debug statement
+
+  begin
+    entity_row = find('tr.clickable-row', text: entity_name, visible: true)
+    if entity_row
+      puts "Found entity row: #{entity_row.text}"  # Debug statement
+      entity_row.click
+    else
+      puts "Entity row not found for: #{entity_name}"  # Debug statement
+      raise "Entity row not found for: #{entity_name}"
+    end
+  rescue Capybara::ElementNotFound => e
+    puts "Error: #{e.message}"  # Debug statement
+    raise "Entity row not found for: #{entity_name}"
+  end
+end
+
+Then('I should see the message {string}') do |message|
+  # Wait for the alert to be present
+  alert = nil
+  Timeout.timeout(Capybara.default_max_wait_time) do
+    loop until (alert = page.driver.browser.switch_to.alert rescue nil)
+  end
+
+  # Ensure the alert is present and has the expected message
+  expect(alert.text).to eq(message)
+  alert.accept
+end
+
+
+Then('there is more details of {string}') do |user_name|
+  expect(page).to have_content(user_name)
+end
+
+
+And('I click {string} details') do |user_name|
+  puts "Looking for user card with name: #{user_name}"  # Debug statement
+
+  user_card = find('.clickable-card', text: user_name, visible: true)
+
+  if user_card
+    puts "Found user card: #{user_card.text}"  # Debug statement
+    user_card.click
+  else
+    puts "User card not found for: #{user_name}"  # Debug statement
+    raise "User card not found for: #{user_name}"
   end
 end
 
 
 
 ############## report user ############
-Then('I login as User') do
+# Then('I login as User') do
+#   visit '/login'
+#   fill_in 'user_login', with: 'alice.smith@example.com'
+#   fill_in 'user_password', with: 'password'
+#   click_button 'Login'
+# end
+
+Then('I click on {string} profile') do |user_name|
+  within(".profile-info_requests_details") do
+    find("a", text: user_name).click
+  end
+end
+
+
+And('there is {string} request') do |string|
+  case string
+  when "Help with gardening"
+    millard_robel = User.find_or_create_by!(
+      name: 'Millard Robel',
+      email: 'millard.robel@example.com'
+    ) do |user|
+      user.number = '96000000'
+      user.description = 'Description of Millard Robel'
+      user.bio = 'Bio of Millard Robel'
+      user.status = 'Active'
+      user.total_hours = 0
+      user.weekly_hours = 0
+      user.role_id = 1 # Assuming 1 is the ID of the role you want to assign
+      user.company_id = nil # Assuming the user is not associated with any company
+      user.charity_id = nil # Assuming the user is not associated with any charity
+      user.password = 'password' # Ensure this matches your validation criteria
+      user.password_confirmation = 'password'
+    end
+
+    Request.find_or_create_by!(
+      title: 'Help with gardening',
+      created_by: millard_robel.id
+    ) do |request|
+      request.description = 'Description of the request'
+      request.category = 'General'
+      request.location = 'POINT(103.851959 1.290270)' # Adjust the location point as needed
+      request.stringlocation = 'Address of the request'
+      request.date = Date.tomorrow + 30 # Adjust the date as needed
+      request.start_time = '10:00 AM'
+      request.number_of_pax = 1
+      request.duration = 2
+      request.reward_type = 'None'
+      request.reward = 'None'
+      request.status = 'Available'
+      request.created_at = DateTime.now
+      request.updated_at = DateTime.now
+    end
+  end
+end
+
+Then('I click on {string} request') do |request_title|
+  card = find('.request-card_requests_index', text: request_title)
+  card.click
+end
+
+Then('I press on {string}') do |button_text|
+  case button_text
+  when "Report"
+    within('.report-button-container') do
+      click_button(button_text)
+    end
+  when "Back"
+    click_button(button_text)
+  when "Cancel"
+    click_link(button_text)
+  else
+    click_button(button_text)
+  end
+end
+
+# Given('I have a user account') do
+#   User.create!(
+#     name: 'Regular User',
+#     email: 'user@example.com',
+#     password: 'password',
+#     password_confirmation: 'password',
+#     number: '92220000',  
+#     role_id: 1,          
+#     status: 'Active'
+#   )
+# end
+
+Then('I login as a user') do
   visit '/login'
-  fill_in 'user_login', with: 'alice.smith@example.com'
+  fill_in 'user_login', with: '98765432'
   fill_in 'user_password', with: 'password'
   click_button 'Login'
 end
 
-Then('I click on {string} profile') do |profile_name|
-  within('.profile-card_requests_details') do
-    find('h6', text: profile_name).click
-  end
-end
+
+  
