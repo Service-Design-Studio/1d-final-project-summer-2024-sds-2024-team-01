@@ -113,14 +113,22 @@ namespace :db do
       create(:user, status: 'Active', company_id: create(:random_company, status: 'Active').id, role_id: 3, number: nil, email: 'cvm3@test.com')
 
       # Create dummy data for charities
-      create(:inexpensive_charity)
-      create(:tasty_charity)
-      create(:delightful_charity)
+      char1 = create(:inexpensive_charity)
+      char2 = create(:tasty_charity)
+      char3 = create(:delightful_charity)
 
-      # Specific companies
-      create(:friendly_company)
-      create(:grace_company)
-      create(:love_company)
+      # Spe = cific companies
+      char4 = create(:friendly_company)
+      char5 = create(:grace_company)
+      char6 = create(:love_company)
+
+      create(:user, email: 'charity1@test.com', status: 'Active', charity_id: char1.id, role_id: 5, number: nil)
+      create(:user, email: 'charity2@test.com', status: 'Active', charity_id: char2.id, role_id: 5, number: nil)
+      create(:user, email: 'charity3@test.com', status: 'Active', charity_id: char3.id, role_id: 5, number: nil)
+      create(:user, email: 'charity4@test.com', status: 'Active', charity_id: char4.id, role_id: 5, number: nil)
+      create(:user, email: 'charity5@test.com', status: 'Active', charity_id: char5.id, role_id: 5, number: nil)
+      create(:user, email: 'charity6@test.com', status: 'Active', charity_id: char6.id, role_id: 5, number: nil)
+
 
       print "\r100% Complete                      "
     end

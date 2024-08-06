@@ -4,8 +4,8 @@ Feature: Report User
     I want to be able to make a report
 
 Background:
-    # Given I have a user account
-    Then I login as a user
+    Given I have an account
+    Then I login 
     And there is "Help with gardening" request
 
 Scenario: Report User
