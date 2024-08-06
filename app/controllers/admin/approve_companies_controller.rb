@@ -18,12 +18,10 @@ class Admin::ApproveCompaniesController < ApplicationController
       @company.update!(status: 'Active')
       unique_code = generate_unique_code
       CompanyCode.create!(company: @company, status: 'Active', code: unique_code)
-      CompanyMailer.with(company: @company, code: unique_code).approval_email.deliver_later
+      # CompanyMailer.with(company: @company, code: unique_code).approval_email.deliver_later
       cvm = User.where(company_id: @company.id).where(role_id: 3).take
-      cvm.status = 'Active'
-      cvm.save
+      cvm.update!(status: 'Active')
     end
-
 
     redirect_to admin_approve_companies_path, notice: 'Company has been approved and email sent.'
   rescue ActiveRecord::RecordInvalid
@@ -31,20 +29,18 @@ class Admin::ApproveCompaniesController < ApplicationController
   end
 
   def disable
-    @company.update(status: 'Inactive')
-    codes = CompanyCode.where(company_id: @company.id).where(status: 'Active')
-    codes.each do |code|
-      code.status = 'Inactive'
+    Company.transaction do
+      @company.update!(status: 'Inactive')
+      codes = CompanyCode.where(company_id: @company.id, status: 'Active')
+      codes.each { |code| code.update!(status: 'Inactive') }
+      cvm = User.where(company_id: @company.id, role_id: 3).take
+      cvm.update!(status: 'Inactive')
     end
-
-    cvm = User.where(company_id: @company.id).where(role_id: 3).take
-    cvm.status = 'Inactive'
-    cvm.save
     redirect_to admin_approve_companies_path, notice: 'Company has been disabled.'
   end
 
   def reject
-    @company.update(status: 'Rejected')
+    @company.update!(status: 'Rejected')
     redirect_to admin_approve_companies_path, notice: 'Company has been rejected.'
   end
 
