@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
     return if current_user.nil?
     allowed_routes = ['/login', '/logout', '/profile']
     apply_routes = ['/requests/apply', '/myapplications', '/myapplications/withdraw']
+    create_req_routes = ['/requests/new', '/myrequests']
 
     case current_user.role_id
     when 3
@@ -23,6 +24,8 @@ class ApplicationController < ActionController::Base
     when 5
       return if allowed_routes.any? { |route| request.path.start_with?(route) } || !apply_routes.any? { |route| request.path.start_with?(route) }
 
+    when 4
+      return if allowed_routes.any? { |route| request.path.start_with?(route) } || !create_req_routes.any? { |route| request.path.start_with?(route) }
       redirect_to '/'
     end
 
