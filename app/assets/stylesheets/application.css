@@ -377,9 +377,8 @@
 /*clickable mini profi  le*/
 .profile-info_requests_details {
   display: flex;
-  align-items: center;
   margin-top: 10px;
-  margin-left: -10%;
+  margin-left: -25%;
 }
 
 .mini-profile {
@@ -1182,6 +1181,7 @@ font-weight: bold;
 
 .request-title {
   font-size: xx-large;
+  font-weight: 700;
   flex: 1;
   padding-right: 20px; /* Add some space between title and indicator */
   width: 70vh;
@@ -2324,7 +2324,7 @@ body.popup-open {
   display: flex;
   justify-content: left;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 5%;
 }
 
 .custom-btn-chat_my {
