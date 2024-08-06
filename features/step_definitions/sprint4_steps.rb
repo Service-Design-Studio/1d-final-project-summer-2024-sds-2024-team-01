@@ -587,10 +587,10 @@ Then('I press on {string}') do |button_text|
   case button_text
   when "Report"
     within('.report-button-container') do
-      click_link(button_text)
+      click_button(button_text)
     end
   when "Back"
-    click_link(button_text)
+    click_button(button_text)
   when "Cancel"
     click_link(button_text)
   else
