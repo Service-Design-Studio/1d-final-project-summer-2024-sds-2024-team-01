@@ -20,6 +20,9 @@ module Admin
         unique_code = generate_unique_code
         CharityCode.create!(charity: @charity, status: 'Approved', code: unique_code)
         CharityMailer.with(charity: @charity, code: unique_code).approval_email.deliver_later
+        charityuser = User.where(charity_id: @charity.id).where(role_id: 5).take
+        charityuser.status = 'Active'
+        charityuser.save
       end
       redirect_to admin_charities_path(anchor: 'active-tab'), notice: 'Charity approved successfully and email sent.'
     rescue ActiveRecord::RecordInvalid
@@ -28,6 +31,9 @@ module Admin
 
     def disable
       @charity.update(status: 'Inactive')
+      charityuser = User.where(charity_id: @charity.id).where(role_id: 5).take
+      charityuser.status = 'Inactive'
+      charityuser.save
       redirect_to admin_charities_path(anchor: 'inactive-tab'), notice: 'Charity disabled successfully.'
     end
 
