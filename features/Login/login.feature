@@ -18,5 +18,3 @@ Feature: Login
     | Password      |        |
     And I click on "Login" button
     Then I should see a message "Invalid Login or password."
-
-    Scenario: Test login
