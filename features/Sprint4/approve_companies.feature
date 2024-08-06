@@ -10,24 +10,24 @@ Background:
     
 Scenario: Approve companies
     Given I am on "Approve Inactive Companies" page
-    And I click on "FriendlyCompany" details
+    And I click on "FriendlyCompany" 'company' details 
     Then I should see more details of "FriendlyCompany"
     Then I am on "Approve Inactive Companies" page
-    When I click on "Approve" button for company "FriendlyCompany"
+    When I click on "Approve" button for "FriendlyCompany" 'company'
     Then I should see "Company has been approved and email sent."
   
 Scenario: Disable companies
     Given I am on "Approve Active Companies" page
-    And I click on "LoveCompany" details
+    And I click on "LoveCompany" 'company' details
     Then I should see more details of "LoveCompany"
     Then I am on "Approve Active Companies" page
-    When I click on "Disable" button for company "LoveCompany"
+    When I click on "Disable" button for "LoveCompany" 'company'
     Then I should see "Company has been disabled."
 
 Scenario: Reject Companies 
     Given I am on "Approve Inactive Companies" page
-    And I click on "GraceCompany" details
+    And I click on "GraceCompany" 'company' details 
     Then I should see more details of "GraceCompany"
     Then I am on "Approve Inactive Companies" page
-    When I click on "Reject" button for company "GraceCompany"
+    When I click on "Reject" button for "GraceCompany" 'company'
     Then I should see "Company has been rejected."

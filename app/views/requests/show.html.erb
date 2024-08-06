@@ -19,13 +19,14 @@
       <div class="card-body p-0">
         <div class="p-3 row">
           <div class="col-md-8">
-            <h1 class="mt-3"><%= @request.title %></h1>
-            <!--Percentage indicator-->
-            <div class="percentage-indicator">
+            <div class="request-details-title-cluster">
+              <div class="request-title"><%= @request.title %></div>
+              <div class="percentage-indicator">
               <% if !current_user.nil? && @match_percentage.include?("%") %>
                 <% is_creator = current_user && @request.created_by == current_user.id %>
                 <%= percentage_indicator(test_value: @match_percentage, show_condition: !is_creator) %>
               <% end %>
+              </div>
             </div>
             <div class="divider_requests_details"></div>
             <div class="details-section_requests_details">
