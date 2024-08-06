@@ -45,8 +45,10 @@
       <div class="card-body body-container_profile">
         <div class="profile-user_description_container">
           <span class="bio-label">Bio</span>
-          <div class="bio-content">
-            <%= @profile.description.presence || 'This user has not provided a description.' %>
+          <div class="bio-content-container">
+            <div class="bio-content">
+              <%= @profile.description.presence || 'This user has not provided a description.' %>
+            </div>
           </div>
         </div>
         <% if user_signed_in? && current_user == @profile %>
