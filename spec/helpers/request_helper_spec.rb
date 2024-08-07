@@ -13,7 +13,7 @@ RSpec.describe RequestsHelper, type: :helper do
         )
       end
       it 'returns the URL for the user avatar' do
-        expect(request_thumbnail_url(request)).to eq(url_for(request.thumbnail))
+        expect(request_thumbnail_url(request)).to eq(image_url(request.thumbnail))
       end
     end
 
