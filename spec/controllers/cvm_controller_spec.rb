@@ -38,7 +38,7 @@ RSpec.describe Cvm::CvmController, type: :controller do
     let(:new_charity) { create(:random_charity) }
 
     it 'updates the charities correctly' do
-      patch :update_charities, params: { charity_ids: "#{new_charity.id}" }
+      patch :update_charities, params: { charity_ids: ["#{new_charity.id}"] }
       expect(CompanyCharity.find_by(company: company, charity: new_charity)).not_to be_nil
       expect(CompanyCharity.find_by(company: company, charity: charity)).to be_nil
       expect(response).to redirect_to(cvm_charities_path)

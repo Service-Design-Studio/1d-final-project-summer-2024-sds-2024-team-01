@@ -2,15 +2,15 @@ class Cvm::CvmController < ApplicationController
   require 'csv'
   # Display dashboard
   def index
-    @numemployees = User.where(status: 'Active').where(company_id: current_user.company_id).where(role_id: 4).count
-    @numdeactivated = User.where.not(status: 'Active').where(company_id: current_user.company_id).where(role_id: 4).count
-    @weeklyhours = User.where(status: 'Active').where(company_id: current_user.company_id).sum(:weekly_hours)
+    @numemployees = User.where.not(status: 'Inactive').where(company_id: current_user.company_id).where(role_id: 4).count
+    @numdeactivated = User.where(status: 'Inactive').where(company_id: current_user.company_id).where(role_id: 4).count
+    @weeklyhours = User.where.not(status: 'Inactive').where(company_id: current_user.company_id).sum(:weekly_hours)
 
     addedids = CompanyCharity.where(company_id: current_user.company_id).pluck(:charity_id)
 
     @charitylist = Charity.where(id: addedids)
 
-    @topvolunteers = User.where(status: 'Active').where(role_id: 4).where(company_id: current_user.company_id).order(weekly_hours: :desc).first(10)
+    @topvolunteers = User.where.not(status: 'Inactive').where(role_id: 4).where(company_id: current_user.company_id).order(weekly_hours: :desc).first(10)
 
     @companycode = CompanyCode.where(company_id: current_user.company_id).where(status: 'Active').last.code
 
@@ -22,7 +22,7 @@ class Cvm::CvmController < ApplicationController
     addedids = CompanyCharity.where(company_id: current_user.company_id).pluck(:charity_id)
 
     @addedcharities = Charity.where(id: addedids)
-    @notaddedcharities = Charity.where.not(id: @addedcharities.pluck(:id))
+    @notaddedcharities = Charity.where.not(id: @addedcharities.pluck(:id)).where.not(status: 'Inactive')
   end
 
   # /PATCH CVM/charities/update
