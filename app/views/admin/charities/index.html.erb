@@ -60,7 +60,7 @@
             <% instance_variable_get("@#{tab}_charities").each do |charity| %>
               <div class="row py-2 border-bottom clickable-row" data-link="<%= admin_charity_path(charity) %>">
                 <div class="col-3 ps-4"><%= charity.charity_name %></div>
-                <div class="col-2"><%= charity.created_at.localtime.strftime('%d %b %Y, %I:%M %p') %></div>
+                <div class="col-2"><%= (charity.created_at + 8.hours).strftime('%d %b %Y, %I:%M %p') %></div>
                 <div class="col-3">
                   <% manager = charity.users.find_by(role_id: 5) %>
                   <%= manager ? manager.name : 'No manager assigned' %>
