@@ -10,7 +10,7 @@ class Cvm::CvmController < ApplicationController
 
     @charitylist = Charity.where(id: addedids)
 
-    @topvolunteers = User.where(status: 'Active').where(role_id: 4).where(company_id: current_user.company_id).order(weekly_hours: :desc).first(10)
+    @topvolunteers = User.where.not(status: 'Inactive').where(role_id: 4).where(company_id: current_user.company_id).order(weekly_hours: :desc).first(10)
 
     @companycode = CompanyCode.where(company_id: current_user.company_id).where(status: 'Active').last.code
 
