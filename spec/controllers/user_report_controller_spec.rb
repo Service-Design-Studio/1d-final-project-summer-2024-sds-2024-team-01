@@ -51,6 +51,7 @@ RSpec.describe UserReportsController, type: :controller do
       expect(assigns(:user)).to eq(reported_user)
       expect(assigns(:report_reason)).to eq('Inappropriate behavior')
     end
+  end
 
     it 'responds to html and js formats' do
       get :confirm, params: { user_report: { reported_user: reported_user.id, report_reason: 'Inappropriate behavior' } }, format: :html
