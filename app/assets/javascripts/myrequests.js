@@ -187,6 +187,7 @@ function updateRequestCards(tabId) {
   });
 }
 
+// tramsotion animations included without page reload, but buggy on the cloud 
 // function handleCompleteForm(form) {
 //   const requestCard = form.closest('.request-card_requests_index_my');
 //   const applicationIndicator = requestCard.querySelector('.application-indicator_requests_index_my');
@@ -272,6 +273,7 @@ function updateRequestCards(tabId) {
 //   });
 // }
 
+// Simpler approach, refreshes page after user marks as complete, updates UI after reload
 function handleCompleteForm(form) {
   fetch(form.action, {
     method: form.method,
@@ -279,20 +281,23 @@ function handleCompleteForm(form) {
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-    }
+    },
+    redirect: 'follow' // Allow fetch to follow redirects
   })
   .then(response => {
     if (response.redirected) {
-      // Follow the redirect, which will reload the page with the new state and notification
+      // If the server sends a redirect, follow it
       window.location.href = response.url;
     } else {
-      // If not redirected (which shouldn't happen in this case), reload the page
+      // If no redirect (which shouldn't happen based on your controller),
+      // reload the page to ensure we're showing the latest state
       window.location.reload();
     }
   })
   .catch(error => {
     console.error('Error:', error);
-    // Optionally, you could show an error message to the user here
+    // Optionally, show an error message to the user
+    alert('An error occurred while completing the request. Please try again.');
   });
 }
 
