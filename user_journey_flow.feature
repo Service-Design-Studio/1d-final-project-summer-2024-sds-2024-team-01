@@ -1,3 +1,11 @@
+# ===============================================
+# Before demo
+# 1: Login to admin account to save time
+# ===============================================
+
+
+# Healing Hands
+# healinghands@gmail.com
 Feature: Signing up as a charity
     As a charity in need of more volunteers
     So that I can obtain more manpower for my beneficiaries
@@ -17,6 +25,8 @@ Feature: Signing up as a charity
         And I click on "Sign up!"
         Then I should see "Failed to register"
 
+# Hextech Solutions
+# hextech@gmail.com
 Feature: Signing up as a corporation
     As a corporate volunteer manager
     So that I can obtain more opportunities to claim tax relief from IRAS
@@ -96,7 +106,10 @@ Feature: Approving corporations and charities as an Administrator
         When I click on "Reject" button for charity "Inactive Charity"
         Then I should see message "Charity rejected successfully."
 
-Feature: Create request as a charity
+# Demo purposes
+# Need volunteers to distribute food
+# Need a few people to help provide and distribute food to the needy. All volunteers welcome! 
+Feature: Create request 
   As a user
   So that I can receive help
   I want to create a request
@@ -120,7 +133,7 @@ Background:
     | Description                     | Looking for someone to help with my backyard garden |
     | Incentive provided              | Money          |
     | Incentive                       | $400           |
-    When I click on "Create" button
+    When I click on "Create" buttoni 
     Then I should see "Request was successfully created."
    
 
@@ -162,6 +175,80 @@ Feature: Generating code for employees
         Then I should receive a new company code
 
 
+# CVM Perspective alr
+Feature: Viewing of statistics
+    As a corporate volunteer manager
+    So that I can keep track on who is volunteering
+    I want to be able to see the number of hours that each employee is volunteering for 
+
+    Background:
+        Given Willing Hearts is registered with the application
+        And Willing Hearts is registered with my company
+        And Jason has completed a request
+        And Alice has completed a request
+        And Bob has completed a request
+        
+    Scenario:
+        Given I have a cvm account
+        When I login as a cvm
+        Then I should 8 hours volunteered this week
+
+    Scenario: Viewing of employee statistics
+        Given I have a cvm account
+        When I login as a cvm
+        Then I should see '3' under top employees
+
+    Scenario: Viewing of volunteering statistics
+        Given I have a cvm account
+        When I login as a cvm
+        Then I should see 'Jason' before 'Alice' under top employees
+        And I should see 'Alice' before 'Bob' under top employees
+
+    Scenario: Viewing of charities registered with my company
+        Given I have a cvm account
+        When I login as a cvm
+        Then I should see 'Willing Hearts'
+
+Feature: Managing Charities
+
+    Background:
+        Given I have a cvm account
+        And I login as a cvm
+        And Willing Hearts is registered with the application
+
+    Scenario: Adding a charity without pressing save
+        Given I click on 'Manage Charities'
+        And I click on Willing Hearts
+        When I am on the cvm dashboard
+        Then I should not see 'Willing Hearts'
+
+    Scenario: Adding a charity 
+        Given I click on 'Manage Charities'
+        And I click on Willing Hearts
+        When I click on 'Save'
+        And I am on the cvm dashboard
+        Then I should see 'Willing Hearts'
+        
+    Scenario: Remove a charity without pressing save
+        Given Willing Hearts is registered with my company
+        And I click on 'Manage Charities'
+        When I click on Willing Hearts
+        And I am on the cvm dashboard
+        Then I should see 'Willing Hearts'
+
+    Scenario: Remove a charity 
+        Given Willing Hearts is registered with my company
+        And I click on 'Manage Charities'
+        When I click on Willing Hearts
+        And I click on 'Save'
+        And I am on the cvm dashboard
+        Then I should not see 'Willing Hearts'
+
+# Demo
+# Darren Chan
+# 
+# darren@hextech.com
+# Hi! I'm a computer science student at SUTD, my hobbies revolve around computers and I also love all sorts of animals. I go to the gym occasionally and also enjoy play sports.
 Feature: Signing up as a corporate volunteer
     As a corporate volunteer 
     So that I can obtain more volunteering opportunities for my company to claim tax relief
@@ -227,42 +314,7 @@ Feature: Differentiating of corporate volunteer applicants
         Then I should see 2 applicants
         And I should see 1 corporate volunteer applicant
 
-# CVM Perspective alr
-Feature: Viewing of statistics
-    As a corporate volunteer manager
-    So that I can keep track on who is volunteering
-    I want to be able to see the number of hours that each employee is volunteering for 
-
-    Background:
-        Given Willing Hearts is registered with the application
-        And Willing Hearts is registered with my company
-        And Jason has completed a request
-        And Alice has completed a request
-        And Bob has completed a request
-        
-    Scenario:
-        Given I have a cvm account
-        When I login as a cvm
-        Then I should 8 hours volunteered this week
-
-    Scenario: Viewing of employee statistics
-        Given I have a cvm account
-        When I login as a cvm
-        Then I should see '3' under top employees
-
-    Scenario: Viewing of volunteering statistics
-        Given I have a cvm account
-        When I login as a cvm
-        Then I should see 'Jason' before 'Alice' under top employees
-        And I should see 'Alice' before 'Bob' under top employees
-
-    Scenario: Viewing of charities registered with my company
-        Given I have a cvm account
-        When I login as a cvm
-        Then I should see 'Willing Hearts'
-
 Feature: Managing employees 
-
     Background:
         Given I have a cvm account
         And I login as a cvm
@@ -277,41 +329,6 @@ Feature: Managing employees
         Given I click on 'Manage Employees'
         And I activate Jason's account
         Then Jason should be able to log in
-
-Feature: Managing Charities
-
-    Background:
-        Given I have a cvm account
-        And I login as a cvm
-        And Willing Hearts is registered with the application
-
-    Scenario: Adding a charity without pressing save
-        Given I click on 'Manage Charities'
-        And I click on Willing Hearts
-        When I am on the cvm dashboard
-        Then I should not see 'Willing Hearts'
-
-    Scenario: Adding a charity 
-        Given I click on 'Manage Charities'
-        And I click on Willing Hearts
-        When I click on 'Save'
-        And I am on the cvm dashboard
-        Then I should see 'Willing Hearts'
-        
-    Scenario: Remove a charity without pressing save
-        Given Willing Hearts is registered with my company
-        And I click on 'Manage Charities'
-        When I click on Willing Hearts
-        And I am on the cvm dashboard
-        Then I should see 'Willing Hearts'
-
-    Scenario: Remove a charity 
-        Given Willing Hearts is registered with my company
-        And I click on 'Manage Charities'
-        When I click on Willing Hearts
-        And I click on 'Save'
-        And I am on the cvm dashboard
-        Then I should not see 'Willing Hearts'
 
 Feature: Generate Report
     As a corporate volunteer manager
