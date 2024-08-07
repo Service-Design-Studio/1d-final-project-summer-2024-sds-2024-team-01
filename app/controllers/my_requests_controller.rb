@@ -102,10 +102,11 @@ class MyRequestsController < ApplicationController
       pending.status = 'Rejected'
       pending.save
     end
-
+    # why the notice never show up ah
     @request.status = 'Completed'
-    @request.save
-    redirect_to @myrequests, flash: { success: "Congratulations! Your request is marked as complete!" }
+    if @request.save
+      redirect_to '/myrequests', notice: "Congratulations! Your request is marked as complete!" 
+    end
   end
 
   def accept
