@@ -21,9 +21,9 @@ RSpec.describe UserReportsController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new UserReport' do
-        expect {
+        expect do
           post :create, params: { user_report: valid_attributes }
-        }.to change(UserReport, :count).by(1)
+        end.to change(UserReport, :count).by(1)
       end
 
       it 'redirects to the requests path' do
@@ -47,17 +47,19 @@ RSpec.describe UserReportsController, type: :controller do
 
   describe 'GET #confirm' do
     it 'assigns the requested user as @user' do
-      get :confirm, params: { user_report: { reported_user: reported_user.id, report_reason: 'Inappropriate behavior' } }
+      get :confirm,
+          params: { user_report: { reported_user: reported_user.id, report_reason: 'Inappropriate behavior' } }
       expect(assigns(:user)).to eq(reported_user)
       expect(assigns(:report_reason)).to eq('Inappropriate behavior')
     end
 
     it 'responds to html and js formats' do
-      get :confirm, params: { user_report: { reported_user: reported_user.id, report_reason: 'Inappropriate behavior' } }, format: :html
+      get :confirm,
+          params: { user_report: { reported_user: reported_user.id, report_reason: 'Inappropriate behavior' } }, format: :html
       expect(response).to render_template(partial: '_confirm')
 
-    #   get :confirm, params: { user_report: { reported_user: reported_user.id, report_reason: 'Inappropriate behavior' } }, format: :js
-    #   expect(response.content_type).to eq('text/javascript')
-    
+      #   get :confirm, params: { user_report: { reported_user: reported_user.id, report_reason: 'Inappropriate behavior' } }, format: :js
+      #   expect(response.content_type).to eq('text/javascript')
+    end
   end
 end

@@ -13,7 +13,7 @@ RSpec.describe AvatarHelper, type: :helper do
         )
       end
       it 'returns the URL for the user avatar' do
-        expect(avatar_url(user)).to eq(url_for(user.avatar))
+        expect(avatar_url(user)).to eq(image_url(user.avatar))
       end
     end
 
