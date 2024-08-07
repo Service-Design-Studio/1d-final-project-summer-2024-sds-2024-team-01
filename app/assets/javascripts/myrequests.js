@@ -187,72 +187,92 @@ function updateRequestCards(tabId) {
   });
 }
 
+// function handleCompleteForm(form) {
+//   const requestCard = form.closest('.request-card_requests_index_my');
+//   const applicationIndicator = requestCard.querySelector('.application-indicator_requests_index_my');
+//   const reviewButton = requestCard.querySelector('.review-btn_mark_completed');
+//   const repostButton = requestCard.querySelector('.repost-btn_unfulfilled');
+
+//   // Update UI immediately
+//   applicationIndicator.style.display = 'none';
+//   form.style.display = 'none';
+
+//   // Check if the request is unfulfilled
+//   const isUnfulfilled = checkIfUnfulfilled(requestCard);
+
+//   if (isUnfulfilled) {
+//     repostButton.classList.remove('d-none');
+//   } else {
+//     reviewButton.classList.remove('d-none');
+//   }
+
+//   // Update request card status
+//   requestCard.dataset.status = 'Completed';
+
+//   // Update buttons for all applicants
+//   updateApplicantButtonsForCompleted(requestCard);
+//   const applicantPopups = requestCard.querySelectorAll('.popup_requests_index_my');
+//   applicantPopups.forEach(popup => {
+//     const chatButton = popup.querySelector('.custom-btn-chat_my');
+//     const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
+//     const splitButton = popup.querySelector('.split-button_requests_index_my');
+//     const applicationStatus = splitButton.querySelector('.status-indicator_my')?.textContent.trim();
+
+//     // Remove chat button
+//     if (chatButton) chatButton.remove();
+
+//     // Add review button if the applicant was accepted
+//     if (applicationStatus === 'Accepted' && applicantInfo && !applicantInfo.querySelector('.leave-review-btn')) {
+//       const reviewButton = document.createElement('button');
+//       reviewButton.classList.add('btn', 'leave-review-btn');
+//       reviewButton.textContent = 'Leave a Review';
+//       // applicantInfo.appendChild(reviewButton);
+//     }
+//   });
+
+//   // Update request card status
+//   requestCard.dataset.status = 'Completed';
+
+//   // Prepare for smooth transition
+//   requestCard.style.transition = 'opacity 0.5s ease-out';
+//   requestCard.style.opacity = '0';
+
+//   setTimeout(() => {
+//     // Move the card to the top of the Completed tab
+//     const completedTabPane = document.querySelector('#completed');
+//     const firstChild = completedTabPane.firstChild;
+//     completedTabPane.insertBefore(requestCard, firstChild);
+
+//     // Switch to the Completed tab
+//     const completedTabButton = document.querySelector('[data-bs-target="#completed"]');
+//     switchTab(completedTabButton);
+
+//     // Fade the card back in
+//     setTimeout(() => {
+//       requestCard.style.opacity = '1';
+//     }, 50);
+//   }, 500);
+
+//   fetch(form.action, {
+//     method: form.method,
+//     body: new FormData(form),
+//     headers: {
+//       'X-Requested-With': 'XMLHttpRequest',
+//       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+//     }
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//     if (!data.success) {
+//       console.error(data.message);
+//     }
+//   })
+//   .catch(error => {
+//     console.error('Error:', error);
+//   });
+// }
+
 function handleCompleteForm(form) {
-  const requestCard = form.closest('.request-card_requests_index_my');
-  const applicationIndicator = requestCard.querySelector('.application-indicator_requests_index_my');
-  const reviewButton = requestCard.querySelector('.review-btn_mark_completed');
-  const repostButton = requestCard.querySelector('.repost-btn_unfulfilled');
-
-  // Update UI immediately
-  applicationIndicator.style.display = 'none';
-  form.style.display = 'none';
-
-  // Check if the request is unfulfilled
-  const isUnfulfilled = checkIfUnfulfilled(requestCard);
-
-  if (isUnfulfilled) {
-    repostButton.classList.remove('d-none');
-  } else {
-    reviewButton.classList.remove('d-none');
-  }
-
-  // Update request card status
-  requestCard.dataset.status = 'Completed';
-
-  // Update buttons for all applicants
-  updateApplicantButtonsForCompleted(requestCard);
-  const applicantPopups = requestCard.querySelectorAll('.popup_requests_index_my');
-  applicantPopups.forEach(popup => {
-    const chatButton = popup.querySelector('.custom-btn-chat_my');
-    const applicantInfo = popup.querySelector('.applicant-info_requests_index_my');
-    const splitButton = popup.querySelector('.split-button_requests_index_my');
-    const applicationStatus = splitButton.querySelector('.status-indicator_my')?.textContent.trim();
-
-    // Remove chat button
-    if (chatButton) chatButton.remove();
-
-    // Add review button if the applicant was accepted
-    if (applicationStatus === 'Accepted' && applicantInfo && !applicantInfo.querySelector('.leave-review-btn')) {
-      const reviewButton = document.createElement('button');
-      reviewButton.classList.add('btn', 'leave-review-btn');
-      reviewButton.textContent = 'Leave a Review';
-      // applicantInfo.appendChild(reviewButton);
-    }
-  });
-
-  // Update request card status
-  requestCard.dataset.status = 'Completed';
-
-  // Prepare for smooth transition
-  requestCard.style.transition = 'opacity 0.5s ease-out';
-  requestCard.style.opacity = '0';
-
-  setTimeout(() => {
-    // Move the card to the top of the Completed tab
-    const completedTabPane = document.querySelector('#completed');
-    const firstChild = completedTabPane.firstChild;
-    completedTabPane.insertBefore(requestCard, firstChild);
-
-    // Switch to the Completed tab
-    const completedTabButton = document.querySelector('[data-bs-target="#completed"]');
-    switchTab(completedTabButton);
-
-    // Fade the card back in
-    setTimeout(() => {
-      requestCard.style.opacity = '1';
-    }, 50);
-  }, 500);
-
   fetch(form.action, {
     method: form.method,
     body: new FormData(form),
@@ -261,14 +281,18 @@ function handleCompleteForm(form) {
       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
     }
   })
-  .then(response => response.json())
-  .then(data => {
-    if (!data.success) {
-      console.error(data.message);
+  .then(response => {
+    if (response.redirected) {
+      // Follow the redirect, which will reload the page with the new state and notification
+      window.location.href = response.url;
+    } else {
+      // If not redirected (which shouldn't happen in this case), reload the page
+      window.location.reload();
     }
   })
   .catch(error => {
     console.error('Error:', error);
+    // Optionally, you could show an error message to the user here
   });
 }
 
