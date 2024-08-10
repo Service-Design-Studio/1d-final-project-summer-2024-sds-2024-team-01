@@ -1,5 +1,19 @@
-# Gebirah Volunteer Connection Platform
-More detailed information can be found on our website: https://sites.google.com/mymail.sutd.edu.sg/voiceserve/
+<h1 align="center">
+  </br></br>Ring of Reciprocity
+</h1>
+<p align="center">
+  </br>
+  <b>
+    #=================================================================#</br>
+    Empowering Volunteers, Transforming Communities
+    #=================================================================#</br>
+  </b> </br></br>
+  Brought to you by Voiceserve. In collaboration with Gebirah.</br></br>
+  More detailed information can be found on our <a href="https://sites.google.com/mymail.sutd.edu.sg/voiceserve/">website</a>
+</p>
+
+
+
 
 ## Introduction
 
